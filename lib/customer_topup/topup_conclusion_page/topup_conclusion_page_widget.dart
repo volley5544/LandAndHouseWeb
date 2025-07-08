@@ -2937,6 +2937,8 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                     },
                                   );
                                   while (_model.loopCountTemp! < 2) {
+                                    _model.skipCurrentIndexLoop = false;
+                                    safeSetState(() {});
                                     if (_model.loopCountTemp == 0) {
                                       if (!(_model.idCardFile == null ||
                                           (_model.idCardFile?.bytes?.isEmpty ??
@@ -2954,10 +2956,8 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                               true))) {
                                         _model.loopCountTemp =
                                             _model.loopCountTemp! + 1;
+                                        _model.skipCurrentIndexLoop = true;
                                         safeSetState(() {});
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
-                                        return;
                                       }
                                     }
 
