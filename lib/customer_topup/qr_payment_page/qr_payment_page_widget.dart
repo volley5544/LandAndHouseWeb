@@ -1,0 +1,485 @@
+import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/pages/loading/loading_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
+import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'qr_payment_page_model.dart';
+export 'qr_payment_page_model.dart';
+
+class QrPaymentPageWidget extends StatefulWidget {
+  const QrPaymentPageWidget({super.key});
+
+  static String routeName = 'QrPaymentPage';
+  static String routePath = '/QrPaymentPage';
+
+  @override
+  State<QrPaymentPageWidget> createState() => _QrPaymentPageWidgetState();
+}
+
+class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
+  late QrPaymentPageModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => QrPaymentPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          automaticallyImplyLeading: false,
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.goNamed(
+                TopupDetailDataPageWidget.routeName,
+                extra: <String, dynamic>{
+                  kTransitionInfoKey: TransitionInfo(
+                    hasTransition: true,
+                    transitionType: PageTransitionType.leftToRight,
+                  ),
+                },
+              );
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primary,
+              size: 24.0,
+            ),
+          ),
+          actions: [],
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(
+              'ชำระด้วย QR',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Noto San Thai',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 18.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            centerTitle: true,
+            expandedTitleScale: 1.0,
+          ),
+          elevation: 2.0,
+        ),
+        body: SafeArea(
+          top: true,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                wrapWithModel(
+                  model: _model.loanDetailCardComponentModel,
+                  updateCallback: () => safeSetState(() {}),
+                  child: LoanDetailCardComponentWidget(
+                    contNo: FFAppState().getLoanListSelected.contractNo,
+                    assetCode: FFAppState()
+                        .getLoanListSelected
+                        .contractDetails
+                        .collateralInformation,
+                    productTypeCode: FFAppState()
+                        .getLoanListSelected
+                        .contractDetails
+                        .loanTypeCode,
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'เลขทะเบียน',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Text(
+                            valueOrDefault<String>(
+                              FFAppState()
+                                  .getLoanListSelected
+                                  .contractDetails
+                                  .collateralInformation,
+                              'collateral_information',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'จำนวนเงินค่างวด',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Text(
+                            (FFAppState()
+                                        .getLoanListSelected
+                                        .topupDetail
+                                        .yield +
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .topupDetail
+                                        .collectionFee +
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .topupDetail
+                                        .penaltyFee)
+                                .toString(),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Divider(
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Text(
+                              '*กรุณาชำระเงินภายในวันเพื่อหลีกเลี่ยงการเสียดอกเบี้ยเพิ่มเติม',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context).error,
+                                    fontSize: 12.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 20.0, 0.0, 0.0),
+                              child: Container(
+                                width: 200.0,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Text(
+                                  'คิวอาร์โค้ด',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Container(
+                              width: 250.0,
+                              height: 250.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: BarcodeWidget(
+                                data: functions.genQRCodePayment(
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .barcodeDetails
+                                        .suffix,
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .barcodeDetails
+                                        .ref1,
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .barcodeDetails
+                                        .ref2,
+                                    (FFAppState()
+                                                .getLoanListSelected
+                                                .topupDetail
+                                                .yield +
+                                            FFAppState()
+                                                .getLoanListSelected
+                                                .topupDetail
+                                                .collectionFee +
+                                            FFAppState()
+                                                .getLoanListSelected
+                                                .topupDetail
+                                                .penaltyFee)
+                                        .toString(),
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .barcodeDetails
+                                        .taxId)!,
+                                barcode: Barcode.qrCode(),
+                                width: 200.0,
+                                height: 200.0,
+                                color: Colors.black,
+                                backgroundColor: Colors.transparent,
+                                errorBuilder: (_context, _error) => SizedBox(
+                                  width: 200.0,
+                                  height: 200.0,
+                                ),
+                                drawText: true,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Text(
+                              'R1 : ${FFAppState().getLoanListSelected.barcodeDetails.ref1}',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Text(
+                              'R2 : ${FFAppState().getLoanListSelected.barcodeDetails.ref2}',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Text(
+                              'คุณสามารถสแกนชำระค่างวดได้ที่ศรีสวัสดิ์ทุกสาขา',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 10.0, 0.0, 0.0),
+                            child: Text(
+                              'หรือโมบายแมพทุกธนาคาร',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () async {
+                                context.goNamed(
+                                  TopupDetailDataPageWidget.routeName,
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType:
+                                          PageTransitionType.leftToRight,
+                                    ),
+                                  },
+                                );
+                              },
+                              text: 'ปรับปรุงยอดชำระ',
+                              options: FFButtonOptions(
+                                width: 140.0,
+                                height: 50.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).accent2,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            Builder(
+                              builder: (context) => FFButtonWidget(
+                                onPressed: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext)
+                                                .unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: LoadingWidget(),
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  Navigator.pop(context);
+                                },
+                                text: 'บันทึกรูปภาพ',
+                                options: FFButtonOptions(
+                                  width: 140.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ].addToStart(SizedBox(height: 8.0)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

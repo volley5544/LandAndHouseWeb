@@ -1,0 +1,508 @@
+import 'dart:convert';
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
+import 'lat_lng.dart';
+import 'place.dart';
+import 'uploaded_file.dart';
+import '/backend/backend.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '/backend/schema/structs/index.dart';
+import '/auth/firebase_auth/auth_util.dart';
+
+int? findIndexInList(
+  List<String>? dataList,
+  String? searchInput,
+) {
+  // Find the index of an item
+  int index = dataList!.indexOf(searchInput!);
+
+  return index;
+}
+
+List<InstallmentsStruct> reversedListInstallment(
+    List<InstallmentsStruct> listInstallment) {
+  List<InstallmentsStruct> reversedList = listInstallment.reversed.toList();
+
+  // Print the reversed list (optional, for debugging)
+  print('Reversed List: $reversedList');
+
+  // Return the reversed list
+  return reversedList;
+}
+
+bool? checkPhoneNumberCharCopy(String? text) {
+  bool isPhoneNumber = false;
+
+  if ((text!.length == 10) && (text![0] == "0")) {
+    isPhoneNumber = true;
+  }
+  return isPhoneNumber;
+}
+
+bool? containString(
+  String? searchWord,
+  String? containWord,
+) {
+  // Check if the string contains a substring
+  bool isContains = containWord!.contains(searchWord!);
+
+  return isContains;
+}
+
+String? removeCommaFromNumText(String? numberText) {
+  String result = numberText!.replaceAll(RegExp('[^A-Za-z0-9.]'), '');
+
+  return result;
+}
+
+String? returnNumberWithCommaFullNumber(String? number) {
+  if (number == 'null') {
+    return '0.00';
+  }
+
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]},';
+
+  String result = '${double.parse(number!)}'.replaceAllMapped(reg, mathFunc);
+
+  return result!;
+
+  // if (number == null || number.trim().isEmpty || number == 'null') {
+  //return '0.00';
+  //}
+
+  // แปลง String เป็น Double และจัดการกรณีแปลงไม่สำเร็จ
+  // double parsedNumber = double.tryParse(number) ?? 0.0;
+
+  // RegExp สำหรับใส่จุลภาค
+  //RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  //String Function(Match) mathFunc = (Match match) => '${match[1]},';
+
+  // แปลงเป็น String พร้อม .00 และใส่จุลภาค
+  // String formattedNumber = parsedNumber
+  //    .toStringAsFixed(2) // แสดงทศนิยม 2 ตำแหน่ง
+  //  .replaceFirst(RegExp(r'\.'), '#') // ป้องกัน . กระทบ regex
+  //.replaceAllMapped(reg, mathFunc) // ใส่จุลภาค
+  //.replaceFirst('#', '.'); // คืนจุดทศนิยมกลับมา
+
+  //return formattedNumber;
+}
+
+String? formatPhoneNumber(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง';
+  }
+
+  // กรองเฉพาะตัวเลข
+  String phoneNumber = input.replaceAll(RegExp(r'[^0-9]'), '');
+
+  // ตรวจสอบว่าเบอร์โทรศัพท์มีตัวหน้าสุดเป็นเลข 0 หรือไม่
+  if (phoneNumber.isNotEmpty && phoneNumber[0] != '0') {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง (ตัวแรกต้องเป็นเลข 0)';
+  }
+  // หากหมายเลขถูกต้อง และมีความยาว 10 ตัว
+  else if (phoneNumber.length == 10) {
+    return phoneNumber[0] +
+        phoneNumber[1] +
+        'X' +
+        '-' +
+        'X' +
+        'X' +
+        'X' +
+        '-' +
+        'X' +
+        phoneNumber[7] +
+        phoneNumber[8] +
+        phoneNumber[9];
+  }
+  // หากมีความยาว 9 ตัว
+  else if (phoneNumber.length == 9) {
+    return phoneNumber[0] +
+        phoneNumber[1] +
+        '-' +
+        'X' +
+        'X' +
+        'X' +
+        '-' +
+        'X' +
+        phoneNumber[6] +
+        phoneNumber[7] +
+        phoneNumber[8];
+  }
+  // หากมีความยาว 4 ตัว
+  else if (phoneNumber.length == 4) {
+    return phoneNumber[0] + 'X' + 'X' + phoneNumber[3];
+  }
+  // หากไม่ตรงตามเงื่อนไขใดๆ
+  else {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง';
+  }
+}
+
+bool? checkRawang(String? input) {
+  // ฟังก์ชันตรวจสอบเลขโรมัน
+  bool isValidRoman(String roman) {
+    // กำหนดรูปแบบที่ถูกต้องของเลขโรมัน (จาก I ถึง IV)
+    RegExp romanPattern = RegExp(r'^(I|II|III|IV)$');
+    return romanPattern.hasMatch(roman);
+  }
+
+  // Regular expression แก้ไขตามเงื่อนไขใหม่
+  RegExp pattern =
+      RegExp(r'^\d{4} ([IVXLCDM]{1,3}) \d{4} ([0-5][0-9]|6[0-4])$');
+
+  // ตรวจสอบว่า input ตรงกับรูปแบบที่กำหนดหรือไม่
+  if (input != null && pattern.hasMatch(input)) {
+    // หากตรงกับ pattern จะแยกเลขโรมันออกมา
+    var romanMatch = pattern.firstMatch(input); // ใช้ input ที่มาจากภายนอก
+    String roman = romanMatch?.group(1) ?? ''; // เอาค่าเลขโรมัน
+
+    // ตรวจสอบว่าเลขโรมันถูกต้องหรือไม่
+    if (isValidRoman(roman)) {
+      return true; // หากเลขโรมันถูกต้อง
+    } else {
+      return false; // หากเลขโรมันไม่ถูกต้อง
+    }
+  } else {
+    return false; // หาก input ไม่ตรงกับ pattern หรือเป็น null
+  }
+}
+
+String? rawangFormattedFunction(String? rawangText) {
+  String rawang = rawangText!.replaceAll(' ', '');
+  rawang = rawang.replaceAll('-', '');
+  String outputRawang = '';
+  if (rawang!.length == 11) {
+    outputRawang =
+        '${rawang!.substring(0, 4)} ${rawang!.substring(4, 5)} ${rawang!.substring(5, 9)} ${rawang!.substring(9, 11)}';
+  } else if (rawang!.length == 12) {
+    outputRawang =
+        '${rawang!.substring(0, 4)} ${rawang!.substring(4, 6)} ${rawang!.substring(6, 10)} ${rawang!.substring(10, 12)}';
+  } else if (rawang!.length == 13) {
+    outputRawang =
+        '${rawang!.substring(0, 4)} ${rawang!.substring(4, 7)} ${rawang!.substring(7, 11)} ${rawang!.substring(11, 13)}';
+  } else if (rawang!.length > 13) {
+    outputRawang =
+        '${rawang!.substring(0, 4)} ${rawang!.substring(4, 7)} ${rawang!.substring(7, 11)} ${rawang!.substring(11, 13)}';
+  } else {
+    outputRawang = rawang!;
+  }
+
+  return outputRawang;
+}
+
+String? replaceSpaceInText(String? textInput) {
+  return textInput!.replaceAll(' ', '');
+}
+
+DateTime? parseStringDateToDateTime(String? stringDate) {
+  return DateTime.parse(stringDate!);
+}
+
+String? checkUserName(String? name) {
+  if (name == null || name.length <= 2) {
+    return name; // ถ้าชื่อเป็น null หรือมีความยาวน้อยกว่าหรือเท่ากับ 2 ตัวอักษร ให้คืนค่าชื่อเดิม
+  } else {
+    return name.substring(0, 2) +
+        'x' * math.min(name.length - 2, 5); // ใช้ 'x' แต่ไม่เกิน 5 ตัว
+  }
+}
+
+List<bool>? setSelectedData(
+  int? listLength,
+  int? index,
+) {
+  List<bool> statuses = List.filled(listLength!, false);
+
+  statuses[index!] = true; // เปลี่ยนตำแหน่งที่ 6 (index 5) ให้เป็น true
+  //print(statuses);  // แสดงผลใหม่หลังจากการเปลี่ยนค่า
+  return statuses;
+}
+
+List<bool>? generateFalseListByNumItem(int? listLength) {
+  List<bool> statuses = List.filled(listLength!, false);
+
+  //print(statuses);  // แสดงผลใหม่หลังจากการเปลี่ยนค่า
+  return statuses;
+}
+
+List<int>? getTrueIndexes(List<bool>? statuses) {
+  if (statuses == null) {
+    return []; // หาก statuses เป็น null ให้คืนลิสต์ว่าง
+  }
+
+  List<int> trueIndexes = [];
+
+  for (int i = 0; i < statuses.length; i++) {
+    if (statuses[i]) {
+      trueIndexes.add(i); // ถ้ามีค่า true ให้เก็บตำแหน่งไว้
+    }
+  }
+
+  return trueIndexes; // ส่งคืนตำแหน่งที่ค่าเป็น true
+}
+
+List<ChanodData3Struct> reversedList(List<ChanodData3Struct> list1) {
+  // Reverse the list
+  List<ChanodData3Struct> reversedList = list1.reversed.toList();
+
+  // Print the reversed list (optional, for debugging)
+  print('Reversed List: $reversedList');
+
+  // Return the reversed list
+  return reversedList;
+}
+
+String? returnNumberWithComma2Decimal(String? number) {
+  if (number == null || number.trim().isEmpty || number == 'null') {
+    return '0.00';
+  }
+
+  // แปลง String เป็น Double และจัดการกรณีแปลงไม่สำเร็จ
+  double parsedNumber = double.tryParse(number) ?? 0.0;
+
+  // RegExp สำหรับใส่จุลภาค
+  RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+  String Function(Match) mathFunc = (Match match) => '${match[1]},';
+
+  // แปลงเป็น String พร้อม .00 และใส่จุลภาค
+  String formattedNumber = parsedNumber
+      .toStringAsFixed(2) // แสดงทศนิยม 2 ตำแหน่ง
+      .replaceFirst(RegExp(r'\.'), '#') // ป้องกัน . กระทบ regex
+      .replaceAllMapped(reg, mathFunc) // ใส่จุลภาค
+      .replaceFirst('#', '.'); // คืนจุดทศนิยมกลับมา
+
+  return formattedNumber;
+}
+
+bool? checkPhoneNumberChar(String? text) {
+  bool isPhoneNumber = false;
+
+  if ((text!.length == 9 || text!.length == 10) && (text![0] == "0")) {
+    isPhoneNumber = true;
+  }
+  return isPhoneNumber;
+}
+
+String? replaceEnterInStringText(String? inputString) {
+  String output = inputString!.replaceAll('\n', '');
+  return output;
+}
+
+String? removeDash(String? input) {
+  String output = input!.replaceAll('-', '');
+
+  return output;
+}
+
+String? getUtmParamFromUrl(String? inputParam) {
+  String? utmSource;
+  String? utmMedium;
+  String? utmCampaign;
+  Uri uri = Uri.base;
+  print(uri);
+
+  // Extract query parameters
+  utmSource = '${uri.queryParameters['utm_source']}';
+  utmMedium = '${uri.queryParameters['utm_medium']}';
+  utmCampaign = '${uri.queryParameters['utm_campaign']}';
+  if ('${inputParam!}' == 'utm_source') {
+    return '${utmSource!}';
+  } else if ('${inputParam!}' == 'utm_medium') {
+    return '${utmMedium!}';
+  } else if ('${inputParam!}' == 'utm_campaign') {
+    return '${utmCampaign!}';
+  }
+
+  print("utm_source: $utmSource");
+  print("utm_medium: $utmMedium");
+  print("utm_campaign: $utmCampaign");
+  return '';
+}
+
+List<bool>? createFalseList(String? listLength) {
+  if (listLength == null) return null;
+
+  int? length = int.tryParse(listLength);
+  if (length == null || length < 0) return null;
+
+  List<bool> falseList = List.filled(length, false);
+  return falseList;
+}
+
+String? stringToImgPath(String? input) {
+  return input!;
+}
+
+List<TenorListDataModelStruct>? returnTenorList(dynamic insuranceInfoData) {
+  List<TenorListDataModelStruct> outputList = [];
+  Map<String, dynamic> mapData = insuranceInfoData as Map<String, dynamic>;
+
+  print(mapData.keys);
+  List<String> listName = mapData.keys.toList();
+  print(listName);
+
+  List<Map<String, dynamic>> listMap = [];
+
+  for (int i = 0; i < listName.length; i++) {
+    TenorListDataModelStruct tenorDataModel =
+        mapData['${listName[i]}'] as TenorListDataModelStruct;
+    outputList.add(tenorDataModel);
+  }
+  print(outputList);
+  //print(listMap);
+
+  // Map<String,dynamic> mapData = {
+  //   "8": {
+  //     "tenor": "8",
+  //     "installment_first_due": "2312",
+  //     "installment_last_due": "2316.23",
+  //     "payment_first": "2312",
+  //     "tenor_first_due": [
+  //       "1",
+  //       "2",
+  //       "3"
+  //     ],
+  //     "tenor_first_due_default": [
+  //       "2"
+  //     ]
+  //   },
+  //   "10": {
+  //     "tenor": "10",
+  //     "installment_first_due": "1850",
+  //     "installment_last_due": "1850.23",
+  //     "payment_first": "1850",
+  //     "tenor_first_due": [
+  //       "1",
+  //       "2",
+  //       "3"
+  //     ],
+  //     "tenor_first_due_default": [
+  //       "2"
+  //     ]
+  //   },
+  //   "12": {
+  //     "tenor": "12",
+  //     "installment_first_due": "1541",
+  //     "installment_last_due": "1549.23",
+  //     "payment_first": "1541",
+  //     "tenor_first_due": [
+  //       "1",
+  //       "2",
+  //       "3"
+  //     ],
+  //     "tenor_first_due_default": [
+  //       "3"
+  //     ]
+  //   }
+  // };
+  // print(mapData.keys);
+  // List<String> listName = mapData.keys.toList();
+  // print(listName);
+  //
+  // List<Map<String,dynamic>> listMap = [];
+  //
+  // for(int i = 0; i < listName.length; i++){
+  //   Map<String,dynamic> tenorDataModel = mapData['${listName[i]}'];
+  //   listMap.add(tenorDataModel);
+  // }
+  //
+  // print(listMap);
+
+  return outputList;
+}
+
+int? findTrueInBoolList(List<bool>? boolList) {
+  int index = boolList!.indexOf(true);
+
+  return index;
+}
+
+int? roundDownInput(String? input) {
+  int rounded = (int.parse(input!) ~/ 100) * 100;
+  return rounded;
+}
+
+String? genQRCodePayment(
+  String? suffix,
+  String? ref1,
+  String? ref2,
+  String? amount,
+  String? taxId,
+) {
+  double originalValue = double.parse(amount!);
+
+  // Step 2: Perform the Multiplication
+  double multipliedValue = originalValue * 100;
+
+  // Step 3: Format the Result with 2 decimal places
+  String amount100 = multipliedValue.toString();
+  String data = '''
+|$taxId$suffix
+$ref1
+$ref2
+$amount100
+''';
+  return data;
+}
+
+String? returnBankName(String? bankShortName) {
+  switch (bankShortName!) {
+    case 'BBL':
+      return 'ธนาคารกรุงเทพ';
+    case 'TTB':
+      return 'ธนาคารทีเอ็มบีธนชาต';
+    case 'LHB':
+      return 'ธนาคารแลนด์ แอนด์ เฮ้าส์';
+    case 'SCBT':
+      return 'ธนาคารสแตนดาร์ดชาร์เตอร์ด (ไทย)';
+    case 'IBANK':
+      return 'ธนาคารอิสลามแห่งประเทศไทย';
+    case 'GHB':
+      return 'ธนาคารอาคารสงเคราะห์';
+    case 'GSB':
+      return 'ธนาคารออมสิน';
+    case 'EXIM':
+      return 'ธนาคารเพื่อการส่งออกและนำเข้าแห่งประเทศไทย';
+    case 'BAAC':
+      return 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร';
+    case 'KTB':
+      return 'ธนาคารกรุงไทย';
+    case 'UOB':
+      return 'ธนาคารยูโอบี';
+    case 'TBANK':
+      return 'ธนาคารธนชาต';
+    case 'SCB':
+      return 'ธนาคารไทยพาณิชย์';
+    case 'TISCO':
+      return 'ธนาคารทิสโก้';
+    case 'CIMB':
+      return 'ธนาคารซีไอเอ็มบีไทย';
+    case 'KK':
+      return 'ธนาคารเกียรตินาคิน';
+    case 'KBANK':
+      return 'ธนาคารกสิกรไทย';
+    case 'BAY':
+      return 'ธนาคารกรุงศรีอยุธยา';
+    case 'TMB':
+      return 'ธนาคารทหารไทย';
+    case 'TNC':
+      return 'ธนาคารธนชาต';
+    default:
+      return bankShortName!;
+  }
+}
+
+String? parseDateTimeToString(String? dateTime) {
+  DateTime date = DateTime.parse(dateTime!)
+      .toLocal(); // Adjust for local timezone if needed
+  int buddhistYear = date!.year + 543;
+  String day = date.day.toString().padLeft(2, '0');
+  String month = date.month.toString().padLeft(2, '0');
+
+  return '$day/$month/$buddhistYear';
+}
