@@ -1,3 +1,4 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
@@ -35,6 +36,14 @@ class TopupConclusionPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (Send an pdf to user)] action in TopupConclusionPage widget.
+  ApiCallResponse? getPdfLoanDocApiOutput;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
+  FFUploadedFile? requestPdfByteFileOutput;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
+  FFUploadedFile? receiptPdfByteFileOutput;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
+  FFUploadedFile? agreementPdfByteFileOutput;
   // Model for LoanDetailCardComponent component.
   late LoanDetailCardComponentModel loanDetailCardComponentModel;
   bool isDataUploading_idCardImageUploadAction = false;
@@ -55,8 +64,6 @@ class TopupConclusionPageModel
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? uploadImageUrlConfirmButton;
-  // Stores action output result for [Custom Action - checkLocationServicePermission] action in Button widget.
-  bool? checkLocationServicePermission;
 
   @override
   void initState(BuildContext context) {
@@ -68,4 +75,7 @@ class TopupConclusionPageModel
   void dispose() {
     loanDetailCardComponentModel.dispose();
   }
+
+  /// Action blocks.
+  Future checkIdCardPhotoBlock(BuildContext context) async {}
 }

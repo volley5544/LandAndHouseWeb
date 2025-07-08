@@ -1,5 +1,7 @@
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/pdf_consent_component/pdf_consent_component_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -71,6 +73,77 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
         },
       );
 
+      _model.getPdfLoanDocApiOutput =
+          await SrisawadApiGroup.sendAnPdfToUserCall.call(
+        bearerAuth: FFAppState().accessToken,
+        contractNo: '123456789',
+        dbName: 'VLOAN',
+        amount: 500,
+        from: 'ศรีสวัสดิ์',
+        vehicleType: 'สินเชื่อรถจักรยานยนต์',
+        contractBankAccount: '123',
+        contractBankBrandname: '123',
+        contractBankBranch: '',
+        contractBankType: '123',
+        hashThaiId: FFAppState().customerDetailData.hashThaiId,
+        interestRate: 500.0,
+        installmentNumber: 9,
+        amountPerInstallment: 5000.0,
+        startInstallmentDate: '2025-01-01',
+        installmentDate: '2025-02-01',
+      );
+
+      if ((_model.getPdfLoanDocApiOutput?.statusCode ?? 200) != 200) {
+        Navigator.pop(context);
+        await showDialog(
+          context: context,
+          builder: (alertDialogContext) {
+            return AlertDialog(
+              content: Text('ไม่สามารถสร้างเอกสารสัญญาได้ กรุณาลองใหม่'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(alertDialogContext),
+                  child: Text('Ok'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+      _model.pdfDocData = SrisawadApiGroup.sendAnPdfToUserCall.pdfLoanDataJson(
+        (_model.getPdfLoanDocApiOutput?.jsonBody ?? ''),
+      );
+      safeSetState(() {});
+      await Future.wait([
+        Future(() async {
+          _model.requestPdfByteFileOutput =
+              await actions.convertBase64ToFFFiles(
+            _model.pdfDocData?.request,
+            '01',
+          );
+          _model.request = _model.requestPdfByteFileOutput;
+          safeSetState(() {});
+        }),
+        Future(() async {
+          _model.receiptPdfByteFileOutput =
+              await actions.convertBase64ToFFFiles(
+            _model.pdfDocData?.receipt,
+            '02',
+          );
+          _model.receipt = _model.receiptPdfByteFileOutput;
+          safeSetState(() {});
+        }),
+        Future(() async {
+          _model.agreementPdfByteFileOutput =
+              await actions.convertBase64ToFFFiles(
+            _model.pdfDocData?.agreement,
+            '03',
+          );
+          _model.agreement = _model.agreementPdfByteFileOutput;
+          safeSetState(() {});
+        }),
+      ]);
       _model.idCardFile = null;
       _model.selfiePlusIdCardFile = null;
       safeSetState(() {});
@@ -2895,47 +2968,6 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                   var _shouldSetState = false;
                                   _model.loopCountTemp = 0;
                                   safeSetState(() {});
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        content: Text(
-                                            (_model.idCardFile == null ||
-                                                    (_model.idCardFile?.bytes
-                                                            ?.isEmpty ??
-                                                        true))
-                                                .toString()),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        content: Text(
-                                            (_model.selfiePlusIdCardFile ==
-                                                        null ||
-                                                    (_model.selfiePlusIdCardFile
-                                                            ?.bytes?.isEmpty ??
-                                                        true))
-                                                .toString()),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
                                   while (_model.loopCountTemp! < 2) {
                                     _model.skipCurrentIndexLoop = false;
                                     safeSetState(() {});
@@ -3100,122 +3132,161 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                   if (!FFAppState()
                                       .pdfDocListConsent
                                       .elementAtOrNull(0)!) {
-                                    context.pushNamed(
-                                      PdfViewerPageWidget.routeName,
-                                      queryParameters: {
-                                        'pdfFileByte': serializeParam(
-                                          _model.request,
-                                          ParamType.FFUploadedFile,
-                                        ),
-                                        'title': serializeParam(
-                                          'ใบคำขอสินเชื่อใหม่',
-                                          ParamType.String,
-                                        ),
-                                        'index': serializeParam(
-                                          0,
-                                          ParamType.int,
-                                        ),
-                                        'isFromConfirmButton': serializeParam(
-                                          true,
-                                          ParamType.bool,
-                                        ),
-                                      }.withoutNulls,
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                        ),
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      isDismissible: false,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: Container(
+                                              height: double.infinity,
+                                              child: PdfConsentComponentWidget(
+                                                title: 'ใบคำขอสินเชื่อใหม่',
+                                                pdfFileByte: _model.request!,
+                                                index: 0,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
-                                    );
+                                    ).then((value) => safeSetState(() {}));
+
+                                    if (!FFAppState()
+                                        .pdfDocListConsent
+                                        .elementAtOrNull(0)!) {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            content: Text(
+                                                'กรุณาให้ความยินยอมใบคำขอสินเชื่อใหม่'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   }
                                   if (!FFAppState()
                                       .pdfDocListConsent
                                       .elementAtOrNull(1)!) {
-                                    context.pushNamed(
-                                      PdfViewerPageWidget.routeName,
-                                      queryParameters: {
-                                        'pdfFileByte': serializeParam(
-                                          _model.receipt,
-                                          ParamType.FFUploadedFile,
-                                        ),
-                                        'title': serializeParam(
-                                          'ใบรับเงิน',
-                                          ParamType.String,
-                                        ),
-                                        'index': serializeParam(
-                                          1,
-                                          ParamType.int,
-                                        ),
-                                        'isFromConfirmButton': serializeParam(
-                                          true,
-                                          ParamType.bool,
-                                        ),
-                                      }.withoutNulls,
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                        ),
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      isDismissible: false,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: Container(
+                                              height: double.infinity,
+                                              child: PdfConsentComponentWidget(
+                                                title: 'ใบรับเงิน',
+                                                pdfFileByte: _model.receipt!,
+                                                index: 1,
+                                              ),
+                                            ),
+                                          ),
+                                        );
                                       },
-                                    );
+                                    ).then((value) => safeSetState(() {}));
+
+                                    if (!FFAppState()
+                                        .pdfDocListConsent
+                                        .elementAtOrNull(1)!) {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            content: Text(
+                                                'กรุณาให้ความยินยอมใบรับเงิน'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   }
                                   if (!FFAppState()
                                       .pdfDocListConsent
                                       .elementAtOrNull(2)!) {
-                                    context.pushNamed(
-                                      PdfViewerPageWidget.routeName,
-                                      queryParameters: {
-                                        'pdfFileByte': serializeParam(
-                                          _model.agreement,
-                                          ParamType.FFUploadedFile,
-                                        ),
-                                        'title': serializeParam(
-                                          'เอกสารสัญญา',
-                                          ParamType.String,
-                                        ),
-                                        'index': serializeParam(
-                                          2,
-                                          ParamType.int,
-                                        ),
-                                        'isFromConfirmButton': serializeParam(
-                                          true,
-                                          ParamType.bool,
-                                        ),
-                                      }.withoutNulls,
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                        ),
-                                      },
-                                    );
-                                  }
-                                  _model.checkLocationServicePermission =
-                                      await actions
-                                          .checkLocationServicePermission();
-                                  _shouldSetState = true;
-                                  if (!_model.checkLocationServicePermission!) {
-                                    await showDialog(
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      isDismissible: false,
+                                      enableDrag: false,
                                       context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          content: Text(
-                                              'กรุณาเปิดตำแหน่งก่อนทำรายการ'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: Container(
+                                              height: double.infinity,
+                                              child: PdfConsentComponentWidget(
+                                                title: 'เอกสารสัญญา',
+                                                pdfFileByte: _model.agreement!,
+                                                index: 2,
+                                              ),
                                             ),
-                                          ],
+                                          ),
                                         );
                                       },
-                                    );
-                                    if (_shouldSetState) safeSetState(() {});
-                                    return;
+                                    ).then((value) => safeSetState(() {}));
+
+                                    if (!FFAppState()
+                                        .pdfDocListConsent
+                                        .elementAtOrNull(2)!) {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            content: Text(
+                                                'กรุณาให้ความยินยอมเอกสารสัญญา'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                   }
                                   await showDialog(
                                     context: context,
