@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'home_page_web_model.dart';
 export 'home_page_web_model.dart';
@@ -90,6 +91,11 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
       Navigator.pop(context);
     });
 
+    _model.thaiIdTextFieldTextController ??= TextEditingController();
+    _model.thaiIdTextFieldFocusNode ??= FocusNode();
+
+    _model.thaiIdTextFieldMask =
+        MaskTextInputFormatter(mask: '#-####-#####-##-#');
     _model.chanodNumberTextFieldTextController ??= TextEditingController();
     _model.chanodNumberTextFieldFocusNode ??= FocusNode();
 
@@ -129,7 +135,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.raiTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.raiTextFieldTextController.text)!;
+                      _model.raiTextFieldTextController.text, '0')!;
             });
           }
         }
@@ -150,7 +156,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.nganTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.nganTextFieldTextController.text)!;
+                      _model.nganTextFieldTextController.text, '0')!;
             });
           }
         }
@@ -171,12 +177,17 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.tarangWaTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldTextController.text)!;
+                      _model.tarangWaTextFieldTextController.text, '0')!;
             });
           }
         }
       },
     );
+    _model.thaiIdTextFieldPCTextController ??= TextEditingController();
+    _model.thaiIdTextFieldPCFocusNode ??= FocusNode();
+
+    _model.thaiIdTextFieldPCMask =
+        MaskTextInputFormatter(mask: '#-####-#####-##-#');
     _model.chanodNumberTextFieldPCTextController ??= TextEditingController();
     _model.chanodNumberTextFieldPCFocusNode ??= FocusNode();
 
@@ -216,7 +227,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.raiTextFieldPCTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.raiTextFieldPCTextController.text)!;
+                      _model.raiTextFieldPCTextController.text, '0')!;
             });
           }
         }
@@ -237,7 +248,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.nganTextFieldPCTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.nganTextFieldPCTextController.text)!;
+                      _model.nganTextFieldPCTextController.text, '0')!;
             });
           }
         }
@@ -258,7 +269,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
             safeSetState(() {
               _model.tarangWaTextFieldPCTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldPCTextController.text)!;
+                      _model.tarangWaTextFieldPCTextController.text, '0')!;
             });
           }
         }
@@ -1255,6 +1266,311 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          'เลขที่บัตรประชาชน',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                fontSize: () {
+                                                                  if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointSmall) {
+                                                                    return 14.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointMedium) {
+                                                                    return 20.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointLarge) {
+                                                                    return 20.0;
+                                                                  } else {
+                                                                    return 20.0;
+                                                                  }
+                                                                }(),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      4.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            '*',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: Color(
+                                                                      0xFFFF0004),
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 18.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 22.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 22.0;
+                                                                    } else {
+                                                                      return 22.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  8.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Container(
+                                                        width: () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 600.0;
+                                                          } else {
+                                                            return 600.0;
+                                                          }
+                                                        }(),
+                                                        height: () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return 50.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return 70.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 70.0;
+                                                          } else {
+                                                            return 70.0;
+                                                          }
+                                                        }(),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      12.0),
+                                                          border: Border.all(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            width: 2.0,
+                                                          ),
+                                                        ),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                .thaiIdTextFieldTextController,
+                                                            focusNode: _model
+                                                                .thaiIdTextFieldFocusNode,
+                                                            autofocus: false,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              isDense: false,
+                                                              labelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              enabledBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0x00000000),
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              errorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  OutlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 1.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              filled: true,
+                                                              fillColor: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 14.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 20.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 20.0;
+                                                                    } else {
+                                                                      return 20.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            cursorColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                            validator: _model
+                                                                .thaiIdTextFieldTextControllerValidator
+                                                                .asValidator(
+                                                                    context),
+                                                            inputFormatters: [
+                                                              _model
+                                                                  .thaiIdTextFieldMask
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                               Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
@@ -5051,6 +5367,83 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                       }
                                     }
 
+                                    if (functions.checkIsIntValue(
+                                        functions.removeDash(_model
+                                            .thaiIdTextFieldTextController
+                                            .text))!) {
+                                      if (!functions.checkIdCard(
+                                          functions.removeDash(_model
+                                              .thaiIdTextFieldTextController
+                                              .text))!) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child:
+                                                    ErrorMessageComponentWidget(
+                                                  textMessage:
+                                                      'กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
+                                      }
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(dialogContext)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child:
+                                                  ErrorMessageComponentWidget(
+                                                textMessage:
+                                                    'กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+
+                                      if (_shouldSetState) safeSetState(() {});
+                                      return;
+                                    }
+
                                     if (!((_model.uploadedLocalFile_uploadDataSqdWebMobile
                                                 .bytes?.isNotEmpty ??
                                             false))) {
@@ -5380,7 +5773,11 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                       email: '',
                                       titleName: '',
                                       hashId: '',
-                                      idNumber: '',
+                                      idNumber: true
+                                          ? functions.removeDash(_model
+                                              .thaiIdTextFieldTextController
+                                              .text)
+                                          : '',
                                       imageChanodFront: _model
                                           .uploadedLocalFile_uploadDataSqdWebMobile,
                                       imageChanodBack: _model
@@ -6155,6 +6552,210 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                               Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      height: 90.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Flexible(
+                                                            child: Container(
+                                                              height: 80.0,
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                minWidth: 200.0,
+                                                                maxWidth: 350.0,
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      SelectionArea(
+                                                                          child:
+                                                                              Text(
+                                                                        'เลขที่บัตรประชาชน',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                              fontSize: 16.0,
+                                                                              letterSpacing: 0.0,
+                                                                            ),
+                                                                      )),
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            4.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Text(
+                                                                          '*',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: Color(0xFFFF0004),
+                                                                                fontSize: 16.0,
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Flexible(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        height:
+                                                                            50.0,
+                                                                        constraints:
+                                                                            BoxConstraints(
+                                                                          minWidth:
+                                                                              200.0,
+                                                                          maxWidth:
+                                                                              350.0,
+                                                                        ),
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(30.0),
+                                                                          border:
+                                                                              Border.all(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).alternate,
+                                                                            width:
+                                                                                2.0,
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          child:
+                                                                              TextFormField(
+                                                                            controller:
+                                                                                _model.thaiIdTextFieldPCTextController,
+                                                                            focusNode:
+                                                                                _model.thaiIdTextFieldPCFocusNode,
+                                                                            autofocus:
+                                                                                false,
+                                                                            obscureText:
+                                                                                false,
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              isDense: false,
+                                                                              labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                              hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                              enabledBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(
+                                                                                  color: Color(0x00000000),
+                                                                                  width: 1.0,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                              focusedBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(
+                                                                                  color: Color(0x00000000),
+                                                                                  width: 1.0,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                              errorBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(
+                                                                                  color: FlutterFlowTheme.of(context).error,
+                                                                                  width: 1.0,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                              focusedErrorBorder: OutlineInputBorder(
+                                                                                borderSide: BorderSide(
+                                                                                  color: FlutterFlowTheme.of(context).error,
+                                                                                  width: 1.0,
+                                                                                ),
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                              filled: true,
+                                                                              fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              contentPadding: EdgeInsetsDirectional.fromSTEB(30.0, 0.0, 30.0, 0.0),
+                                                                              hoverColor: Colors.transparent,
+                                                                            ),
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: Colors.black,
+                                                                                  fontSize: () {
+                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                      return 14.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                      return 20.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                      return 20.0;
+                                                                                    } else {
+                                                                                      return 20.0;
+                                                                                    }
+                                                                                  }(),
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                            keyboardType:
+                                                                                TextInputType.number,
+                                                                            cursorColor:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            validator:
+                                                                                _model.thaiIdTextFieldPCTextControllerValidator.asValidator(context),
+                                                                            inputFormatters: [
+                                                                              _model.thaiIdTextFieldPCMask
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 30.0)),
+                                                      ),
+                                                    ),
+                                                  ),
                                                   Expanded(
                                                     child: Container(
                                                       decoration:
@@ -9166,6 +9767,91 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                             }
                                           }
 
+                                          if (functions.checkIsIntValue(
+                                              functions.removeDash(_model
+                                                  .thaiIdTextFieldPCTextController
+                                                  .text))!) {
+                                            if (!functions.checkIdCard(
+                                                functions.removeDash(_model
+                                                    .thaiIdTextFieldPCTextController
+                                                    .text))!) {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                          } else {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ErrorMessageComponentWidget(
+                                                      textMessage:
+                                                          'กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+
                                           if (!((_model.uploadedLocalFile_uploadDataSqdWebPC
                                                       .bytes?.isNotEmpty ??
                                                   false))) {
@@ -9536,7 +10222,11 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                             email: '',
                                             titleName: '',
                                             hashId: '',
-                                            idNumber: '',
+                                            idNumber: true
+                                                ? functions.removeDash(_model
+                                                    .thaiIdTextFieldPCTextController
+                                                    .text)
+                                                : '',
                                             imageChanodFront: _model
                                                 .uploadedLocalFile_uploadDataSqdWebPC,
                                             imageChanodBack: _model

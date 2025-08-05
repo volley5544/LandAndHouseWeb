@@ -21,6 +21,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
     int? penaltyFee,
     int? yield,
     String? interestPaidFlag,
+    String? canTopupMsg,
+    int? maxTransferAmount,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _totalInstallmentAmount = totalInstallmentAmount,
         _canTopup = canTopup,
@@ -35,6 +37,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         _penaltyFee = penaltyFee,
         _yield = yield,
         _interestPaidFlag = interestPaidFlag,
+        _canTopupMsg = canTopupMsg,
+        _maxTransferAmount = maxTransferAmount,
         super(firestoreUtilData);
 
   // "total_installment_amount" field.
@@ -154,6 +158,23 @@ class TopupDetailStruct extends FFFirebaseStruct {
 
   bool hasInterestPaidFlag() => _interestPaidFlag != null;
 
+  // "can_topup_msg" field.
+  String? _canTopupMsg;
+  String get canTopupMsg => _canTopupMsg ?? '';
+  set canTopupMsg(String? val) => _canTopupMsg = val;
+
+  bool hasCanTopupMsg() => _canTopupMsg != null;
+
+  // "max_transfer_amount" field.
+  int? _maxTransferAmount;
+  int get maxTransferAmount => _maxTransferAmount ?? 0;
+  set maxTransferAmount(int? val) => _maxTransferAmount = val;
+
+  void incrementMaxTransferAmount(int amount) =>
+      maxTransferAmount = maxTransferAmount + amount;
+
+  bool hasMaxTransferAmount() => _maxTransferAmount != null;
+
   static TopupDetailStruct fromMap(Map<String, dynamic> data) =>
       TopupDetailStruct(
         totalInstallmentAmount:
@@ -171,6 +192,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         penaltyFee: castToType<int>(data['penalty_fee']),
         yield: castToType<int>(data['yield']),
         interestPaidFlag: data['interest_paid_flag'] as String?,
+        canTopupMsg: data['can_topup_msg'] as String?,
+        maxTransferAmount: castToType<int>(data['max_transfer_amount']),
       );
 
   static TopupDetailStruct? maybeFromMap(dynamic data) => data is Map
@@ -191,6 +214,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         'penalty_fee': _penaltyFee,
         'yield': _yield,
         'interest_paid_flag': _interestPaidFlag,
+        'can_topup_msg': _canTopupMsg,
+        'max_transfer_amount': _maxTransferAmount,
       }.withoutNulls;
 
   @override
@@ -246,6 +271,14 @@ class TopupDetailStruct extends FFFirebaseStruct {
         'interest_paid_flag': serializeParam(
           _interestPaidFlag,
           ParamType.String,
+        ),
+        'can_topup_msg': serializeParam(
+          _canTopupMsg,
+          ParamType.String,
+        ),
+        'max_transfer_amount': serializeParam(
+          _maxTransferAmount,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -316,6 +349,16 @@ class TopupDetailStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        canTopupMsg: deserializeParam(
+          data['can_topup_msg'],
+          ParamType.String,
+          false,
+        ),
+        maxTransferAmount: deserializeParam(
+          data['max_transfer_amount'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -336,7 +379,9 @@ class TopupDetailStruct extends FFFirebaseStruct {
         collectionFee == other.collectionFee &&
         penaltyFee == other.penaltyFee &&
         yield == other.yield &&
-        interestPaidFlag == other.interestPaidFlag;
+        interestPaidFlag == other.interestPaidFlag &&
+        canTopupMsg == other.canTopupMsg &&
+        maxTransferAmount == other.maxTransferAmount;
   }
 
   @override
@@ -353,7 +398,9 @@ class TopupDetailStruct extends FFFirebaseStruct {
         collectionFee,
         penaltyFee,
         yield,
-        interestPaidFlag
+        interestPaidFlag,
+        canTopupMsg,
+        maxTransferAmount
       ]);
 }
 
@@ -371,6 +418,8 @@ TopupDetailStruct createTopupDetailStruct({
   int? penaltyFee,
   int? yield,
   String? interestPaidFlag,
+  String? canTopupMsg,
+  int? maxTransferAmount,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -390,6 +439,8 @@ TopupDetailStruct createTopupDetailStruct({
       penaltyFee: penaltyFee,
       yield: yield,
       interestPaidFlag: interestPaidFlag,
+      canTopupMsg: canTopupMsg,
+      maxTransferAmount: maxTransferAmount,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

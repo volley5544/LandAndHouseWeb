@@ -35,6 +35,12 @@ class AddCustomerLeadModel extends FlutterFlowModel<AddCustomerLeadWidget> {
   late MaskTextInputFormatter phoneTextFieldMask;
   String? Function(BuildContext, String?)?
       phoneTextFieldTextControllerValidator;
+  // State field(s) for thaiIdTextField widget.
+  FocusNode? thaiIdTextFieldFocusNode;
+  TextEditingController? thaiIdTextFieldTextController;
+  late MaskTextInputFormatter thaiIdTextFieldMask;
+  String? Function(BuildContext, String?)?
+      thaiIdTextFieldTextControllerValidator;
   // State field(s) for RadioButton widget.
   FormFieldController<String>? radioButtonValueController;
   // Stores action output result for [Backend Call - API (saveRateApiWeb)] action in Button widget.
@@ -61,6 +67,9 @@ class AddCustomerLeadModel extends FlutterFlowModel<AddCustomerLeadWidget> {
 
     phoneTextFieldFocusNode?.dispose();
     phoneTextFieldTextController?.dispose();
+
+    thaiIdTextFieldFocusNode?.dispose();
+    thaiIdTextFieldTextController?.dispose();
 
     loanDataComponentModel.dispose();
   }

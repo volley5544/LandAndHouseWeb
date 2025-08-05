@@ -27,9 +27,6 @@ List<InstallmentsStruct> reversedListInstallment(
     List<InstallmentsStruct> listInstallment) {
   List<InstallmentsStruct> reversedList = listInstallment.reversed.toList();
 
-  // Print the reversed list (optional, for debugging)
-  print('Reversed List: $reversedList');
-
   // Return the reversed list
   return reversedList;
 }
@@ -59,9 +56,22 @@ String? removeCommaFromNumText(String? numberText) {
   return result;
 }
 
-String? returnNumberWithCommaFullNumber(String? number) {
-  if (number == 'null') {
-    return '0.00';
+String? returnNumberWithCommaFullNumber(
+  String? number,
+  String? defaultValue,
+) {
+  if (number == '' || number == 'null' || double.tryParse(number!) == null) {
+    if (double.tryParse(defaultValue!) == null) {
+      return '0';
+    } else {
+      RegExp reg1 = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+      String Function(Match) mathFunc1 = (Match match) => '${match[1]},';
+
+      String result1 =
+          '${double.parse(defaultValue!)}'.replaceAllMapped(reg1, mathFunc1);
+
+      return result1!.split('.').first;
+    }
   }
 
   RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
@@ -69,7 +79,7 @@ String? returnNumberWithCommaFullNumber(String? number) {
 
   String result = '${double.parse(number!)}'.replaceAllMapped(reg, mathFunc);
 
-  return result!;
+  return result!.split('.').first;
 
   // if (number == null || number.trim().isEmpty || number == 'null') {
   //return '0.00';
@@ -258,7 +268,11 @@ List<ChanodData3Struct> reversedList(List<ChanodData3Struct> list1) {
 }
 
 String? returnNumberWithComma2Decimal(String? number) {
-  if (number == null || number.trim().isEmpty || number == 'null') {
+  if (number! == '' ||
+      number! == null ||
+      number!.trim().isEmpty ||
+      number! == 'null' ||
+      double.tryParse(number!) == null) {
     return '0.00';
   }
 
@@ -423,6 +437,10 @@ int? findTrueInBoolList(List<bool>? boolList) {
 }
 
 int? roundDownInput(String? input) {
+  if (int.tryParse(input!) == null) {
+    return 0;
+  }
+
   int rounded = (int.parse(input!) ~/ 100) * 100;
   return rounded;
 }
@@ -498,6 +516,12 @@ String? returnBankName(String? bankShortName) {
 }
 
 String? parseDateTimeToString(String? dateTime) {
+  if (DateTime.tryParse('${dateTime!}') == null ||
+      dateTime! == '' ||
+      dateTime! == 'null') {
+    return '';
+  }
+
   DateTime date = DateTime.parse(dateTime!)
       .toLocal(); // Adjust for local timezone if needed
   int buddhistYear = date!.year + 543;
@@ -505,4 +529,114 @@ String? parseDateTimeToString(String? dateTime) {
   String month = date.month.toString().padLeft(2, '0');
 
   return '$day/$month/$buddhistYear';
+}
+
+String? getLatLngStringFromDevice(
+  LatLng? currentLo,
+  String? data,
+) {
+  if (data == "lat") {
+    return "${currentLo!.latitude}";
+  } else {
+    return "${currentLo!.longitude}";
+  }
+}
+
+bool? isCurrentDateBeforeDateInput(
+  String? dateInput,
+  String? dateTimeNow,
+) {
+  if (dateInput == 'null') {
+    return false;
+  }
+  DateTime latestDate = DateTime.parse(dateInput!);
+
+  // Get the current date
+  DateTime now = DateTime.parse(dateTimeNow!);
+
+  // Compare just the date (without time)
+  DateTime currentDateOnly = DateTime(now.year, now.month, now.day);
+  DateTime latestDateOnly =
+      DateTime(latestDate.year, latestDate.month, latestDate.day);
+
+  // Return true if current date is before latest date
+  return currentDateOnly.isBefore(latestDateOnly);
+}
+
+String? formatToThaiDate(String? isoDate) {
+  if (DateTime.tryParse('${isoDate!}') == null ||
+      isoDate! == '' ||
+      isoDate! == 'null') {
+    return '';
+  }
+
+  DateTime date = DateTime.parse(isoDate!);
+  int thaiYear = date.year + 543;
+  String formattedDate = "${date.day.toString().padLeft(2, '0')}/"
+      "${date.month.toString().padLeft(2, '0')}/"
+      "$thaiYear";
+  return formattedDate;
+}
+
+String? maskPhone(String? phoneNumber) {
+  if (phoneNumber!.length != 10)
+    return phoneNumber; // simple check for Thai phone number length
+
+  String result =
+      '${phoneNumber.substring(0, 3)}-XXX-${phoneNumber.substring(6)}';
+
+  return result;
+}
+
+String? showDateBE(String? inputDateStr) {
+  if (DateTime.tryParse('${inputDateStr!}') == null ||
+      inputDateStr! == '' ||
+      inputDateStr! == 'null') {
+    return '';
+  }
+
+  final datetimeFormatDate = DateFormat('dd/MM/y');
+  String datetimeDate =
+      datetimeFormatDate.format(DateTime.parse(inputDateStr!));
+  print(datetimeDate);
+
+  List<String> splitDate = datetimeDate.split('/');
+  print(splitDate);
+  String dateBE =
+      '${splitDate[0]}/${splitDate[1]}/${int.parse(splitDate[2]) + 543}';
+  print(dateBE);
+  return dateBE;
+}
+
+bool? checkIsIntValue(String? value) {
+  bool isInt = false;
+  if (int.tryParse(value!) != null) {
+    isInt = true;
+  }
+
+  return isInt;
+}
+
+bool? checkIdCard(String? idCard) {
+  // Check if the ID card has the correct length (13 characters)
+  if (idCard!.length != 13) {
+    return false;
+  }
+
+  // Check if all characters are digits
+  if (!RegExp(r'^\d{13}$').hasMatch(idCard)) {
+    return false;
+  }
+
+  // Calculate and validate the checksum digit
+  int sum = 0;
+  for (int i = 0; i < 12; i++) {
+    int digit = int.parse(idCard[i]);
+    sum += digit * (13 - i);
+  }
+
+  int checksum = (11 - (sum % 11)) % 10;
+  int lastDigit = int.parse(idCard[12]);
+
+  return checksum == lastDigit;
 }

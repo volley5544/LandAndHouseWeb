@@ -27,12 +27,13 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
     PaymentDetailsStruct? paymentDetails,
     BarcodeDetailsStruct? barcodeDetails,
     TopupDetailStruct? topupDetail,
-    List<String>? insurances,
+    InsurancesStruct? insurances,
     String? dataDate,
     String? transno,
     int? requestTopupAmount,
     String? requestDate,
     String? requestStatus,
+    String? requestStatusCode,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _contractName = contractName,
         _branchCode = branchCode,
@@ -58,6 +59,7 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         _requestTopupAmount = requestTopupAmount,
         _requestDate = requestDate,
         _requestStatus = requestStatus,
+        _requestStatusCode = requestStatusCode,
         super(firestoreUtilData);
 
   // "contract_name" field.
@@ -207,12 +209,12 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
   bool hasTopupDetail() => _topupDetail != null;
 
   // "insurances" field.
-  List<String>? _insurances;
-  List<String> get insurances => _insurances ?? const [];
-  set insurances(List<String>? val) => _insurances = val;
+  InsurancesStruct? _insurances;
+  InsurancesStruct get insurances => _insurances ?? InsurancesStruct();
+  set insurances(InsurancesStruct? val) => _insurances = val;
 
-  void updateInsurances(Function(List<String>) updateFn) {
-    updateFn(_insurances ??= []);
+  void updateInsurances(Function(InsurancesStruct) updateFn) {
+    updateFn(_insurances ??= InsurancesStruct());
   }
 
   bool hasInsurances() => _insurances != null;
@@ -255,6 +257,13 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
 
   bool hasRequestStatus() => _requestStatus != null;
 
+  // "request_status_code" field.
+  String? _requestStatusCode;
+  String get requestStatusCode => _requestStatusCode ?? '';
+  set requestStatusCode(String? val) => _requestStatusCode = val;
+
+  bool hasRequestStatusCode() => _requestStatusCode != null;
+
   static GetLoanListAPIDataTypeStruct fromMap(Map<String, dynamic> data) =>
       GetLoanListAPIDataTypeStruct(
         contractName: data['contract_name'] as String?,
@@ -284,12 +293,15 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         topupDetail: data['topup_detail'] is TopupDetailStruct
             ? data['topup_detail']
             : TopupDetailStruct.maybeFromMap(data['topup_detail']),
-        insurances: getDataList(data['insurances']),
+        insurances: data['insurances'] is InsurancesStruct
+            ? data['insurances']
+            : InsurancesStruct.maybeFromMap(data['insurances']),
         dataDate: data['data_date'] as String?,
         transno: data['transno'] as String?,
         requestTopupAmount: castToType<int>(data['request_topup_amount']),
         requestDate: data['request_date'] as String?,
         requestStatus: data['request_status'] as String?,
+        requestStatusCode: data['request_status_code'] as String?,
       );
 
   static GetLoanListAPIDataTypeStruct? maybeFromMap(dynamic data) => data is Map
@@ -315,12 +327,13 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         'payment_details': _paymentDetails?.toMap(),
         'barcode_details': _barcodeDetails?.toMap(),
         'topup_detail': _topupDetail?.toMap(),
-        'insurances': _insurances,
+        'insurances': _insurances?.toMap(),
         'data_date': _dataDate,
         'transno': _transno,
         'request_topup_amount': _requestTopupAmount,
         'request_date': _requestDate,
         'request_status': _requestStatus,
+        'request_status_code': _requestStatusCode,
       }.withoutNulls;
 
   @override
@@ -399,8 +412,7 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         ),
         'insurances': serializeParam(
           _insurances,
-          ParamType.String,
-          isList: true,
+          ParamType.DataStruct,
         ),
         'data_date': serializeParam(
           _dataDate,
@@ -420,6 +432,10 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         ),
         'request_status': serializeParam(
           _requestStatus,
+          ParamType.String,
+        ),
+        'request_status_code': serializeParam(
+          _requestStatusCode,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -521,10 +537,11 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
           false,
           structBuilder: TopupDetailStruct.fromSerializableMap,
         ),
-        insurances: deserializeParam<String>(
+        insurances: deserializeStructParam(
           data['insurances'],
-          ParamType.String,
-          true,
+          ParamType.DataStruct,
+          false,
+          structBuilder: InsurancesStruct.fromSerializableMap,
         ),
         dataDate: deserializeParam(
           data['data_date'],
@@ -551,6 +568,11 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        requestStatusCode: deserializeParam(
+          data['request_status_code'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -558,7 +580,6 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
-    const listEquality = ListEquality();
     return other is GetLoanListAPIDataTypeStruct &&
         contractName == other.contractName &&
         branchCode == other.branchCode &&
@@ -578,12 +599,13 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         paymentDetails == other.paymentDetails &&
         barcodeDetails == other.barcodeDetails &&
         topupDetail == other.topupDetail &&
-        listEquality.equals(insurances, other.insurances) &&
+        insurances == other.insurances &&
         dataDate == other.dataDate &&
         transno == other.transno &&
         requestTopupAmount == other.requestTopupAmount &&
         requestDate == other.requestDate &&
-        requestStatus == other.requestStatus;
+        requestStatus == other.requestStatus &&
+        requestStatusCode == other.requestStatusCode;
   }
 
   @override
@@ -611,7 +633,8 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         transno,
         requestTopupAmount,
         requestDate,
-        requestStatus
+        requestStatus,
+        requestStatusCode
       ]);
 }
 
@@ -634,11 +657,13 @@ GetLoanListAPIDataTypeStruct createGetLoanListAPIDataTypeStruct({
   PaymentDetailsStruct? paymentDetails,
   BarcodeDetailsStruct? barcodeDetails,
   TopupDetailStruct? topupDetail,
+  InsurancesStruct? insurances,
   String? dataDate,
   String? transno,
   int? requestTopupAmount,
   String? requestDate,
   String? requestStatus,
+  String? requestStatusCode,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -667,11 +692,13 @@ GetLoanListAPIDataTypeStruct createGetLoanListAPIDataTypeStruct({
           barcodeDetails ?? (clearUnsetFields ? BarcodeDetailsStruct() : null),
       topupDetail:
           topupDetail ?? (clearUnsetFields ? TopupDetailStruct() : null),
+      insurances: insurances ?? (clearUnsetFields ? InsurancesStruct() : null),
       dataDate: dataDate,
       transno: transno,
       requestTopupAmount: requestTopupAmount,
       requestDate: requestDate,
       requestStatus: requestStatus,
+      requestStatusCode: requestStatusCode,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
@@ -767,6 +794,16 @@ Map<String, dynamic> getGetLoanListAPIDataTypeFirestoreData(
         ? getLoanListAPIDataType.topupDetail
         : null,
     'topup_detail',
+    forFieldValue,
+  );
+
+  // Handle nested data for "insurances" field.
+  addInsurancesStructData(
+    firestoreData,
+    getLoanListAPIDataType.hasInsurances()
+        ? getLoanListAPIDataType.insurances
+        : null,
+    'insurances',
     forFieldValue,
   );
 

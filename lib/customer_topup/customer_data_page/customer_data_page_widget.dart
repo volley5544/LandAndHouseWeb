@@ -353,9 +353,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                               children: [
                                                                 Expanded(
                                                                   child: Text(
-                                                                    FFAppState()
-                                                                        .getLoanListSelected
-                                                                        .contractBankAccount,
+                                                                    '${FFAppState().getLoanListSelected.contractBankAccount}',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -472,11 +470,11 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Text(
-                                                  valueOrDefault<String>(
+                                                  '${valueOrDefault<String>(
                                                     functions.formatPhoneNumber(
                                                         '${FFAppState().customerDetailData.hashThaiId}'),
                                                     'phone_number',
-                                                  ),
+                                                  )}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -653,7 +651,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  '${FFAppState().userAddressData.currentAddress.addressDetails.trim()} ${FFAppState().userAddressData.currentAddress.addressSubDistrict} ${FFAppState().userAddressData.currentAddress.addressDistrict} ${FFAppState().userAddressData.currentAddress.addressProvince} ${FFAppState().userAddressData.currentAddress.addressPostalCode}',
+                                                                  '${'${FFAppState().userAddressData.currentAddress.addressDetails}'.trim()} ${FFAppState().userAddressData.currentAddress.addressSubDistrict} ${FFAppState().userAddressData.currentAddress.addressDistrict} ${FFAppState().userAddressData.currentAddress.addressProvince} ${FFAppState().userAddressData.currentAddress.addressPostalCode}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -794,7 +792,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  '${FFAppState().userAddressData.registrationAddress.addressDetails.trim()} ${FFAppState().userAddressData.registrationAddress.addressSubDistrict} ${FFAppState().userAddressData.registrationAddress.addressDistrict} ${FFAppState().userAddressData.registrationAddress.addressProvince} ${FFAppState().userAddressData.registrationAddress.addressPostalCode}',
+                                                                  '${'${FFAppState().userAddressData.registrationAddress.addressDetails}'.trim()} ${FFAppState().userAddressData.registrationAddress.addressSubDistrict} ${FFAppState().userAddressData.registrationAddress.addressDistrict} ${FFAppState().userAddressData.registrationAddress.addressProvince} ${FFAppState().userAddressData.registrationAddress.addressPostalCode}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -935,7 +933,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  '${FFAppState().userAddressData.idCardAddress.addressDetails.trim()} ${FFAppState().userAddressData.idCardAddress.addressSubDistrict} ${FFAppState().userAddressData.idCardAddress.addressDistrict} ${FFAppState().userAddressData.idCardAddress.addressProvince} ${FFAppState().userAddressData.idCardAddress.addressPostalCode}',
+                                                                  '${'${FFAppState().userAddressData.idCardAddress.addressDetails}'.trim()} ${FFAppState().userAddressData.idCardAddress.addressSubDistrict} ${FFAppState().userAddressData.idCardAddress.addressDistrict} ${FFAppState().userAddressData.idCardAddress.addressProvince} ${FFAppState().userAddressData.idCardAddress.addressPostalCode}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1076,7 +1074,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  '${FFAppState().userAddressData.otherAddress.addressDetails.trim()} ${FFAppState().userAddressData.otherAddress.addressSubDistrict} ${FFAppState().userAddressData.otherAddress.addressDistrict} ${FFAppState().userAddressData.otherAddress.addressProvince} ${FFAppState().userAddressData.otherAddress.addressPostalCode}',
+                                                                  '${'${FFAppState().userAddressData.otherAddress.addressDetails}'.trim()} ${FFAppState().userAddressData.otherAddress.addressSubDistrict} ${FFAppState().userAddressData.otherAddress.addressDistrict} ${FFAppState().userAddressData.otherAddress.addressProvince} ${FFAppState().userAddressData.otherAddress.addressPostalCode}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1237,7 +1235,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                     ].divide(SizedBox(height: 8.0)),
                   ),
                 ),
-              ],
+              ].addToEnd(SizedBox(height: 30.0)),
             ),
           ),
         ),

@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/loading/loading_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:barcode_widget/barcode_widget.dart';
@@ -114,6 +115,13 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                         .getLoanListSelected
                         .contractDetails
                         .loanTypeCode,
+                    assetName: valueOrDefault<String>(
+                      FFAppState()
+                          .getLoanListSelected
+                          .contractDetails
+                          .loanTypeName,
+                      'loan_type_code',
+                    ),
                   ),
                 ),
                 Container(
@@ -178,19 +186,23 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                 ),
                           ),
                           Text(
-                            (FFAppState()
-                                        .getLoanListSelected
-                                        .topupDetail
-                                        .yield +
-                                    FFAppState()
-                                        .getLoanListSelected
-                                        .topupDetail
-                                        .collectionFee +
-                                    FFAppState()
-                                        .getLoanListSelected
-                                        .topupDetail
-                                        .penaltyFee)
-                                .toString(),
+                            valueOrDefault<String>(
+                              functions.returnNumberWithComma2Decimal(
+                                  (FFAppState()
+                                              .getLoanListSelected
+                                              .topupDetail
+                                              .yield +
+                                          FFAppState()
+                                              .getLoanListSelected
+                                              .topupDetail
+                                              .collectionFee +
+                                          FFAppState()
+                                              .getLoanListSelected
+                                              .topupDetail
+                                              .penaltyFee)
+                                      .toString()),
+                              '0.0',
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -222,17 +234,26 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              '*กรุณาชำระเงินภายในวันเพื่อหลีกเลี่ยงการเสียดอกเบี้ยเพิ่มเติม',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: FlutterFlowTheme.of(context).error,
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                  ),
+                                10.0, 0.0, 10.0, 0.0),
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 0.0),
+                                child: Text(
+                                  '*กรุณาชำระเงินภายในวัน 00:05 ถึง 22:45 เท่านั้น\nเพื่อหลีกเลี่ยงการเสียดอกเบี้ยเพิ่มเติม',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        fontSize: 12.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
                             ),
                           ),
                           Align(
@@ -351,7 +372,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
-                              'คุณสามารถสแกนชำระค่างวดได้ที่ศรีสวัสดิ์ทุกสาขา',
+                              'สามารถสแกนชำระค่างวด ผ่านโมบายแอปได้ทุกธนาคาร',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -362,20 +383,27 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                   ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 10.0, 0.0, 0.0),
-                            child: Text(
-                              'หรือโมบายแมพทุกธนาคาร',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
+                          Text(
+                            'ยกเว้นธนาคาร ธ.ก.ส. และ ออมสิน',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Text(
+                            'หลังชำระสำเร็จยอดบัญชีจะถูกปรับภายใน 30 นาที',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                         ],
                       ),
@@ -402,7 +430,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                               text: 'ปรับปรุงยอดชำระ',
                               options: FFButtonOptions(
                                 width: 140.0,
-                                height: 50.0,
+                                height: 60.0,
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 0.0),
                                 iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -446,12 +474,48 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                     },
                                   );
 
+                                  await actions.saveQrImage(
+                                    context,
+                                    functions.removeCommaFromNumText(
+                                        FFAppState()
+                                            .qrCodeDataTypeAppState
+                                            .topupAmountWithComma),
+                                    FFAppState().qrCodeDataTypeAppState.suffix,
+                                    FFAppState().qrCodeDataTypeAppState.ref1,
+                                    FFAppState().qrCodeDataTypeAppState.ref2,
+                                    FFAppState().qrCodeDataTypeAppState.taxId,
+                                    FFAppState().qrCodeDataTypeAppState.contNo,
+                                    FFAppState()
+                                        .qrCodeDataTypeAppState
+                                        .topupAmountWithComma,
+                                    FFAppState()
+                                        .qrCodeDataTypeAppState
+                                        .carRegistration,
+                                    FFAppState()
+                                        .qrCodeDataTypeAppState
+                                        .currentDate,
+                                  );
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text('บันทึกภาพสำเร็จ'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
                                   Navigator.pop(context);
                                 },
                                 text: 'บันทึกรูปภาพ',
                                 options: FFButtonOptions(
                                   width: 140.0,
-                                  height: 50.0,
+                                  height: 60.0,
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
@@ -475,7 +539,9 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                     ],
                   ),
                 ),
-              ].addToStart(SizedBox(height: 8.0)),
+              ]
+                  .addToStart(SizedBox(height: 8.0))
+                  .addToEnd(SizedBox(height: 30.0)),
             ),
           ),
         ),

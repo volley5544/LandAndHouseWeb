@@ -36,11 +36,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
     int? balanceReceivable,
     int? collectionFee,
     int? penaltyFee,
-    int? yield,
-    int? overdueAmount,
+    double? overdueAmount,
     String? overdueFrom,
     String? overdueTo,
     String? interestPaidFlag,
+    int? yield,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _code = code,
         _message = message,
@@ -69,11 +69,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         _balanceReceivable = balanceReceivable,
         _collectionFee = collectionFee,
         _penaltyFee = penaltyFee,
-        _yield = yield,
         _overdueAmount = overdueAmount,
         _overdueFrom = overdueFrom,
         _overdueTo = overdueTo,
         _interestPaidFlag = interestPaidFlag,
+        _yield = yield,
         super(firestoreUtilData);
 
   // "code" field.
@@ -316,21 +316,12 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
 
   bool hasPenaltyFee() => _penaltyFee != null;
 
-  // "yield" field.
-  int? _yield;
-  int get yield => _yield ?? 0;
-  set yield(int? val) => _yield = val;
-
-  void incrementYield(int amount) => yield = yield + amount;
-
-  bool hasYield() => _yield != null;
-
   // "overdue_amount" field.
-  int? _overdueAmount;
-  int get overdueAmount => _overdueAmount ?? 0;
-  set overdueAmount(int? val) => _overdueAmount = val;
+  double? _overdueAmount;
+  double get overdueAmount => _overdueAmount ?? 0.0;
+  set overdueAmount(double? val) => _overdueAmount = val;
 
-  void incrementOverdueAmount(int amount) =>
+  void incrementOverdueAmount(double amount) =>
       overdueAmount = overdueAmount + amount;
 
   bool hasOverdueAmount() => _overdueAmount != null;
@@ -355,6 +346,15 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
   set interestPaidFlag(String? val) => _interestPaidFlag = val;
 
   bool hasInterestPaidFlag() => _interestPaidFlag != null;
+
+  // "yield" field.
+  int? _yield;
+  int get yield => _yield ?? 0;
+  set yield(int? val) => _yield = val;
+
+  void incrementYield(int amount) => yield = yield + amount;
+
+  bool hasYield() => _yield != null;
 
   static GetTopupDataAPIDataTypeStruct fromMap(Map<String, dynamic> data) =>
       GetTopupDataAPIDataTypeStruct(
@@ -389,11 +389,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         balanceReceivable: castToType<int>(data['balance_receivable']),
         collectionFee: castToType<int>(data['collection_fee']),
         penaltyFee: castToType<int>(data['penalty_fee']),
-        yield: castToType<int>(data['yield']),
-        overdueAmount: castToType<int>(data['overdue_amount']),
+        overdueAmount: castToType<double>(data['overdue_amount']),
         overdueFrom: data['overdue_from'] as String?,
         overdueTo: data['overdue_to'] as String?,
         interestPaidFlag: data['interest_paid_flag'] as String?,
+        yield: castToType<int>(data['yield']),
       );
 
   static GetTopupDataAPIDataTypeStruct? maybeFromMap(dynamic data) =>
@@ -429,11 +429,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         'balance_receivable': _balanceReceivable,
         'collection_fee': _collectionFee,
         'penalty_fee': _penaltyFee,
-        'yield': _yield,
         'overdue_amount': _overdueAmount,
         'overdue_from': _overdueFrom,
         'overdue_to': _overdueTo,
         'interest_paid_flag': _interestPaidFlag,
+        'yield': _yield,
       }.withoutNulls;
 
   @override
@@ -546,13 +546,9 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
           _penaltyFee,
           ParamType.int,
         ),
-        'yield': serializeParam(
-          _yield,
-          ParamType.int,
-        ),
         'overdue_amount': serializeParam(
           _overdueAmount,
-          ParamType.int,
+          ParamType.double,
         ),
         'overdue_from': serializeParam(
           _overdueFrom,
@@ -565,6 +561,10 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         'interest_paid_flag': serializeParam(
           _interestPaidFlag,
           ParamType.String,
+        ),
+        'yield': serializeParam(
+          _yield,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -708,14 +708,9 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
-        yield: deserializeParam(
-          data['yield'],
-          ParamType.int,
-          false,
-        ),
         overdueAmount: deserializeParam(
           data['overdue_amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         overdueFrom: deserializeParam(
@@ -731,6 +726,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         interestPaidFlag: deserializeParam(
           data['interest_paid_flag'],
           ParamType.String,
+          false,
+        ),
+        yield: deserializeParam(
+          data['yield'],
+          ParamType.int,
           false,
         ),
       );
@@ -768,11 +768,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         balanceReceivable == other.balanceReceivable &&
         collectionFee == other.collectionFee &&
         penaltyFee == other.penaltyFee &&
-        yield == other.yield &&
         overdueAmount == other.overdueAmount &&
         overdueFrom == other.overdueFrom &&
         overdueTo == other.overdueTo &&
-        interestPaidFlag == other.interestPaidFlag;
+        interestPaidFlag == other.interestPaidFlag &&
+        yield == other.yield;
   }
 
   @override
@@ -804,11 +804,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         balanceReceivable,
         collectionFee,
         penaltyFee,
-        yield,
         overdueAmount,
         overdueFrom,
         overdueTo,
-        interestPaidFlag
+        interestPaidFlag,
+        yield
       ]);
 }
 
@@ -840,11 +840,11 @@ GetTopupDataAPIDataTypeStruct createGetTopupDataAPIDataTypeStruct({
   int? balanceReceivable,
   int? collectionFee,
   int? penaltyFee,
-  int? yield,
-  int? overdueAmount,
+  double? overdueAmount,
   String? overdueFrom,
   String? overdueTo,
   String? interestPaidFlag,
+  int? yield,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -879,11 +879,11 @@ GetTopupDataAPIDataTypeStruct createGetTopupDataAPIDataTypeStruct({
       balanceReceivable: balanceReceivable,
       collectionFee: collectionFee,
       penaltyFee: penaltyFee,
-      yield: yield,
       overdueAmount: overdueAmount,
       overdueFrom: overdueFrom,
       overdueTo: overdueTo,
       interestPaidFlag: interestPaidFlag,
+      yield: yield,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

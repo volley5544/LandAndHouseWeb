@@ -141,7 +141,10 @@ class GetMasterAddressCall {
 /// Start Srisawad api Group Code
 
 class SrisawadApiGroup {
-  static String getBaseUrl() => 'https://dev.swpfin.com:7076';
+  static String getBaseUrl({
+    String? apiUrl = '',
+  }) =>
+      '${apiUrl}';
   static Map<String, String> headers = {
     'x-srisawad': 'x1',
   };
@@ -155,6 +158,8 @@ class SrisawadApiGroup {
   static UpdateRankContentTechDoc451Call updateRankContentTechDoc451Call =
       UpdateRankContentTechDoc451Call();
   static GetListOfLoanCall getListOfLoanCall = GetListOfLoanCall();
+  static GetTopupStatusDetailCall getTopupStatusDetailCall =
+      GetTopupStatusDetailCall();
   static GetDetailOfLoanCall getDetailOfLoanCall = GetDetailOfLoanCall();
   static UserLogoutCall userLogoutCall = UserLogoutCall();
   static UserLoginCall userLoginCall = UserLoginCall();
@@ -237,19 +242,20 @@ class SrisawadApiGroup {
   static PostToCalculatorToGetNewTopupCall postToCalculatorToGetNewTopupCall =
       PostToCalculatorToGetNewTopupCall();
   static GetTopupDetailCall getTopupDetailCall = GetTopupDetailCall();
-  static GetTopupStatusDetailDataByTransNoCall
-      getTopupStatusDetailDataByTransNoCall =
-      GetTopupStatusDetailDataByTransNoCall();
   static InterestpaymentAPICall interestpaymentAPICall =
       InterestpaymentAPICall();
+  static VisionThaiIdCall visionThaiIdCall = VisionThaiIdCall();
 }
 
 class ReturnTopupConfigsThatControllTopupUICall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'return topup configs that controll topup UI .',
@@ -275,8 +281,11 @@ class UpdateMemberGetMemberContentThatWikkCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -316,8 +325,11 @@ class UpdateRankContentCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -360,8 +372,11 @@ class UpdateRankContentTechDoc451Call {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -394,8 +409,11 @@ class GetListOfLoanCall {
   Future<ApiCallResponse> call({
     String? hashThaiId = '',
     String? authorization = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get list of loan.',
@@ -438,14 +456,67 @@ class GetListOfLoanCall {
           .toList();
 }
 
+class GetTopupStatusDetailCall {
+  Future<ApiCallResponse> call({
+    String? hashThaiId = '',
+    String? authorization = '',
+    String? dbName = '',
+    String? transNo = '',
+    String? apiUrl = '',
+  }) async {
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get topup status detail ',
+      apiUrl:
+          '${baseUrl}/topup/status-detail/${hashThaiId}/${dbName}/${transNo}',
+      callType: ApiCallType.GET,
+      headers: {
+        'x-srisawad': 'x1',
+        'Authorization': 'Bearer ${authorization}',
+      },
+      params: {
+        'hash_thai_id': hashThaiId,
+        'db_name': dbName,
+        'trans_no': transNo,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  TopupStatusModelStruct? results(dynamic response) =>
+      TopupStatusModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$''',
+      ));
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
 class GetDetailOfLoanCall {
   Future<ApiCallResponse> call({
     String? contractNo = '',
     String? dbName = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get detail of loan.',
@@ -473,8 +544,11 @@ class GetDetailOfLoanCall {
 class UserLogoutCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'User logout.',
@@ -499,8 +573,11 @@ class UserLogoutCall {
 class UserLoginCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -531,8 +608,11 @@ class UserLoginCall {
 class UserRegisterCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -576,8 +656,11 @@ class UserRegisterCall {
 class ToVerifyWhetherAUserIsASrisawadUserOrAGuestUserCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -609,8 +692,11 @@ class ToVerifyWhetherAUserIsASrisawadUserOrAGuestUserCall {
 class ToVerifyAndValidateOneUserPerOneDeviceThisEndpointWillNotificationToExisingDifferentDeviceLoginUserToLogoutCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -643,8 +729,11 @@ class CheckLatestVersionCall {
   Future<ApiCallResponse> call({
     String? version = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Check latest version.',
@@ -668,8 +757,11 @@ class CheckLatestVersionCall {
 class GetApplicationVersionCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get application version.',
@@ -693,8 +785,11 @@ class GetApplicationVersionCall {
 class SrisawadAdminManualApiSetApplicationLatestVersionCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -724,8 +819,11 @@ class SrisawadAdminManualApiSetApplicationLatestVersionCall {
 class GetProvinceMasterCall {
   Future<ApiCallResponse> call({
     String? getBy = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get province master',
@@ -750,8 +848,11 @@ class GetProvinceMasterCall {
 class SrisawadAdminManualApiSetRetentionLoanNumberCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -781,8 +882,11 @@ class SrisawadAdminManualApiSetRetentionLoanNumberCall {
 class GetRetentionLoanNumberCall {
   Future<ApiCallResponse> call({
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get retention loan number.',
@@ -811,8 +915,11 @@ class SearchBranchByCharacterCall {
     String? lng = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Search branch by Character.',
@@ -846,8 +953,11 @@ class SearchBranchByCenterAndRadiusKMCall {
     String? distanceKM = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Search branch by center and radius KM.',
@@ -876,8 +986,11 @@ class SearchBranchByCenterAndRadiusKMCall {
 class SrisawadAdminManualApiInitFileBranchDataToDataStoreCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName:
@@ -902,8 +1015,11 @@ class SrisawadAdminManualApiInitFileBranchDataToDataStoreCall {
 class SrisawadAdminManualApiEditDeleteInsertAndBranchBybranchInitialsCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -974,8 +1090,11 @@ class GetMemberRankCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get member rank.',
@@ -1002,8 +1121,11 @@ class GetMemberRankContentCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get member rank content',
@@ -1028,8 +1150,11 @@ class GetMemberRankContentCall {
 class SrisawadAdminManualApiSendNotificationgroupCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1066,8 +1191,11 @@ class SendAnOtpToUserCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1101,8 +1229,11 @@ class GetPaymentDetailByIdCall {
     String? id = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get payment detail by id',
@@ -1132,8 +1263,11 @@ class GetPaymentHistoryDetailByIdCall {
     String? contractNo = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get payment history detail by id',
@@ -1160,8 +1294,11 @@ class SaveUserAttachmentToTheDatabaseCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1216,8 +1353,11 @@ class SendAnPdfToUserCall {
     double? amountPerInstallment,
     String? startInstallmentDate = '',
     String? installmentDate = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1282,8 +1422,11 @@ class GetLoanProductListCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get loan product list.',
@@ -1309,8 +1452,11 @@ class GetInsuranceProductListCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get insurance product list.',
@@ -1337,8 +1483,11 @@ class GetProductDetailCall {
     String? productId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get product detail.',
@@ -1366,8 +1515,11 @@ class GetProductDetailInsuranceCall {
     String? productId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get product detail insurance',
@@ -1395,8 +1547,11 @@ class GetProductListCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1439,8 +1594,11 @@ class GetProductListInsuranceCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1484,8 +1642,11 @@ class UpdateUserInformationCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1533,8 +1694,11 @@ class GetUserInformationCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get user information.',
@@ -1561,8 +1725,11 @@ class GetUserAddressInformationCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get user address information.',
@@ -1594,8 +1761,11 @@ class UpdateUserPhoneNumberCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1629,8 +1799,11 @@ class GenerateQRCodeCall {
     String? keySearch = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Generate QR Code.',
@@ -1661,8 +1834,11 @@ class GetReferralLinkCall {
     String? fullName = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get referral link.',
@@ -1691,8 +1867,11 @@ class GetReferralLinkContentCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get referral link content',
@@ -1718,8 +1897,11 @@ class GetListOfRewardCall {
   Future<ApiCallResponse> call({
     String? basicAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get list of reward.',
@@ -1746,8 +1928,11 @@ class GetListOfRewardHistoryCall {
     String? hashThaiId = '',
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'get list of reward history.',
@@ -1775,8 +1960,11 @@ class GetRewarpointByPassingHashThaiIdCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1809,8 +1997,11 @@ class AddEarnPointListCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1846,55 +2037,87 @@ class AddEarnPointListCall {
 class SaveNewTopupCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
-    String? xSrisawad = '',
+    String? lifeInsureAmt = '',
+    String? transno = '',
+    String? dbName = '',
+    String? hashThaiId = '',
+    String? contractNo = '',
+    String? marketingConsent = '',
+    String? sensitiveConsent = '',
+    String? latitude = '',
+    String? longitude = '',
+    double? loanAmount,
+    double? topupFee,
+    double? feeAmount,
+    double? transferAmount,
+    double? interestRate,
+    double? interestAmount,
+    double? totalAmount,
+    double? creditLimit,
+    double? termPeriod,
+    double? regularPeriod,
+    double? lastPeriod,
+    double? lastPeriodPromo,
+    String? actImage = '',
+    String? propertyImage = '',
+    String? topupRequestFile = '',
+    String? topupArgeementFile = '',
+    String? topupReceiptFile = '',
+    dynamic savePdfJson,
+    String? customerImage2 = '',
+    String? customerImage3 = '',
+    String? carImageFront = '',
+    String? carImageBack = '',
+    String? carImageLeft = '',
+    String? carImageRight = '',
+    String? carImageMile = '',
+    String? source = '',
+    String? referId = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
+    final savePdf = _serializeJson(savePdfJson);
     final ffApiRequestBody = '''
 {
-  "life_insure_amt": "",
-  "transno": "",
-  "db_name": "",
-  "hash_thai_id": "",
-  "contract_no": "",
-  "marketing_consent": "",
-  "sensitive_consent": "",
-  "latitude": "",
-  "longitude": "",
-  "loan_amount": 0,
-  "topup_fee": 0,
-  "fee_amount": 0,
-  "transfer_amount": 0,
-  "interest_rate": 0,
-  "interest_amount": 0,
-  "total_amount": 0,
-  "credit_limit": 0,
-  "term_period": 0,
-  "regular_period": 0,
-  "last_period": 0,
-  "last_period_promo": 0,
-  "act_image": "",
-  "property_image": "",
-  "topup_request_file": "",
-  "topup_argeement_file": "",
-  "topup_receipt_file": "",
-  "save_pdf": {
-    "contract_no": "",
-    "db_name": "",
-    "contract_date": "",
-    "amount": 0,
-    "from": "",
-    "contract_bank_account": "",
-    "contract_bank_brandname": "",
-    "contract_bank_type": "",
-    "contract_bank_branch": "",
-    "interest_rate": 0,
-    "installment_number": 0,
-    "amount_per_installment": 0,
-    "start_installment_date": "",
-    "installment_date": "",
-    "vehicle_type": ""
-  }
+"save_pdf":${savePdf},
+ "topup_receipt_file": "${escapeStringForJson(topupReceiptFile)}",
+"customer_image_2":"${escapeStringForJson(customerImage2)}",
+"customer_image_3":"${escapeStringForJson(customerImage3)}",
+"car_image_front":"${escapeStringForJson(carImageFront)}",
+"car_image_back":"${escapeStringForJson(carImageBack)}",
+"car_image_left":"${escapeStringForJson(carImageLeft)}",
+"car_image_right":"${escapeStringForJson(carImageRight)}",
+"car_image_mile":"${escapeStringForJson(carImageMile)}",
+"source":"${escapeStringForJson(source)}",
+"refer_id":"${escapeStringForJson(referId)}",
+  "life_insure_amt": "${escapeStringForJson(lifeInsureAmt)}",
+  "transno": "${escapeStringForJson(transno)}",
+  "db_name": "${escapeStringForJson(dbName)}",
+  "hash_thai_id": "${escapeStringForJson(hashThaiId)}",
+  "contract_no": "${escapeStringForJson(contractNo)}",
+  "marketing_consent": "${escapeStringForJson(marketingConsent)}",
+  "sensitive_consent": "${escapeStringForJson(sensitiveConsent)}",
+  "latitude": "${escapeStringForJson(latitude)}",
+  "longitude": "${escapeStringForJson(longitude)}",
+  "loan_amount": ${loanAmount},
+  "topup_fee": ${topupFee},
+  "fee_amount": ${feeAmount},
+  "transfer_amount": ${transferAmount},
+  "interest_rate": ${interestRate},
+  "interest_amount": ${interestAmount},
+  "total_amount": ${totalAmount},
+  "credit_limit": ${creditLimit},
+  "term_period": ${termPeriod},
+  "regular_period": ${regularPeriod},
+  "last_period": ${lastPeriod},
+  "last_period_promo": ${lastPeriodPromo},
+  "act_image": "${escapeStringForJson(actImage)}",
+  "property_image": "${escapeStringForJson(propertyImage)}",
+  "topup_request_file": "${escapeStringForJson(topupRequestFile)}",
+  "topup_argeement_file": "${escapeStringForJson(topupArgeementFile)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Save new topup',
@@ -1927,8 +2150,11 @@ class PostToCalculatorToGetNewTopupCall {
     double? interestRate,
     double? topupFeeAmount,
     double? feeAmount,
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -1966,8 +2192,11 @@ class GetTopupDetailCall {
     String? dbName = '',
     String? contractNo = '',
     String? bearerAuth = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     return ApiManager.instance.makeApiCall(
       callName: 'Get topup detail ',
@@ -2118,35 +2347,6 @@ class GetTopupDetailCall {
       ));
 }
 
-class GetTopupStatusDetailDataByTransNoCall {
-  Future<ApiCallResponse> call({
-    String? transNo = '',
-    String? hashThaiId = '',
-    String? dbName = '',
-    String? bearerAuth = '',
-  }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'Get topup status detail data by trans_no',
-      apiUrl:
-          '${baseUrl}/topup/status-detail/${hashThaiId}/${dbName}/${transNo}',
-      callType: ApiCallType.GET,
-      headers: {
-        'x-srisawad': 'x1',
-        'Authorization': 'Bearer ${bearerAuth}',
-      },
-      params: {},
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
 class InterestpaymentAPICall {
   Future<ApiCallResponse> call({
     String? comcode = '',
@@ -2162,8 +2362,11 @@ class InterestpaymentAPICall {
     String? db = '',
     String? barcodeRef1 = '',
     String? barcodeRef2 = '',
+    String? apiUrl = '',
   }) async {
-    final baseUrl = SrisawadApiGroup.getBaseUrl();
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
 
     final ffApiRequestBody = '''
 {
@@ -2209,6 +2412,36 @@ class InterestpaymentAPICall {
         response,
         r'''$.data''',
       );
+}
+
+class VisionThaiIdCall {
+  Future<ApiCallResponse> call({
+    FFUploadedFile? file,
+    String? apiUrl = '',
+  }) async {
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'visionThaiId',
+      apiUrl: '${baseUrl}/vision/thai-id-validate',
+      callType: ApiCallType.POST,
+      headers: {
+        'x-srisawad': 'x1',
+      },
+      params: {
+        'file': file,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 /// End Srisawad api Group Code
@@ -2376,6 +2609,7 @@ class SaveRateApiWebCall {
     String? utmSource = '',
     String? utmMedium = '',
     String? utmCampaign = '',
+    String? thaiId = '',
   }) async {
     final ratesData = _serializeJson(ratesDataJson);
 
@@ -2416,8 +2650,132 @@ class SaveRateApiWebCall {
         'utm_source': utmSource,
         'utm_medium': utmMedium,
         'utm_campaign': utmCampaign,
+        'thai_id': thaiId,
       },
       bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static String? statuscode(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  static int? leadsid(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.results.data.leads_id''',
+      ));
+}
+
+class TopupLeadLHMobileAppCall {
+  static Future<ApiCallResponse> call({
+    String? apiUrl = '',
+    String? branchCode = '',
+    String? branchName = '',
+    String? titleId = '',
+    String? titleName = '',
+    String? firstName = '',
+    String? lastName = '',
+    String? phoneNumber = '',
+    String? birthDate = '',
+    String? age = '',
+    String? email = '',
+    String? contractThaiId = '',
+    String? pdpaFlg = '',
+    String? pdpaDate = '',
+    String? utmSource = '',
+    String? utmMedium = '',
+    String? utmCampaign = '',
+    dynamic contractDetailsJson,
+    dynamic carDetailsJson,
+    dynamic paymentDetailsJson,
+    dynamic topupDetailJson,
+    dynamic barcodeDetailsJson,
+    dynamic insurancesJson,
+    String? dataDate = '',
+    String? contractName = '',
+    String? dbName = '',
+    String? contractNo = '',
+    String? contractNoBlinding = '',
+    String? contractBankType = '',
+    String? contractBankAccount = '',
+    String? contractBankBrandname = '',
+    String? contractDate = '',
+    String? contractCloseDate = '',
+    String? transno = '',
+    String? requestTopupAmount = '',
+    String? requestDate = '',
+    String? requestStatus = '',
+    String? loanAmount = '',
+    String? thaiId = '',
+    String? hashThaiId = '',
+  }) async {
+    final contractDetails = _serializeJson(contractDetailsJson);
+    final carDetails = _serializeJson(carDetailsJson);
+    final paymentDetails = _serializeJson(paymentDetailsJson);
+    final topupDetail = _serializeJson(topupDetailJson);
+    final barcodeDetails = _serializeJson(barcodeDetailsJson);
+    final insurances = _serializeJson(insurancesJson);
+    final ffApiRequestBody = '''
+{
+"thai_id":"${thaiId}",
+"hash_thai_id":"${hashThaiId}",
+  "contract_details": ${contractDetails},
+  "car_details": ${carDetails},
+  "payment_details": ${paymentDetails},
+  "topup_detail": ${topupDetail},
+  "barcode_details": ${barcodeDetails},
+  "insurances": ${insurances},
+  "data_date": "${dataDate}",
+  "contract_name": "${contractName}",
+  "db_name": "${dbName}",
+  "contract_no": "${contractNo}",
+  "contract_no_blinding": "${contractNoBlinding}",
+  "contract_bank_type": "${contractBankType}",
+  "contract_bank_account": "${contractBankAccount}",
+  "contract_bank_brandname": "${contractBankBrandname}",
+  "contract_date": "${contractDate}",
+  "contract_close_date": "${contractCloseDate}",
+  "transno": "${transno}",
+  "request_topup_amount": "${requestTopupAmount}",
+  "request_date": "${requestDate}",
+  "request_status": "${requestStatus}",
+  "loan_amount": "${loanAmount}",
+  "branch_code": "${branchCode}",
+  "branch_name": "${branchName}",
+  "title_id": "${titleId}",
+  "title_name": "${titleName}",
+  "first_name": "${firstName}",
+  "last_name": "${lastName}",
+  "phone_number": "${phoneNumber}",
+  "birth_date": "${birthDate}",
+  "age": "${age}",
+  "email": "${email}",
+  "contract_thai_id": "${contractThaiId}",
+  "pdpa_flg": "${pdpaFlg}",
+  "pdpa_date": "${pdpaDate}",
+  "utm_source": "${utmSource}",
+  "utm_medium": "${utmMedium}",
+  "utm_campaign": "${utmCampaign}"
+
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'topupLeadLHMobileApp',
+      apiUrl: '${apiUrl}/ssw_service_api/api/leads/lh-save',
+      callType: ApiCallType.POST,
+      headers: {
+        'x-api-key': 'YXBpIGludGVybmFsIHRyYW5zZmVyIGdzYg==',
+        'Authorization': 'bearer LPXBrHOLgSYVWoK25zOKmgIxou3MQ430',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
@@ -2481,11 +2839,11 @@ class SendNotificationCall {
 class UserDetailCall {
   static Future<ApiCallResponse> call({
     String? hashId = '',
+    String? url = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'userDetail',
-      apiUrl:
-          'https://mobile-api.swpfin.com/user/detail?hash_thai_id=${hashId}',
+      apiUrl: '${url}/user/detail?hash_thai_id=${hashId}',
       callType: ApiCallType.GET,
       headers: {},
       params: {},

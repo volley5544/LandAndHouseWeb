@@ -5,6 +5,7 @@ import '/components/p_c_banner_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   ///  Local state fields for this page.
@@ -25,6 +26,12 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   ApplicationRecord? queryAPIUrl;
   // Model for PCBannerComponent component.
   late PCBannerComponentModel pCBannerComponentModel;
+  // State field(s) for ThaiIdTextField widget.
+  FocusNode? thaiIdTextFieldFocusNode;
+  TextEditingController? thaiIdTextFieldTextController;
+  late MaskTextInputFormatter thaiIdTextFieldMask;
+  String? Function(BuildContext, String?)?
+      thaiIdTextFieldTextControllerValidator;
   // State field(s) for ChanodNumberTextField widget.
   FocusNode? chanodNumberTextFieldFocusNode;
   TextEditingController? chanodNumberTextFieldTextController;
@@ -60,6 +67,12 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   ApiCallResponse? aPIcheckRateOutputMobile;
   // Stores action output result for [Backend Call - API (saveRateApiWeb)] action in Container widget.
   ApiCallResponse? saveAPIOutputMobile;
+  // State field(s) for ThaiIdTextFieldPC widget.
+  FocusNode? thaiIdTextFieldPCFocusNode;
+  TextEditingController? thaiIdTextFieldPCTextController;
+  late MaskTextInputFormatter thaiIdTextFieldPCMask;
+  String? Function(BuildContext, String?)?
+      thaiIdTextFieldPCTextControllerValidator;
   // State field(s) for ChanodNumberTextFieldPC widget.
   FocusNode? chanodNumberTextFieldPCFocusNode;
   TextEditingController? chanodNumberTextFieldPCTextController;
@@ -117,6 +130,9 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   @override
   void dispose() {
     pCBannerComponentModel.dispose();
+    thaiIdTextFieldFocusNode?.dispose();
+    thaiIdTextFieldTextController?.dispose();
+
     chanodNumberTextFieldFocusNode?.dispose();
     chanodNumberTextFieldTextController?.dispose();
 
@@ -131,6 +147,9 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
 
     tarangWaTextFieldFocusNode?.dispose();
     tarangWaTextFieldTextController?.dispose();
+
+    thaiIdTextFieldPCFocusNode?.dispose();
+    thaiIdTextFieldPCTextController?.dispose();
 
     chanodNumberTextFieldPCFocusNode?.dispose();
     chanodNumberTextFieldPCTextController?.dispose();

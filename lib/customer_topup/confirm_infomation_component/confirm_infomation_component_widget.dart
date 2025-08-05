@@ -193,14 +193,12 @@ class _ConfirmInfomationComponentWidgetState
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            functions.returnBankName(
-                                                                FFAppState()
-                                                                    .getLoanListSelected
-                                                                    .contractBankBrandname),
+                                                          '${valueOrDefault<String>(
+                                                            functions
+                                                                .returnBankName(
+                                                                    '${FFAppState().getLoanListSelected.contractBankBrandname}'),
                                                             'contract_bank_brandname',
-                                                          ),
+                                                          )}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -231,9 +229,7 @@ class _ConfirmInfomationComponentWidgetState
                                                     children: [
                                                       Expanded(
                                                         child: Text(
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractBankAccount,
+                                                          '${FFAppState().getLoanListSelected.contractBankAccount}',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium

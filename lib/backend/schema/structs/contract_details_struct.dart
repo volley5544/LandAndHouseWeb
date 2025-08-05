@@ -18,17 +18,18 @@ class ContractDetailsStruct extends FFFirebaseStruct {
     String? licensePlateExpireDate,
     String? vehicleBrand,
     int? currentLtvAmount,
-    int? creditLimit,
+    double? creditLimit,
     double? financeAmount,
     double? osBalance,
     int? installmentAmount,
-    int? currentDueAmount,
+    double? currentDueAmount,
     String? currentDueDate,
     String? accountStatus,
     String? loanTypeCode,
     String? loanTypeName,
     String? loanTypeIcon,
     String? comcodeCode,
+    double? arRemainAmount,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _closingBalance = closingBalance,
         _comcode = comcode,
@@ -51,6 +52,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         _loanTypeName = loanTypeName,
         _loanTypeIcon = loanTypeIcon,
         _comcodeCode = comcodeCode,
+        _arRemainAmount = arRemainAmount,
         super(firestoreUtilData);
 
   // "closing_balance" field.
@@ -130,11 +132,12 @@ class ContractDetailsStruct extends FFFirebaseStruct {
   bool hasCurrentLtvAmount() => _currentLtvAmount != null;
 
   // "credit_limit" field.
-  int? _creditLimit;
-  int get creditLimit => _creditLimit ?? 0;
-  set creditLimit(int? val) => _creditLimit = val;
+  double? _creditLimit;
+  double get creditLimit => _creditLimit ?? 0.0;
+  set creditLimit(double? val) => _creditLimit = val;
 
-  void incrementCreditLimit(int amount) => creditLimit = creditLimit + amount;
+  void incrementCreditLimit(double amount) =>
+      creditLimit = creditLimit + amount;
 
   bool hasCreditLimit() => _creditLimit != null;
 
@@ -168,11 +171,11 @@ class ContractDetailsStruct extends FFFirebaseStruct {
   bool hasInstallmentAmount() => _installmentAmount != null;
 
   // "current_due_amount" field.
-  int? _currentDueAmount;
-  int get currentDueAmount => _currentDueAmount ?? 0;
-  set currentDueAmount(int? val) => _currentDueAmount = val;
+  double? _currentDueAmount;
+  double get currentDueAmount => _currentDueAmount ?? 0.0;
+  set currentDueAmount(double? val) => _currentDueAmount = val;
 
-  void incrementCurrentDueAmount(int amount) =>
+  void incrementCurrentDueAmount(double amount) =>
       currentDueAmount = currentDueAmount + amount;
 
   bool hasCurrentDueAmount() => _currentDueAmount != null;
@@ -219,6 +222,16 @@ class ContractDetailsStruct extends FFFirebaseStruct {
 
   bool hasComcodeCode() => _comcodeCode != null;
 
+  // "ar_remain_amount" field.
+  double? _arRemainAmount;
+  double get arRemainAmount => _arRemainAmount ?? 0.0;
+  set arRemainAmount(double? val) => _arRemainAmount = val;
+
+  void incrementArRemainAmount(double amount) =>
+      arRemainAmount = arRemainAmount + amount;
+
+  bool hasArRemainAmount() => _arRemainAmount != null;
+
   static ContractDetailsStruct fromMap(Map<String, dynamic> data) =>
       ContractDetailsStruct(
         closingBalance: castToType<int>(data['closing_balance']),
@@ -231,17 +244,18 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         licensePlateExpireDate: data['license_plate_expire_date'] as String?,
         vehicleBrand: data['vehicle_brand'] as String?,
         currentLtvAmount: castToType<int>(data['current_ltv_amount']),
-        creditLimit: castToType<int>(data['credit_limit']),
+        creditLimit: castToType<double>(data['credit_limit']),
         financeAmount: castToType<double>(data['finance_amount']),
         osBalance: castToType<double>(data['os_balance']),
         installmentAmount: castToType<int>(data['installment_amount']),
-        currentDueAmount: castToType<int>(data['current_due_amount']),
+        currentDueAmount: castToType<double>(data['current_due_amount']),
         currentDueDate: data['current_due_date'] as String?,
         accountStatus: data['account_status'] as String?,
         loanTypeCode: data['loan_type_code'] as String?,
         loanTypeName: data['loan_type_name'] as String?,
         loanTypeIcon: data['loan_type_icon'] as String?,
         comcodeCode: data['comcode_code'] as String?,
+        arRemainAmount: castToType<double>(data['ar_remain_amount']),
       );
 
   static ContractDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -270,6 +284,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         'loan_type_name': _loanTypeName,
         'loan_type_icon': _loanTypeIcon,
         'comcode_code': _comcodeCode,
+        'ar_remain_amount': _arRemainAmount,
       }.withoutNulls;
 
   @override
@@ -316,7 +331,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         ),
         'credit_limit': serializeParam(
           _creditLimit,
-          ParamType.int,
+          ParamType.double,
         ),
         'finance_amount': serializeParam(
           _financeAmount,
@@ -332,7 +347,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         ),
         'current_due_amount': serializeParam(
           _currentDueAmount,
-          ParamType.int,
+          ParamType.double,
         ),
         'current_due_date': serializeParam(
           _currentDueDate,
@@ -357,6 +372,10 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         'comcode_code': serializeParam(
           _comcodeCode,
           ParamType.String,
+        ),
+        'ar_remain_amount': serializeParam(
+          _arRemainAmount,
+          ParamType.double,
         ),
       }.withoutNulls;
 
@@ -414,7 +433,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         ),
         creditLimit: deserializeParam(
           data['credit_limit'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         financeAmount: deserializeParam(
@@ -434,7 +453,7 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         ),
         currentDueAmount: deserializeParam(
           data['current_due_amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         currentDueDate: deserializeParam(
@@ -467,6 +486,11 @@ class ContractDetailsStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        arRemainAmount: deserializeParam(
+          data['ar_remain_amount'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -495,7 +519,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         loanTypeCode == other.loanTypeCode &&
         loanTypeName == other.loanTypeName &&
         loanTypeIcon == other.loanTypeIcon &&
-        comcodeCode == other.comcodeCode;
+        comcodeCode == other.comcodeCode &&
+        arRemainAmount == other.arRemainAmount;
   }
 
   @override
@@ -520,7 +545,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         loanTypeCode,
         loanTypeName,
         loanTypeIcon,
-        comcodeCode
+        comcodeCode,
+        arRemainAmount
       ]);
 }
 
@@ -535,17 +561,18 @@ ContractDetailsStruct createContractDetailsStruct({
   String? licensePlateExpireDate,
   String? vehicleBrand,
   int? currentLtvAmount,
-  int? creditLimit,
+  double? creditLimit,
   double? financeAmount,
   double? osBalance,
   int? installmentAmount,
-  int? currentDueAmount,
+  double? currentDueAmount,
   String? currentDueDate,
   String? accountStatus,
   String? loanTypeCode,
   String? loanTypeName,
   String? loanTypeIcon,
   String? comcodeCode,
+  double? arRemainAmount,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -573,6 +600,7 @@ ContractDetailsStruct createContractDetailsStruct({
       loanTypeName: loanTypeName,
       loanTypeIcon: loanTypeIcon,
       comcodeCode: comcodeCode,
+      arRemainAmount: arRemainAmount,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -11,15 +11,15 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
     String? contractNo,
     String? dbName,
     String? contractDate,
-    int? amount,
+    double? amount,
     String? from,
     String? contractBankAccount,
     String? contractBankBrandname,
     String? contractBankType,
     String? contractBankBranch,
-    int? interestRate,
-    int? installmentNumber,
-    int? amountPerInstallment,
+    double? interestRate,
+    double? installmentNumber,
+    double? amountPerInstallment,
     String? startInstallmentDate,
     String? installmentDate,
     String? vehicleType,
@@ -63,11 +63,11 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
   bool hasContractDate() => _contractDate != null;
 
   // "amount" field.
-  int? _amount;
-  int get amount => _amount ?? 0;
-  set amount(int? val) => _amount = val;
+  double? _amount;
+  double get amount => _amount ?? 0.0;
+  set amount(double? val) => _amount = val;
 
-  void incrementAmount(int amount) => amount = amount + amount;
+  void incrementAmount(double amount) => amount = amount + amount;
 
   bool hasAmount() => _amount != null;
 
@@ -107,31 +107,31 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
   bool hasContractBankBranch() => _contractBankBranch != null;
 
   // "interest_rate" field.
-  int? _interestRate;
-  int get interestRate => _interestRate ?? 0;
-  set interestRate(int? val) => _interestRate = val;
+  double? _interestRate;
+  double get interestRate => _interestRate ?? 0.0;
+  set interestRate(double? val) => _interestRate = val;
 
-  void incrementInterestRate(int amount) =>
+  void incrementInterestRate(double amount) =>
       interestRate = interestRate + amount;
 
   bool hasInterestRate() => _interestRate != null;
 
   // "installment_number" field.
-  int? _installmentNumber;
-  int get installmentNumber => _installmentNumber ?? 0;
-  set installmentNumber(int? val) => _installmentNumber = val;
+  double? _installmentNumber;
+  double get installmentNumber => _installmentNumber ?? 0.0;
+  set installmentNumber(double? val) => _installmentNumber = val;
 
-  void incrementInstallmentNumber(int amount) =>
+  void incrementInstallmentNumber(double amount) =>
       installmentNumber = installmentNumber + amount;
 
   bool hasInstallmentNumber() => _installmentNumber != null;
 
   // "amount_per_installment" field.
-  int? _amountPerInstallment;
-  int get amountPerInstallment => _amountPerInstallment ?? 0;
-  set amountPerInstallment(int? val) => _amountPerInstallment = val;
+  double? _amountPerInstallment;
+  double get amountPerInstallment => _amountPerInstallment ?? 0.0;
+  set amountPerInstallment(double? val) => _amountPerInstallment = val;
 
-  void incrementAmountPerInstallment(int amount) =>
+  void incrementAmountPerInstallment(double amount) =>
       amountPerInstallment = amountPerInstallment + amount;
 
   bool hasAmountPerInstallment() => _amountPerInstallment != null;
@@ -162,15 +162,16 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
         contractNo: data['contract_no'] as String?,
         dbName: data['db_name'] as String?,
         contractDate: data['contract_date'] as String?,
-        amount: castToType<int>(data['amount']),
+        amount: castToType<double>(data['amount']),
         from: data['from'] as String?,
         contractBankAccount: data['contract_bank_account'] as String?,
         contractBankBrandname: data['contract_bank_brandname'] as String?,
         contractBankType: data['contract_bank_type'] as String?,
         contractBankBranch: data['contract_bank_branch'] as String?,
-        interestRate: castToType<int>(data['interest_rate']),
-        installmentNumber: castToType<int>(data['installment_number']),
-        amountPerInstallment: castToType<int>(data['amount_per_installment']),
+        interestRate: castToType<double>(data['interest_rate']),
+        installmentNumber: castToType<double>(data['installment_number']),
+        amountPerInstallment:
+            castToType<double>(data['amount_per_installment']),
         startInstallmentDate: data['start_installment_date'] as String?,
         installmentDate: data['installment_date'] as String?,
         vehicleType: data['vehicle_type'] as String?,
@@ -214,7 +215,7 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
         ),
         'amount': serializeParam(
           _amount,
-          ParamType.int,
+          ParamType.double,
         ),
         'from': serializeParam(
           _from,
@@ -238,15 +239,15 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
         ),
         'interest_rate': serializeParam(
           _interestRate,
-          ParamType.int,
+          ParamType.double,
         ),
         'installment_number': serializeParam(
           _installmentNumber,
-          ParamType.int,
+          ParamType.double,
         ),
         'amount_per_installment': serializeParam(
           _amountPerInstallment,
-          ParamType.int,
+          ParamType.double,
         ),
         'start_installment_date': serializeParam(
           _startInstallmentDate,
@@ -282,7 +283,7 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
         ),
         amount: deserializeParam(
           data['amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         from: deserializeParam(
@@ -312,17 +313,17 @@ class SavePdfDataModelStruct extends FFFirebaseStruct {
         ),
         interestRate: deserializeParam(
           data['interest_rate'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         installmentNumber: deserializeParam(
           data['installment_number'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         amountPerInstallment: deserializeParam(
           data['amount_per_installment'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         startInstallmentDate: deserializeParam(
@@ -389,15 +390,15 @@ SavePdfDataModelStruct createSavePdfDataModelStruct({
   String? contractNo,
   String? dbName,
   String? contractDate,
-  int? amount,
+  double? amount,
   String? from,
   String? contractBankAccount,
   String? contractBankBrandname,
   String? contractBankType,
   String? contractBankBranch,
-  int? interestRate,
-  int? installmentNumber,
-  int? amountPerInstallment,
+  double? interestRate,
+  double? installmentNumber,
+  double? amountPerInstallment,
   String? startInstallmentDate,
   String? installmentDate,
   String? vehicleType,

@@ -107,7 +107,7 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
       if ('${getJsonField(
             (_model.approveInstallmentApiOutput?.jsonBody ?? ''),
             r'''$.code''',
-          ).toString().toString()}' !=
+          ).toString()}' !=
           '200') {
         await showDialog(
           context: context,
@@ -116,7 +116,7 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
               content: Text('${getJsonField(
                 (_model.approveInstallmentApiOutput?.jsonBody ?? ''),
                 r'''$.message''',
-              ).toString().toString()}'),
+              ).toString()}'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(alertDialogContext),

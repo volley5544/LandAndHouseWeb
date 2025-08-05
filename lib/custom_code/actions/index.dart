@@ -10,3 +10,5 @@ export 'cap_qr_code.dart' show capQrCode;
 export 'request_camera_permission.dart' show requestCameraPermission;
 export 'check_location_service_permission.dart'
     show checkLocationServicePermission;
+export 'save_qr_image.dart' show saveQrImage;
+export 'navigate_to_remove_until.dart' show navigateToRemoveUntil;

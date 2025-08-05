@@ -52,109 +52,109 @@ class _ErrorMessageComponentWidgetState
       child: Container(
         width: () {
           if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-            return (MediaQuery.sizeOf(context).width * 0.85);
+            return (MediaQuery.sizeOf(context).width * 0.95);
           } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-            return (MediaQuery.sizeOf(context).width * 0.85);
+            return (MediaQuery.sizeOf(context).width * 0.95);
           } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
             return (MediaQuery.sizeOf(context).width * 0.25);
           } else {
             return (MediaQuery.sizeOf(context).width * 0.25);
           }
         }(),
-        height: () {
-          if (MediaQuery.sizeOf(context).height < kBreakpointSmall) {
-            return 130.0;
-          } else if (MediaQuery.sizeOf(context).height < kBreakpointMedium) {
-            return 130.0;
-          } else if (MediaQuery.sizeOf(context).height < kBreakpointLarge) {
-            return 200.0;
-          } else {
-            return 200.0;
-          }
-        }(),
-        constraints: BoxConstraints(
-          minHeight: () {
-            if (MediaQuery.sizeOf(context).height < kBreakpointSmall) {
-              return 130.0;
-            } else if (MediaQuery.sizeOf(context).height < kBreakpointMedium) {
-              return 130.0;
-            } else if (MediaQuery.sizeOf(context).height < kBreakpointLarge) {
-              return (MediaQuery.sizeOf(context).height * 0.35);
-            } else {
-              return (MediaQuery.sizeOf(context).height * 0.35);
-            }
-          }(),
-        ),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(20.0),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: FlutterFlowTheme.of(context).error,
-              size: () {
-                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                  return 45.0;
-                } else if (MediaQuery.sizeOf(context).width <
-                    kBreakpointMedium) {
-                  return 45.0;
-                } else if (MediaQuery.sizeOf(context).width <
-                    kBreakpointLarge) {
-                  return 60.0;
-                } else {
-                  return 60.0;
-                }
-              }(),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-              child: AutoSizeText(
-                valueOrDefault<String>(
-                  widget.textMessage,
-                  '-',
-                ),
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                style: FlutterFlowTheme.of(context).labelMedium.override(
-                      font: GoogleFonts.plusJakartaSans(
-                        fontWeight: FontWeight.w500,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).labelMedium.fontStyle,
+        child: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: FlutterFlowTheme.of(context).error,
+                size: () {
+                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                    return 45.0;
+                  } else if (MediaQuery.sizeOf(context).width <
+                      kBreakpointMedium) {
+                    return 45.0;
+                  } else if (MediaQuery.sizeOf(context).width <
+                      kBreakpointLarge) {
+                    return 60.0;
+                  } else {
+                    return 60.0;
+                  }
+                }(),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 30.0),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 4.0, 0.0, 0.0),
+                          child: AutoSizeText(
+                            valueOrDefault<String>(
+                              widget.textMessage,
+                              '-',
+                            ),
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .labelMedium
+                                .override(
+                                  font: GoogleFonts.plusJakartaSans(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                                  color: Color(0xFF606A85),
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                        ),
                       ),
-                      color: Color(0xFF606A85),
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w500,
-                      fontStyle:
-                          FlutterFlowTheme.of(context).labelMedium.fontStyle,
-                    ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            FFButtonWidget(
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-              text: 'ตกลง',
-              options: FFButtonOptions(
-                width: 150.0,
-                height: 50.0,
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                color: Color(0xFFF46503),
-                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Noto San Thai',
-                      color: Colors.white,
-                      letterSpacing: 0.0,
-                    ),
-                elevation: 0.0,
-                borderRadius: BorderRadius.circular(8.0),
+              FFButtonWidget(
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+                text: 'ตกลง',
+                options: FFButtonOptions(
+                  width: 150.0,
+                  height: 50.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        fontFamily: 'Noto San Thai',
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                      ),
+                  elevation: 0.0,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
-            ),
-          ],
+            ]
+                .addToStart(SizedBox(height: 30.0))
+                .addToEnd(SizedBox(height: 30.0)),
+          ),
         ),
       ),
     );

@@ -365,7 +365,8 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                                               FFAppState()
                                                                   .chanodOutput
                                                                   .ltv1Amount
-                                                                  .toString()),
+                                                                  .toString(),
+                                                              '0'),
                                                           '-',
                                                         ),
                                                         style:
@@ -739,7 +740,8 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                                                 FFAppState()
                                                                     .chanodOutput
                                                                     .ltv2Amount
-                                                                    .toString()),
+                                                                    .toString(),
+                                                                '0'),
                                                         '-',
                                                       ),
                                                       style:

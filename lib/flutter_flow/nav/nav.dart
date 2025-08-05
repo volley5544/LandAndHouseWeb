@@ -395,6 +395,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'isFromConfirmButton',
               ParamType.bool,
             ),
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -410,6 +414,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: TopupStatusPageWidget.routeName,
+          path: TopupStatusPageWidget.routePath,
+          builder: (context, params) => TopupStatusPageWidget(
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SaveTopupSuccessWidget.routeName,
+          path: SaveTopupSuccessWidget.routePath,
+          builder: (context, params) => SaveTopupSuccessWidget(),
+        ),
+        FFRoute(
+          name: SaveLeadHLSuccessWidget.routeName,
+          path: SaveLeadHLSuccessWidget.routePath,
+          builder: (context, params) => SaveLeadHLSuccessWidget(),
+        ),
+        FFRoute(
+          name: TestPageWidget.routeName,
+          path: TestPageWidget.routePath,
+          builder: (context, params) => TestPageWidget(),
+        ),
+        FFRoute(
+          name: TestPageCopyWidget.routeName,
+          path: TestPageCopyWidget.routePath,
+          builder: (context, params) => TestPageCopyWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

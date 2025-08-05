@@ -32,7 +32,16 @@ class TopupConclusionPageModel
 
   FFUploadedFile? selfiePlusIdCardFile;
 
-  bool skipCurrentIndexLoop = false;
+  bool isSecondTime = false;
+
+  SavePdfDataModelStruct? savePdfData;
+  void updateSavePdfDataStruct(Function(SavePdfDataModelStruct) updateFn) {
+    updateFn(savePdfData ??= SavePdfDataModelStruct());
+  }
+
+  bool boolTemp = true;
+
+  bool uploadingImage = false;
 
   ///  State fields for stateful widgets in this page.
 
@@ -46,24 +55,38 @@ class TopupConclusionPageModel
   FFUploadedFile? agreementPdfByteFileOutput;
   // Model for LoanDetailCardComponent component.
   late LoanDetailCardComponentModel loanDetailCardComponentModel;
-  bool isDataUploading_idCardImageUploadAction = false;
-  FFUploadedFile uploadedLocalFile_idCardImageUploadAction =
+  bool isDataUploading_uploadIdCardAction = false;
+  FFUploadedFile uploadedLocalFile_uploadIdCardAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? idCardImageUrlOutput;
-  bool isDataUploading_selfieImageUploadAction = false;
-  FFUploadedFile uploadedLocalFile_selfieImageUploadAction =
+  // Stores action output result for [Backend Call - API (visionThaiId)] action in Button widget.
+  ApiCallResponse? visionOutputThaiId;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  bool? changeDateOutput;
+  bool isDataUploading_uploadSelfieAction = false;
+  FFUploadedFile uploadedLocalFile_uploadSelfieAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
-  String? circleImageUrlOutput;
-  bool isDataUploading_uploadImageConfirmButton = false;
-  FFUploadedFile uploadedLocalFile_uploadImageConfirmButton =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-
-  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
-  String? uploadImageUrlConfirmButton;
+  String? selfieImageUrlOutput;
+  // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Button widget.
+  FFUploadedFile? cameraTriggerComponentReturn;
+  // Stores action output result for [Backend Call - API (visionThaiId)] action in Button widget.
+  ApiCallResponse? visionThaiIdOutputButton;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  bool? changeDateOutputButton;
+  // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Button widget.
+  FFUploadedFile? cameraTriggerComponentReturn2;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  bool? saveTopupConfirm;
+  // Stores action output result for [Custom Action - encodeBase64FromFFFile] action in Button widget.
+  String? idCardImageBase64;
+  // Stores action output result for [Custom Action - encodeBase64FromFFFile] action in Button widget.
+  String? selfieImageBase64;
+  // Stores action output result for [Backend Call - API (Save new topup)] action in Button widget.
+  ApiCallResponse? saveTopupOutput;
 
   @override
   void initState(BuildContext context) {

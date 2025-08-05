@@ -90,6 +90,9 @@ class _HomePageWidgetState extends State<HomePageWidget>
       if (widget.projectName != 'Arunsawad') {
         _model.userDetailOutput = await UserDetailCall.call(
           hashId: widget.hashThaiId,
+          url: FFDevEnvironmentValues().isProduction
+              ? 'https://mobile-api.swpfin.com'
+              : 'https://dev.swpfin.com:7076',
         );
 
         if ((_model.userDetailOutput?.statusCode ?? 200) != 200) {
@@ -192,7 +195,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
             safeSetState(() {
               _model.raiTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.raiTextFieldTextController.text)!;
+                      _model.raiTextFieldTextController.text, '0')!;
             });
           }
         }
@@ -213,7 +216,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
             safeSetState(() {
               _model.nganTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.nganTextFieldTextController.text)!;
+                      _model.nganTextFieldTextController.text, '0')!;
             });
           }
         }
@@ -234,7 +237,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
             safeSetState(() {
               _model.tarangWaTextFieldTextController?.text =
                   functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldTextController.text)!;
+                      _model.tarangWaTextFieldTextController.text, '0')!;
             });
           }
         }

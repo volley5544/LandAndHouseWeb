@@ -9,10 +9,10 @@ import '/flutter_flow/flutter_flow_util.dart';
 class PaymentDetailsStruct extends FFFirebaseStruct {
   PaymentDetailsStruct({
     int? installmentAmount,
-    int? overdueAmount,
-    int? currentDueAmount,
+    double? overdueAmount,
+    double? currentDueAmount,
     int? currentInstallmentNumber,
-    int? totalInstallmentNumber,
+    double? totalInstallmentNumber,
     String? currentDueDate,
     double? totalPaidAmount,
     double? osBalance,
@@ -50,21 +50,21 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
   bool hasInstallmentAmount() => _installmentAmount != null;
 
   // "overdue_amount" field.
-  int? _overdueAmount;
-  int get overdueAmount => _overdueAmount ?? 0;
-  set overdueAmount(int? val) => _overdueAmount = val;
+  double? _overdueAmount;
+  double get overdueAmount => _overdueAmount ?? 0.0;
+  set overdueAmount(double? val) => _overdueAmount = val;
 
-  void incrementOverdueAmount(int amount) =>
+  void incrementOverdueAmount(double amount) =>
       overdueAmount = overdueAmount + amount;
 
   bool hasOverdueAmount() => _overdueAmount != null;
 
   // "current_due_amount" field.
-  int? _currentDueAmount;
-  int get currentDueAmount => _currentDueAmount ?? 0;
-  set currentDueAmount(int? val) => _currentDueAmount = val;
+  double? _currentDueAmount;
+  double get currentDueAmount => _currentDueAmount ?? 0.0;
+  set currentDueAmount(double? val) => _currentDueAmount = val;
 
-  void incrementCurrentDueAmount(int amount) =>
+  void incrementCurrentDueAmount(double amount) =>
       currentDueAmount = currentDueAmount + amount;
 
   bool hasCurrentDueAmount() => _currentDueAmount != null;
@@ -80,11 +80,11 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
   bool hasCurrentInstallmentNumber() => _currentInstallmentNumber != null;
 
   // "total_installment_number" field.
-  int? _totalInstallmentNumber;
-  int get totalInstallmentNumber => _totalInstallmentNumber ?? 0;
-  set totalInstallmentNumber(int? val) => _totalInstallmentNumber = val;
+  double? _totalInstallmentNumber;
+  double get totalInstallmentNumber => _totalInstallmentNumber ?? 0.0;
+  set totalInstallmentNumber(double? val) => _totalInstallmentNumber = val;
 
-  void incrementTotalInstallmentNumber(int amount) =>
+  void incrementTotalInstallmentNumber(double amount) =>
       totalInstallmentNumber = totalInstallmentNumber + amount;
 
   bool hasTotalInstallmentNumber() => _totalInstallmentNumber != null;
@@ -165,12 +165,12 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
   static PaymentDetailsStruct fromMap(Map<String, dynamic> data) =>
       PaymentDetailsStruct(
         installmentAmount: castToType<int>(data['installment_amount']),
-        overdueAmount: castToType<int>(data['overdue_amount']),
-        currentDueAmount: castToType<int>(data['current_due_amount']),
+        overdueAmount: castToType<double>(data['overdue_amount']),
+        currentDueAmount: castToType<double>(data['current_due_amount']),
         currentInstallmentNumber:
             castToType<int>(data['current_installment_number']),
         totalInstallmentNumber:
-            castToType<int>(data['total_installment_number']),
+            castToType<double>(data['total_installment_number']),
         currentDueDate: data['current_due_date'] as String?,
         totalPaidAmount: castToType<double>(data['total_paid_amount']),
         osBalance: castToType<double>(data['os_balance']),
@@ -211,11 +211,11 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         ),
         'overdue_amount': serializeParam(
           _overdueAmount,
-          ParamType.int,
+          ParamType.double,
         ),
         'current_due_amount': serializeParam(
           _currentDueAmount,
-          ParamType.int,
+          ParamType.double,
         ),
         'current_installment_number': serializeParam(
           _currentInstallmentNumber,
@@ -223,7 +223,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         ),
         'total_installment_number': serializeParam(
           _totalInstallmentNumber,
-          ParamType.int,
+          ParamType.double,
         ),
         'current_due_date': serializeParam(
           _currentDueDate,
@@ -272,12 +272,12 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         ),
         overdueAmount: deserializeParam(
           data['overdue_amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         currentDueAmount: deserializeParam(
           data['current_due_amount'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         currentInstallmentNumber: deserializeParam(
@@ -287,7 +287,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         ),
         totalInstallmentNumber: deserializeParam(
           data['total_installment_number'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         currentDueDate: deserializeParam(
@@ -380,10 +380,10 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
 
 PaymentDetailsStruct createPaymentDetailsStruct({
   int? installmentAmount,
-  int? overdueAmount,
-  int? currentDueAmount,
+  double? overdueAmount,
+  double? currentDueAmount,
   int? currentInstallmentNumber,
-  int? totalInstallmentNumber,
+  double? totalInstallmentNumber,
   String? currentDueDate,
   double? totalPaidAmount,
   double? osBalance,

@@ -1,5 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/error_message_component_widget.dart';
 import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -10,6 +12,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'topup_detail_data_page_model.dart';
 export 'topup_detail_data_page_model.dart';
@@ -65,25 +68,38 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         dbName: FFAppState().getLoanListSelected.dbName,
         contractNo: FFAppState().getLoanListSelected.contractNo,
         bearerAuth: FFAppState().accessToken,
+        apiUrl: FFDevEnvironmentValues().isProduction
+            ? FFAppState().topupUrlProd
+            : FFAppState().topupUrlDev,
       );
 
       if ((_model.getTopupDetailAPIOutput?.statusCode ?? 200) != 200) {
         await showDialog(
+          barrierDismissible: false,
           context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text(
-                  'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIOutput?.statusCode ?? 200).toString()})'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage:
+                      'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIOutput?.statusCode ?? 200).toString()})',
                 ),
-              ],
+              ),
             );
           },
         );
+
         Navigator.pop(context);
+        context.safePop();
         return;
       }
       if (SrisawadApiGroup.getTopupDetailCall.code(
@@ -91,27 +107,41 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
           ) !=
           '200') {
         await showDialog(
+          barrierDismissible: false,
           context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('${SrisawadApiGroup.getTopupDetailCall.message(
-                (_model.getTopupDetailAPIOutput?.jsonBody ?? ''),
-              )}'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage: '${SrisawadApiGroup.getTopupDetailCall.message(
+                    (_model.getTopupDetailAPIOutput?.jsonBody ?? ''),
+                  )}',
                 ),
-              ],
+              ),
             );
           },
         );
+
         Navigator.pop(context);
+        context.safePop();
         return;
       }
       FFAppState().getTopupDataAPIResultAppstate =
           GetTopupDataAPIDataTypeStruct.maybeFromMap(
               (_model.getTopupDetailAPIOutput?.jsonBody ?? ''))!;
+      safeSetState(() {});
+      _model.yieldTemp = SrisawadApiGroup.getTopupDetailCall.topupYield(
+        (_model.getTopupDetailAPIOutput?.jsonBody ?? ''),
+      );
       safeSetState(() {});
       safeSetState(() {
         _model.textController?.text = valueOrDefault<String>(
@@ -120,6 +150,21 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
               .defaultTopupAmount
               .toString(),
           'default_topup_amount',
+        );
+        _model.textFieldMask.updateMask(
+          newValue: TextEditingValue(
+            text: _model.textController!.text,
+          ),
+        );
+      });
+      safeSetState(() {
+        _model.textController?.text = functions.returnNumberWithCommaFullNumber(
+            _model.textController.text,
+            '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
+        _model.textFieldMask.updateMask(
+          newValue: TextEditingValue(
+            text: _model.textController!.text,
+          ),
         );
       });
       _model.inittopupCalculateAPIOutput =
@@ -150,25 +195,38 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
           FFAppState().getTopupDataAPIResultAppstate.feeAmount.toString(),
           'fee_amount',
         )),
+        apiUrl: FFDevEnvironmentValues().isProduction
+            ? FFAppState().topupUrlProd
+            : FFAppState().topupUrlDev,
       );
 
       if ((_model.inittopupCalculateAPIOutput?.statusCode ?? 200) != 200) {
         await showDialog(
+          barrierDismissible: false,
           context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text(
-                  'พบข้อผิดพลาด status (${(_model.inittopupCalculateAPIOutput?.statusCode ?? 200).toString()})'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage:
+                      'พบข้อผิดพลาด status (${(_model.inittopupCalculateAPIOutput?.statusCode ?? 200).toString()})',
                 ),
-              ],
+              ),
             );
           },
         );
+
         Navigator.pop(context);
+        context.safePop();
         return;
       }
       FFAppState().getTopupCalculateAppState =
@@ -179,12 +237,187 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         (e) => e..feeAmount = FFAppState().getTopupCalculateAppState.feeAmount,
       );
       safeSetState(() {});
+      logFirebaseEvent(
+        'topup_step1',
+        parameters: {
+          'hash_id': FFAppState().hashThaiIdAppState,
+          'source': FFAppState().saveTopupData.source,
+        },
+      );
       Navigator.pop(context);
     });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    _model.textFieldFocusNode!.addListener(
+      () async {
+        var _shouldSetState = false;
+        if ('${valueOrDefault<String>(
+              FFAppState().getTopupDataAPIResultAppstate.interestPaidFlag,
+              'yield',
+            )}' ==
+            'Y') {
+          if (_shouldSetState) safeSetState(() {});
+          return;
+        }
+        if ((_model.textFieldFocusNode?.hasFocus ?? false)) {
+          safeSetState(() {
+            _model.textController?.text =
+                functions.removeCommaFromNumText(_model.textController.text)!;
+            _model.textFieldMask.updateMask(
+              newValue: TextEditingValue(
+                text: _model.textController!.text,
+              ),
+            );
+          });
+        } else {
+          if (_model.textController.text != '') {
+            safeSetState(() {
+              _model.textController?.text =
+                  '${functions.returnNumberWithCommaFullNumber('${functions.roundDownInput(functions.removeCommaFromNumText(_model.textController.text))?.toString()}', FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString())}';
+              _model.textFieldMask.updateMask(
+                newValue: TextEditingValue(
+                  text: _model.textController!.text,
+                ),
+              );
+            });
+          } else {
+            safeSetState(() {
+              _model.textController?.text = functions.returnNumberWithCommaFullNumber(
+                  '${functions.roundDownInput(functions.removeCommaFromNumText('${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}'))?.toString()}',
+                  '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
+              _model.textFieldMask.updateMask(
+                newValue: TextEditingValue(
+                  text: _model.textController!.text,
+                ),
+              );
+            });
+          }
 
+          unawaited(
+            () async {}(),
+          );
+          if (!((String textField, int minTopup, int maxTopup) {
+            return (double.parse(textField).toInt() >= minTopup) &&
+                (double.parse(textField).toInt() <= maxTopup);
+          }(
+              functions.removeCommaFromNumText(_model.textController.text)!,
+              valueOrDefault<int>(
+                FFAppState().getTopupDataAPIResultAppstate.minTopupAmount,
+                0,
+              ),
+              valueOrDefault<int>(
+                FFAppState().getTopupDataAPIResultAppstate.maxTopupAmount,
+                0,
+              )))) {
+            if (_shouldSetState) safeSetState(() {});
+            return;
+          }
+          showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(0.0, 0.0)
+                    .resolve(Directionality.of(context)),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(dialogContext).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: LoadingWidget(),
+                ),
+              );
+            },
+          );
+
+          safeSetState(() {
+            _model.sliderValue = (double.parse((functions
+                .removeCommaFromNumText(_model.textController.text)!)));
+          });
+          _model.topupCalculateAPIOutput =
+              await SrisawadApiGroup.postToCalculatorToGetNewTopupCall.call(
+            bearerAuth: FFAppState().accessToken,
+            transno: '',
+            dbName: valueOrDefault<String>(
+              FFAppState().getTopupDataAPIResultAppstate.dbName,
+              'db_name',
+            ),
+            contractNo: valueOrDefault<String>(
+              FFAppState().getTopupDataAPIResultAppstate.contractNo,
+              'contract_no',
+            ),
+            loanAmount: double.parse((functions
+                .removeCommaFromNumText(_model.textController.text)!)),
+            interestRate: double.parse(valueOrDefault<String>(
+              FFAppState()
+                  .getTopupDataAPIResultAppstate
+                  .interestRate
+                  .toString(),
+              'interest_rate',
+            )),
+            topupFeeAmount: double.parse(valueOrDefault<String>(
+              FFAppState().getTopupDataAPIResultAppstate.feeAmount.toString(),
+              'fee_amount',
+            )),
+            feeAmount: double.parse(valueOrDefault<String>(
+              FFAppState().getTopupDataAPIResultAppstate.feeAmount.toString(),
+              'fee_amount',
+            )),
+            apiUrl: FFDevEnvironmentValues().isProduction
+                ? FFAppState().topupUrlProd
+                : FFAppState().topupUrlDev,
+          );
+
+          _shouldSetState = true;
+          if ((_model.topupCalculateAPIOutput?.statusCode ?? 200) != 200) {
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutput?.statusCode ?? 200).toString()})',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            if (_shouldSetState) safeSetState(() {});
+            return;
+          }
+          FFAppState().getTopupCalculateAppState =
+              TopupCalculateDataTypeStruct.maybeFromMap(
+                  (_model.topupCalculateAPIOutput?.jsonBody ?? ''))!;
+          safeSetState(() {});
+          FFAppState().updateGetTopupDataAPIResultAppstateStruct(
+            (e) =>
+                e..feeAmount = FFAppState().getTopupCalculateAppState.feeAmount,
+          );
+          safeSetState(() {});
+          Navigator.pop(context);
+        }
+
+        if (_shouldSetState) safeSetState(() {});
+      },
+    );
+    _model.textFieldMask =
+        MaskTextInputFormatter(mask: '#######################');
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -207,7 +440,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         },
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondary,
             automaticallyImplyLeading: false,
@@ -217,7 +450,27 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.safePop();
+                context.pushNamed(
+                  TopupCardPageWidget.routeName,
+                  queryParameters: {
+                    'token': serializeParam(
+                      FFAppState().accessToken,
+                      ParamType.String,
+                    ),
+                    'hashThaiId': serializeParam(
+                      FFAppState().hashThaiIdAppState,
+                      ParamType.String,
+                    ),
+                    'source': serializeParam(
+                      FFAppState().saveTopupData.source,
+                      ParamType.String,
+                    ),
+                    'referId': serializeParam(
+                      FFAppState().saveTopupData.referId,
+                      ParamType.String,
+                    ),
+                  }.withoutNulls,
+                );
               },
               child: Icon(
                 Icons.arrow_back,
@@ -227,14 +480,21 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
             ),
             actions: [],
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'ข้อมูลยอดจัดสินเชื่อ',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                    ),
+              title: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {},
+                child: Text(
+                  'ข้อมูลยอดจัดสินเชื่อ',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Noto San Thai',
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        fontSize: 18.0,
+                        letterSpacing: 0.0,
+                      ),
+                ),
               ),
               centerTitle: true,
               expandedTitleScale: 1.0,
@@ -265,23 +525,28 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                               model: _model.loanDetailCardComponentModel,
                               updateCallback: () => safeSetState(() {}),
                               child: LoanDetailCardComponentWidget(
-                                contNo: valueOrDefault<String>(
+                                contNo: '${valueOrDefault<String>(
                                   FFAppState()
                                       .getTopupDataAPIResultAppstate
                                       .contractNo,
                                   'contract_no',
-                                ),
-                                assetCode: valueOrDefault<String>(
+                                )}',
+                                assetCode: '${valueOrDefault<String>(
                                   FFAppState()
                                       .getTopupDataAPIResultAppstate
                                       .contractDetails
                                       .collateralInformation,
                                   'collateral_information',
-                                ),
-                                productTypeCode: FFAppState()
-                                    .getLoanListSelected
-                                    .contractDetails
-                                    .loanTypeCode,
+                                )}',
+                                productTypeCode:
+                                    '${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
+                                assetName: '${valueOrDefault<String>(
+                                  FFAppState()
+                                      .getLoanListSelected
+                                      .contractDetails
+                                      .loanTypeName,
+                                  'loan_type_code',
+                                )}',
                               ),
                             ),
                             Container(
@@ -351,19 +616,19 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                valueOrDefault<String>(
+                                                '${valueOrDefault<String>(
                                                   functions
                                                       .returnNumberWithComma2Decimal(
-                                                          valueOrDefault<
-                                                              String>(
+                                                          '${valueOrDefault<String>(
                                                     FFAppState()
                                                         .getTopupDataAPIResultAppstate
-                                                        .topupActual
+                                                        .contractDetails
+                                                        .creditLimit
                                                         .toString(),
-                                                    'topup_actual',
-                                                  )),
-                                                  'topup_actual',
-                                                ),
+                                                    'credit_limit',
+                                                  )}'),
+                                                  'credit_limit',
+                                                )}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
@@ -402,133 +667,139 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                       ),
                                     ].divide(SizedBox(height: 8.0)),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  24.0, 0.0, 24.0, 0.0),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    width: 100.0,
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  1.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        'วงเงินพิเศษ',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
+                                  if ('${valueOrDefault<String>(
+                                        FFAppState()
+                                            .getTopupDataAPIResultAppstate
+                                            .topupExtra
+                                            .toString(),
+                                        'topup_extra',
+                                      )}' !=
+                                      '0')
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    24.0, 0.0, 24.0, 0.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      width: 100.0,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    1.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          'วงเงินพิเศษ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  24.0, 0.0, 24.0, 0.0),
-                                          child: Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  valueOrDefault<String>(
-                                                    functions
-                                                        .returnNumberWithComma2Decimal(
-                                                            valueOrDefault<
-                                                                String>(
-                                                      FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .topupExtra
-                                                          .toString(),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    24.0, 0.0, 24.0, 0.0),
+                                            child: Container(
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    valueOrDefault<String>(
+                                                      functions
+                                                          .returnNumberWithComma2Decimal(
+                                                              '${valueOrDefault<String>(
+                                                        FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .topupExtra
+                                                            .toString(),
+                                                        'topup_extra',
+                                                      )}'),
                                                       'topup_extra',
-                                                    )),
-                                                    'topup_extra',
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color:
+                                                              Color(0xFFFF0000),
+                                                          fontSize: 24.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                   ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            Color(0xFFFF0000),
-                                                        fontSize: 24.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  'บาท',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            Color(0xFFFF0000),
-                                                        fontSize: 18.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                      ),
-                                                ),
-                                              ],
+                                                  Text(
+                                                    'บาท',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color:
+                                                              Color(0xFFFF0000),
+                                                          fontSize: 18.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w800,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ].divide(SizedBox(height: 8.0)),
+                                        ].divide(SizedBox(height: 8.0)),
+                                      ),
                                     ),
-                                  ),
                                   Divider(
                                     thickness: 2.0,
                                     color:
@@ -536,10 +807,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 0.0, 24.0, 0.0),
+                                        24.0, 12.0, 24.0, 12.0),
                                     child: Container(
                                       width: double.infinity,
-                                      height: 50.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
@@ -548,38 +818,44 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Expanded(
-                                            child: Container(
-                                              width: 100.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: Text(
-                                                'วงเงินสินเชื่อใหม่',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 24.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 0.0, 12.0, 0.0),
+                                              child: Container(
+                                                width: 100.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                ),
+                                                child: Text(
+                                                  'วงเงินสินเชื่อใหม่',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 20.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                           Text(
-                                            '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                            '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                               FFAppState()
                                                   .getTopupDataAPIResultAppstate
                                                   .defaultTopupAmount
                                                   .toString(),
                                               'default_topup_amount',
-                                            ))} บาท',
+                                            )}')} บาท',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -645,7 +921,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             ],
                                           ),
                                           Text(
-                                            'คุณสามารถแก้ไขยอดขอสินเชื่อใหม่ได้ แต่จำนวนเงินต้องไม่เกิน 7000 บาท (ยอดจัดสินเชื่อ ระบบจะปัดเป็นจำนวนเต็มร้อยเท่านั้น)',
+                                            'คุณสามารถแก้ไขยอดขอสินเชื่อใหม่ได้ แต่จำนวนเงินต้องไม่เกิน 7,000 บาท (ยอดจัดสินเชื่อ ระบบจะปัดเป็นจำนวนเต็มร้อยเท่านั้น)',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -737,207 +1013,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                               .textController,
                                                           focusNode: _model
                                                               .textFieldFocusNode,
-                                                          onFieldSubmitted:
-                                                              (_) async {
-                                                            var _shouldSetState =
-                                                                false;
-                                                            safeSetState(() {
-                                                              _model.textController
-                                                                      ?.text =
-                                                                  functions
-                                                                      .roundDownInput(functions.removeCommaFromNumText(_model
-                                                                          .textController
-                                                                          .text))!
-                                                                      .toString();
-                                                            });
-                                                            unawaited(
-                                                              () async {}(),
-                                                            );
-                                                            if (!((int textField,
-                                                                    int
-                                                                        minTopup,
-                                                                    int
-                                                                        maxTopup) {
-                                                              return (textField >=
-                                                                      minTopup) &&
-                                                                  (textField <=
-                                                                      maxTopup);
-                                                            }(
-                                                                int.parse(_model
-                                                                    .textController
-                                                                    .text),
-                                                                valueOrDefault<
-                                                                    int>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .minTopupAmount,
-                                                                  0,
-                                                                ),
-                                                                valueOrDefault<
-                                                                    int>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .maxTopupAmount,
-                                                                  0,
-                                                                )))) {
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
-                                                            showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (dialogContext) {
-                                                                return Dialog(
-                                                                  elevation: 0,
-                                                                  insetPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  alignment: AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0)
-                                                                      .resolve(
-                                                                          Directionality.of(
-                                                                              context)),
-                                                                  child:
-                                                                      GestureDetector(
-                                                                    onTap: () {
-                                                                      FocusScope.of(
-                                                                              dialogContext)
-                                                                          .unfocus();
-                                                                      FocusManager
-                                                                          .instance
-                                                                          .primaryFocus
-                                                                          ?.unfocus();
-                                                                    },
-                                                                    child:
-                                                                        LoadingWidget(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            );
-
-                                                            _model.topupCalculateAPIOutput =
-                                                                await SrisawadApiGroup
-                                                                    .postToCalculatorToGetNewTopupCall
-                                                                    .call(
-                                                              bearerAuth:
-                                                                  FFAppState()
-                                                                      .accessToken,
-                                                              transno: '',
-                                                              dbName:
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .dbName,
-                                                                'db_name',
-                                                              ),
-                                                              contractNo:
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .contractNo,
-                                                                'contract_no',
-                                                              ),
-                                                              loanAmount: double
-                                                                  .parse((functions
-                                                                      .removeCommaFromNumText(_model
-                                                                          .textController
-                                                                          .text)!)),
-                                                              interestRate:
-                                                                  double.parse(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .interestRate
-                                                                    .toString(),
-                                                                'interest_rate',
-                                                              )),
-                                                              topupFeeAmount:
-                                                                  double.parse(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .feeAmount
-                                                                    .toString(),
-                                                                'fee_amount',
-                                                              )),
-                                                              feeAmount: double.parse(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .feeAmount
-                                                                    .toString(),
-                                                                'fee_amount',
-                                                              )),
-                                                            );
-
-                                                            _shouldSetState =
-                                                                true;
-                                                            if ((_model.topupCalculateAPIOutput
-                                                                        ?.statusCode ??
-                                                                    200) !=
-                                                                200) {
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    content: Text(
-                                                                        'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutput?.statusCode ?? 200).toString()})'),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            'Ok'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
-                                                              Navigator.pop(
-                                                                  context);
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
-                                                            FFAppState()
-                                                                    .getTopupCalculateAppState =
-                                                                TopupCalculateDataTypeStruct
-                                                                    .maybeFromMap((_model
-                                                                            .topupCalculateAPIOutput
-                                                                            ?.jsonBody ??
-                                                                        ''))!;
-                                                            safeSetState(() {});
-                                                            FFAppState()
-                                                                .updateGetTopupDataAPIResultAppstateStruct(
-                                                              (e) => e
-                                                                ..feeAmount =
-                                                                    FFAppState()
-                                                                        .getTopupCalculateAppState
-                                                                        .feeAmount,
-                                                            );
-                                                            safeSetState(() {});
-                                                            Navigator.pop(
-                                                                context);
-                                                            if (_shouldSetState)
-                                                              safeSetState(
-                                                                  () {});
-                                                          },
                                                           autofocus: false,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .none,
                                                           readOnly:
                                                               valueOrDefault<
                                                                       String>(
@@ -962,7 +1041,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                           0.0,
                                                                     ),
                                                             hintText:
-                                                                'TextField',
+                                                                'กรอกวงเงินที่ต้องการกู้ใหม่',
                                                             hintStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
@@ -1057,6 +1136,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                               .textControllerValidator
                                                               .asValidator(
                                                                   context),
+                                                          inputFormatters: [
+                                                            _model.textFieldMask
+                                                          ],
                                                         ),
                                                       ),
                                                     ),
@@ -1122,10 +1204,38 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                               decoration: BoxDecoration(),
                                               child: Stack(
                                                 children: [
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  24.0,
+                                                                  0.0),
+                                                      child: Container(
+                                                        width: 3.0,
+                                                        height: 15.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                   Builder(
                                                     builder: (context) =>
                                                         Container(
-                                                      width: 350.0,
+                                                      width: double.infinity,
                                                       child: Slider(
                                                         activeColor:
                                                             FlutterFlowTheme.of(
@@ -1165,16 +1275,35 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             .sliderValue
                                                             ?.toStringAsFixed(
                                                                 0),
-                                                        divisions: 100,
-                                                        onChanged: (newValue) {
-                                                          newValue = double
-                                                              .parse(newValue
-                                                                  .toStringAsFixed(
-                                                                      0));
-                                                          safeSetState(() =>
-                                                              _model.sliderValue =
-                                                                  newValue);
-                                                        },
+                                                        divisions: (int max,
+                                                                int min) {
+                                                          return ((double.parse(
+                                                                          '${max}') -
+                                                                      double.parse(
+                                                                          '${min}')) /
+                                                                  100.0)
+                                                              .round();
+                                                        }(
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .maxTopupAmount,
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .minTopupAmount),
+                                                        onChanged: (FFAppState()
+                                                                    .getTopupDataAPIResultAppstate
+                                                                    .interestPaidFlag ==
+                                                                'Y')
+                                                            ? null
+                                                            : (newValue) {
+                                                                newValue = double
+                                                                    .parse(newValue
+                                                                        .toStringAsFixed(
+                                                                            0));
+                                                                safeSetState(() =>
+                                                                    _model.sliderValue =
+                                                                        newValue);
+                                                              },
                                                         onChangeEnd:
                                                             (newValue) async {
                                                           newValue = double
@@ -1189,11 +1318,18 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           safeSetState(() {
                                                             _model.textController
                                                                     ?.text =
-                                                                functions
-                                                                    .roundDownInput(functions.removeCommaFromNumText(_model
-                                                                        .sliderValue
-                                                                        ?.toString()))!
-                                                                    .toString();
+                                                                functions.returnNumberWithCommaFullNumber(
+                                                                    '${functions.roundDownInput(_model.sliderValue?.toString())?.toString()}',
+                                                                    '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
+                                                            _model.textFieldMask
+                                                                .updateMask(
+                                                              newValue:
+                                                                  TextEditingValue(
+                                                                text: _model
+                                                                    .textController!
+                                                                    .text,
+                                                              ),
+                                                            );
                                                           });
                                                           safeSetState(() {
                                                             _model.sliderValue = functions
@@ -1302,6 +1438,12 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   .toString(),
                                                               'fee_amount',
                                                             )),
+                                                            apiUrl: FFDevEnvironmentValues()
+                                                                    .isProduction
+                                                                ? FFAppState()
+                                                                    .topupUrlProd
+                                                                : FFAppState()
+                                                                    .topupUrlDev,
                                                           );
 
                                                           _shouldSetState =
@@ -1311,24 +1453,46 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   200) !=
                                                               200) {
                                                             await showDialog(
+                                                              barrierDismissible:
+                                                                  false,
                                                               context: context,
                                                               builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  content: Text(
-                                                                      'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutputSlider?.statusCode ?? 200).toString()})'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed:
-                                                                          () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                      child: Text(
-                                                                          'Ok'),
+                                                                  (dialogContext) {
+                                                                return Dialog(
+                                                                  elevation: 0,
+                                                                  insetPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  alignment: AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0)
+                                                                      .resolve(
+                                                                          Directionality.of(
+                                                                              context)),
+                                                                  child:
+                                                                      GestureDetector(
+                                                                    onTap: () {
+                                                                      FocusScope.of(
+                                                                              dialogContext)
+                                                                          .unfocus();
+                                                                      FocusManager
+                                                                          .instance
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                    },
+                                                                    child:
+                                                                        ErrorMessageComponentWidget(
+                                                                      textMessage:
+                                                                          'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutputSlider?.statusCode ?? 200).toString()})',
                                                                     ),
-                                                                  ],
+                                                                  ),
                                                                 );
                                                               },
                                                             );
+
                                                             Navigator.pop(
                                                                 context);
                                                             if (_shouldSetState)
@@ -1364,36 +1528,36 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -0.86, 0.0),
-                                                    child: Container(
-                                                      width: 3.0,
-                                                      height: 15.0,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.0),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.86, 0.0),
-                                                    child: Container(
-                                                      width: 3.0,
-                                                      height: 15.0,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.0),
+                                                            -1.0, 0.0),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  24.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Container(
+                                                        width: 3.0,
+                                                        height: 15.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FFAppState()
+                                                                      .getTopupDataAPIResultAppstate
+                                                                      .interestPaidFlag ==
+                                                                  'Y'
+                                                              ? FlutterFlowTheme
+                                                                      .of(
+                                                                          context)
+                                                                  .secondaryText
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -1418,13 +1582,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                       AlignmentDirectional(
                                                           0.0, 0.0),
                                                   child: Text(
-                                                    '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                                    '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                       FFAppState()
                                                           .getTopupDataAPIResultAppstate
                                                           .minTopupAmount
                                                           .toString(),
                                                       'min_topup_amount',
-                                                    ))} บาท',
+                                                    )}')} บาท',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -1433,7 +1597,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                               'Noto San Thai',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .error,
+                                                              .primaryText,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -1443,13 +1607,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                       AlignmentDirectional(
                                                           0.0, 0.0),
                                                   child: Text(
-                                                    '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                                    '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                       FFAppState()
                                                           .getTopupDataAPIResultAppstate
                                                           .maxTopupAmount
                                                           .toString(),
                                                       'max_topup_amount',
-                                                    ))} บาท',
+                                                    )}')} บาท',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -1458,7 +1622,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                               'Noto San Thai',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .error,
+                                                              .primaryText,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -1478,18 +1642,19 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         .secondaryBackground,
                                                   ),
                                                   child: Visibility(
-                                                    visible: int.parse(_model
-                                                            .textController
-                                                            .text) <
+                                                    visible: int.parse((functions
+                                                            .removeCommaFromNumText(
+                                                                _model
+                                                                    .textController
+                                                                    .text)!)) <
                                                         int.parse(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            '${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .minTopupAmount
                                                               .toString(),
                                                           '0',
-                                                        )),
+                                                        )}'),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -1499,13 +1664,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        '* จำนวนเงินต้องไม่น้อยกว่า  ${valueOrDefault<String>(
+                                                        '* จำนวนเงินต้องไม่น้อยกว่า  ${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .minTopupAmount
                                                               .toString(),
                                                           'default_topup_amount',
-                                                        )}  บาท',
+                                                        )}')}  บาท',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1538,18 +1703,19 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         .secondaryBackground,
                                                   ),
                                                   child: Visibility(
-                                                    visible: int.parse(_model
-                                                            .textController
-                                                            .text) >
+                                                    visible: int.parse((functions
+                                                            .removeCommaFromNumText(
+                                                                _model
+                                                                    .textController
+                                                                    .text)!)) >
                                                         int.parse(
-                                                            valueOrDefault<
-                                                                String>(
+                                                            '${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .maxTopupAmount
                                                               .toString(),
                                                           '0',
-                                                        )),
+                                                        )}'),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
@@ -1559,13 +1725,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        '* ต้องการวงเงินมากกว่า${valueOrDefault<String>(
+                                                        '* ต้องการวงเงินมากกว่า${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .maxTopupAmount
                                                               .toString(),
                                                           'max_topup_amount',
-                                                        )}บาท สามารถติดต่อสาขาใกล้บ้านที่สะดวก',
+                                                        )}')}บาท สามารถติดต่อสาขาใกล้บ้านที่สะดวก',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -1617,7 +1783,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '1.หักยอดเงินต้นสัญญาเก่า',
+                                                  '1.หักยอดเงินต้นคงเหลือสัญญาเก่า',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -1631,14 +1797,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                                 ),
-                                                if (valueOrDefault<String>(
-                                                      FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .contractDetails
-                                                          .loanTypeCode,
-                                                      'contract_no',
-                                                    ) !=
-                                                    'L')
+                                                if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                        'L') &&
+                                                    ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                        'H'))
                                                   Text(
                                                     '(เลขที่สัญญา ${valueOrDefault<String>(
                                                       FFAppState()
@@ -1657,14 +1819,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                if (valueOrDefault<String>(
-                                                      FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .contractDetails
-                                                          .loanTypeCode,
-                                                      'contract_no',
-                                                    ) ==
-                                                    'L')
+                                                if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                        'L') ||
+                                                    ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                        'H'))
                                                   Text(
                                                     '(ตั๋วสัญญาใช้เงิน ${valueOrDefault<String>(
                                                       FFAppState()
@@ -1687,14 +1845,14 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                            '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                               FFAppState()
                                                   .getTopupDataAPIResultAppstate
                                                   .contractDetails
                                                   .closingBalance
                                                   .toString(),
                                               'closing_balance',
-                                            ))} บาท',
+                                            )}')} บาท',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1749,14 +1907,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         letterSpacing: 0.0,
                                                       ),
                                                 ),
-                                                if (valueOrDefault<String>(
-                                                      FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .contractDetails
-                                                          .loanTypeCode,
-                                                      'contract_no',
-                                                    ) !=
-                                                    'L')
+                                                if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                        'L') &&
+                                                    ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                        'H'))
                                                   Text(
                                                     '(เลขที่สัญญา ${valueOrDefault<String>(
                                                       FFAppState()
@@ -1775,14 +1929,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                if (valueOrDefault<String>(
-                                                      FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .contractDetails
-                                                          .loanTypeCode,
-                                                      'contract_no',
-                                                    ) ==
-                                                    'L')
+                                                if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                        'L') ||
+                                                    ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                        'H'))
                                                   Text(
                                                     '(ตั๋วสัญญาใช้เงิน ${valueOrDefault<String>(
                                                       FFAppState()
@@ -1805,13 +1955,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                            '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                               FFAppState()
                                                   .getTopupDataAPIResultAppstate
                                                   .feeAmount
                                                   .toString(),
                                               'fee_amount',
-                                            ))} บาท',
+                                            )}')} บาท',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1852,7 +2002,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '3.จำนวนเงินที่จะได้รับ',
+                                                  '3.จำนวนเงินก่อนจ่ายยอดค้างชำระ',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -1867,7 +2017,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  '(ก่อนจ่ายยอดค้างชำระ)',
+                                                  '   (ก่อนจ่ายยอดค้างชำระ)',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -1878,6 +2028,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .error,
+                                                        fontSize: 12.0,
                                                         letterSpacing: 0.0,
                                                       ),
                                                 ),
@@ -1885,26 +2036,20 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             ),
                                           ),
                                           Text(
-                                            '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse(valueOrDefault<String>(
+                                            '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse('${valueOrDefault<String>(
                                                   FFAppState()
                                                       .getTopupDataAPIResultAppstate
                                                       .contractDetails
                                                       .closingBalance
                                                       .toString(),
                                                   'closing_balance',
-                                                )) - int.parse(valueOrDefault<String>(
+                                                )}') - int.parse('${valueOrDefault<String>(
                                                   FFAppState()
                                                       .getTopupDataAPIResultAppstate
                                                       .feeAmount
                                                       .toString(),
                                                   'fee_amount',
-                                                )) - int.parse(valueOrDefault<String>(
-                                                  FFAppState()
-                                                      .getTopupDataAPIResultAppstate
-                                                      .collectionFee
-                                                      .toString(),
-                                                  'collection_fee',
-                                                ))).toString())} บาท',
+                                                )}')).toString())} บาท',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
                                                 .override(
@@ -1918,25 +2063,41 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                       ),
                                     ),
                                   ),
-                                  if (valueOrDefault<String>(
-                                        FFAppState()
-                                            .getTopupDataAPIResultAppstate
-                                            .interestPaidFlag,
-                                        'yield',
-                                      ) ==
-                                      'Y')
+                                  if (('${valueOrDefault<String>(
+                                            FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .interestPaidFlag,
+                                            'yield',
+                                          )}' ==
+                                          'Y') &&
+                                      ('${valueOrDefault<String>(
+                                            FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .overdueAmount
+                                                .toString(),
+                                            'overdue_amount',
+                                          )}' !=
+                                          '0'))
                                     Divider(
                                       thickness: 2.0,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
                                     ),
-                                  if (valueOrDefault<String>(
-                                        FFAppState()
-                                            .getTopupDataAPIResultAppstate
-                                            .interestPaidFlag,
-                                        'yield',
-                                      ) ==
-                                      'Y')
+                                  if (('${valueOrDefault<String>(
+                                            FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .interestPaidFlag,
+                                            'yield',
+                                          )}' ==
+                                          'Y') &&
+                                      ('${valueOrDefault<String>(
+                                            FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .overdueAmount
+                                                .toString(),
+                                            'overdue_amount',
+                                          )}' !=
+                                          '0'))
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           24.0, 12.0, 24.0, 0.0),
@@ -1959,7 +2120,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    '4.ค้างชำระงวดที่ (${valueOrDefault<String>(
+                                                    '4.ยอดค้างชำระงวดที่ (${valueOrDefault<String>(
                                                       FFAppState()
                                                           .getTopupDataAPIResultAppstate
                                                           .overdueTo,
@@ -1982,14 +2143,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                  if (valueOrDefault<String>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .contractDetails
-                                                            .loanTypeCode,
-                                                        'contract_no',
-                                                      ) !=
-                                                      'L')
+                                                  if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                          'L') &&
+                                                      ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                          'H'))
                                                     Text(
                                                       '(เลขที่สัญญา ${valueOrDefault<String>(
                                                         FFAppState()
@@ -2008,14 +2165,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
-                                                  if (valueOrDefault<String>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .contractDetails
-                                                            .loanTypeCode,
-                                                        'contract_no',
-                                                      ) ==
-                                                      'L')
+                                                  if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                          'L') ||
+                                                      ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                          'H'))
                                                     Text(
                                                       '(ตั๋วสัญญาใช้เงิน ${valueOrDefault<String>(
                                                         FFAppState()
@@ -2038,13 +2191,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                              '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                 FFAppState()
                                                     .getTopupDataAPIResultAppstate
                                                     .overdueAmount
                                                     .toString(),
                                                 'overdue_amount',
-                                              ))} บาท',
+                                              )}')} บาท',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -2059,31 +2212,31 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                         ),
                                       ),
                                     ),
-                                  if (valueOrDefault<String>(
+                                  if ('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'Y')
                                     Divider(
                                       thickness: 2.0,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
                                     ),
-                                  if (valueOrDefault<String>(
+                                  if ('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'Y')
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           24.0, 12.0, 24.0, 0.0),
                                       child: Container(
                                         width: double.infinity,
-                                        height: 80.0,
+                                        height: 100.0,
                                         decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryBackground,
@@ -2118,14 +2271,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
-                                                  if (valueOrDefault<String>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .contractDetails
-                                                            .loanTypeCode,
-                                                        'contract_no',
-                                                      ) !=
-                                                      'L')
+                                                  if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                          'L') &&
+                                                      ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' !=
+                                                          'H'))
                                                     Text(
                                                       '(เลขที่สัญญา ${valueOrDefault<String>(
                                                         FFAppState()
@@ -2144,14 +2293,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             letterSpacing: 0.0,
                                                           ),
                                                     ),
-                                                  if (valueOrDefault<String>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .contractDetails
-                                                            .loanTypeCode,
-                                                        'contract_no',
-                                                      ) ==
-                                                      'L')
+                                                  if (('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                          'L') ||
+                                                      ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                          'H'))
                                                     Text(
                                                       '(ตั๋วสัญญาใช้เงิน ${valueOrDefault<String>(
                                                         FFAppState()
@@ -2171,7 +2316,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           ),
                                                     ),
                                                   Text(
-                                                    '*กรุณาชำระเงินก่อนดำเนินการเติมวงเงิน',
+                                                    '*กรุณาชำระเงินก่อนดำเนินการ',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .bodyMedium
@@ -2181,6 +2326,21 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .error,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    'รายละเอียด (5)',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
                                                           letterSpacing: 0.0,
                                                         ),
                                                   ),
@@ -2188,19 +2348,19 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              '${functions.returnNumberWithComma2Decimal((int.parse(valueOrDefault<String>(
+                                              '${functions.returnNumberWithComma2Decimal((int.parse('${valueOrDefault<String>(
                                                     FFAppState()
                                                         .getTopupDataAPIResultAppstate
                                                         .collectionFee
                                                         .toString(),
-                                                    'collection_fee',
-                                                  )) + int.parse(valueOrDefault<String>(
+                                                    '0',
+                                                  )}') + int.parse('${valueOrDefault<String>(
                                                     FFAppState()
                                                         .getTopupDataAPIResultAppstate
                                                         .yield
                                                         .toString(),
-                                                    'yield',
-                                                  ))).toString())} บาท',
+                                                    '0',
+                                                  )}')).toString())} บาท',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -2215,12 +2375,12 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                         ),
                                       ),
                                     ),
-                                  if (valueOrDefault<String>(
+                                  if ('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'Y')
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -2246,7 +2406,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                          0.0, 0.0, 0.0, 5.0),
+                                                          0.0, 5.0, 0.0, 5.0),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -2271,13 +2431,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                 ),
                                                       ),
                                                       Text(
-                                                        '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                                        '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .collectionFee
                                                               .toString(),
-                                                          'collection_fee',
-                                                        ))} บาท',
+                                                          '0',
+                                                        )}')} บาท',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -2333,13 +2493,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                 ),
                                                       ),
                                                       Text(
-                                                        '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
+                                                        '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
                                                               .yield
                                                               .toString(),
-                                                          'yield',
-                                                        ))} บาท',
+                                                          '0',
+                                                        )}')} บาท',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -2363,11 +2523,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                         ),
                                       ),
                                     ),
-                                  Divider(
-                                    thickness: 2.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
                                 ],
                               ),
                             ),
@@ -2377,39 +2532,42 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                     ),
                   ),
                 ),
-                if ((((String textField, String minTopup) {
-                          return int.parse(textField) >= int.parse(minTopup);
-                        }(
-                            _model.textController.text,
-                            valueOrDefault<String>(
-                              FFAppState()
-                                  .getTopupDataAPIResultAppstate
-                                  .minTopupAmount
-                                  .toString(),
-                              '0',
-                            ))) ==
-                        true) ||
-                    (((String textField, String maxTopup) {
-                          return int.parse(textField) <= int.parse(maxTopup);
-                        }(
-                            _model.textController.text,
-                            valueOrDefault<String>(
-                              FFAppState()
-                                  .getTopupDataAPIResultAppstate
-                                  .minTopupAmount
-                                  .toString(),
-                              '0',
-                            ))) ==
-                        true))
+                if (((String textField, String minTopup) {
+                      return int.parse(textField) >= int.parse(minTopup);
+                    }(
+                        functions.removeCommaFromNumText(
+                            _model.textController.text)!,
+                        valueOrDefault<String>(
+                          FFAppState()
+                              .getTopupDataAPIResultAppstate
+                              .minTopupAmount
+                              .toString(),
+                          '0',
+                        ))) ||
+                    ((String textField, String maxTopup) {
+                      return int.parse(textField) <= int.parse(maxTopup);
+                    }(
+                        functions.removeCommaFromNumText(
+                            _model.textController.text)!,
+                        valueOrDefault<String>(
+                          FFAppState()
+                              .getTopupDataAPIResultAppstate
+                              .minTopupAmount
+                              .toString(),
+                          '0',
+                        ))))
                   Container(
                     width: double.infinity,
-                    height: 120.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        Divider(
+                          thickness: 2.0,
+                          color: FlutterFlowTheme.of(context).alternate,
+                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               24.0, 12.0, 24.0, 0.0),
@@ -2451,37 +2609,37 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                   ),
                                 ),
                                 Text(
-                                  '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse((valueOrDefault<String>(
+                                  '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse(('${valueOrDefault<String>(
                                             FFAppState()
                                                 .getTopupDataAPIResultAppstate
                                                 .interestPaidFlag,
                                             'yield',
-                                          ) == 'Y' ? valueOrDefault<String>(
+                                          )}' == 'Y' ? '${valueOrDefault<String>(
                                           FFAppState()
                                               .getTopupDataAPIResultAppstate
                                               .yield
                                               .toString(),
-                                          'yield',
-                                        ) : '0')) - int.parse(valueOrDefault<String>(
+                                          '0',
+                                        )}' : '0')) - int.parse('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .contractDetails
                                             .closingBalance
                                             .toString(),
                                         'closing_balance',
-                                      )) - int.parse(valueOrDefault<String>(
+                                      )}') - int.parse('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .feeAmount
                                             .toString(),
                                         'fee_amount',
-                                      )) - int.parse(valueOrDefault<String>(
+                                      )}') - int.parse('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .collectionFee
                                             .toString(),
                                         'collection_fee',
-                                      ))).toString())} บาท',
+                                      )}')).toString())} บาท',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -2496,129 +2654,232 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                             ),
                           ),
                         ),
+                        if (FFAppState()
+                                .getTopupDataAPIResultAppstate
+                                .contractDetails
+                                .canTopup !=
+                            'Y')
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 4.0, 24.0, 0.0),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${valueOrDefault<String>(
+                                        FFAppState()
+                                            .getLoanListSelected
+                                            .topupDetail
+                                            .canTopupMsg,
+                                        'can_topup_msg',
+                                      )}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                              24.0, 24.0, 24.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              if ((valueOrDefault<String>(
+                              if (('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'Y') ||
-                                  true)
-                                FFButtonWidget(
-                                  onPressed: () async {
-                                    _model.interestPayment =
-                                        await SrisawadApiGroup
-                                            .interestpaymentAPICall
-                                            .call(
-                                      comcode: FFAppState()
-                                          .getLoanListSelected
-                                          .barcodeDetails
-                                          .comcode,
-                                      contractNo: FFAppState()
-                                          .getLoanListSelected
-                                          .contractNo,
-                                      contractName: FFAppState()
-                                          .getLoanListSelected
-                                          .contractName,
-                                      firstname: (String name) {
-                                        return name.split(' ')[0];
-                                      }(FFAppState()
-                                          .getLoanListSelected
-                                          .contractName),
-                                      lastname: (String name) {
-                                        return name.split(' ')[1];
-                                      }(FFAppState()
-                                          .getLoanListSelected
-                                          .contractName),
-                                      nationalThaiId: FFAppState()
-                                          .customerDetailData
-                                          .thaiId,
-                                      hashThaiId:
-                                          FFAppState().hashThaiIdAppState,
-                                      interestAmount: int.parse(
-                                          (functions.removeCommaFromNumText(
-                                              _model.textController.text)!)),
-                                      collectionFee: FFAppState()
-                                          .getTopupDataAPIResultAppstate
-                                          .collectionFee,
-                                      penaltyFee: FFAppState()
-                                          .getTopupDataAPIResultAppstate
-                                          .penaltyFee,
-                                      db: FFAppState()
-                                          .getTopupDataAPIResultAppstate
-                                          .dbName,
-                                      barcodeRef1: FFAppState()
-                                          .getLoanListSelected
-                                          .barcodeDetails
-                                          .ref1,
-                                      barcodeRef2: FFAppState()
-                                          .getLoanListSelected
-                                          .barcodeDetails
-                                          .ref2,
-                                    );
+                                  false)
+                                Expanded(
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      FFAppState()
+                                          .updateQrCodeDataTypeAppStateStruct(
+                                        (e) => e
+                                          ..prefix = FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .prefix
+                                          ..suffix = FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .suffix
+                                          ..taxId = FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .taxId
+                                          ..ref1 = FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .ref1
+                                          ..ref2 = FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .ref2
+                                          ..yield = _model.yieldTemp
+                                          ..collectionFee = FFAppState()
+                                              .getTopupDataAPIResultAppstate
+                                              .collectionFee
+                                          ..penaltyFee = FFAppState()
+                                              .getTopupDataAPIResultAppstate
+                                              .penaltyFee
+                                          ..carRegistration = FFAppState()
+                                              .getLoanListSelected
+                                              .contractDetails
+                                              .collateralInformation
+                                          ..contNo = FFAppState()
+                                              .getLoanListSelected
+                                              .contractNo
+                                          ..topupAmountWithComma = functions
+                                              .returnNumberWithComma2Decimal(((_model
+                                                          .yieldTemp!) +
+                                                      FFAppState()
+                                                          .getTopupDataAPIResultAppstate
+                                                          .collectionFee +
+                                                      FFAppState()
+                                                          .getTopupDataAPIResultAppstate
+                                                          .penaltyFee)
+                                                  .toString())
+                                          ..currentDate = FFAppState()
+                                              .getLoanListSelected
+                                              .dataDate,
+                                      );
+                                      safeSetState(() {});
+                                      _model.interestPayment =
+                                          await SrisawadApiGroup
+                                              .interestpaymentAPICall
+                                              .call(
+                                        comcode: FFAppState()
+                                            .getLoanListSelected
+                                            .barcodeDetails
+                                            .comcode,
+                                        contractNo: FFAppState()
+                                            .getLoanListSelected
+                                            .contractNo,
+                                        contractName: FFAppState()
+                                            .getLoanListSelected
+                                            .contractName,
+                                        firstname: (String name) {
+                                          return name.split(' ')[0];
+                                        }(FFAppState()
+                                            .getLoanListSelected
+                                            .contractName),
+                                        lastname: (String name) {
+                                          return name.split(' ')[1];
+                                        }(FFAppState()
+                                            .getLoanListSelected
+                                            .contractName),
+                                        nationalThaiId: FFAppState()
+                                            .customerDetailData
+                                            .thaiId,
+                                        hashThaiId:
+                                            FFAppState().hashThaiIdAppState,
+                                        interestAmount: _model.yieldTemp,
+                                        collectionFee: FFAppState()
+                                            .getTopupDataAPIResultAppstate
+                                            .collectionFee,
+                                        penaltyFee: FFAppState()
+                                            .getTopupDataAPIResultAppstate
+                                            .penaltyFee,
+                                        db: FFAppState()
+                                            .getTopupDataAPIResultAppstate
+                                            .dbName,
+                                        barcodeRef1: FFAppState()
+                                            .getLoanListSelected
+                                            .barcodeDetails
+                                            .ref1,
+                                        barcodeRef2: FFAppState()
+                                            .getLoanListSelected
+                                            .barcodeDetails
+                                            .ref2,
+                                        apiUrl: FFDevEnvironmentValues()
+                                                .isProduction
+                                            ? FFAppState().topupUrlProd
+                                            : FFAppState().topupUrlDev,
+                                      );
 
-                                    context.goNamed(
-                                      QrPaymentPageWidget.routeName,
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                        ),
-                                      },
-                                    );
+                                      context.goNamed(
+                                        QrPaymentPageWidget.routeName,
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.rightToLeft,
+                                          ),
+                                        },
+                                      );
 
-                                    safeSetState(() {});
-                                  },
-                                  text: 'ชำระเงิน',
-                                  options: FFButtonOptions(
-                                    width: 140.0,
-                                    height: 50.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    elevation: 0.0,
-                                    borderRadius: BorderRadius.circular(8.0),
+                                      safeSetState(() {});
+                                    },
+                                    text: 'ชำระเงิน',
+                                    options: FFButtonOptions(
+                                      width: 140.0,
+                                      height: 60.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
                                   ),
                                 ),
-                              if ((valueOrDefault<String>(
+                              if (('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'N') ||
-                                  true)
+                                  false)
                                 Expanded(
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        20.0, 0.0, 20.0, 0.0),
-                                    child: FFButtonWidget(
-                                      onPressed: !(((int textField,
+                                  child: Builder(
+                                    builder: (context) => FFButtonWidget(
+                                      onPressed: !(((String textField,
                                                       int minTopup,
                                                       int maxTopup) {
-                                                return (textField >=
+                                                return (int.parse(textField) >=
                                                         minTopup) &&
-                                                    (textField <= maxTopup);
+                                                    (int.parse(textField) <=
+                                                        maxTopup);
                                               }(
-                                                  int.parse(_model
-                                                      .textController.text),
+                                                  functions
+                                                      .removeCommaFromNumText(
+                                                          _model.textController
+                                                              .text)!,
                                                   valueOrDefault<int>(
                                                     FFAppState()
                                                         .getTopupDataAPIResultAppstate
@@ -2641,33 +2902,471 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   true))
                                           ? null
                                           : () async {
-                                              context.pushNamed(
-                                                SelectInstallmentPageWidget
-                                                    .routeName,
-                                                extra: <String, dynamic>{
-                                                  kTransitionInfoKey:
-                                                      TransitionInfo(
-                                                    hasTransition: true,
-                                                    transitionType:
-                                                        PageTransitionType
-                                                            .rightToLeft,
-                                                  ),
-                                                },
-                                              );
-                                            },
-                                      text: valueOrDefault<String>(
+                                              var _shouldSetState = false;
+                                              if ((FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractDetails
+                                                          .loanTypeCode ==
+                                                      'L') ||
+                                                  (FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractDetails
+                                                          .loanTypeCode ==
+                                                      'H') ||
+                                                  (FFAppState()
+                                                          .getTopupDataAPIResultAppstate
+                                                          .contractDetails
+                                                          .canTopup !=
+                                                      'Y') ||
+                                                  ((double.parse((functions
+                                                              .removeCommaFromNumText(
+                                                                  '${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) -
+                                                          int.parse((valueOrDefault<
+                                                                      String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .interestPaidFlag,
+                                                                    'yield',
+                                                                  ) ==
+                                                                  'Y'
+                                                              ? _model
+                                                                  .yieldTemp!
+                                                                  .toString()
+                                                              : '0')) -
+                                                          int.parse(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .contractDetails
+                                                                .closingBalance
+                                                                .toString(),
+                                                            'closing_balance',
+                                                          )) -
+                                                          int.parse(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .feeAmount
+                                                                .toString(),
+                                                            'fee_amount',
+                                                          )) -
+                                                          int.parse(valueOrDefault<String>(
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .collectionFee
+                                                                .toString(),
+                                                            'collection_fee',
+                                                          ))) >
+                                                      FFAppState().getLoanListSelected.topupDetail.maxTransferAmount)) {
+                                                _model
+                                                    .updateSaveTopupLHDataStruct(
+                                                  (e) => e
+                                                    ..branchCode = FFAppState()
+                                                        .getLoanListSelected
+                                                        .branchCode
+                                                    ..branchName = FFAppState()
+                                                        .getLoanListSelected
+                                                        .branchCode
+                                                    ..firstName =
+                                                        (String name) {
+                                                      return name.split(' ')[0];
+                                                    }(FFAppState()
+                                                            .getLoanListSelected
+                                                            .contractName)
+                                                    ..lastName = (String name) {
+                                                      return name.split(' ')[1];
+                                                    }(FFAppState()
+                                                        .getLoanListSelected
+                                                        .contractName)
+                                                    ..phoneNumber = FFAppState()
+                                                        .customerDetailData
+                                                        .phoneNumber
+                                                    ..birthDate = FFAppState()
+                                                        .customerDetailData
+                                                        .dob
+                                                    ..email = FFAppState()
+                                                        .customerDetailData
+                                                        .email
+                                                    ..contractThaiId =
+                                                        FFAppState()
+                                                            .hashThaiIdAppState
+                                                    ..pdpaFlg = 'Y'
+                                                    ..pdpaDate = FFAppState()
+                                                        .getLoanListSelected
+                                                        .paymentDetails
+                                                        .currentDueDate,
+                                                );
+                                                safeSetState(() {});
                                                 FFAppState()
-                                                    .getTopupDataAPIResultAppstate
-                                                    .contractDetails
-                                                    .loanTypeCode,
-                                                'contract_no',
-                                              ) !=
-                                              'L'
-                                          ? 'ถัดไป'
-                                          : 'ส่งข้อมูล',
+                                                    .updateGetLoanListSelectedStruct(
+                                                  (e) => e
+                                                    ..updateTopupDetail(
+                                                      (e) => e
+                                                        ..collectionFee =
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .collectionFee
+                                                        ..penaltyFee = FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .penaltyFee
+                                                        ..feeAmount = FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .feeAmount
+                                                        ..yield =
+                                                            _model.yieldTemp,
+                                                    ),
+                                                );
+                                                safeSetState(() {});
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child: LoadingWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                _model.saveLeadLHOutput =
+                                                    await TopupLeadLHMobileAppCall
+                                                        .call(
+                                                  apiUrl:
+                                                      FFDevEnvironmentValues()
+                                                              .isProduction
+                                                          ? FFAppState()
+                                                              .LeadUrlProd
+                                                          : FFAppState()
+                                                              .LeadUrlDev,
+                                                  branchCode: _model
+                                                      .saveTopupLHData
+                                                      ?.branchCode,
+                                                  branchName: _model
+                                                      .saveTopupLHData
+                                                      ?.branchName,
+                                                  titleId: '',
+                                                  titleName: '',
+                                                  firstName: _model
+                                                      .saveTopupLHData
+                                                      ?.firstName,
+                                                  lastName: _model
+                                                      .saveTopupLHData
+                                                      ?.lastName,
+                                                  phoneNumber: _model
+                                                      .saveTopupLHData
+                                                      ?.phoneNumber,
+                                                  birthDate: _model
+                                                      .saveTopupLHData
+                                                      ?.birthDate,
+                                                  age: '',
+                                                  email: _model
+                                                      .saveTopupLHData?.email,
+                                                  contractThaiId: _model
+                                                      .saveTopupLHData
+                                                      ?.contractThaiId,
+                                                  pdpaFlg: _model
+                                                      .saveTopupLHData?.pdpaFlg,
+                                                  pdpaDate: _model
+                                                      .saveTopupLHData
+                                                      ?.pdpaDate,
+                                                  utmSource: '',
+                                                  utmMedium: '',
+                                                  utmCampaign: '',
+                                                  contractDetailsJson:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractDetails
+                                                          .toMap(),
+                                                  carDetailsJson: FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .carDetails
+                                                      .toMap(),
+                                                  paymentDetailsJson:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .paymentDetails
+                                                          .toMap(),
+                                                  topupDetailJson: FFAppState()
+                                                      .getLoanListSelected
+                                                      .topupDetail
+                                                      .toMap(),
+                                                  barcodeDetailsJson:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .barcodeDetails
+                                                          .toMap(),
+                                                  insurancesJson: FFAppState()
+                                                      .getLoanListSelected
+                                                      .insurances
+                                                      .toMap(),
+                                                  dataDate: FFAppState()
+                                                      .getLoanListSelected
+                                                      .dataDate,
+                                                  contractName: FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractName,
+                                                  dbName: FFAppState()
+                                                      .getLoanListSelected
+                                                      .dbName,
+                                                  contractNo: FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractNo,
+                                                  contractNoBlinding:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractNo,
+                                                  contractBankType: FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractBankType,
+                                                  contractBankAccount:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractBankAccount,
+                                                  contractBankBrandname:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractBankBrandname,
+                                                  contractDate: FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractDate,
+                                                  contractCloseDate:
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractCloseDate,
+                                                  transno: FFAppState()
+                                                      .getLoanListSelected
+                                                      .transno,
+                                                  requestTopupAmount: FFAppState()
+                                                      .getTopupCalculateAppState
+                                                      .amount
+                                                      .toString(),
+                                                  requestDate: FFAppState()
+                                                      .getLoanListSelected
+                                                      .requestDate,
+                                                  loanAmount: FFAppState()
+                                                      .getTopupCalculateAppState
+                                                      .amount
+                                                      .toString(),
+                                                  requestStatus: FFAppState()
+                                                      .getLoanListSelected
+                                                      .requestStatusCode,
+                                                  thaiId: FFAppState()
+                                                      .customerDetailData
+                                                      .thaiId,
+                                                  hashThaiId: FFAppState()
+                                                      .hashThaiIdAppState,
+                                                );
+
+                                                _shouldSetState = true;
+                                                if ((_model.saveLeadLHOutput
+                                                            ?.statusCode ??
+                                                        200) !=
+                                                    200) {
+                                                  Navigator.pop(context);
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              ErrorMessageComponentWidget(
+                                                            textMessage:
+                                                                'พบข้อผิดพลาด status (${TopupLeadLHMobileAppCall.statuscode(
+                                                              (_model.saveLeadLHOutput
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            )})',
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                                if (TopupLeadLHMobileAppCall
+                                                        .statuscode(
+                                                      (_model.saveLeadLHOutput
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ) !=
+                                                    '200') {
+                                                  Navigator.pop(context);
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              ErrorMessageComponentWidget(
+                                                            textMessage:
+                                                                'พบข้อผิดพลาด (${TopupLeadLHMobileAppCall.statuscode(
+                                                              (_model.saveLeadLHOutput
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            )})',
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                                Navigator.pop(context);
+
+                                                context.goNamed(
+                                                  SaveLeadHLSuccessWidget
+                                                      .routeName,
+                                                  extra: <String, dynamic>{
+                                                    kTransitionInfoKey:
+                                                        TransitionInfo(
+                                                      hasTransition: true,
+                                                      transitionType:
+                                                          PageTransitionType
+                                                              .rightToLeft,
+                                                    ),
+                                                  },
+                                                );
+                                              } else {
+                                                context.pushNamed(
+                                                  SelectInstallmentPageWidget
+                                                      .routeName,
+                                                  extra: <String, dynamic>{
+                                                    kTransitionInfoKey:
+                                                        TransitionInfo(
+                                                      hasTransition: true,
+                                                      transitionType:
+                                                          PageTransitionType
+                                                              .rightToLeft,
+                                                    ),
+                                                  },
+                                                );
+                                              }
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                            },
+                                      text: ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                  'L') ||
+                                              ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
+                                                  'H') ||
+                                              ('${FFAppState().getTopupDataAPIResultAppstate.contractDetails.canTopup}' !=
+                                                  'Y') ||
+                                              ((double.parse((functions
+                                                          .removeCommaFromNumText(
+                                                              '${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) -
+                                                      int.parse(
+                                                          ('${valueOrDefault<String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .interestPaidFlag,
+                                                                    'yield',
+                                                                  )}' ==
+                                                                  'Y'
+                                                              ? '${_model.yieldTemp?.toString()}'
+                                                              : '0')) -
+                                                      int.parse(
+                                                          '${valueOrDefault<String>(
+                                                        FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .contractDetails
+                                                            .closingBalance
+                                                            .toString(),
+                                                        'closing_balance',
+                                                      )}') -
+                                                      int.parse(
+                                                          '${valueOrDefault<String>(
+                                                        FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .feeAmount
+                                                            .toString(),
+                                                        'fee_amount',
+                                                      )}') -
+                                                      int.parse(
+                                                          '${valueOrDefault<String>(
+                                                        FFAppState()
+                                                            .getTopupDataAPIResultAppstate
+                                                            .collectionFee
+                                                            .toString(),
+                                                        'collection_fee',
+                                                      )}')) >
+                                                  FFAppState()
+                                                      .getLoanListSelected
+                                                      .topupDetail
+                                                      .maxTransferAmount)
+                                          ? 'ส่งข้อมูล'
+                                          : 'ถัดไป',
                                       options: FFButtonOptions(
                                         width: 140.0,
-                                        height: 50.0,
+                                        height: 60.0,
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16.0, 0.0, 16.0, 0.0),
                                         iconPadding:
@@ -2690,160 +3389,206 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                     ),
                                   ),
                                 ),
-                              if ((valueOrDefault<String>(
+                              if (('${valueOrDefault<String>(
                                         FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .interestPaidFlag,
                                         'yield',
-                                      ) ==
+                                      )}' ==
                                       'Y') ||
-                                  true)
-                                Builder(
-                                  builder: (context) => FFButtonWidget(
-                                    onPressed: () async {
-                                      var _shouldSetState = false;
-                                      unawaited(
-                                        () async {}(),
-                                      );
-                                      showDialog(
-                                        context: context,
-                                        builder: (dialogContext) {
-                                          return Dialog(
-                                            elevation: 0,
-                                            insetPadding: EdgeInsets.zero,
-                                            backgroundColor: Colors.transparent,
-                                            alignment: AlignmentDirectional(
-                                                    0.0, 0.0)
-                                                .resolve(
-                                                    Directionality.of(context)),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                FocusScope.of(dialogContext)
-                                                    .unfocus();
-                                                FocusManager
-                                                    .instance.primaryFocus
-                                                    ?.unfocus();
-                                              },
-                                              child: LoadingWidget(),
-                                            ),
+                                  false)
+                                Expanded(
+                                  child: Builder(
+                                    builder: (context) => FFButtonWidget(
+                                      onPressed: () async {
+                                        var _shouldSetState = false;
+                                        unawaited(
+                                          () async {}(),
+                                        );
+                                        showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child: LoadingWidget(),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        _model.getTopupDetailAPIRefresh =
+                                            await SrisawadApiGroup
+                                                .getTopupDetailCall
+                                                .call(
+                                          dbName: FFAppState()
+                                              .getLoanListSelected
+                                              .dbName,
+                                          contractNo: FFAppState()
+                                              .getLoanListSelected
+                                              .contractNo,
+                                          bearerAuth: FFAppState().accessToken,
+                                          apiUrl: FFDevEnvironmentValues()
+                                                  .isProduction
+                                              ? FFAppState().topupUrlProd
+                                              : FFAppState().topupUrlDev,
+                                        );
+
+                                        _shouldSetState = true;
+                                        if ((_model.getTopupDetailAPIRefresh
+                                                    ?.statusCode ??
+                                                200) !=
+                                            200) {
+                                          await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIRefresh?.statusCode ?? 200).toString()})',
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           );
-                                        },
-                                      );
 
-                                      _model.getTopupDetailAPIRefresh =
-                                          await SrisawadApiGroup
-                                              .getTopupDetailCall
-                                              .call(
-                                        dbName: FFAppState()
-                                            .getLoanListSelected
-                                            .dbName,
-                                        contractNo: FFAppState()
-                                            .getLoanListSelected
-                                            .contractNo,
-                                        bearerAuth: FFAppState().accessToken,
-                                      );
-
-                                      _shouldSetState = true;
-                                      if ((_model.getTopupDetailAPIRefresh
-                                                  ?.statusCode ??
-                                              200) !=
-                                          200) {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              content: Text(
-                                                  'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIRefresh?.statusCode ?? 200).toString()})'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                        Navigator.pop(context);
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
-                                        return;
-                                      }
-                                      if (SrisawadApiGroup.getTopupDetailCall
-                                              .code(
-                                            (_model.getTopupDetailAPIRefresh
-                                                    ?.jsonBody ??
-                                                ''),
-                                          ) !=
-                                          '200') {
-                                        await showDialog(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              content: Text(
-                                                  '${SrisawadApiGroup.getTopupDetailCall.message(
-                                                (_model.getTopupDetailAPIRefresh
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              )}'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext),
-                                                  child: Text('Ok'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                        Navigator.pop(context);
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
-                                        return;
-                                      }
-                                      FFAppState()
-                                              .getTopupDataAPIResultAppstate =
-                                          GetTopupDataAPIDataTypeStruct
-                                              .maybeFromMap((_model
-                                                      .getTopupDetailAPIRefresh
+                                          Navigator.pop(context);
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
+                                        if (SrisawadApiGroup.getTopupDetailCall
+                                                .code(
+                                              (_model.getTopupDetailAPIRefresh
                                                       ?.jsonBody ??
-                                                  ''))!;
-                                      safeSetState(() {});
-                                      Navigator.pop(context);
-                                      if (_shouldSetState) safeSetState(() {});
-                                    },
-                                    text: 'ปรับปรุงยอดชำระ',
-                                    options: FFButtonOptions(
-                                      width: 140.0,
-                                      height: 50.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                      iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).accent2,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: Colors.white,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 0.0,
-                                      borderRadius: BorderRadius.circular(8.0),
+                                                  ''),
+                                            ) !=
+                                            '200') {
+                                          await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        '${SrisawadApiGroup.getTopupDetailCall.message(
+                                                      (_model.getTopupDetailAPIRefresh
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    )}',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          Navigator.pop(context);
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
+                                        FFAppState()
+                                                .getTopupDataAPIResultAppstate =
+                                            GetTopupDataAPIDataTypeStruct
+                                                .maybeFromMap((_model
+                                                        .getTopupDetailAPIRefresh
+                                                        ?.jsonBody ??
+                                                    ''))!;
+                                        safeSetState(() {});
+                                        _model.yieldTemp = SrisawadApiGroup
+                                            .getTopupDetailCall
+                                            .topupYield(
+                                          (_model.getTopupDetailAPIRefresh
+                                                  ?.jsonBody ??
+                                              ''),
+                                        );
+                                        safeSetState(() {});
+                                        Navigator.pop(context);
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                      },
+                                      text: 'ปรับปรุงยอดชำระ',
+                                      options: FFButtonOptions(
+                                        width: 140.0,
+                                        height: 60.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .accent2,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        elevation: 0.0,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
                                     ),
                                   ),
                                 ),
-                            ],
+                            ].divide(SizedBox(width: 16.0)),
                           ),
                         ),
-                      ],
+                      ].addToEnd(SizedBox(height: 12.0)),
                     ),
                   ),
-              ],
+              ].addToEnd(SizedBox(height: 18.0)),
             ),
           ),
         ),

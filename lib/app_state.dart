@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -394,7 +395,7 @@ class FFAppState extends ChangeNotifier {
   }
 
   GetTopupDataAPIDataTypeStruct _getTopupDataAPIResultAppstate =
-      GetTopupDataAPIDataTypeStruct();
+      GetTopupDataAPIDataTypeStruct.fromSerializableMap(jsonDecode('{}'));
   GetTopupDataAPIDataTypeStruct get getTopupDataAPIResultAppstate =>
       _getTopupDataAPIResultAppstate;
   set getTopupDataAPIResultAppstate(GetTopupDataAPIDataTypeStruct value) {
@@ -497,6 +498,60 @@ class FFAppState extends ChangeNotifier {
   String get idCardPlusSelfieFilePath => _idCardPlusSelfieFilePath;
   set idCardPlusSelfieFilePath(String value) {
     _idCardPlusSelfieFilePath = value;
+  }
+
+  String _circleImageBase64SaveTopup = '';
+  String get circleImageBase64SaveTopup => _circleImageBase64SaveTopup;
+  set circleImageBase64SaveTopup(String value) {
+    _circleImageBase64SaveTopup = value;
+  }
+
+  String _fullVehicleImageBase64SaveTopup = '';
+  String get fullVehicleImageBase64SaveTopup =>
+      _fullVehicleImageBase64SaveTopup;
+  set fullVehicleImageBase64SaveTopup(String value) {
+    _fullVehicleImageBase64SaveTopup = value;
+  }
+
+  QrCodeDataTypeStruct _qrCodeDataTypeAppState = QrCodeDataTypeStruct();
+  QrCodeDataTypeStruct get qrCodeDataTypeAppState => _qrCodeDataTypeAppState;
+  set qrCodeDataTypeAppState(QrCodeDataTypeStruct value) {
+    _qrCodeDataTypeAppState = value;
+  }
+
+  void updateQrCodeDataTypeAppStateStruct(
+      Function(QrCodeDataTypeStruct) updateFn) {
+    updateFn(_qrCodeDataTypeAppState);
+  }
+
+  dynamic _jsonTemp = jsonDecode('{}');
+  dynamic get jsonTemp => _jsonTemp;
+  set jsonTemp(dynamic value) {
+    _jsonTemp = value;
+  }
+
+  String _topupUrlDev = '';
+  String get topupUrlDev => _topupUrlDev;
+  set topupUrlDev(String value) {
+    _topupUrlDev = value;
+  }
+
+  String _topupUrlProd = '';
+  String get topupUrlProd => _topupUrlProd;
+  set topupUrlProd(String value) {
+    _topupUrlProd = value;
+  }
+
+  String _LeadUrlDev = '';
+  String get LeadUrlDev => _LeadUrlDev;
+  set LeadUrlDev(String value) {
+    _LeadUrlDev = value;
+  }
+
+  String _LeadUrlProd = '';
+  String get LeadUrlProd => _LeadUrlProd;
+  set LeadUrlProd(String value) {
+    _LeadUrlProd = value;
   }
 }
 

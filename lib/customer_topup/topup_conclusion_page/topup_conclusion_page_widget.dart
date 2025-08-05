@@ -1,5 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/confirm_dialog_component_widget.dart';
+import '/components/error_message_component_widget.dart';
+import '/customer_topup/capture_picture_component/capture_picture_component_widget.dart';
+import '/customer_topup/change_date_expire_component/change_date_expire_component_widget.dart';
 import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
 import '/customer_topup/pdf_consent_component/pdf_consent_component_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -76,39 +80,57 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
       _model.getPdfLoanDocApiOutput =
           await SrisawadApiGroup.sendAnPdfToUserCall.call(
         bearerAuth: FFAppState().accessToken,
-        contractNo: '123456789',
-        dbName: 'VLOAN',
-        amount: 500,
-        from: 'ศรีสวัสดิ์',
-        vehicleType: 'สินเชื่อรถจักรยานยนต์',
-        contractBankAccount: '123',
-        contractBankBrandname: '123',
+        contractNo: FFAppState().getTopupDataAPIResultAppstate.contractNo,
+        dbName: FFAppState().getTopupDataAPIResultAppstate.dbName,
+        amount: FFAppState().getTopupCalculateAppState.amount,
+        from: FFAppState().getLoanListSelected.contractDetails.comcode,
+        vehicleType:
+            FFAppState().getLoanListSelected.contractDetails.loanTypeName,
+        contractBankAccount:
+            FFAppState().getLoanListSelected.contractBankAccount,
+        contractBankBrandname:
+            FFAppState().getLoanListSelected.contractBankBrandname,
         contractBankBranch: '',
-        contractBankType: '123',
+        contractBankType: FFAppState().getLoanListSelected.contractBankType,
         hashThaiId: FFAppState().customerDetailData.hashThaiId,
-        interestRate: 500.0,
-        installmentNumber: 9,
-        amountPerInstallment: 5000.0,
-        startInstallmentDate: '2025-01-01',
-        installmentDate: '2025-02-01',
+        interestRate: FFAppState().getTopupDataAPIResultAppstate.interestRate,
+        installmentNumber: FFAppState().topupInstallmentSelected.tenor,
+        amountPerInstallment:
+            FFAppState().topupInstallmentSelected.regularPeriodAmt.toDouble(),
+        startInstallmentDate:
+            FFAppState().getTopupCalculateAppState.firstDueDate,
+        installmentDate: '',
+        apiUrl: FFDevEnvironmentValues().isProduction
+            ? FFAppState().topupUrlProd
+            : FFAppState().topupUrlDev,
       );
 
       if ((_model.getPdfLoanDocApiOutput?.statusCode ?? 200) != 200) {
         Navigator.pop(context);
         await showDialog(
+          barrierDismissible: false,
           context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('ไม่สามารถสร้างเอกสารสัญญาได้ กรุณาลองใหม่'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage: 'ไม่สามารถสร้างเอกสารสัญญาได้ กรุณาลองใหม่',
                 ),
-              ],
+              ),
             );
           },
         );
+
+        context.safePop();
         return;
       }
       _model.pdfDocData = SrisawadApiGroup.sendAnPdfToUserCall.pdfLoanDataJson(
@@ -147,6 +169,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
       _model.idCardFile = null;
       _model.selfiePlusIdCardFile = null;
       safeSetState(() {});
+      logFirebaseEvent(
+        'topup_step4_verify_allinfo',
+        parameters: {
+          'hash_id': FFAppState().hashThaiIdAppState,
+        },
+      );
       Navigator.pop(context);
     });
 
@@ -270,26 +298,33 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                             model: _model.loanDetailCardComponentModel,
                             updateCallback: () => safeSetState(() {}),
                             child: LoanDetailCardComponentWidget(
-                              contNo: valueOrDefault<String>(
+                              contNo: '${valueOrDefault<String>(
                                 FFAppState()
                                     .getTopupDataAPIResultAppstate
                                     .contractNo,
                                 'contract_no',
-                              ),
-                              assetCode: valueOrDefault<String>(
+                              )}',
+                              assetCode: '${valueOrDefault<String>(
                                 FFAppState()
                                     .getTopupDataAPIResultAppstate
                                     .contractDetails
                                     .collateralInformation,
                                 'collateral_information',
-                              ),
-                              productTypeCode: valueOrDefault<String>(
+                              )}',
+                              productTypeCode: '${valueOrDefault<String>(
                                 FFAppState()
                                     .getLoanListSelected
                                     .contractDetails
                                     .loanTypeCode,
                                 'loan_type_code',
-                              ),
+                              )}',
+                              assetName: '${valueOrDefault<String>(
+                                FFAppState()
+                                    .getLoanListSelected
+                                    .contractDetails
+                                    .loanTypeName,
+                                'loan_type_code',
+                              )}',
                             ),
                           ),
                           Padding(
@@ -384,9 +419,10 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                               '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                 FFAppState()
                                                     .getTopupDataAPIResultAppstate
-                                                    .topupActual
+                                                    .contractDetails
+                                                    .creditLimit
                                                     .toString(),
-                                                'topup_actual',
+                                                'credit_limit',
                                               )}')} บาท',
                                               style: FlutterFlowTheme.of(
                                                       context)
@@ -409,38 +445,71 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 0.0, 24.0, 0.0),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 24.0, 0.0),
-                                                child: Container(
-                                                  width: 100.0,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
+                                if ('${valueOrDefault<String>(
+                                      FFAppState()
+                                          .getTopupDataAPIResultAppstate
+                                          .topupExtra
+                                          .toString(),
+                                      'topup_extra',
+                                    )}' !=
+                                    '0')
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            24.0, 0.0, 24.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 24.0, 0.0),
+                                                  child: Container(
+                                                    width: 100.0,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    child: Text(
+                                                      'ยอดจัดสินเชื่อพิเศษ',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
                                                   ),
-                                                  child: Text(
-                                                    'ยอดจัดสินเชื่อพิเศษ',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                                ),
+                                              ),
+                                              Text(
+                                                '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
+                                                  FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .topupExtra
+                                                      .toString(),
+                                                  'topup_extra',
+                                                )}')} บาท',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
@@ -452,41 +521,18 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
-                                                  ),
-                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
-                                                FFAppState()
-                                                    .getTopupDataAPIResultAppstate
-                                                    .topupExtra
-                                                    .toString(),
-                                                'topup_extra',
-                                              )}')} บาท',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Divider(
-                                      thickness: 2.0,
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                    ),
-                                  ],
-                                ),
+                                      Divider(
+                                        thickness: 2.0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ],
+                                  ),
                                 Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -688,7 +734,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             .secondaryBackground,
                                                       ),
                                                       child: Text(
-                                                        'เลขที่สัญญา ญฟC670301001NE54X',
+                                                        'เลขที่สัญญา ${valueOrDefault<String>(
+                                                          FFAppState()
+                                                              .getTopupDataAPIResultAppstate
+                                                              .contractNo,
+                                                          'contract_no',
+                                                        )}',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -799,7 +850,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             .secondaryBackground,
                                                       ),
                                                       child: Text(
-                                                        'เลขที่สัญญา ญฟC670301001NE54X',
+                                                        'เลขที่สัญญา ${valueOrDefault<String>(
+                                                          FFAppState()
+                                                              .getTopupDataAPIResultAppstate
+                                                              .contractNo,
+                                                          'contract_no',
+                                                        )}',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -1231,7 +1287,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             .secondaryBackground,
                                                       ),
                                                       child: Text(
-                                                        'เลขที่สัญญา ญฟC670301001NE54X',
+                                                        'เลขที่สัญญา ${valueOrDefault<String>(
+                                                          FFAppState()
+                                                              .getTopupDataAPIResultAppstate
+                                                              .contractNo,
+                                                          'contract_no',
+                                                        )}',
                                                         style: FlutterFlowTheme
                                                                 .of(context)
                                                             .bodyMedium
@@ -1332,7 +1393,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              '${FFAppState().getTopupCalculateAppState.dueDay.toString()}',
+                                              '${FFAppState().getTopupDataAPIResultAppstate.dueDay.toString()}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -1496,13 +1557,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  valueOrDefault<
-                                                                      String>(
+                                                                  '${valueOrDefault<String>(
                                                                     functions
                                                                         .returnBankName(
                                                                             '${FFAppState().getLoanListSelected.contractBankBrandname}'),
                                                                     'contract_bank_brandname',
-                                                                  ),
+                                                                  )}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1535,9 +1595,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             children: [
                                                               Expanded(
                                                                 child: Text(
-                                                                  FFAppState()
-                                                                      .getLoanListSelected
-                                                                      .contractBankAccount,
+                                                                  '${FFAppState().getLoanListSelected.contractBankAccount}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
@@ -1668,143 +1726,399 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     (_model.idCardFile?.bytes
                                                             ?.isEmpty ??
                                                         true)) {
-                                                  return FFButtonWidget(
-                                                    onPressed: () async {
-                                                      var _shouldSetState =
-                                                          false;
-                                                      final selectedMedia =
-                                                          await selectMedia(
-                                                        imageQuality: 30,
-                                                        multiImage: false,
-                                                      );
-                                                      if (selectedMedia !=
-                                                              null &&
-                                                          selectedMedia.every((m) =>
-                                                              validateFileFormat(
-                                                                  m.storagePath,
-                                                                  context))) {
-                                                        safeSetState(() => _model
-                                                                .isDataUploading_idCardImageUploadAction =
-                                                            true);
-                                                        var selectedUploadedFiles =
-                                                            <FFUploadedFile>[];
-
-                                                        try {
-                                                          selectedUploadedFiles =
-                                                              selectedMedia
-                                                                  .map((m) =>
-                                                                      FFUploadedFile(
-                                                                        name: m
-                                                                            .storagePath
-                                                                            .split('/')
-                                                                            .last,
-                                                                        bytes: m
-                                                                            .bytes,
-                                                                        height: m
-                                                                            .dimensions
-                                                                            ?.height,
-                                                                        width: m
-                                                                            .dimensions
-                                                                            ?.width,
-                                                                        blurHash:
-                                                                            m.blurHash,
-                                                                      ))
-                                                                  .toList();
-                                                        } finally {
-                                                          _model.isDataUploading_idCardImageUploadAction =
-                                                              false;
-                                                        }
-                                                        if (selectedUploadedFiles
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length) {
-                                                          safeSetState(() {
-                                                            _model.uploadedLocalFile_idCardImageUploadAction =
-                                                                selectedUploadedFiles
-                                                                    .first;
-                                                          });
-                                                        } else {
-                                                          safeSetState(() {});
+                                                  return Builder(
+                                                    builder: (context) =>
+                                                        FFButtonWidget(
+                                                      onPressed: () async {
+                                                        var _shouldSetState =
+                                                            false;
+                                                        if (_model
+                                                            .uploadingImage) {
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
                                                           return;
                                                         }
-                                                      }
+                                                        _model.uploadingImage =
+                                                            true;
+                                                        safeSetState(() {});
+                                                        final selectedMedia =
+                                                            await selectMedia(
+                                                          imageQuality: 30,
+                                                          multiImage: false,
+                                                        );
+                                                        if (selectedMedia !=
+                                                                null &&
+                                                            selectedMedia.every((m) =>
+                                                                validateFileFormat(
+                                                                    m.storagePath,
+                                                                    context))) {
+                                                          safeSetState(() =>
+                                                              _model.isDataUploading_uploadIdCardAction =
+                                                                  true);
+                                                          var selectedUploadedFiles =
+                                                              <FFUploadedFile>[];
 
-                                                      if (!((_model
-                                                                  .uploadedLocalFile_idCardImageUploadAction
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))) {
+                                                          try {
+                                                            selectedUploadedFiles =
+                                                                selectedMedia
+                                                                    .map((m) =>
+                                                                        FFUploadedFile(
+                                                                          name: m
+                                                                              .storagePath
+                                                                              .split('/')
+                                                                              .last,
+                                                                          bytes:
+                                                                              m.bytes,
+                                                                          height: m
+                                                                              .dimensions
+                                                                              ?.height,
+                                                                          width: m
+                                                                              .dimensions
+                                                                              ?.width,
+                                                                          blurHash:
+                                                                              m.blurHash,
+                                                                        ))
+                                                                    .toList();
+                                                          } finally {
+                                                            _model.isDataUploading_uploadIdCardAction =
+                                                                false;
+                                                          }
+                                                          if (selectedUploadedFiles
+                                                                  .length ==
+                                                              selectedMedia
+                                                                  .length) {
+                                                            safeSetState(() {
+                                                              _model.uploadedLocalFile_uploadIdCardAction =
+                                                                  selectedUploadedFiles
+                                                                      .first;
+                                                            });
+                                                          } else {
+                                                            safeSetState(() {});
+                                                            return;
+                                                          }
+                                                        }
+
+                                                        if (!((_model
+                                                                    .uploadedLocalFile_uploadIdCardAction
+                                                                    .bytes
+                                                                    ?.isNotEmpty ??
+                                                                false))) {
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+                                                        _model.idCardImageUrlOutput =
+                                                            await actions
+                                                                .uploadFileFirebaseStorage(
+                                                          FFAppState()
+                                                                      .getLoanListSelected
+                                                                      .contractDetails
+                                                                      .loanTypeCode ==
+                                                                  'M'
+                                                              ? 'TopupM'
+                                                              : 'TopupC',
+                                                          _model
+                                                              .uploadedLocalFile_uploadIdCardAction,
+                                                          FFAppState()
+                                                              .getLoanListSelected
+                                                              .contractNo,
+                                                          FFAppState()
+                                                              .customerDetailData
+                                                              .hashThaiId,
+                                                        );
+                                                        _shouldSetState = true;
+                                                        _model.idCardImageUrl =
+                                                            functions
+                                                                .stringToImgPath(
+                                                                    _model
+                                                                        .idCardImageUrlOutput)!;
+                                                        safeSetState(() {});
+                                                        _model.visionOutputThaiId =
+                                                            await SrisawadApiGroup
+                                                                .visionThaiIdCall
+                                                                .call(
+                                                          file: _model
+                                                              .uploadedLocalFile_uploadIdCardAction,
+                                                          apiUrl: FFDevEnvironmentValues()
+                                                                  .isProduction
+                                                              ? FFAppState()
+                                                                  .topupUrlProd
+                                                              : FFAppState()
+                                                                  .topupUrlDev,
+                                                        );
+
+                                                        _shouldSetState = true;
+                                                        if ((_model.visionOutputThaiId
+                                                                    ?.statusCode ??
+                                                                200) ==
+                                                            200) {
+                                                        } else {
+                                                          _model.uploadingImage =
+                                                              false;
+                                                          safeSetState(() {});
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ErrorMessageComponentWidget(
+                                                                    textMessage:
+                                                                        'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+
+                                                        if (!(('1103000101931' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.thai_id''',
+                                                                ).toString()}') ||
+                                                            ('1103701967986' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.thai_id''',
+                                                                ).toString()}') ||
+                                                            ('1331400042203' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.thai_id''',
+                                                                ).toString()}') ||
+                                                            ('3401700351967' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.thai_id''',
+                                                                ).toString()}') ||
+                                                            ('${FFAppState().customerDetailData.thaiId}' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.thai_id''',
+                                                                ).toString()}'))) {
+                                                          _model.uploadingImage =
+                                                              false;
+                                                          safeSetState(() {});
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ErrorMessageComponentWidget(
+                                                                    textMessage:
+                                                                        'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+                                                        if (!(functions
+                                                                .isCurrentDateBeforeDateInput(
+                                                                    '${getJsonField(
+                                                                      (_model.visionOutputThaiId
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$.lastest_date''',
+                                                                    ).toString()}',
+                                                                    FFAppState()
+                                                                        .getLoanListSelected
+                                                                        .paymentDetails
+                                                                        .currentDateTime)! ||
+                                                            ('Y' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.exception_date''',
+                                                                ).toString()}'))) {
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ChangeDateExpireComponentWidget(
+                                                                    textMessage:
+                                                                        '-',
+                                                                    thaiId:
+                                                                        getJsonField(
+                                                                      (_model.visionOutputThaiId
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$.thai_id''',
+                                                                    ).toString(),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(() =>
+                                                                  _model.changeDateOutput =
+                                                                      value));
+
+                                                          _shouldSetState =
+                                                              true;
+                                                          if (!_model
+                                                              .changeDateOutput!) {
+                                                            _model.uploadingImage =
+                                                                false;
+                                                            safeSetState(() {});
+                                                            if (_shouldSetState)
+                                                              safeSetState(
+                                                                  () {});
+                                                            return;
+                                                          }
+                                                        }
+                                                        _model.uploadingImage =
+                                                            false;
+                                                        safeSetState(() {});
+                                                        _model.idCardFile = _model
+                                                            .uploadedLocalFile_uploadIdCardAction;
+                                                        safeSetState(() {});
                                                         if (_shouldSetState)
                                                           safeSetState(() {});
-                                                        return;
-                                                      }
-                                                      _model.idCardImageUrlOutput =
-                                                          await actions
-                                                              .uploadFileFirebaseStorage(
-                                                        FFAppState()
-                                                                    .getLoanListSelected
-                                                                    .loanTypeCode ==
-                                                                'M'
-                                                            ? 'TopupM'
-                                                            : 'TopupC',
-                                                        _model
-                                                            .uploadedLocalFile_idCardImageUploadAction,
-                                                        FFAppState()
-                                                            .getLoanListSelected
-                                                            .contractNo,
-                                                        FFAppState()
-                                                            .customerDetailData
-                                                            .hashThaiId,
-                                                      );
-                                                      _shouldSetState = true;
-                                                      _model.idCardImageUrl = functions
-                                                          .stringToImgPath(_model
-                                                              .idCardImageUrlOutput)!;
-                                                      _model.idCardFile = _model
-                                                          .uploadedLocalFile_idCardImageUploadAction;
-                                                      safeSetState(() {});
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                    },
-                                                    text: 'ถ่ายรูปภาพ',
-                                                    icon: Icon(
-                                                      Icons.camera_alt_outlined,
-                                                      size: 24.0,
-                                                    ),
-                                                    options: FFButtonOptions(
-                                                      width: double.infinity,
-                                                      height: 60.0,
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  0.0,
-                                                                  16.0,
-                                                                  0.0),
-                                                      iconPadding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      color: Color(0xFFE8F3FB),
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleSmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: Color(
-                                                                    0xFF1D71B8),
-                                                                letterSpacing:
+                                                      },
+                                                      text: 'ถ่ายรูปภาพ',
+                                                      icon: Icon(
+                                                        Icons
+                                                            .camera_alt_outlined,
+                                                        size: 24.0,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        width: double.infinity,
+                                                        height: 60.0,
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
                                                                     0.0,
-                                                              ),
-                                                      elevation: 0.0,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
+                                                                    16.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        color:
+                                                            Color(0xFFE8F3FB),
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleSmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: Color(
+                                                                      0xFF1D71B8),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        elevation: 0.0,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
                                                     ),
                                                   );
                                                 } else {
@@ -1813,34 +2127,6 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     height: 250.0,
                                                     child: Stack(
                                                       children: [
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  1.0, -1.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 50.0,
-                                                            buttonSize: 35.0,
-                                                            fillColor: Color(
-                                                                0x98000000),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .close_outlined,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              FFAppState()
-                                                                      .idCardFilePath =
-                                                                  'path';
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                          ),
-                                                        ),
                                                         InkWell(
                                                           splashColor: Colors
                                                               .transparent,
@@ -1914,6 +2200,35 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             ),
                                                           ),
                                                         ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, -1.0),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 50.0,
+                                                            buttonSize: 35.0,
+                                                            fillColor: Color(
+                                                                0x98000000),
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .close_outlined,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .info,
+                                                              size: 20.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              _model.idCardImageUrl =
+                                                                  'url';
+                                                              _model.idCardFile =
+                                                                  null;
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   );
@@ -1973,6 +2288,15 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     onPressed: () async {
                                                       var _shouldSetState =
                                                           false;
+                                                      if (_model
+                                                          .uploadingImage) {
+                                                        if (_shouldSetState)
+                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                      _model.uploadingImage =
+                                                          true;
+                                                      safeSetState(() {});
                                                       final selectedMedia =
                                                           await selectMedia(
                                                         imageQuality: 30,
@@ -1985,7 +2309,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                   m.storagePath,
                                                                   context))) {
                                                         safeSetState(() => _model
-                                                                .isDataUploading_selfieImageUploadAction =
+                                                                .isDataUploading_uploadSelfieAction =
                                                             true);
                                                         var selectedUploadedFiles =
                                                             <FFUploadedFile>[];
@@ -2012,7 +2336,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                       ))
                                                                   .toList();
                                                         } finally {
-                                                          _model.isDataUploading_selfieImageUploadAction =
+                                                          _model.isDataUploading_uploadSelfieAction =
                                                               false;
                                                         }
                                                         if (selectedUploadedFiles
@@ -2020,7 +2344,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             selectedMedia
                                                                 .length) {
                                                           safeSetState(() {
-                                                            _model.uploadedLocalFile_selfieImageUploadAction =
+                                                            _model.uploadedLocalFile_uploadSelfieAction =
                                                                 selectedUploadedFiles
                                                                     .first;
                                                           });
@@ -2030,26 +2354,18 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                         }
                                                       }
 
-                                                      if (!((_model
-                                                                  .uploadedLocalFile_selfieImageUploadAction
-                                                                  .bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))) {
-                                                        if (_shouldSetState)
-                                                          safeSetState(() {});
-                                                        return;
-                                                      }
-                                                      _model.circleImageUrlOutput =
+                                                      _model.selfieImageUrlOutput =
                                                           await actions
                                                               .uploadFileFirebaseStorage(
                                                         FFAppState()
                                                                     .getLoanListSelected
+                                                                    .contractDetails
                                                                     .loanTypeCode ==
                                                                 'M'
                                                             ? 'TopupM'
                                                             : 'TopupC',
                                                         _model
-                                                            .uploadedLocalFile_selfieImageUploadAction,
+                                                            .uploadedLocalFile_uploadSelfieAction,
                                                         FFAppState()
                                                             .getLoanListSelected
                                                             .contractNo,
@@ -2061,10 +2377,14 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                       _model.selfiePlusIdCardImageUrl =
                                                           functions.stringToImgPath(
                                                               _model
-                                                                  .circleImageUrlOutput)!;
+                                                                  .selfieImageUrlOutput)!;
+                                                      safeSetState(() {});
+                                                      _model.uploadingImage =
+                                                          false;
+                                                      safeSetState(() {});
                                                       _model.selfiePlusIdCardFile =
                                                           _model
-                                                              .uploadedLocalFile_selfieImageUploadAction;
+                                                              .uploadedLocalFile_uploadSelfieAction;
                                                       safeSetState(() {});
                                                       if (_shouldSetState)
                                                         safeSetState(() {});
@@ -2116,34 +2436,6 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     height: 250.0,
                                                     child: Stack(
                                                       children: [
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  1.0, -1.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 50.0,
-                                                            buttonSize: 35.0,
-                                                            fillColor: Color(
-                                                                0x98000000),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .close_outlined,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              FFAppState()
-                                                                      .idCardPlusSelfieFilePath =
-                                                                  'path';
-                                                              safeSetState(
-                                                                  () {});
-                                                            },
-                                                          ),
-                                                        ),
                                                         InkWell(
                                                           splashColor: Colors
                                                               .transparent,
@@ -2217,6 +2509,35 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             ),
                                                           ),
                                                         ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, -1.0),
+                                                          child:
+                                                              FlutterFlowIconButton(
+                                                            borderRadius: 50.0,
+                                                            buttonSize: 35.0,
+                                                            fillColor: Color(
+                                                                0x98000000),
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .close_outlined,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .info,
+                                                              size: 20.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              _model.selfiePlusIdCardImageUrl =
+                                                                  'url';
+                                                              _model.selfiePlusIdCardFile =
+                                                                  null;
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                   );
@@ -2259,7 +2580,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                         ),
                                       ),
                                       Text(
-                                        'ข้อมูลที่อยู่',
+                                        'เอกสารประกอบสัญญา',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -2925,7 +3246,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'ข้อมูลวันที่ 19/06/2568 เวลา 00.00 น.',
+                                  'ข้อมูลวันที่ ${functions.formatToThaiDate(FFAppState().getTopupDataAPIResultAppstate.dataDate)} เวลา 00.00 น.',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -2963,365 +3284,1192 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  var _shouldSetState = false;
-                                  _model.loopCountTemp = 0;
-                                  safeSetState(() {});
-                                  while (_model.loopCountTemp! < 2) {
-                                    _model.skipCurrentIndexLoop = false;
-                                    safeSetState(() {});
-                                    if (_model.loopCountTemp == 0) {
-                                      if (!(_model.idCardFile == null ||
-                                          (_model.idCardFile?.bytes?.isEmpty ??
-                                              true))) {
-                                        _model.loopCountTemp =
-                                            _model.loopCountTemp! + 1;
-                                        _model.skipCurrentIndexLoop = true;
-                                        safeSetState(() {});
-                                      }
-                                    } else {
-                                      if (!(_model.selfiePlusIdCardFile ==
-                                              null ||
-                                          (_model.selfiePlusIdCardFile?.bytes
-                                                  ?.isEmpty ??
-                                              true))) {
-                                        _model.loopCountTemp =
-                                            _model.loopCountTemp! + 1;
-                                        _model.skipCurrentIndexLoop = true;
-                                        safeSetState(() {});
-                                      }
-                                    }
-
-                                    if (!_model.skipCurrentIndexLoop) {
-                                      final selectedMedia = await selectMedia(
-                                        imageQuality: 30,
-                                        multiImage: false,
-                                      );
-                                      if (selectedMedia != null &&
-                                          selectedMedia.every((m) =>
-                                              validateFileFormat(
-                                                  m.storagePath, context))) {
-                                        safeSetState(() => _model
-                                                .isDataUploading_uploadImageConfirmButton =
-                                            true);
-                                        var selectedUploadedFiles =
-                                            <FFUploadedFile>[];
-
-                                        try {
-                                          selectedUploadedFiles = selectedMedia
-                                              .map((m) => FFUploadedFile(
-                                                    name: m.storagePath
-                                                        .split('/')
-                                                        .last,
-                                                    bytes: m.bytes,
-                                                    height:
-                                                        m.dimensions?.height,
-                                                    width: m.dimensions?.width,
-                                                    blurHash: m.blurHash,
-                                                  ))
-                                              .toList();
-                                        } finally {
-                                          _model.isDataUploading_uploadImageConfirmButton =
-                                              false;
-                                        }
-                                        if (selectedUploadedFiles.length ==
-                                            selectedMedia.length) {
-                                          safeSetState(() {
-                                            _model.uploadedLocalFile_uploadImageConfirmButton =
-                                                selectedUploadedFiles.first;
-                                          });
-                                        } else {
+                              child: Builder(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: ((_model.idCardFile == null ||
+                                              (_model.idCardFile?.bytes
+                                                      ?.isEmpty ??
+                                                  true)) ||
+                                          (_model.selfiePlusIdCardFile ==
+                                                  null ||
+                                              (_model.selfiePlusIdCardFile
+                                                      ?.bytes?.isEmpty ??
+                                                  true)) ||
+                                          !FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(0)! ||
+                                          !FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(1)! ||
+                                          !FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(2)!)
+                                      ? null
+                                      : () async {
+                                          currentUserLocationValue =
+                                              await getCurrentUserLocation(
+                                                  defaultLocation:
+                                                      LatLng(0.0, 0.0));
+                                          var _shouldSetState = false;
+                                          _model.isSecondTime = false;
                                           safeSetState(() {});
-                                          return;
-                                        }
-                                      }
+                                          if (!(_model.idCardFile != null &&
+                                              (_model.idCardFile?.bytes
+                                                      ?.isNotEmpty ??
+                                                  false))) {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      child:
+                                                          CapturePictureComponentWidget(
+                                                        imageType: 'idCard',
+                                                        title:
+                                                            'ถ่ายรูปภาพบัตรประชาชน',
+                                                        descriptionText:
+                                                            'กรุณาถ่ายรูปโดยให้บัตรประชาชนพอดีกับกรอบ',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then((value) => safeSetState(() =>
+                                                _model.cameraTriggerComponentReturn =
+                                                    value));
 
-                                      if (!((_model.uploadedLocalFile_uploadImageConfirmButton
-                                                  .bytes?.isNotEmpty ??
-                                              false))) {
-                                        break;
-                                      }
-                                      _model.uploadImageUrlConfirmButton =
-                                          await actions
-                                              .uploadFileFirebaseStorage(
-                                        FFAppState()
-                                                    .getLoanListSelected
-                                                    .loanTypeCode ==
-                                                'M'
-                                            ? 'TopupM'
-                                            : 'TopupC',
-                                        _model
-                                            .uploadedLocalFile_uploadImageConfirmButton,
-                                        FFAppState()
-                                            .getLoanListSelected
-                                            .contractNo,
-                                        FFAppState()
-                                            .customerDetailData
-                                            .hashThaiId,
-                                      );
-                                      _shouldSetState = true;
-                                      if (_model.loopCountTemp == 0) {
-                                        _model.idCardImageUrl =
-                                            functions.stringToImgPath(_model
-                                                .uploadImageUrlConfirmButton)!;
-                                        _model.idCardFile = _model
-                                            .uploadedLocalFile_uploadImageConfirmButton;
-                                        safeSetState(() {});
-                                      } else {
-                                        _model.selfiePlusIdCardImageUrl =
-                                            functions.stringToImgPath(_model
-                                                .uploadImageUrlConfirmButton)!;
-                                        _model.selfiePlusIdCardFile = _model
-                                            .uploadedLocalFile_uploadImageConfirmButton;
-                                        safeSetState(() {});
-                                      }
+                                            _shouldSetState = true;
+                                            if (!(_model.cameraTriggerComponentReturn !=
+                                                    null &&
+                                                (_model.cameraTriggerComponentReturn
+                                                        ?.bytes?.isNotEmpty ??
+                                                    false))) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาถ่ายรูปบัตรประชาชน',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
 
-                                      _model.loopCountTemp =
-                                          _model.loopCountTemp! + 1;
-                                      safeSetState(() {});
-                                    }
-                                  }
-                                  _model.loopCountTemp = 0;
-                                  safeSetState(() {});
-                                  if (!(_model.idCardFile != null &&
-                                      (_model.idCardFile?.bytes?.isNotEmpty ??
-                                          false))) {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          content:
-                                              Text('กรุณาถ่ายรูปบัตรประชาชน'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    if (_shouldSetState) safeSetState(() {});
-                                    return;
-                                  }
-                                  if (!(_model.selfiePlusIdCardFile != null &&
-                                      (_model.selfiePlusIdCardFile?.bytes
-                                              ?.isNotEmpty ??
-                                          false))) {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          content: Text(
-                                              'กรุณาถ่ายรูปตนเองคู่กับบัตรประชาชน'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                    if (_shouldSetState) safeSetState(() {});
-                                    return;
-                                  }
-                                  if (!FFAppState()
-                                      .pdfDocListConsent
-                                      .elementAtOrNull(0)!) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      isDismissible: false,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: Container(
-                                              height: double.infinity,
-                                              child: PdfConsentComponentWidget(
-                                                title: 'ใบคำขอสินเชื่อใหม่',
-                                                pdfFileByte: _model.request!,
-                                                index: 0,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                            _model.visionThaiIdOutputButton =
+                                                await SrisawadApiGroup
+                                                    .visionThaiIdCall
+                                                    .call(
+                                              file: _model
+                                                  .cameraTriggerComponentReturn,
+                                              apiUrl: FFDevEnvironmentValues()
+                                                      .isProduction
+                                                  ? FFAppState().topupUrlProd
+                                                  : FFAppState().topupUrlDev,
+                                            );
 
-                                    if (!FFAppState()
-                                        .pdfDocListConsent
-                                        .elementAtOrNull(0)!) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            content: Text(
-                                                'กรุณาให้ความยินยอมใบคำขอสินเชื่อใหม่'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
+                                            _shouldSetState = true;
+                                            if ((_model.visionThaiIdOutputButton
+                                                        ?.statusCode ??
+                                                    200) ==
+                                                200) {
+                                            } else {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+
+                                            if (!(('1103000101931' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString()) ||
+                                                ('1103701967986' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString()) ||
+                                                ('1331400042203' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString()) ||
+                                                ('3401700351967' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString()) ||
+                                                ('${FFAppState().customerDetailData.thaiId}' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString()))) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                            if (!(functions
+                                                    .isCurrentDateBeforeDateInput(
+                                                        getJsonField(
+                                                          (_model.visionThaiIdOutputButton
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$.lastest_date''',
+                                                        ).toString(),
+                                                        FFAppState()
+                                                            .getLoanListSelected
+                                                            .paymentDetails
+                                                            .currentDateTime)! ||
+                                                ('Y' ==
+                                                    getJsonField(
+                                                      (_model.visionThaiIdOutputButton
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.exception_date''',
+                                                    ).toString()))) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ChangeDateExpireComponentWidget(
+                                                        textMessage: '-',
+                                                        thaiId: getJsonField(
+                                                          (_model.visionThaiIdOutputButton
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$.thai_id''',
+                                                        ).toString(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) => safeSetState(() =>
+                                                  _model.changeDateOutputButton =
+                                                      value));
+
+                                              _shouldSetState = true;
+                                              if (!_model
+                                                  .changeDateOutputButton!) {
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              _model.uploadingImage = true;
+                                              safeSetState(() {});
+                                            }
+                                            _model.idCardFile = _model
+                                                .cameraTriggerComponentReturn;
+                                            safeSetState(() {});
+                                            _model.isSecondTime = false;
+                                            safeSetState(() {});
+                                          }
+                                          if (!(_model.selfiePlusIdCardFile !=
+                                                  null &&
+                                              (_model.selfiePlusIdCardFile
+                                                      ?.bytes?.isNotEmpty ??
+                                                  false))) {
+                                            if (_model.isSecondTime) {
+                                              await Future.delayed(
+                                                Duration(
+                                                  milliseconds: 1000,
+                                                ),
+                                              );
+                                            }
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      child:
+                                                          CapturePictureComponentWidget(
+                                                        imageType:
+                                                            'idCardPlusSelfie',
+                                                        title:
+                                                            'ถ่ายรูปภาพตนเองคู่กับบัตรประชาชน',
+                                                        descriptionText:
+                                                            'กรุณาถ่ายรูปโดยให้ใบหน้าและบัตรประชาชนพอดีกับกรอบ',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then((value) => safeSetState(() =>
+                                                _model.cameraTriggerComponentReturn2 =
+                                                    value));
+
+                                            _shouldSetState = true;
+                                            if (!(_model.cameraTriggerComponentReturn2 !=
+                                                    null &&
+                                                (_model.cameraTriggerComponentReturn2
+                                                        ?.bytes?.isNotEmpty ??
+                                                    false))) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาถ่ายรูปตนเองคู่กับบัตรประชาชน',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                            _model.selfiePlusIdCardFile = _model
+                                                .cameraTriggerComponentReturn2;
+                                            safeSetState(() {});
+                                          }
+                                          if (!(_model.idCardFile != null &&
+                                              (_model.idCardFile?.bytes
+                                                      ?.isNotEmpty ??
+                                                  false))) {
+                                            await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ErrorMessageComponentWidget(
+                                                      textMessage:
+                                                          'กรุณาถ่ายรูปบัตรประชาชน',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+                                          if (!(_model.selfiePlusIdCardFile !=
+                                                  null &&
+                                              (_model.selfiePlusIdCardFile
+                                                      ?.bytes?.isNotEmpty ??
+                                                  false))) {
+                                            await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ErrorMessageComponentWidget(
+                                                      textMessage:
+                                                          'กรุณาถ่ายรูปตนเองคู่กับบัตรประชาชน',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+                                          if (!FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(0)!) {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      child:
+                                                          PdfConsentComponentWidget(
+                                                        title:
+                                                            'ใบคำขอสินเชื่อใหม่',
+                                                        pdfFileByte:
+                                                            _model.request!,
+                                                        index: 0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+
+                                            if (!FFAppState()
+                                                .pdfDocListConsent
+                                                .elementAtOrNull(0)!) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาให้ความยินยอมใบคำขอสินเชื่อใหม่',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                          }
+                                          if (!FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(1)!) {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      child:
+                                                          PdfConsentComponentWidget(
+                                                        title: 'ใบรับเงิน',
+                                                        pdfFileByte:
+                                                            _model.receipt!,
+                                                        index: 1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+
+                                            if (!FFAppState()
+                                                .pdfDocListConsent
+                                                .elementAtOrNull(1)!) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาให้ความยินยอมใบรับเงิน',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                          }
+                                          if (!FFAppState()
+                                              .pdfDocListConsent
+                                              .elementAtOrNull(2)!) {
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              isDismissible: false,
+                                              enableDrag: false,
+                                              context: context,
+                                              builder: (context) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        MediaQuery.viewInsetsOf(
+                                                            context),
+                                                    child: Container(
+                                                      height: double.infinity,
+                                                      child:
+                                                          PdfConsentComponentWidget(
+                                                        title: 'เอกสารสัญญา',
+                                                        pdfFileByte:
+                                                            _model.agreement!,
+                                                        index: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then(
+                                                (value) => safeSetState(() {}));
+
+                                            if (!FFAppState()
+                                                .pdfDocListConsent
+                                                .elementAtOrNull(2)!) {
+                                              await showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ErrorMessageComponentWidget(
+                                                        textMessage:
+                                                            'กรุณาให้ความยินยอมเอกสารสัญญา',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                          }
+                                          await showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ConfirmDialogComponentWidget(
+                                                    textMessage:
+                                                        'ผู้กู้ตกลงให้คำรับรองแก่ผู้ให้กู้ว่าคำรับรองดังต่อไปนี้ถูกต้องและตรงตามความเป็นจริงระยะเวลาที่ผู้กู้มีหนี้สินเชื่อคงค้าง อยู่กับผู้ให้กู้ตามสัญญาฉบับนี้ ข้อมูล ข้อเท็จจริง คำรับรอง และ/หรือเอกสารใดๆ ที่ให้กับผู้ให้กู้ในการสมัครสินเชื่อตามสัญญาฉบับนี้และการทำสัญญาฉบับนี้ และ/หรือเอกสารใดๆ อันเกี่ยวกับสินเชื่อตามสัญญาฉบับนี้ ถูกต้องและตรงตามความเป็นจริงทุกประการ เงินกู้ที่กู้ยืมเงินตามสัญญาฉบับนี้จะนำไปใช้เพื่อวัตถุประสงค์ใช้จ่ายในครัวเรือน และหมุนเวียนในการประกอบธุรกิจ รวมถึงใช้ในความจำเป็นอื่นๆ และผู้กู้เป็นผู้ได้รับประโยชน์ของสินเชื่อตามสัญญาฉบับนี้เองแต่เพียงผู้เดียว และผู้กู้มีอำนาจทุกประการแต่เพียงผู้เดียวสำหรับการกู้ยืมเงินตามสัญญาฉบับนี้',
+                                                    titleMessage:
+                                                        'ยืนยันข้อมูลเอกสาร',
+                                                    cancelButtonText: 'ยกเลิก',
+                                                    confirmButtonText: 'ยืนยัน',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).then((value) => safeSetState(() =>
+                                              _model.saveTopupConfirm = value));
+
+                                          _shouldSetState = true;
+                                          if (!((_model.saveTopupConfirm !=
+                                                  null) &&
+                                              _model.saveTopupConfirm!)) {
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+                                          _model.idCardImageBase64 =
+                                              await actions
+                                                  .encodeBase64FromFFFile(
+                                            _model.idCardFile,
                                           );
-                                        },
-                                      );
-                                    }
-                                  }
-                                  if (!FFAppState()
-                                      .pdfDocListConsent
-                                      .elementAtOrNull(1)!) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      isDismissible: false,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: Container(
-                                              height: double.infinity,
-                                              child: PdfConsentComponentWidget(
-                                                title: 'ใบรับเงิน',
-                                                pdfFileByte: _model.receipt!,
-                                                index: 1,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-
-                                    if (!FFAppState()
-                                        .pdfDocListConsent
-                                        .elementAtOrNull(1)!) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            content: Text(
-                                                'กรุณาให้ความยินยอมใบรับเงิน'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
+                                          _shouldSetState = true;
+                                          _model.selfieImageBase64 =
+                                              await actions
+                                                  .encodeBase64FromFFFile(
+                                            _model.selfiePlusIdCardFile,
                                           );
-                                        },
-                                      );
-                                    }
-                                  }
-                                  if (!FFAppState()
-                                      .pdfDocListConsent
-                                      .elementAtOrNull(2)!) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      isDismissible: false,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(context).unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: Container(
-                                              height: double.infinity,
-                                              child: PdfConsentComponentWidget(
-                                                title: 'เอกสารสัญญา',
-                                                pdfFileByte: _model.agreement!,
-                                                index: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-
-                                    if (!FFAppState()
-                                        .pdfDocListConsent
-                                        .elementAtOrNull(2)!) {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            content: Text(
-                                                'กรุณาให้ความยินยอมเอกสารสัญญา'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
+                                          _shouldSetState = true;
+                                          FFAppState()
+                                              .updateSaveTopupDataStruct(
+                                            (e) => e
+                                              ..customerImage2 =
+                                                  _model.idCardImageBase64
+                                              ..customerImage3 =
+                                                  _model.selfieImageBase64,
                                           );
+                                          safeSetState(() {});
+                                          showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child: LoadingWidget(),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          _model.updateSavePdfDataStruct(
+                                            (e) => e
+                                              ..contractNo = FFAppState()
+                                                  .getTopupDataAPIResultAppstate
+                                                  .contractNo
+                                              ..dbName = FFAppState()
+                                                  .getTopupDataAPIResultAppstate
+                                                  .dbName
+                                              ..contractDate = FFAppState()
+                                                  .getTopupDataAPIResultAppstate
+                                                  .contractDate
+                                              ..amount = (FFAppState()
+                                                          .getTopupCalculateAppState
+                                                          .amount -
+                                                      FFAppState()
+                                                          .getTopupDataAPIResultAppstate
+                                                          .contractDetails
+                                                          .closingBalance -
+                                                      FFAppState()
+                                                          .getTopupDataAPIResultAppstate
+                                                          .feeAmount)
+                                                  .toDouble()
+                                              ..from = FFAppState()
+                                                  .getLoanListSelected
+                                                  .contractDetails
+                                                  .comcode
+                                              ..contractBankAccount =
+                                                  FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractBankAccount
+                                              ..contractBankBrandname =
+                                                  FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractBankBrandname
+                                              ..contractBankType = FFAppState()
+                                                  .getLoanListSelected
+                                                  .contractBankType
+                                              ..contractBankBranch = ''
+                                              ..interestRate = FFAppState()
+                                                  .getTopupCalculateAppState
+                                                  .interestRate
+                                              ..installmentNumber = FFAppState()
+                                                  .topupInstallmentSelected
+                                                  .tenor
+                                                  .toDouble()
+                                              ..amountPerInstallment =
+                                                  FFAppState()
+                                                      .topupInstallmentSelected
+                                                      .regularPeriodAmt
+                                                      .toDouble()
+                                              ..startInstallmentDate =
+                                                  FFAppState()
+                                                      .getTopupCalculateAppState
+                                                      .firstDueDate
+                                              ..installmentDate = ''
+                                              ..vehicleType = FFAppState()
+                                                  .getLoanListSelected
+                                                  .contractDetails
+                                                  .loanTypeName,
+                                          );
+                                          safeSetState(() {});
+                                          _model.saveTopupOutput =
+                                              await SrisawadApiGroup
+                                                  .saveNewTopupCall
+                                                  .call(
+                                            bearerAuth:
+                                                FFAppState().accessToken,
+                                            lifeInsureAmt: FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .lifeInsureAmt,
+                                            transno: '',
+                                            dbName: FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .dbName,
+                                            hashThaiId: FFDevEnvironmentValues()
+                                                    .isProduction
+                                                ? FFAppState()
+                                                    .hashThaiIdAppState
+                                                : '128854d638b67b69b01bc66f7e61de0aecde76706d0e9e4261c704197a0ccf01',
+                                            contractNo: FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .contractNo,
+                                            marketingConsent: 'Y',
+                                            sensitiveConsent: 'Y',
+                                            latitude: functions
+                                                .getLatLngStringFromDevice(
+                                                    currentUserLocationValue,
+                                                    'lat'),
+                                            longitude: functions
+                                                .getLatLngStringFromDevice(
+                                                    currentUserLocationValue,
+                                                    'lng'),
+                                            loanAmount: FFAppState()
+                                                .getTopupCalculateAppState
+                                                .amount
+                                                .toDouble(),
+                                            topupFee: FFAppState()
+                                                .getTopupCalculateAppState
+                                                .topupFeeAmount
+                                                .toDouble(),
+                                            feeAmount: FFAppState()
+                                                .getTopupCalculateAppState
+                                                .feeAmount
+                                                .toDouble(),
+                                            transferAmount: (FFAppState()
+                                                        .getTopupCalculateAppState
+                                                        .amount -
+                                                    FFAppState()
+                                                        .getTopupDataAPIResultAppstate
+                                                        .contractDetails
+                                                        .closingBalance -
+                                                    FFAppState()
+                                                        .getTopupDataAPIResultAppstate
+                                                        .feeAmount)
+                                                .toDouble(),
+                                            interestRate: FFAppState()
+                                                .getTopupCalculateAppState
+                                                .interestRate,
+                                            interestAmount: FFAppState()
+                                                .topupInstallmentSelected
+                                                .intAmt,
+                                            totalAmount: FFAppState()
+                                                .topupInstallmentSelected
+                                                .totalAmt,
+                                            creditLimit: FFAppState()
+                                                .getTopupDataAPIResultAppstate
+                                                .contractDetails
+                                                .creditLimit,
+                                            termPeriod: FFAppState()
+                                                .topupInstallmentSelected
+                                                .tenor
+                                                .toDouble(),
+                                            regularPeriod: FFAppState()
+                                                .topupInstallmentSelected
+                                                .regularPeriodAmt
+                                                .toDouble(),
+                                            lastPeriod: FFAppState()
+                                                .topupInstallmentSelected
+                                                .lastPeriodAmt,
+                                            lastPeriodPromo: FFAppState()
+                                                .topupInstallmentSelected
+                                                .lastPeriodPromo,
+                                            actImage: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.actImage}'
+                                                : '',
+                                            propertyImage: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.propertyImage}'
+                                                : '',
+                                            topupRequestFile: _model.boolTemp
+                                                ? _model.pdfDocData?.request
+                                                : '',
+                                            topupArgeementFile: _model.boolTemp
+                                                ? _model.pdfDocData?.agreement
+                                                : '',
+                                            topupReceiptFile: _model.boolTemp
+                                                ? _model.pdfDocData?.receipt
+                                                : '',
+                                            savePdfJson:
+                                                _model.savePdfData?.toMap(),
+                                            customerImage2: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.customerImage2}'
+                                                : '',
+                                            customerImage3: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.customerImage3}'
+                                                : '',
+                                            carImageFront: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.carImageFront}'
+                                                : '',
+                                            carImageBack: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.carImageBack}'
+                                                : '',
+                                            carImageLeft: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.carImageLeft}'
+                                                : '',
+                                            carImageRight: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.carImageRight}'
+                                                : '',
+                                            carImageMile: _model.boolTemp
+                                                ? 'data:image/jpeg;base64,${FFAppState().saveTopupData.carImageMile}'
+                                                : '',
+                                            source: FFAppState()
+                                                .saveTopupData
+                                                .source,
+                                            referId: FFAppState()
+                                                .saveTopupData
+                                                .referId,
+                                            apiUrl: FFDevEnvironmentValues()
+                                                    .isProduction
+                                                ? FFAppState().topupUrlProd
+                                                : FFAppState().topupUrlDev,
+                                          );
+
+                                          _shouldSetState = true;
+                                          if ((_model.saveTopupOutput
+                                                      ?.statusCode ??
+                                                  200) !=
+                                              200) {
+                                            await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ErrorMessageComponentWidget(
+                                                      textMessage:
+                                                          'พบข้อผิดพลาด status (${(_model.saveTopupOutput?.statusCode ?? 200).toString()})',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            Navigator.pop(context);
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+                                          if ('N' !=
+                                              getJsonField(
+                                                (_model.saveTopupOutput
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.head.error_flag''',
+                                              ).toString()) {
+                                            await showDialog(
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ErrorMessageComponentWidget(
+                                                      textMessage: getJsonField(
+                                                        (_model.saveTopupOutput
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                        r'''$.head.error_desc''',
+                                                      ).toString(),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            Navigator.pop(context);
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                            return;
+                                          }
+                                          FFAppState()
+                                              .updateGetLoanListSelectedStruct(
+                                            (e) => e
+                                              ..transno = getJsonField(
+                                                (_model.saveTopupOutput
+                                                        ?.jsonBody ??
+                                                    ''),
+                                                r'''$.body.trans_no''',
+                                              ).toString()
+                                              ..requestDate = FFAppState()
+                                                  .getLoanListSelected
+                                                  .paymentDetails
+                                                  .currentDateTime,
+                                          );
+                                          safeSetState(() {});
+                                          Navigator.pop(context);
+
+                                          context.goNamed(
+                                            SaveTopupSuccessWidget.routeName,
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .bottomToTop,
+                                              ),
+                                            },
+                                          );
+
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
                                         },
-                                      );
-                                    }
-                                  }
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        content: Text('done'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                  if (_shouldSetState) safeSetState(() {});
-                                },
-                                text: 'ยืนยัน',
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(12.0),
+                                  text: 'ยืนยัน',
+                                  options: FFButtonOptions(
+                                    height: 60.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    elevation: 0.0,
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    disabledColor: Color(0x7FDB771A),
+                                  ),
                                 ),
                               ),
                             ),
@@ -3331,7 +4479,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                     ].divide(SizedBox(height: 8.0)),
                   ),
                 ),
-              ],
+              ].addToEnd(SizedBox(height: 30.0)),
             ),
           ),
         ),

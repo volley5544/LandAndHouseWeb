@@ -12,11 +12,19 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? landAndHouseAssign,
     String? arunsawadApiUrlProd,
     String? tanjaiApiUrl,
+    String? apiUrlDev,
+    String? apiUrlProd,
+    String? apiUrlLeadDev,
+    String? apiUrlLeadProd,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
         _arunsawadApiUrlProd = arunsawadApiUrlProd,
         _tanjaiApiUrl = tanjaiApiUrl,
+        _apiUrlDev = apiUrlDev,
+        _apiUrlProd = apiUrlProd,
+        _apiUrlLeadDev = apiUrlLeadDev,
+        _apiUrlLeadProd = apiUrlLeadProd,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -47,11 +55,43 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasTanjaiApiUrl() => _tanjaiApiUrl != null;
 
+  // "api_url_dev" field.
+  String? _apiUrlDev;
+  String get apiUrlDev => _apiUrlDev ?? '';
+  set apiUrlDev(String? val) => _apiUrlDev = val;
+
+  bool hasApiUrlDev() => _apiUrlDev != null;
+
+  // "api_url_prod" field.
+  String? _apiUrlProd;
+  String get apiUrlProd => _apiUrlProd ?? '';
+  set apiUrlProd(String? val) => _apiUrlProd = val;
+
+  bool hasApiUrlProd() => _apiUrlProd != null;
+
+  // "api_url_lead_dev" field.
+  String? _apiUrlLeadDev;
+  String get apiUrlLeadDev => _apiUrlLeadDev ?? '';
+  set apiUrlLeadDev(String? val) => _apiUrlLeadDev = val;
+
+  bool hasApiUrlLeadDev() => _apiUrlLeadDev != null;
+
+  // "api_url_lead_prod" field.
+  String? _apiUrlLeadProd;
+  String get apiUrlLeadProd => _apiUrlLeadProd ?? '';
+  set apiUrlLeadProd(String? val) => _apiUrlLeadProd = val;
+
+  bool hasApiUrlLeadProd() => _apiUrlLeadProd != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
         arunsawadApiUrlProd: data['arunsawad_api_url_prod'] as String?,
         tanjaiApiUrl: data['tanjai_api_url'] as String?,
+        apiUrlDev: data['api_url_dev'] as String?,
+        apiUrlProd: data['api_url_prod'] as String?,
+        apiUrlLeadDev: data['api_url_lead_dev'] as String?,
+        apiUrlLeadProd: data['api_url_lead_prod'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -62,6 +102,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'land_and_house_assign': _landAndHouseAssign,
         'arunsawad_api_url_prod': _arunsawadApiUrlProd,
         'tanjai_api_url': _tanjaiApiUrl,
+        'api_url_dev': _apiUrlDev,
+        'api_url_prod': _apiUrlProd,
+        'api_url_lead_dev': _apiUrlLeadDev,
+        'api_url_lead_prod': _apiUrlLeadProd,
       }.withoutNulls;
 
   @override
@@ -80,6 +124,22 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'tanjai_api_url': serializeParam(
           _tanjaiApiUrl,
+          ParamType.String,
+        ),
+        'api_url_dev': serializeParam(
+          _apiUrlDev,
+          ParamType.String,
+        ),
+        'api_url_prod': serializeParam(
+          _apiUrlProd,
+          ParamType.String,
+        ),
+        'api_url_lead_dev': serializeParam(
+          _apiUrlLeadDev,
+          ParamType.String,
+        ),
+        'api_url_lead_prod': serializeParam(
+          _apiUrlLeadProd,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -106,6 +166,26 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        apiUrlDev: deserializeParam(
+          data['api_url_dev'],
+          ParamType.String,
+          false,
+        ),
+        apiUrlProd: deserializeParam(
+          data['api_url_prod'],
+          ParamType.String,
+          false,
+        ),
+        apiUrlLeadDev: deserializeParam(
+          data['api_url_lead_dev'],
+          ParamType.String,
+          false,
+        ),
+        apiUrlLeadProd: deserializeParam(
+          data['api_url_lead_prod'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -117,12 +197,24 @@ class ApiUrlStruct extends FFFirebaseStruct {
         landHouseUrl == other.landHouseUrl &&
         landAndHouseAssign == other.landAndHouseAssign &&
         arunsawadApiUrlProd == other.arunsawadApiUrlProd &&
-        tanjaiApiUrl == other.tanjaiApiUrl;
+        tanjaiApiUrl == other.tanjaiApiUrl &&
+        apiUrlDev == other.apiUrlDev &&
+        apiUrlProd == other.apiUrlProd &&
+        apiUrlLeadDev == other.apiUrlLeadDev &&
+        apiUrlLeadProd == other.apiUrlLeadProd;
   }
 
   @override
-  int get hashCode => const ListEquality().hash(
-      [landHouseUrl, landAndHouseAssign, arunsawadApiUrlProd, tanjaiApiUrl]);
+  int get hashCode => const ListEquality().hash([
+        landHouseUrl,
+        landAndHouseAssign,
+        arunsawadApiUrlProd,
+        tanjaiApiUrl,
+        apiUrlDev,
+        apiUrlProd,
+        apiUrlLeadDev,
+        apiUrlLeadProd
+      ]);
 }
 
 ApiUrlStruct createApiUrlStruct({
@@ -130,6 +222,10 @@ ApiUrlStruct createApiUrlStruct({
   String? landAndHouseAssign,
   String? arunsawadApiUrlProd,
   String? tanjaiApiUrl,
+  String? apiUrlDev,
+  String? apiUrlProd,
+  String? apiUrlLeadDev,
+  String? apiUrlLeadProd,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -140,6 +236,10 @@ ApiUrlStruct createApiUrlStruct({
       landAndHouseAssign: landAndHouseAssign,
       arunsawadApiUrlProd: arunsawadApiUrlProd,
       tanjaiApiUrl: tanjaiApiUrl,
+      apiUrlDev: apiUrlDev,
+      apiUrlProd: apiUrlProd,
+      apiUrlLeadDev: apiUrlLeadDev,
+      apiUrlLeadProd: apiUrlLeadProd,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

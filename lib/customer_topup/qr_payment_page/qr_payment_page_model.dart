@@ -11,6 +11,8 @@ class QrPaymentPageModel extends FlutterFlowModel<QrPaymentPageWidget> {
 
   String circleImageUrl = 'url';
 
+  String amount = '0';
+
   ///  State fields for stateful widgets in this page.
 
   // Model for LoanDetailCardComponent component.

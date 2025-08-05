@@ -432,8 +432,9 @@ class _RateWebPageWidgetState extends State<RateWebPageWidget>
                                                                         child: Text(
                                                                       valueOrDefault<
                                                                           String>(
-                                                                        functions
-                                                                            .returnNumberWithCommaFullNumber(FFAppState().ltv1AmountWeb),
+                                                                        functions.returnNumberWithCommaFullNumber(
+                                                                            FFAppState().ltv1AmountWeb,
+                                                                            '0'),
                                                                         '0',
                                                                       ),
                                                                       style: FlutterFlowTheme.of(
@@ -655,8 +656,9 @@ class _RateWebPageWidgetState extends State<RateWebPageWidget>
                                                                         child: Text(
                                                                       valueOrDefault<
                                                                           String>(
-                                                                        functions
-                                                                            .returnNumberWithCommaFullNumber(FFAppState().ltv2AmountWeb),
+                                                                        functions.returnNumberWithCommaFullNumber(
+                                                                            FFAppState().ltv2AmountWeb,
+                                                                            '0'),
                                                                         '0',
                                                                       ),
                                                                       style: FlutterFlowTheme.of(

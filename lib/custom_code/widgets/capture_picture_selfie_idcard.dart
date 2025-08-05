@@ -14,18 +14,28 @@ import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
+import 'package:web/web.dart' as web;
+import 'dart:typed_data';
 
 class CapturePictureSelfieIdcard extends StatefulWidget {
-  const CapturePictureSelfieIdcard({
-    Key? key,
-    this.width,
-    this.height,
-    this.imagesType,
-  }) : super(key: key);
+  const CapturePictureSelfieIdcard(
+      {Key? key,
+      this.width,
+      this.height,
+      this.imagesType,
+      required this.onFinishCapture,
+      required this.onCaptured,
+      required this.openLoadingComponent,
+      required this.closeLoadingComponent})
+      : super(key: key);
 
   final double? width;
   final double? height;
   final String? imagesType;
+  final Future Function(FFUploadedFile imgFileBytes) onFinishCapture;
+  final Future Function(bool isCaptured) onCaptured;
+  final Future Function() openLoadingComponent;
+  final Future Function() closeLoadingComponent;
 
   @override
   _CapturePictureSelfieIdcardState createState() =>
@@ -37,12 +47,16 @@ class _CapturePictureSelfieIdcardState
   bool _isLoading = true;
   bool _isFrontCamera = true;
   late CameraController _cameraController;
-  XFile? _capturedImage;
+  String _capturePicPath = '';
+  XFile? _capturedImage = null;
   Image? imageNew;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _capturePicPath = '';
+    });
     _initCamera();
   }
 
@@ -57,7 +71,9 @@ class _CapturePictureSelfieIdcardState
     final camera = cameras.firstWhere((cam) =>
         cam.lensDirection ==
         (widget.imagesType != 'idCard'
-            ? CameraLensDirection.front
+            ? (widget.imagesType != 'test5544'
+                ? CameraLensDirection.front
+                : CameraLensDirection.back)
             : CameraLensDirection.back));
     _cameraController = CameraController(camera, ResolutionPreset.medium);
     await _cameraController.initialize();
@@ -72,17 +88,33 @@ class _CapturePictureSelfieIdcardState
     await _initCamera();
   }
 
-  Future<void> _takePicture() async {
-    if (!_cameraController.value.isInitialized) return;
-    final image = await _cameraController.takePicture();
-    setState(() {
-      imageNew = Image.network(
-        image.path,
-        fit: BoxFit.fill,
-        alignment: Alignment(MediaQuery.of(context).size.width / 2, 0),
-      ); //
+  Future<String> _takePicture() async {
+    //try {
+    if (!_cameraController.value.isInitialized) return '';
+    // final Image image;
+    // image = Image.network(
+
+    //   fit: BoxFit.fill,
+    //   alignment: Alignment(MediaQuery.of(context).size.width / 2, 0),
+    // );
+
+    _capturedImage = await _cameraController.takePicture();
+
+    String output = _capturedImage!.path!;
+    setState(() async {
+      // imageNew = Image.network(
+      //   image.path,
+      //   fit: BoxFit.fill,
+      //   alignment: Alignment(MediaQuery.of(context).size.width / 2, 0),
+      // ); //
       // _capturedImage = image;
     });
+    //} catch (e) {
+
+    // print('Exception : ${e.toString()}');
+
+    //}
+    return '${output}';
   }
 
   @override
@@ -178,6 +210,114 @@ class _CapturePictureSelfieIdcardState
                           ),
                         ),
                       ),
+                      // Visibility(
+                      //   visible: widget.imagesType == 'idCard',
+                      //   child: CustomPaint(
+                      //     size: Size.infinite,
+                      //     painter: HolePainterIdCard(
+                      //       topCircleRect: Rect.fromCenter(
+                      //         center: Offset(
+                      //             MediaQuery.sizeOf(context).width / 2,
+                      //             (MediaQuery.sizeOf(context).height / 2) *
+                      //                 0.75),
+                      //         width: MediaQuery.sizeOf(context).width * 0.98,
+                      //         height: MediaQuery.sizeOf(context).height * 0.3,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: widget.imagesType == 'idCard',
+                      //   child: Container(
+                      //       width: double.infinity,
+                      //       height: MediaQuery.of(context).size.height * 0.75,
+                      //       decoration: BoxDecoration(),
+                      //       child: Container(
+                      //           width: double.infinity,
+                      //           height: double.infinity,
+                      //           child: Container(
+                      //             width: double.infinity,
+                      //             height: double.infinity,
+                      //             child: Stack(
+                      //               children: [
+                      //                 Align(
+                      //                   alignment:
+                      //                       AlignmentDirectional(0.0, 0.0),
+                      //                   child: Container(
+                      //                     width:
+                      //                         MediaQuery.sizeOf(context).width *
+                      //                             0.98,
+                      //                     height: MediaQuery.sizeOf(context)
+                      //                             .height *
+                      //                         0.3,
+                      //                     decoration: BoxDecoration(
+                      //                       border: Border.all(
+                      //                         color: Colors.white,
+                      //                         width: 7.0,
+                      //                       ),
+                      //                     ),
+                      //                     child: Stack(
+                      //                       children: [
+                      //                         Align(
+                      //                           alignment: AlignmentDirectional(
+                      //                               -1.0, -1.0),
+                      //                           child: Padding(
+                      //                             padding: EdgeInsetsDirectional
+                      //                                 .fromSTEB(
+                      //                                     0.0, 0.0, 8.0, 12.0),
+                      //                             child: Container(
+                      //                               width: MediaQuery.sizeOf(
+                      //                                           context)
+                      //                                       .width *
+                      //                                   0.15,
+                      //                               height: MediaQuery.sizeOf(
+                      //                                           context)
+                      //                                       .width *
+                      //                                   0.15,
+                      //                               decoration: BoxDecoration(
+                      //                                 shape: BoxShape.circle,
+                      //                                 border: Border.all(
+                      //                                   color: Colors.white,
+                      //                                   width: 5.0,
+                      //                                 ),
+                      //                               ),
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                         Align(
+                      //                           alignment: AlignmentDirectional(
+                      //                               1.0, 1.0),
+                      //                           child: Padding(
+                      //                             padding: EdgeInsetsDirectional
+                      //                                 .fromSTEB(
+                      //                                     0.0, 0.0, 8.0, 12.0),
+                      //                             child: Container(
+                      //                               width: MediaQuery.sizeOf(
+                      //                                           context)
+                      //                                       .width *
+                      //                                   0.25,
+                      //                               height: MediaQuery.sizeOf(
+                      //                                           context)
+                      //                                       .height *
+                      //                                   0.13,
+                      //                               decoration: BoxDecoration(
+                      //                                 border: Border.all(
+                      //                                   color: Colors.white,
+                      //                                   width: 5.0,
+                      //                                 ),
+                      //                               ),
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ))),
+                      // ),
+
                       Visibility(
                         visible: widget.imagesType == 'idCard',
                         child: CustomPaint(
@@ -189,7 +329,7 @@ class _CapturePictureSelfieIdcardState
                                   (MediaQuery.sizeOf(context).height / 2) *
                                       0.75),
                               width: MediaQuery.sizeOf(context).width * 0.98,
-                              height: MediaQuery.sizeOf(context).height * 0.3,
+                              height: MediaQuery.sizeOf(context).height * 0.35,
                             ),
                           ),
                         ),
@@ -212,85 +352,311 @@ class _CapturePictureSelfieIdcardState
                                         alignment:
                                             AlignmentDirectional(0.0, 0.0),
                                         child: Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  0.98,
-                                          height: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.3,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.white,
-                                              width: 7.0,
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.98,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                0.35,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 4.0,
+                                              ),
                                             ),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    -1.0, -1.0),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 8.0, 12.0),
-                                                  child: Container(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        0.15,
-                                                    height: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        0.15,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 5.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                            child: Container(
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                child: Container(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    child: Container(
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height:
+                                                                double.infinity,
+                                                            child: Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              child: Stack(
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.4,
+                                                                            -0.9),
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.37,
+                                                                      height:
+                                                                          30.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                          width:
+                                                                              2.0,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.3,
+                                                                            -1.3),
+                                                                    child: Text(
+                                                                      'เลขที่บัตรประชาชน',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondary,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.38,
+                                                                            1.0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.18,
+                                                                      height: MediaQuery.sizeOf(context)
+                                                                              .height *
+                                                                          0.08,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                          width:
+                                                                              2.0,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.4,
+                                                                            1.3),
+                                                                    child: Text(
+                                                                      'วันที่หมดอายุบัตร',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondary,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )))))),
+                                      ),
+                                    ],
+                                  ),
+                                ))),
+                      ),
+
+                      Visibility(
+                        visible: widget.imagesType == 'test5544',
+                        child: CustomPaint(
+                          size: Size.infinite,
+                          painter: HolePainterIdCard(
+                            topCircleRect: Rect.fromCenter(
+                              center: Offset(
+                                  MediaQuery.sizeOf(context).width / 2,
+                                  (MediaQuery.sizeOf(context).height / 2) *
+                                      0.75),
+                              width: MediaQuery.sizeOf(context).width * 0.98,
+                              height: MediaQuery.sizeOf(context).height * 0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: widget.imagesType == 'test5544',
+                        child: Container(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            decoration: BoxDecoration(),
+                            child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                            width: MediaQuery.sizeOf(context)
+                                                    .width *
+                                                0.98,
+                                            height: MediaQuery.sizeOf(context)
+                                                    .height *
+                                                0.35,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 4.0,
                                               ),
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    1.0, 1.0),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 8.0, 12.0),
-                                                  child: Container(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        0.25,
-                                                    height: MediaQuery.sizeOf(
-                                                                context)
-                                                            .height *
-                                                        0.13,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 5.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                            ),
+                                            child: Container(
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                child: Container(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    child: Container(
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height:
+                                                                double.infinity,
+                                                            child: Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height: double
+                                                                  .infinity,
+                                                              child: Stack(
+                                                                children: [
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.4,
+                                                                            -0.9),
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.37,
+                                                                      height:
+                                                                          30.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                          width:
+                                                                              2.0,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.3,
+                                                                            -1.3),
+                                                                    child: Text(
+                                                                      'เลขที่บัตรประชาชน',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondary,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.38,
+                                                                            1.0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.18,
+                                                                      height: MediaQuery.sizeOf(context)
+                                                                              .height *
+                                                                          0.08,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                          width:
+                                                                              2.0,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.4,
+                                                                            1.3),
+                                                                    child: Text(
+                                                                      'วันที่หมดอายุบัตร',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondary,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )))))),
                                       ),
                                     ],
                                   ),
                                 ))),
                       ),
                     ]))),
-          if (imageNew != null)
+          if (_capturePicPath != '')
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.75,
-              child: imageNew!,
+              child: Image.network(
+                _capturePicPath,
+                fit: BoxFit.fill,
+                alignment: Alignment(MediaQuery.of(context).size.width / 2, 0),
+              ), //,
             ),
           Positioned(
             bottom: 50,
@@ -305,13 +671,48 @@ class _CapturePictureSelfieIdcardState
                 //   child: const Icon(Icons.switch_camera),
                 //   onPressed: _switchCameraDirection,
                 // ),
-                _capturedImage == null
+                _capturePicPath == ''
                     ? FloatingActionButton(
                         heroTag: "capture",
                         backgroundColor: Colors.red,
                         child: const Icon(Icons.camera_alt),
                         onPressed: () async {
-                          await _takePicture;
+                          try {
+                            await widget.openLoadingComponent();
+                            _capturePicPath = await _takePicture();
+                            await widget.closeLoadingComponent();
+                            await widget.onCaptured(true);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${_capturedImage!.name}',
+                                  style: TextStyle(
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'wo5544w',
+                                  style: TextStyle(
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                              ),
+                            );
+                          }
+
                           // await showDialog(
                           //   context: context,
                           //   builder: (alertDialogContext) {
@@ -346,8 +747,10 @@ class _CapturePictureSelfieIdcardState
                               ),
                               onPressed: () async {
                                 setState(() {
+                                  _capturePicPath = '';
                                   _capturedImage = null;
                                 });
+                                await widget.onCaptured(false);
                               },
                             ),
                             FloatingActionButton(
@@ -359,23 +762,51 @@ class _CapturePictureSelfieIdcardState
                               ),
                               onPressed: () async {
                                 // appstate that store image
+                                // _capturePicPath
+
+                                // Load blob URL to Uint8List
+
+                                Uint8List bytes =
+                                    await _capturedImage!.readAsBytes();
+                                FFUploadedFile fileBytesOutput = FFUploadedFile(
+                                    bytes: bytes,
+                                    name:
+                                        widget.imagesType! == 'idCardPlusSelfie'
+                                            ? 'selfie-img.jpg'
+                                            : 'id-card-img.jpg');
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(
+                                //     content: Text(
+                                //       '${fileBytesOutput.bytes}',
+                                //       style: TextStyle(
+                                //         color: FlutterFlowTheme.of(context)
+                                //             .secondary,
+                                //       ),
+                                //     ),
+                                //     duration: Duration(milliseconds: 4000),
+                                //     backgroundColor:
+                                //         FlutterFlowTheme.of(context)
+                                //             .primaryText,
+                                //   ),
+                                // );
+
                                 if (widget.imagesType! == 'idCardPlusSelfie') {
-                                  setState(() {
+                                  setState(() async {
                                     FFAppState().idCardPlusSelfieFilePath =
-                                        _capturedImage!.path;
+                                        _capturePicPath;
                                   });
                                   // print(
                                   // 'AppState().idCardPlusSelfieFile : ${AppState().idCardPlusSelfieFile!.path}');
                                 } else {
-                                  setState(() {
+                                  setState(() async {
                                     FFAppState().idCardFilePath =
-                                        _capturedImage!.path;
+                                        _capturePicPath;
                                   });
                                   // print(
                                   //     'AppState().idCardFile : ${AppState().idCardFile!.path}');
                                 }
-                                print(_capturedImage!.path);
-                                Navigator.of(context).pop();
+                                print(_capturePicPath);
+                                await widget.onFinishCapture(fileBytesOutput);
                               },
                             )
                           ],
