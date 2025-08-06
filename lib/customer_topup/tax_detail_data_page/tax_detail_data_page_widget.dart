@@ -1,7 +1,7 @@
 import '/components/error_message_component_widget.dart';
 import '/customer_topup/camera_trigger_component/camera_trigger_component_widget.dart';
 import '/customer_topup/full_vehicle_image_example/full_vehicle_image_example_widget.dart';
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -112,9 +112,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 wrapWithModel(
-                  model: _model.loanDetailCardComponentModel,
+                  model: _model.loanDetailCardTopupComponentModel,
                   updateCallback: () => safeSetState(() {}),
-                  child: LoanDetailCardComponentWidget(
+                  child: LoanDetailCardTopupComponentWidget(
                     contNo: '${valueOrDefault<String>(
                       FFAppState().getTopupDataAPIResultAppstate.contractNo,
                       'contract_no',

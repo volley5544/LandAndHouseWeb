@@ -444,6 +444,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: TestPageCopyWidget.routeName,
           path: TestPageCopyWidget.routePath,
           builder: (context, params) => TestPageCopyWidget(),
+        ),
+        FFRoute(
+          name: CustomerQrPaymentPageWidget.routeName,
+          path: CustomerQrPaymentPageWidget.routePath,
+          builder: (context, params) => CustomerQrPaymentPageWidget(
+            amount: params.getParam(
+              'amount',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: LoanDetailPageWidget.routeName,
+          path: LoanDetailPageWidget.routePath,
+          builder: (context, params) => LoanDetailPageWidget(
+            bankIcon: params.getParam(
+              'bankIcon',
+              ParamType.FFUploadedFile,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: CusomterLoanDetailPageWidget.routeName,
+          path: CusomterLoanDetailPageWidget.routePath,
+          builder: (context, params) => CusomterLoanDetailPageWidget(
+            bankIcon: params.getParam(
+              'bankIcon',
+              ParamType.FFUploadedFile,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

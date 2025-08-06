@@ -1,10 +1,11 @@
 import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'qr_payment_page_widget.dart' show QrPaymentPageWidget;
+import 'customer_qr_payment_page_widget.dart' show CustomerQrPaymentPageWidget;
 import 'package:flutter/material.dart';
 
-class QrPaymentPageModel extends FlutterFlowModel<QrPaymentPageWidget> {
+class CustomerQrPaymentPageModel
+    extends FlutterFlowModel<CustomerQrPaymentPageWidget> {
   ///  Local state fields for this page.
 
   String fullVehicleImageUrl = 'url';

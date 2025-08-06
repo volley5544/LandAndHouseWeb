@@ -472,7 +472,7 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                                 Text(
                                                   '${valueOrDefault<String>(
                                                     functions.formatPhoneNumber(
-                                                        '${FFAppState().customerDetailData.hashThaiId}'),
+                                                        '${FFAppState().customerDetailData.phoneNumber}'),
                                                     'phone_number',
                                                   )}',
                                                   style: FlutterFlowTheme.of(

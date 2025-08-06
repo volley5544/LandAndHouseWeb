@@ -53,3 +53,9 @@ export '/customer_topup/save_lead_h_l_success/save_lead_h_l_success_widget.dart'
     show SaveLeadHLSuccessWidget;
 export '/test_page/test_page_widget.dart' show TestPageWidget;
 export '/test_page_copy/test_page_copy_widget.dart' show TestPageCopyWidget;
+export '/customer_payment/customer_qr_payment_page/customer_qr_payment_page_widget.dart'
+    show CustomerQrPaymentPageWidget;
+export '/customer_loan_detail/loan_detail_page/loan_detail_page_widget.dart'
+    show LoanDetailPageWidget;
+export '/customer_payment/cusomter_loan_detail_page/cusomter_loan_detail_page_widget.dart'
+    show CusomterLoanDetailPageWidget;

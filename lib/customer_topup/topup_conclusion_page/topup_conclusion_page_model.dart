@@ -1,7 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'topup_conclusion_page_widget.dart' show TopupConclusionPageWidget;
@@ -53,8 +53,8 @@ class TopupConclusionPageModel
   FFUploadedFile? receiptPdfByteFileOutput;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
   FFUploadedFile? agreementPdfByteFileOutput;
-  // Model for LoanDetailCardComponent component.
-  late LoanDetailCardComponentModel loanDetailCardComponentModel;
+  // Model for LoanDetailCardTopupComponent component.
+  late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   bool isDataUploading_uploadIdCardAction = false;
   FFUploadedFile uploadedLocalFile_uploadIdCardAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -90,13 +90,13 @@ class TopupConclusionPageModel
 
   @override
   void initState(BuildContext context) {
-    loanDetailCardComponentModel =
-        createModel(context, () => LoanDetailCardComponentModel());
+    loanDetailCardTopupComponentModel =
+        createModel(context, () => LoanDetailCardTopupComponentModel());
   }
 
   @override
   void dispose() {
-    loanDetailCardComponentModel.dispose();
+    loanDetailCardTopupComponentModel.dispose();
   }
 
   /// Action blocks.

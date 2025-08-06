@@ -7,6 +7,10 @@ import 'topup_card_page_widget.dart' show TopupCardPageWidget;
 import 'package:flutter/material.dart';
 
 class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
+  ///  Local state fields for this page.
+
+  bool isLoadFirestoreCompleted = false;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in topupCardPage widget.

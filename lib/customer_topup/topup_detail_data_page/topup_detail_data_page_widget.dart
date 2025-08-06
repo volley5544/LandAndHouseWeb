@@ -2,7 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -522,9 +522,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             wrapWithModel(
-                              model: _model.loanDetailCardComponentModel,
+                              model: _model.loanDetailCardTopupComponentModel,
                               updateCallback: () => safeSetState(() {}),
-                              child: LoanDetailCardComponentWidget(
+                              child: LoanDetailCardTopupComponentWidget(
                                 contNo: '${valueOrDefault<String>(
                                   FFAppState()
                                       .getTopupDataAPIResultAppstate

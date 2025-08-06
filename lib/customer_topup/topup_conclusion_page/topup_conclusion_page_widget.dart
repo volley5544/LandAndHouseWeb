@@ -4,7 +4,7 @@ import '/components/confirm_dialog_component_widget.dart';
 import '/components/error_message_component_widget.dart';
 import '/customer_topup/capture_picture_component/capture_picture_component_widget.dart';
 import '/customer_topup/change_date_expire_component/change_date_expire_component_widget.dart';
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/customer_topup/pdf_consent_component/pdf_consent_component_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -295,9 +295,9 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           wrapWithModel(
-                            model: _model.loanDetailCardComponentModel,
+                            model: _model.loanDetailCardTopupComponentModel,
                             updateCallback: () => safeSetState(() {}),
-                            child: LoanDetailCardComponentWidget(
+                            child: LoanDetailCardTopupComponentWidget(
                               contNo: '${valueOrDefault<String>(
                                 FFAppState()
                                     .getTopupDataAPIResultAppstate

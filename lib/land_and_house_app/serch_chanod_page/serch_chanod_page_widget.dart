@@ -279,6 +279,61 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        15.0, 10.0, 15.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(),
+                                            child: Text(
+                                              FFAppState()
+                                                          .chanodOutput
+                                                          .chanodNo !=
+                                                      ''
+                                                  ? 'เลขโฉนด ${FFAppState().chanodOutput.chanodNo}'
+                                                  : 'เลขที่ดิน${FFAppState().chanodOutput.landNo}',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 18.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 24.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 24.0;
+                                                      } else {
+                                                        return 24.0;
+                                                      }
+                                                    }(),
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   if (FFAppState().chanodOutput.ltv1Amount != 0)
                                     Container(
                                       decoration: BoxDecoration(),
@@ -296,7 +351,7 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                                   child: Container(
                                                     decoration: BoxDecoration(),
                                                     child: Text(
-                                                      'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง)',
+                                                      'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง) ${FFAppState().addressOutput.keyword}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -477,7 +532,7 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                                   child: Container(
                                                     decoration: BoxDecoration(),
                                                     child: Text(
-                                                      'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง)',
+                                                      'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง) ${FFAppState().addressOutput.keyword}',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -530,106 +585,118 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                                 Builder(
                                                   builder: (context) {
                                                     if (true) {
-                                                      return Container(
-                                                        width: () {
-                                                          if (MediaQuery.sizeOf(
-                                                                      context)
-                                                                  .width <
-                                                              kBreakpointSmall) {
-                                                            return 70.0;
-                                                          } else if (MediaQuery
-                                                                      .sizeOf(
-                                                                          context)
-                                                                  .width <
-                                                              kBreakpointMedium) {
-                                                            return 90.0;
-                                                          } else if (MediaQuery
-                                                                      .sizeOf(
-                                                                          context)
-                                                                  .width <
-                                                              kBreakpointLarge) {
-                                                            return 90.0;
-                                                          } else {
-                                                            return 90.0;
-                                                          }
-                                                        }(),
-                                                        height: () {
-                                                          if (MediaQuery.sizeOf(
-                                                                      context)
-                                                                  .width <
-                                                              kBreakpointSmall) {
-                                                            return 25.0;
-                                                          } else if (MediaQuery
-                                                                      .sizeOf(
-                                                                          context)
-                                                                  .width <
-                                                              kBreakpointMedium) {
-                                                            return 35.0;
-                                                          } else if (MediaQuery
-                                                                      .sizeOf(
-                                                                          context)
-                                                                  .width <
-                                                              kBreakpointLarge) {
-                                                            return 35.0;
-                                                          } else {
-                                                            return 35.0;
-                                                          }
-                                                        }(),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0xFFFF0000),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    40.0),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    40.0),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    40.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    40.0),
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    2.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Container(
+                                                          width: () {
+                                                            if (MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width <
+                                                                kBreakpointSmall) {
+                                                              return 70.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointMedium) {
+                                                              return 90.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointLarge) {
+                                                              return 90.0;
+                                                            } else {
+                                                              return 90.0;
+                                                            }
+                                                          }(),
+                                                          height: () {
+                                                            if (MediaQuery.sizeOf(
+                                                                        context)
+                                                                    .width <
+                                                                kBreakpointSmall) {
+                                                              return 25.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointMedium) {
+                                                              return 35.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointLarge) {
+                                                              return 35.0;
+                                                            } else {
+                                                              return 35.0;
+                                                            }
+                                                          }(),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFFFF0000),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              bottomLeft: Radius
+                                                                  .circular(
+                                                                      40.0),
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          40.0),
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      40.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      40.0),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0.0, 0.0),
-                                                          child: Text(
-                                                            'เริ่มต้นที่',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                  fontSize: () {
-                                                                    if (MediaQuery.sizeOf(context)
-                                                                            .width <
-                                                                        kBreakpointSmall) {
-                                                                      return 14.0;
-                                                                    } else if (MediaQuery.sizeOf(context)
-                                                                            .width <
-                                                                        kBreakpointMedium) {
-                                                                      return 18.0;
-                                                                    } else if (MediaQuery.sizeOf(context)
-                                                                            .width <
-                                                                        kBreakpointLarge) {
-                                                                      return 18.0;
-                                                                    } else {
-                                                                      return 18.0;
-                                                                    }
-                                                                  }(),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
+                                                          child: Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    0.0, 0.0),
+                                                            child: Text(
+                                                              'เริ่มต้นที่',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                    fontSize:
+                                                                        () {
+                                                                      if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointSmall) {
+                                                                        return 14.0;
+                                                                      } else if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointMedium) {
+                                                                        return 18.0;
+                                                                      } else if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointLarge) {
+                                                                        return 18.0;
+                                                                      } else {
+                                                                        return 18.0;
+                                                                      }
+                                                                    }(),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
                                                           ),
                                                         ),
                                                       );

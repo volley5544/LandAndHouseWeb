@@ -1,4 +1,4 @@
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'tax_detail_data_page_widget.dart' show TaxDetailDataPageWidget;
@@ -39,8 +39,8 @@ class TaxDetailDataPageModel extends FlutterFlowModel<TaxDetailDataPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Model for LoanDetailCardComponent component.
-  late LoanDetailCardComponentModel loanDetailCardComponentModel;
+  // Model for LoanDetailCardTopupComponent component.
+  late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   bool isDataUploading_fullVehicleImageUploadAction = false;
   FFUploadedFile uploadedLocalFile_fullVehicleImageUploadAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -118,12 +118,12 @@ class TaxDetailDataPageModel extends FlutterFlowModel<TaxDetailDataPageWidget> {
 
   @override
   void initState(BuildContext context) {
-    loanDetailCardComponentModel =
-        createModel(context, () => LoanDetailCardComponentModel());
+    loanDetailCardTopupComponentModel =
+        createModel(context, () => LoanDetailCardTopupComponentModel());
   }
 
   @override
   void dispose() {
-    loanDetailCardComponentModel.dispose();
+    loanDetailCardTopupComponentModel.dispose();
   }
 }

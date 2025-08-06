@@ -9,28 +9,35 @@ import '/index.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'qr_payment_page_model.dart';
-export 'qr_payment_page_model.dart';
+import 'customer_qr_payment_page_model.dart';
+export 'customer_qr_payment_page_model.dart';
 
-class QrPaymentPageWidget extends StatefulWidget {
-  const QrPaymentPageWidget({super.key});
+class CustomerQrPaymentPageWidget extends StatefulWidget {
+  const CustomerQrPaymentPageWidget({
+    super.key,
+    this.amount,
+  });
 
-  static String routeName = 'QrPaymentPage';
-  static String routePath = '/QrPaymentPage';
+  final String? amount;
+
+  static String routeName = 'CustomerQrPaymentPage';
+  static String routePath = '/CustomerQrPaymentPage';
 
   @override
-  State<QrPaymentPageWidget> createState() => _QrPaymentPageWidgetState();
+  State<CustomerQrPaymentPageWidget> createState() =>
+      _CustomerQrPaymentPageWidgetState();
 }
 
-class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
-  late QrPaymentPageModel _model;
+class _CustomerQrPaymentPageWidgetState
+    extends State<CustomerQrPaymentPageWidget> {
+  late CustomerQrPaymentPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => QrPaymentPageModel());
+    _model = createModel(context, () => CustomerQrPaymentPageModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -188,19 +195,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                           Text(
                             valueOrDefault<String>(
                               functions.returnNumberWithComma2Decimal(
-                                  (FFAppState()
-                                              .getLoanListSelected
-                                              .topupDetail
-                                              .yield +
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .topupDetail
-                                              .collectionFee +
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .topupDetail
-                                              .penaltyFee)
-                                      .toString()),
+                                  widget.amount),
                               '0.0',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -308,19 +303,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                         .getLoanListSelected
                                         .barcodeDetails
                                         .ref2,
-                                    (FFAppState()
-                                                .getLoanListSelected
-                                                .topupDetail
-                                                .yield +
-                                            FFAppState()
-                                                .getLoanListSelected
-                                                .topupDetail
-                                                .collectionFee +
-                                            FFAppState()
-                                                .getLoanListSelected
-                                                .topupDetail
-                                                .penaltyFee)
-                                        .toString(),
+                                    widget.amount,
                                     FFAppState()
                                         .getLoanListSelected
                                         .barcodeDetails
@@ -414,39 +397,6 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                context.goNamed(
-                                  TopupDetailDataPageWidget.routeName,
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType:
-                                          PageTransitionType.leftToRight,
-                                    ),
-                                  },
-                                );
-                              },
-                              text: 'ปรับปรุงยอดชำระ',
-                              options: FFButtonOptions(
-                                width: 140.0,
-                                height: 60.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).accent2,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
                             Builder(
                               builder: (context) => FFButtonWidget(
                                 onPressed: () async {

@@ -1,7 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
-import '/customer_topup/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'topup_detail_data_page_widget.dart' show TopupDetailDataPageWidget;
@@ -25,8 +25,8 @@ class TopupDetailDataPageModel
   ApiCallResponse? getTopupDetailAPIOutput;
   // Stores action output result for [Backend Call - API (post to calculator to get new topup)] action in TopupDetailDataPage widget.
   ApiCallResponse? inittopupCalculateAPIOutput;
-  // Model for LoanDetailCardComponent component.
-  late LoanDetailCardComponentModel loanDetailCardComponentModel;
+  // Model for LoanDetailCardTopupComponent component.
+  late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -47,13 +47,13 @@ class TopupDetailDataPageModel
 
   @override
   void initState(BuildContext context) {
-    loanDetailCardComponentModel =
-        createModel(context, () => LoanDetailCardComponentModel());
+    loanDetailCardTopupComponentModel =
+        createModel(context, () => LoanDetailCardTopupComponentModel());
   }
 
   @override
   void dispose() {
-    loanDetailCardComponentModel.dispose();
+    loanDetailCardTopupComponentModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }

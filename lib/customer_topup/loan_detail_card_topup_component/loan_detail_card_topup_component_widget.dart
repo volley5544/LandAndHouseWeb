@@ -2,11 +2,11 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'loan_detail_card_component_model.dart';
-export 'loan_detail_card_component_model.dart';
+import 'loan_detail_card_topup_component_model.dart';
+export 'loan_detail_card_topup_component_model.dart';
 
-class LoanDetailCardComponentWidget extends StatefulWidget {
-  const LoanDetailCardComponentWidget({
+class LoanDetailCardTopupComponentWidget extends StatefulWidget {
+  const LoanDetailCardTopupComponentWidget({
     super.key,
     required this.contNo,
     required this.assetCode,
@@ -20,13 +20,13 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
   final String? assetName;
 
   @override
-  State<LoanDetailCardComponentWidget> createState() =>
-      _LoanDetailCardComponentWidgetState();
+  State<LoanDetailCardTopupComponentWidget> createState() =>
+      _LoanDetailCardTopupComponentWidgetState();
 }
 
-class _LoanDetailCardComponentWidgetState
-    extends State<LoanDetailCardComponentWidget> {
-  late LoanDetailCardComponentModel _model;
+class _LoanDetailCardTopupComponentWidgetState
+    extends State<LoanDetailCardTopupComponentWidget> {
+  late LoanDetailCardTopupComponentModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -37,7 +37,7 @@ class _LoanDetailCardComponentWidgetState
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => LoanDetailCardComponentModel());
+    _model = createModel(context, () => LoanDetailCardTopupComponentModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -90,11 +90,32 @@ class _LoanDetailCardComponentWidgetState
                               fit: BoxFit.cover,
                             ),
                           );
-                        } else {
+                        } else if ((widget.productTypeCode == 'L') ||
+                            (widget.productTypeCode == 'H')) {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: SvgPicture.asset(
                               'assets/images/HouseLoanIcon.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else if (widget.productTypeCode == 'T') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANT.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANV.svg',
                               width: 50.0,
                               height: 50.0,
                               fit: BoxFit.cover,
@@ -257,6 +278,12 @@ class _LoanDetailCardComponentWidgetState
                                       } else if (widget.productTypeCode ==
                                           'M') {
                                         return 'สินเชื่อรถจักรยานยนต์';
+                                      } else if (widget.productTypeCode ==
+                                          'T') {
+                                        return 'สินเชื่อรถบรรทุก';
+                                      } else if (widget.productTypeCode ==
+                                          'V') {
+                                        return 'สินเชื่อรถไถ';
                                       } else {
                                         return 'สินเชื่อที่ดินและสิ่งปลูกสร้าง';
                                       }
