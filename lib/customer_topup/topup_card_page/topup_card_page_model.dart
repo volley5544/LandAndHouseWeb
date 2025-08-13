@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/customer_topup/empty_component_topup/empty_component_topup_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import '/index.dart';
 import 'topup_card_page_widget.dart' show TopupCardPageWidget;
 import 'package:flutter/material.dart';
@@ -17,12 +18,9 @@ class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
   ApplicationRecord? configOutput;
   // Stores action output result for [Backend Call - API (userDetail)] action in topupCardPage widget.
   ApiCallResponse? userDetailOutput;
-  // Stores action output result for [Backend Call - API (Get user address information.)] action in topupCardPage widget.
-  ApiCallResponse? getUserAddressApiOutput;
-  // Stores action output result for [Backend Call - API (get list of loan.)] action in topupCardPage widget.
-  ApiCallResponse? getLoanListOutput;
   // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Text widget.
   FFUploadedFile? test;
+  Completer<ApiCallResponse>? apiRequestCompleter;
   // Model for EmptyComponentTopup component.
   late EmptyComponentTopupModel emptyComponentTopupModel;
 
@@ -35,5 +33,21 @@ class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
   @override
   void dispose() {
     emptyComponentTopupModel.dispose();
+  }
+
+  /// Additional helper methods.
+  Future waitForApiRequestCompleted({
+    double minWait = 0,
+    double maxWait = double.infinity,
+  }) async {
+    final stopwatch = Stopwatch()..start();
+    while (true) {
+      await Future.delayed(Duration(milliseconds: 50));
+      final timeElapsed = stopwatch.elapsedMilliseconds;
+      final requestComplete = apiRequestCompleter?.isCompleted ?? false;
+      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
+        break;
+      }
+    }
   }
 }

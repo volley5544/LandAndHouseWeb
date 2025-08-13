@@ -553,6 +553,18 @@ class FFAppState extends ChangeNotifier {
   set LeadUrlProd(String value) {
     _LeadUrlProd = value;
   }
+
+  int _webProdVersion = 1;
+  int get webProdVersion => _webProdVersion;
+  set webProdVersion(int value) {
+    _webProdVersion = value;
+  }
+
+  int _webUatVersion = 6;
+  int get webUatVersion => _webUatVersion;
+  set webUatVersion(int value) {
+    _webUatVersion = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

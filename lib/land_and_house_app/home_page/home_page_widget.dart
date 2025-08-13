@@ -141,20 +141,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
           (_model.userDetailOutput?.jsonBody ?? ''),
         )!;
         safeSetState(() {});
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('4'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
         FFAppState().updateCustomerDetailDataStruct(
           (e) => e
             ..hashThaiId = widget.hashThaiId
@@ -162,67 +148,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                 '${dateTimeFormat("yyyy-MM-dd", functions.parseStringDateToDateTime(widget.consentDate))}',
         );
         safeSetState(() {});
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('5'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
       }
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text('1'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       _model.queryAPIUrl = await ApplicationRecord.getDocumentOnce(
           FFAppState().landAndHouseAPIDocRef!);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text('2'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       FFAppState().landAndHouseAPIUrl = _model.queryAPIUrl!.apiUrl.landHouseUrl;
       safeSetState(() {});
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text('3'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       Navigator.pop(context);
     });
 
@@ -380,6 +310,23 @@ class _HomePageWidgetState extends State<HomePageWidget>
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondary,
             automaticallyImplyLeading: false,
+            leading: Visibility(
+              visible: false,
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  await actions.navigateBackWebviewAction();
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 30.0,
+                ),
+              ),
+            ),
             title: InkWell(
               splashColor: Colors.transparent,
               focusColor: Colors.transparent,

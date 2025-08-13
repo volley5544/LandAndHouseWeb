@@ -59,12 +59,12 @@ class TopupConclusionPageModel
   FFUploadedFile uploadedLocalFile_uploadIdCardAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
-  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
-  String? idCardImageUrlOutput;
   // Stores action output result for [Backend Call - API (visionThaiId)] action in Button widget.
   ApiCallResponse? visionOutputThaiId;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   bool? changeDateOutput;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
+  String? idCardImageUrlOutput;
   bool isDataUploading_uploadSelfieAction = false;
   FFUploadedFile uploadedLocalFile_uploadSelfieAction =
       FFUploadedFile(bytes: Uint8List.fromList([]));

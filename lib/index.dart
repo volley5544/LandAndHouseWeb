@@ -57,5 +57,5 @@ export '/customer_payment/customer_qr_payment_page/customer_qr_payment_page_widg
     show CustomerQrPaymentPageWidget;
 export '/customer_loan_detail/loan_detail_page/loan_detail_page_widget.dart'
     show LoanDetailPageWidget;
-export '/customer_payment/cusomter_loan_detail_page/cusomter_loan_detail_page_widget.dart'
-    show CusomterLoanDetailPageWidget;
+export '/customer_payment/select_payment_page/select_payment_page_widget.dart'
+    show SelectPaymentPageWidget;

@@ -245,6 +245,8 @@ class SrisawadApiGroup {
   static InterestpaymentAPICall interestpaymentAPICall =
       InterestpaymentAPICall();
   static VisionThaiIdCall visionThaiIdCall = VisionThaiIdCall();
+  static OcrThaiIdPythonCall ocrThaiIdPythonCall = OcrThaiIdPythonCall();
+  static PaymentHistoryCall paymentHistoryCall = PaymentHistoryCall();
 }
 
 class ReturnTopupConfigsThatControllTopupUICall {
@@ -539,6 +541,34 @@ class GetDetailOfLoanCall {
       alwaysAllowBody: false,
     );
   }
+
+  CarDetailsStruct? cardetails(dynamic response) =>
+      CarDetailsStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.accounts[:].car_details''',
+      ));
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  ContractDetailsStruct? contractdetails(dynamic response) =>
+      ContractDetailsStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.accounts[:].contract_details''',
+      ));
+  List<String>? datadate(dynamic response) => (getJsonField(
+        response,
+        r'''$.accounts[:].data_date''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
 }
 
 class UserLogoutCall {
@@ -1754,6 +1784,26 @@ class GetUserAddressInformationCall {
         response,
         r'''$''',
       ));
+  UserAddressDataModelStruct? currentAddress(dynamic response) =>
+      UserAddressDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.current_address''',
+      ));
+  UserAddressDataModelStruct? registrationAddress(dynamic response) =>
+      UserAddressDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.registration_address''',
+      ));
+  UserAddressDataModelStruct? idCardAddress(dynamic response) =>
+      UserAddressDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.id_card_address''',
+      ));
+  UserAddressDataModelStruct? otherAddress(dynamic response) =>
+      UserAddressDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.other_address''',
+      ));
 }
 
 class UpdateUserPhoneNumberCall {
@@ -2442,6 +2492,82 @@ class VisionThaiIdCall {
       alwaysAllowBody: false,
     );
   }
+}
+
+class OcrThaiIdPythonCall {
+  Future<ApiCallResponse> call({
+    FFUploadedFile? file,
+    String? apiUrl = '',
+  }) async {
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'ocrThaiIdPython',
+      apiUrl: '${baseUrl}/api/v1/process-id-card-specific/',
+      callType: ApiCallType.POST,
+      headers: {
+        'x-srisawad': 'x1',
+        'accept': 'application/json',
+      },
+      params: {
+        'file': file,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class PaymentHistoryCall {
+  Future<ApiCallResponse> call({
+    String? contractNo = '',
+    String? dbName = '',
+    String? apiUrl = '',
+  }) async {
+    final baseUrl = SrisawadApiGroup.getBaseUrl(
+      apiUrl: apiUrl,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "contract_no": "${escapeStringForJson(contractNo)}",
+  "db_name": "${escapeStringForJson(dbName)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'paymentHistory',
+      apiUrl: '${baseUrl}/payment/history_new',
+      callType: ApiCallType.POST,
+      headers: {
+        'x-srisawad': 'x1',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<PaymentHistoryModelStruct>? data(dynamic response) => (getJsonField(
+        response,
+        r'''$.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => PaymentHistoryModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
 }
 
 /// End Srisawad api Group Code

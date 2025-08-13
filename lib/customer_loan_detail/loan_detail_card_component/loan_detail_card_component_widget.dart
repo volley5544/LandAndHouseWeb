@@ -12,12 +12,26 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
     required this.assetCode,
     required this.productTypeCode,
     required this.assetName,
+    this.currentInstallmentNumber,
+    this.overdueFrom,
+    this.overdueTo,
+    this.overdueAmount,
+    this.installmentAmount,
+    this.totalDueAmount,
+    this.currentDueDate,
   });
 
   final String? contNo;
   final String? assetCode;
   final String? productTypeCode;
   final String? assetName;
+  final String? currentInstallmentNumber;
+  final String? overdueFrom;
+  final String? overdueTo;
+  final String? overdueAmount;
+  final String? installmentAmount;
+  final String? totalDueAmount;
+  final String? currentDueDate;
 
   @override
   State<LoanDetailCardComponentWidget> createState() =>
@@ -210,8 +224,8 @@ class _LoanDetailCardComponentWidgetState
                               ),
                               Text(
                                 valueOrDefault<String>(
-                                  widget.assetCode,
-                                  'asset_code',
+                                  widget.currentDueDate,
+                                  'currentDueDate',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -225,53 +239,55 @@ class _LoanDetailCardComponentWidgetState
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 12.0, 0.0),
-                                  child: Container(
-                                    width: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Text(
-                                      'ค้างชำระ (งวดที่41-42)',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
+                        if (widget.overdueAmount != '0')
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 12.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Text(
+                                        'ค้างชำระ (งวดที่${widget.overdueFrom}-${widget.overdueTo})',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                valueOrDefault<String>(
-                                  widget.assetName,
-                                  'asset_name',
+                                Text(
+                                  valueOrDefault<String>(
+                                    widget.overdueAmount,
+                                    'overdueAmount',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
@@ -304,8 +320,8 @@ class _LoanDetailCardComponentWidgetState
                               ),
                               Text(
                                 valueOrDefault<String>(
-                                  widget.assetName,
-                                  'asset_name',
+                                  widget.currentInstallmentNumber,
+                                  'currentInstallment',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -351,8 +367,8 @@ class _LoanDetailCardComponentWidgetState
                               ),
                               Text(
                                 valueOrDefault<String>(
-                                  widget.assetName,
-                                  'asset_name',
+                                  widget.installmentAmount,
+                                  'installmentAmount',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -366,53 +382,55 @@ class _LoanDetailCardComponentWidgetState
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 12.0, 0.0),
-                                  child: Container(
-                                    width: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Text(
-                                      'รวมต้องชำระ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
+                        if (widget.totalDueAmount != '0')
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 12.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Text(
+                                        'รวมต้องชำระ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                valueOrDefault<String>(
-                                  widget.assetName,
-                                  'asset_name',
+                                Text(
+                                  valueOrDefault<String>(
+                                    widget.totalDueAmount,
+                                    'totalDueAmount',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),

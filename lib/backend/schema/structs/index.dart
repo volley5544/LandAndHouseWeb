@@ -13,6 +13,7 @@ export 'get_loan_list_a_p_i_data_type_struct.dart';
 export 'get_topup_data_a_p_i_data_type_struct.dart';
 export 'insurance_info_data_model_struct.dart';
 export 'payment_details_data_model_struct.dart';
+export 'payment_history_model_struct.dart';
 export 'pdf_loan_doc_data_model_struct.dart';
 export 'qr_code_data_type_struct.dart';
 export 'save_assign_branch_struct.dart';

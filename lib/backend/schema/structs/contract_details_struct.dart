@@ -30,6 +30,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
     String? loanTypeIcon,
     String? comcodeCode,
     double? arRemainAmount,
+    String? firstDueDate,
+    String? lastDueDate,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _closingBalance = closingBalance,
         _comcode = comcode,
@@ -53,6 +55,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         _loanTypeIcon = loanTypeIcon,
         _comcodeCode = comcodeCode,
         _arRemainAmount = arRemainAmount,
+        _firstDueDate = firstDueDate,
+        _lastDueDate = lastDueDate,
         super(firestoreUtilData);
 
   // "closing_balance" field.
@@ -232,6 +236,20 @@ class ContractDetailsStruct extends FFFirebaseStruct {
 
   bool hasArRemainAmount() => _arRemainAmount != null;
 
+  // "first_due_date" field.
+  String? _firstDueDate;
+  String get firstDueDate => _firstDueDate ?? '';
+  set firstDueDate(String? val) => _firstDueDate = val;
+
+  bool hasFirstDueDate() => _firstDueDate != null;
+
+  // "last_due_date" field.
+  String? _lastDueDate;
+  String get lastDueDate => _lastDueDate ?? '';
+  set lastDueDate(String? val) => _lastDueDate = val;
+
+  bool hasLastDueDate() => _lastDueDate != null;
+
   static ContractDetailsStruct fromMap(Map<String, dynamic> data) =>
       ContractDetailsStruct(
         closingBalance: castToType<int>(data['closing_balance']),
@@ -256,6 +274,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         loanTypeIcon: data['loan_type_icon'] as String?,
         comcodeCode: data['comcode_code'] as String?,
         arRemainAmount: castToType<double>(data['ar_remain_amount']),
+        firstDueDate: data['first_due_date'] as String?,
+        lastDueDate: data['last_due_date'] as String?,
       );
 
   static ContractDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -285,6 +305,8 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         'loan_type_icon': _loanTypeIcon,
         'comcode_code': _comcodeCode,
         'ar_remain_amount': _arRemainAmount,
+        'first_due_date': _firstDueDate,
+        'last_due_date': _lastDueDate,
       }.withoutNulls;
 
   @override
@@ -376,6 +398,14 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         'ar_remain_amount': serializeParam(
           _arRemainAmount,
           ParamType.double,
+        ),
+        'first_due_date': serializeParam(
+          _firstDueDate,
+          ParamType.String,
+        ),
+        'last_due_date': serializeParam(
+          _lastDueDate,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -491,6 +521,16 @@ class ContractDetailsStruct extends FFFirebaseStruct {
           ParamType.double,
           false,
         ),
+        firstDueDate: deserializeParam(
+          data['first_due_date'],
+          ParamType.String,
+          false,
+        ),
+        lastDueDate: deserializeParam(
+          data['last_due_date'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -520,7 +560,9 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         loanTypeName == other.loanTypeName &&
         loanTypeIcon == other.loanTypeIcon &&
         comcodeCode == other.comcodeCode &&
-        arRemainAmount == other.arRemainAmount;
+        arRemainAmount == other.arRemainAmount &&
+        firstDueDate == other.firstDueDate &&
+        lastDueDate == other.lastDueDate;
   }
 
   @override
@@ -546,7 +588,9 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         loanTypeName,
         loanTypeIcon,
         comcodeCode,
-        arRemainAmount
+        arRemainAmount,
+        firstDueDate,
+        lastDueDate
       ]);
 }
 
@@ -573,6 +617,8 @@ ContractDetailsStruct createContractDetailsStruct({
   String? loanTypeIcon,
   String? comcodeCode,
   double? arRemainAmount,
+  String? firstDueDate,
+  String? lastDueDate,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -601,6 +647,8 @@ ContractDetailsStruct createContractDetailsStruct({
       loanTypeIcon: loanTypeIcon,
       comcodeCode: comcodeCode,
       arRemainAmount: arRemainAmount,
+      firstDueDate: firstDueDate,
+      lastDueDate: lastDueDate,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

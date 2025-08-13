@@ -138,7 +138,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                           .getLoanListSelected
                           .contractDetails
                           .loanTypeName,
-                      'loan_type_code',
+                      'loan_type_name',
                     )}',
                   ),
                 ),

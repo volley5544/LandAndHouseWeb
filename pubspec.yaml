@@ -44,6 +44,7 @@ dependencies:
   dropdown_button2: 2.3.9
   easy_debounce: 2.0.1
   equatable: 2.0.7
+  expandable: 5.0.1
   file_picker: 10.1.9
   firebase_analytics: 11.5.0
   firebase_analytics_platform_interface: 4.4.0
@@ -97,6 +98,7 @@ dependencies:
   intl: 0.20.2
   json_path: 0.7.2
   location: ^8.0.1
+  logger: ^2.6.1
   mask_text_input_formatter: 2.9.0
   mime_type: 1.0.0
   page_transition: 2.1.0

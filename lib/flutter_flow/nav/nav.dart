@@ -463,12 +463,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'bankIcon',
               ParamType.FFUploadedFile,
             ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
-          name: CusomterLoanDetailPageWidget.routeName,
-          path: CusomterLoanDetailPageWidget.routePath,
-          builder: (context, params) => CusomterLoanDetailPageWidget(
+          name: SelectPaymentPageWidget.routeName,
+          path: SelectPaymentPageWidget.routePath,
+          builder: (context, params) => SelectPaymentPageWidget(
             bankIcon: params.getParam(
               'bankIcon',
               ParamType.FFUploadedFile,
@@ -479,6 +491,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             contNo: params.getParam(
               'contNo',
+              ParamType.String,
+            ),
+            from: params.getParam(
+              'from',
+              ParamType.String,
+            ),
+            token: params.getParam(
+              'token',
               ParamType.String,
             ),
           ),

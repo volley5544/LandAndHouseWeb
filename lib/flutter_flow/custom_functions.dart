@@ -640,3 +640,154 @@ bool? checkIdCard(String? idCard) {
 
   return checksum == lastDigit;
 }
+
+String? formatToThaiDateWithMonth(
+  String? dateInput,
+  bool? timeFormat,
+) {
+  DateTime dateTime = DateFormat("dd-MM-yyyy HH:mm").parse(dateInput!);
+
+  // Thai short month names
+  List<String> thaiMonths = [
+    '',
+    'ม.ค.',
+    'ก.พ.',
+    'มี.ค.',
+    'เม.ย.',
+    'พ.ค.',
+    'มิ.ย.',
+    'ก.ค.',
+    'ส.ค.',
+    'ก.ย.',
+    'ต.ค.',
+    'พ.ย.',
+    'ธ.ค.'
+  ];
+
+  // Get Thai Buddhist Era year (year + 543)
+  int buddhistYear = dateTime.year + 543;
+
+  // Use only last 2 digits of Buddhist year
+  String yearShort = buddhistYear.toString().substring(2);
+
+  // Get date parts
+  int day = dateTime.day;
+  String monthName = thaiMonths[dateTime.month];
+  String time = DateFormat('HH:mm').format(dateTime);
+
+  // Build final string
+  if (timeFormat!) {
+    return '$day $monthName $yearShort $time น.';
+  } else {
+    return '$day $monthName $yearShort';
+  }
+}
+
+String? returnThaiDateFormat(String? dateInput) {
+  if (dateInput! == 'null' || dateInput! == '') {
+    return '';
+  }
+
+  String month = 'month';
+  List<String> dateSplit = dateInput!.split('-');
+  String dateFormatted = '${dateSplit[2]}-${dateSplit[1]}-${dateSplit[0]}';
+  String thaiYear = (int.parse(dateSplit[2]) + 543).toString();
+
+  if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) == 'January') {
+    month = 'ม.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'February') {
+    month = 'ก.พ.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'March') {
+    month = 'มี.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'April') {
+    month = 'เม.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'May') {
+    month = 'พ.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'June') {
+    month = 'มิ.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'July') {
+    month = 'ก.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'August') {
+    month = 'ส.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'September') {
+    month = 'ก.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'October') {
+    month = 'ต.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'November') {
+    month = 'พ.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'December') {
+    month = 'ธ.ค.';
+  }
+
+  return DateFormat(
+    'dd $month ${thaiYear[2]}${thaiYear[3]}',
+  ).format(DateTime.parse(dateFormatted));
+}
+
+String? returnThaiDateFromNormalFormat(String? dateInput) {
+  if (dateInput! == 'null' ||
+      dateInput! == '' ||
+      DateTime.parse('${dateInput!}') == null) {
+    return '';
+  }
+
+  String formattedDate =
+      DateFormat('yyyy-MM-dd').format(DateTime.parse('${dateInput!}'));
+
+  String month = 'month';
+  List<String> dateSplit = formattedDate!.split('-');
+  String dateFormatted = '${dateSplit[0]}-${dateSplit[1]}-${dateSplit[2]}';
+  String thaiYear = (int.parse(dateSplit[0]) + 543).toString();
+
+  if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) == 'January') {
+    month = 'ม.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'February') {
+    month = 'ก.พ.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'March') {
+    month = 'มี.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'April') {
+    month = 'เม.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'May') {
+    month = 'พ.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'June') {
+    month = 'มิ.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'July') {
+    month = 'ก.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'August') {
+    month = 'ส.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'September') {
+    month = 'ก.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'October') {
+    month = 'ต.ค.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'November') {
+    month = 'พ.ย.';
+  } else if (DateFormat('MMMM').format(DateTime.parse(dateFormatted)) ==
+      'December') {
+    month = 'ธ.ค.';
+  }
+
+  return DateFormat(
+    'dd $month ${thaiYear[2]}${thaiYear[3]}',
+  ).format(DateTime.parse(dateFormatted));
+}

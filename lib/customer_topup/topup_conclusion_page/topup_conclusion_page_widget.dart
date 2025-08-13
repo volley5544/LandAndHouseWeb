@@ -1807,6 +1807,245 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             safeSetState(() {});
                                                           return;
                                                         }
+                                                        if (true) {
+                                                          _model.visionOutputThaiId =
+                                                              await SrisawadApiGroup
+                                                                  .visionThaiIdCall
+                                                                  .call(
+                                                            file: _model
+                                                                .uploadedLocalFile_uploadIdCardAction,
+                                                            apiUrl: FFDevEnvironmentValues()
+                                                                    .isProduction
+                                                                ? FFAppState()
+                                                                    .topupUrlProd
+                                                                : FFAppState()
+                                                                    .topupUrlDev,
+                                                          );
+
+                                                          _shouldSetState =
+                                                              true;
+                                                          if ((_model.visionOutputThaiId
+                                                                      ?.statusCode ??
+                                                                  200) ==
+                                                              200) {
+                                                          } else {
+                                                            _model.uploadingImage =
+                                                                false;
+                                                            safeSetState(() {});
+                                                            await showDialog(
+                                                              barrierDismissible:
+                                                                  false,
+                                                              context: context,
+                                                              builder:
+                                                                  (dialogContext) {
+                                                                return Dialog(
+                                                                  elevation: 0,
+                                                                  insetPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  alignment: AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0)
+                                                                      .resolve(
+                                                                          Directionality.of(
+                                                                              context)),
+                                                                  child:
+                                                                      GestureDetector(
+                                                                    onTap: () {
+                                                                      FocusScope.of(
+                                                                              dialogContext)
+                                                                          .unfocus();
+                                                                      FocusManager
+                                                                          .instance
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                    },
+                                                                    child:
+                                                                        ErrorMessageComponentWidget(
+                                                                      textMessage:
+                                                                          'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+
+                                                            if (_shouldSetState)
+                                                              safeSetState(
+                                                                  () {});
+                                                            return;
+                                                          }
+
+                                                          if (!(('1103000101931' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.thai_id''',
+                                                                  ).toString()}') ||
+                                                              ('1103701967986' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.thai_id''',
+                                                                  ).toString()}') ||
+                                                              ('1331400042203' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.thai_id''',
+                                                                  ).toString()}') ||
+                                                              ('3401700351967' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.thai_id''',
+                                                                  ).toString()}') ||
+                                                              ('${FFAppState().customerDetailData.thaiId}' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.thai_id''',
+                                                                  ).toString()}'))) {
+                                                            _model.uploadingImage =
+                                                                false;
+                                                            safeSetState(() {});
+                                                            await showDialog(
+                                                              barrierDismissible:
+                                                                  false,
+                                                              context: context,
+                                                              builder:
+                                                                  (dialogContext) {
+                                                                return Dialog(
+                                                                  elevation: 0,
+                                                                  insetPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  alignment: AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0)
+                                                                      .resolve(
+                                                                          Directionality.of(
+                                                                              context)),
+                                                                  child:
+                                                                      GestureDetector(
+                                                                    onTap: () {
+                                                                      FocusScope.of(
+                                                                              dialogContext)
+                                                                          .unfocus();
+                                                                      FocusManager
+                                                                          .instance
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                    },
+                                                                    child:
+                                                                        ErrorMessageComponentWidget(
+                                                                      textMessage:
+                                                                          'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            );
+
+                                                            if (_shouldSetState)
+                                                              safeSetState(
+                                                                  () {});
+                                                            return;
+                                                          }
+                                                          if (!(functions
+                                                                  .isCurrentDateBeforeDateInput(
+                                                                      '${getJsonField(
+                                                                        (_model.visionOutputThaiId?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.lastest_date''',
+                                                                      ).toString()}',
+                                                                      FFAppState()
+                                                                          .getLoanListSelected
+                                                                          .paymentDetails
+                                                                          .currentDateTime)! ||
+                                                              ('Y' ==
+                                                                  '${getJsonField(
+                                                                    (_model.visionOutputThaiId
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.exception_date''',
+                                                                  ).toString()}'))) {
+                                                            await showDialog(
+                                                              barrierDismissible:
+                                                                  false,
+                                                              context: context,
+                                                              builder:
+                                                                  (dialogContext) {
+                                                                return Dialog(
+                                                                  elevation: 0,
+                                                                  insetPadding:
+                                                                      EdgeInsets
+                                                                          .zero,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  alignment: AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0)
+                                                                      .resolve(
+                                                                          Directionality.of(
+                                                                              context)),
+                                                                  child:
+                                                                      GestureDetector(
+                                                                    onTap: () {
+                                                                      FocusScope.of(
+                                                                              dialogContext)
+                                                                          .unfocus();
+                                                                      FocusManager
+                                                                          .instance
+                                                                          .primaryFocus
+                                                                          ?.unfocus();
+                                                                    },
+                                                                    child:
+                                                                        ChangeDateExpireComponentWidget(
+                                                                      textMessage:
+                                                                          '-',
+                                                                      thaiId:
+                                                                          getJsonField(
+                                                                        (_model.visionOutputThaiId?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.thai_id''',
+                                                                      ).toString(),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ).then((value) =>
+                                                                safeSetState(() =>
+                                                                    _model.changeDateOutput =
+                                                                        value));
+
+                                                            _shouldSetState =
+                                                                true;
+                                                            if (!_model
+                                                                .changeDateOutput!) {
+                                                              _model.uploadingImage =
+                                                                  false;
+                                                              safeSetState(
+                                                                  () {});
+                                                              if (_shouldSetState)
+                                                                safeSetState(
+                                                                    () {});
+                                                              return;
+                                                            }
+                                                          }
+                                                        }
                                                         _model.idCardImageUrlOutput =
                                                             await actions
                                                                 .uploadFileFirebaseStorage(
@@ -1833,241 +2072,6 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                     _model
                                                                         .idCardImageUrlOutput)!;
                                                         safeSetState(() {});
-                                                        _model.visionOutputThaiId =
-                                                            await SrisawadApiGroup
-                                                                .visionThaiIdCall
-                                                                .call(
-                                                          file: _model
-                                                              .uploadedLocalFile_uploadIdCardAction,
-                                                          apiUrl: FFDevEnvironmentValues()
-                                                                  .isProduction
-                                                              ? FFAppState()
-                                                                  .topupUrlProd
-                                                              : FFAppState()
-                                                                  .topupUrlDev,
-                                                        );
-
-                                                        _shouldSetState = true;
-                                                        if ((_model.visionOutputThaiId
-                                                                    ?.statusCode ??
-                                                                200) ==
-                                                            200) {
-                                                        } else {
-                                                          _model.uploadingImage =
-                                                              false;
-                                                          safeSetState(() {});
-                                                          await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            dialogContext)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      ErrorMessageComponentWidget(
-                                                                    textMessage:
-                                                                        'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-
-                                                          if (_shouldSetState)
-                                                            safeSetState(() {});
-                                                          return;
-                                                        }
-
-                                                        if (!(('1103000101931' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.thai_id''',
-                                                                ).toString()}') ||
-                                                            ('1103701967986' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.thai_id''',
-                                                                ).toString()}') ||
-                                                            ('1331400042203' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.thai_id''',
-                                                                ).toString()}') ||
-                                                            ('3401700351967' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.thai_id''',
-                                                                ).toString()}') ||
-                                                            ('${FFAppState().customerDetailData.thaiId}' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.thai_id''',
-                                                                ).toString()}'))) {
-                                                          _model.uploadingImage =
-                                                              false;
-                                                          safeSetState(() {});
-                                                          await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            dialogContext)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      ErrorMessageComponentWidget(
-                                                                    textMessage:
-                                                                        'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-
-                                                          if (_shouldSetState)
-                                                            safeSetState(() {});
-                                                          return;
-                                                        }
-                                                        if (!(functions
-                                                                .isCurrentDateBeforeDateInput(
-                                                                    '${getJsonField(
-                                                                      (_model.visionOutputThaiId
-                                                                              ?.jsonBody ??
-                                                                          ''),
-                                                                      r'''$.lastest_date''',
-                                                                    ).toString()}',
-                                                                    FFAppState()
-                                                                        .getLoanListSelected
-                                                                        .paymentDetails
-                                                                        .currentDateTime)! ||
-                                                            ('Y' ==
-                                                                '${getJsonField(
-                                                                  (_model.visionOutputThaiId
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.exception_date''',
-                                                                ).toString()}'))) {
-                                                          await showDialog(
-                                                            barrierDismissible:
-                                                                false,
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            dialogContext)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      ChangeDateExpireComponentWidget(
-                                                                    textMessage:
-                                                                        '-',
-                                                                    thaiId:
-                                                                        getJsonField(
-                                                                      (_model.visionOutputThaiId
-                                                                              ?.jsonBody ??
-                                                                          ''),
-                                                                      r'''$.thai_id''',
-                                                                    ).toString(),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          ).then((value) =>
-                                                              safeSetState(() =>
-                                                                  _model.changeDateOutput =
-                                                                      value));
-
-                                                          _shouldSetState =
-                                                              true;
-                                                          if (!_model
-                                                              .changeDateOutput!) {
-                                                            _model.uploadingImage =
-                                                                false;
-                                                            safeSetState(() {});
-                                                            if (_shouldSetState)
-                                                              safeSetState(
-                                                                  () {});
-                                                            return;
-                                                          }
-                                                        }
                                                         _model.uploadingImage =
                                                             false;
                                                         safeSetState(() {});
