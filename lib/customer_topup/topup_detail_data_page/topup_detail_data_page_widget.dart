@@ -2996,7 +2996,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                     ..pdpaDate = FFAppState()
                                                         .getLoanListSelected
                                                         .paymentDetails
-                                                        .currentDueDate,
+                                                        .currentDateTime,
                                                 );
                                                 safeSetState(() {});
                                                 FFAppState()
