@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/customer_loan_detail/loan_detail_card_component/loan_detail_card_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'dart:async';
 import '/index.dart';
 import 'select_payment_page_widget.dart' show SelectPaymentPageWidget;
 import 'package:expandable/expandable.dart';
@@ -38,6 +39,14 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
   // State field(s) for Expandable widget.
   late ExpandableController expandableExpandableController2;
 
+  // State field(s) for Expandable widget.
+  late ExpandableController expandableExpandableController3;
+
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
+
   @override
   void initState(BuildContext context) {
     loanDetailCardComponentModel =
@@ -49,6 +58,9 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
     loanDetailCardComponentModel.dispose();
     expandableExpandableController1.dispose();
     expandableExpandableController2.dispose();
+    expandableExpandableController3.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
   }
 
   /// Action blocks.

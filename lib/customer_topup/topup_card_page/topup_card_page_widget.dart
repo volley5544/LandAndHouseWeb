@@ -1112,7 +1112,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                                                       ),
                                                                                     ),
                                                                                   ),
-                                                                                if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') || ('${loanListItem.contractDetails.loanTypeCode}' == 'H') || (loanListItem.topupDetail.canTopup == 'G') || (loanListItem.topupDetail.canTopup == 'A'))
+                                                                                if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') || ('${loanListItem.contractDetails.loanTypeCode}' == 'H') || (loanListItem.topupDetail.canTopup == 'G') || (loanListItem.topupDetail.canTopup == 'A') || (loanListItem.topupDetail.canTopup == 'L'))
                                                                                   Column(
                                                                                     mainAxisSize: MainAxisSize.max,
                                                                                     children: [

@@ -43,6 +43,10 @@ class TopupConclusionPageModel
 
   bool uploadingImage = false;
 
+  String thaiIdPageState = 'null';
+
+  String expireDatePageState = 'null';
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (Send an pdf to user)] action in TopupConclusionPage widget.
@@ -61,6 +65,8 @@ class TopupConclusionPageModel
 
   // Stores action output result for [Backend Call - API (visionThaiId)] action in Button widget.
   ApiCallResponse? visionOutputThaiId;
+  // Stores action output result for [Backend Call - API (ocrThaiIdPython)] action in Button widget.
+  ApiCallResponse? oCResultsAPI;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   bool? changeDateOutput;
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.

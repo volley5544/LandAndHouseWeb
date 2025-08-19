@@ -12,6 +12,7 @@ export 'customer_detail_struct.dart';
 export 'get_loan_list_a_p_i_data_type_struct.dart';
 export 'get_topup_data_a_p_i_data_type_struct.dart';
 export 'insurance_info_data_model_struct.dart';
+export 'o_c_r_results_model_struct.dart';
 export 'payment_details_data_model_struct.dart';
 export 'payment_history_model_struct.dart';
 export 'pdf_loan_doc_data_model_struct.dart';

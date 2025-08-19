@@ -2397,9 +2397,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             if ('${valueOrDefault<String>(
                                                   FFAppState()
                                                       .getTopupDataAPIResultAppstate
-                                                      .collectionFee
+                                                      .yield
                                                       .toString(),
-                                                  'collection_fee',
+                                                  'yield',
                                                 )}' !=
                                                 '0')
                                               Expanded(
@@ -2434,7 +2434,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
-                                                              .collectionFee
+                                                              .yield
                                                               .toString(),
                                                           '0',
                                                         )}')} บาท',
@@ -2460,9 +2460,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             if ('${valueOrDefault<String>(
                                                   FFAppState()
                                                       .getTopupDataAPIResultAppstate
-                                                      .yield
+                                                      .collectionFee
                                                       .toString(),
-                                                  'yield',
+                                                  'collection_fee',
                                                 )}' !=
                                                 '0')
                                               Expanded(
@@ -2496,7 +2496,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                         '${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
                                                           FFAppState()
                                                               .getTopupDataAPIResultAppstate
-                                                              .yield
+                                                              .collectionFee
                                                               .toString(),
                                                           '0',
                                                         )}')} บาท',

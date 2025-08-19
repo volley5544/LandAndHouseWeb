@@ -104,11 +104,51 @@ class _LoanDetailCardComponentWidgetState
                               fit: BoxFit.cover,
                             ),
                           );
-                        } else {
+                        } else if (widget.productTypeCode == 'H') {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: SvgPicture.asset(
                               'assets/images/HouseLoanIcon.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else if (widget.productTypeCode == 'L') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANL.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else if (widget.productTypeCode == 'T') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANT.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else if (widget.productTypeCode == 'V') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANV.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANL.svg',
                               width: 50.0,
                               height: 50.0,
                               fit: BoxFit.cover,

@@ -791,3 +791,12 @@ String? returnThaiDateFromNormalFormat(String? dateInput) {
     'dd $month ${thaiYear[2]}${thaiYear[3]}',
   ).format(DateTime.parse(dateFormatted));
 }
+
+bool? checkPaymentFieldValue(
+  String? paymentTextField,
+  String? osBalance,
+) {
+  return double.parse(paymentTextField!) <= double.parse(osBalance!)
+      ? true
+      : false;
+}

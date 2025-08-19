@@ -80,7 +80,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       _model.getLoanListOutput = await SrisawadApiGroup.getListOfLoanCall.call(
         hashThaiId: FFAppState().hashThaiIdAppState,
         authorization: FFAppState().accessToken,
-        apiUrl: FFDevEnvironmentValues().isProduction
+        apiUrl: !FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
             : FFAppState().topupUrlDev,
       );
@@ -155,7 +155,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         dbName: FFAppState().getLoanListSelected.dbName,
         bearerAuth: FFAppState().accessToken,
         xSrisawad: 'x1',
-        apiUrl: FFDevEnvironmentValues().isProduction
+        apiUrl: !FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
             : FFAppState().topupUrlDev,
       );
@@ -348,7 +348,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                         .toString(),
                     currentDueDate: functions.formatToThaiDate(FFAppState()
                         .getLoanListSelected
-                        .contractDetails
+                        .paymentDetails
                         .currentDueDate),
                   ),
                 ),
@@ -1108,7 +1108,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '${'${FFAppState().getLoanListSelected.contractDetails.vehicleBrand}'}',
+                                                      '${_model.carDetailLoanPageState?.carSeries}' !=
+                                                              ''
+                                                          ? '${_model.carDetailLoanPageState?.carSeries}'
+                                                          : '-',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -1191,7 +1194,11 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '${functions.returnNumberWithCommaFullNumber(_model.carDetailLoanPageState?.carCc, '0')} cc',
+                                                      _model.carDetailLoanPageState
+                                                                  ?.carCc !=
+                                                              ''
+                                                          ? '${functions.returnNumberWithCommaFullNumber(_model.carDetailLoanPageState?.carCc, '0')} cc'
+                                                          : '-',
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyMedium
@@ -1838,7 +1845,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                               .getLoanListSelected
                                               .dbName
                                               .substring(0, 2),
-                                          apiUrl: FFDevEnvironmentValues()
+                                          apiUrl: !FFDevEnvironmentValues()
                                                   .isProduction
                                               ? FFAppState().topupUrlProd
                                               : FFAppState().topupUrlDev,

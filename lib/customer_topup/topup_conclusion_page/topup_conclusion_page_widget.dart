@@ -1828,6 +1828,21 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                       ?.statusCode ??
                                                                   200) ==
                                                               200) {
+                                                            _model.thaiIdPageState =
+                                                                getJsonField(
+                                                              (_model.visionOutputThaiId
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                              r'''$.thai_id''',
+                                                            ).toString();
+                                                            _model.expireDatePageState =
+                                                                getJsonField(
+                                                              (_model.visionOutputThaiId
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                              r'''$.lastest_date''',
+                                                            ).toString();
+                                                            safeSetState(() {});
                                                           } else {
                                                             _model.uploadingImage =
                                                                 false;
@@ -1878,42 +1893,26 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                   () {});
                                                             return;
                                                           }
+                                                        } else {
+                                                          _model.oCResultsAPI =
+                                                              await SrisawadApiGroup
+                                                                  .ocrThaiIdPythonCall
+                                                                  .call(
+                                                            file: _model
+                                                                .uploadedLocalFile_uploadIdCardAction,
+                                                            apiUrl: FFDevEnvironmentValues()
+                                                                    .isProduction
+                                                                ? FFAppState()
+                                                                    .topupUrlProd
+                                                                : 'https://4067572fe23a.ngrok-free.app',
+                                                          );
 
-                                                          if (!(('1103000101931' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.thai_id''',
-                                                                  ).toString()}') ||
-                                                              ('1103701967986' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.thai_id''',
-                                                                  ).toString()}') ||
-                                                              ('1331400042203' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.thai_id''',
-                                                                  ).toString()}') ||
-                                                              ('3401700351967' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.thai_id''',
-                                                                  ).toString()}') ||
-                                                              ('${FFAppState().customerDetailData.thaiId}' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.thai_id''',
-                                                                  ).toString()}'))) {
+                                                          _shouldSetState =
+                                                              true;
+                                                          if ((_model.oCResultsAPI
+                                                                      ?.statusCode ??
+                                                                  200) !=
+                                                              200) {
                                                             _model.uploadingImage =
                                                                 false;
                                                             safeSetState(() {});
@@ -1951,7 +1950,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                     child:
                                                                         ErrorMessageComponentWidget(
                                                                       textMessage:
-                                                                          'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                                                                          'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
                                                                     ),
                                                                   ),
                                                                 );
@@ -1963,87 +1962,155 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                   () {});
                                                             return;
                                                           }
-                                                          if (!(functions
-                                                                  .isCurrentDateBeforeDateInput(
-                                                                      '${getJsonField(
-                                                                        (_model.visionOutputThaiId?.jsonBody ??
-                                                                            ''),
-                                                                        r'''$.lastest_date''',
-                                                                      ).toString()}',
-                                                                      FFAppState()
-                                                                          .getLoanListSelected
-                                                                          .paymentDetails
-                                                                          .currentDateTime)! ||
-                                                              ('Y' ==
-                                                                  '${getJsonField(
-                                                                    (_model.visionOutputThaiId
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.exception_date''',
-                                                                  ).toString()}'))) {
-                                                            await showDialog(
-                                                              barrierDismissible:
-                                                                  false,
-                                                              context: context,
-                                                              builder:
-                                                                  (dialogContext) {
-                                                                return Dialog(
-                                                                  elevation: 0,
-                                                                  insetPadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .transparent,
-                                                                  alignment: AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0)
-                                                                      .resolve(
-                                                                          Directionality.of(
-                                                                              context)),
-                                                                  child:
-                                                                      GestureDetector(
-                                                                    onTap: () {
-                                                                      FocusScope.of(
-                                                                              dialogContext)
-                                                                          .unfocus();
-                                                                      FocusManager
-                                                                          .instance
-                                                                          .primaryFocus
-                                                                          ?.unfocus();
-                                                                    },
-                                                                    child:
-                                                                        ChangeDateExpireComponentWidget(
-                                                                      textMessage:
-                                                                          '-',
-                                                                      thaiId:
-                                                                          getJsonField(
-                                                                        (_model.visionOutputThaiId?.jsonBody ??
-                                                                            ''),
-                                                                        r'''$.thai_id''',
-                                                                      ).toString(),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(() =>
-                                                                    _model.changeDateOutput =
-                                                                        value));
+                                                          _model.thaiIdPageState =
+                                                              (String thaiId) {
+                                                            return thaiId
+                                                                .replaceAll(
+                                                                    " ", "");
+                                                          }(getJsonField(
+                                                            (_model.oCResultsAPI
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$.cards[*].ocr_results[0].text''',
+                                                          ).toString());
+                                                          _model.expireDatePageState =
+                                                              getJsonField(
+                                                            (_model.oCResultsAPI
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                            r'''$.cards[*].ocr_results[1].text''',
+                                                          ).toString();
+                                                          safeSetState(() {});
+                                                        }
 
-                                                            _shouldSetState =
-                                                                true;
-                                                            if (!_model
-                                                                .changeDateOutput!) {
-                                                              _model.uploadingImage =
-                                                                  false;
+                                                        if (!(('1103000101931' ==
+                                                                '${_model.thaiIdPageState}') ||
+                                                            ('1103701967986' ==
+                                                                '${_model.thaiIdPageState}') ||
+                                                            ('1331400042203' ==
+                                                                '${_model.thaiIdPageState}') ||
+                                                            ('3401700351967' ==
+                                                                '${_model.thaiIdPageState}') ||
+                                                            ('${FFAppState().customerDetailData.thaiId}' ==
+                                                                '${_model.thaiIdPageState}'))) {
+                                                          _model.uploadingImage =
+                                                              false;
+                                                          safeSetState(() {});
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ErrorMessageComponentWidget(
+                                                                    textMessage:
+                                                                        'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+                                                        if (!(functions.isCurrentDateBeforeDateInput(
+                                                                '${_model.expireDatePageState}',
+                                                                FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .paymentDetails
+                                                                    .currentDateTime)! ||
+                                                            ('Y' ==
+                                                                '${getJsonField(
+                                                                  (_model.visionOutputThaiId
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.exception_date''',
+                                                                ).toString()}'))) {
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ChangeDateExpireComponentWidget(
+                                                                    textMessage:
+                                                                        '-',
+                                                                    thaiId: _model
+                                                                        .thaiIdPageState,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ).then((value) =>
+                                                              safeSetState(() =>
+                                                                  _model.changeDateOutput =
+                                                                      value));
+
+                                                          _shouldSetState =
+                                                              true;
+                                                          if (!_model
+                                                              .changeDateOutput!) {
+                                                            _model.uploadingImage =
+                                                                false;
+                                                            safeSetState(() {});
+                                                            if (_shouldSetState)
                                                               safeSetState(
                                                                   () {});
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
+                                                            return;
                                                           }
                                                         }
                                                         _model.idCardImageUrlOutput =
