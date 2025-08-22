@@ -575,7 +575,7 @@ String getCORSProxyUrl(String path) {
     return path;
   }
   const proxyUrl =
-      'https://us-central1-srisawad-mobile-app-prd.cloudfunctions.net/corsProxy?url=';
+      'https://us-central1-srisawad-mobile-app-qa-360402.cloudfunctions.net/corsProxy?url=';
   return '$proxyUrl$path';
 }
 

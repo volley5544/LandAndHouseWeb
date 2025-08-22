@@ -800,3 +800,22 @@ bool? checkPaymentFieldValue(
       ? true
       : false;
 }
+
+String? getDataFromMapJson(
+  dynamic jsonDataInput,
+  String? fieldName,
+) {
+  Map<String, dynamic> mapDataInput = jsonDecode(jsonDataInput!);
+  dynamic jsonOutput = jsonEncode(mapDataInput[fieldName!]);
+  return jsonOutput;
+}
+
+List<String>? getDataListFromMapJson(
+  dynamic jsonDataInput,
+  String? fieldName,
+) {
+  Map<String, dynamic> mapDataInput = jsonDecode(jsonDataInput!);
+  dynamic listOutput = mapDataInput[fieldName!];
+  List<String> listOutput1 = listOutput.cast<String>();
+  return listOutput1;
+}

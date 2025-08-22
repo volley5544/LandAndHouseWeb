@@ -52,10 +52,14 @@ class LoanDetailPageModel extends FlutterFlowModel<LoanDetailPageWidget> {
 
   String? dataDate;
 
+  dynamic wow;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in LoanDetailPage widget.
   ApplicationRecord? configOutput;
+  // Stores action output result for [Custom Action - getDataFromDocument] action in LoanDetailPage widget.
+  dynamic comCodeConfigDoc;
   // Stores action output result for [Backend Call - API (get list of loan.)] action in LoanDetailPage widget.
   ApiCallResponse? getLoanListOutput;
   // Stores action output result for [Backend Call - API (get detail of loan.)] action in LoanDetailPage widget.

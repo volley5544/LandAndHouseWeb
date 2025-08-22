@@ -1903,8 +1903,9 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             apiUrl: FFDevEnvironmentValues()
                                                                     .isProduction
                                                                 ? FFAppState()
-                                                                    .topupUrlProd
-                                                                : 'https://4067572fe23a.ngrok-free.app',
+                                                                    .ocrUrlProd
+                                                                : FFAppState()
+                                                                    .ocrUrlDev,
                                                           );
 
                                                           _shouldSetState =

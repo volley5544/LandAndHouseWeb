@@ -560,10 +560,28 @@ class FFAppState extends ChangeNotifier {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 6;
+  int _webUatVersion = 8;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
+  }
+
+  String _ocrUrlDev = '';
+  String get ocrUrlDev => _ocrUrlDev;
+  set ocrUrlDev(String value) {
+    _ocrUrlDev = value;
+  }
+
+  String _ocrUrlProd = '';
+  String get ocrUrlProd => _ocrUrlProd;
+  set ocrUrlProd(String value) {
+    _ocrUrlProd = value;
+  }
+
+  dynamic _comcodeConfigsDocument;
+  dynamic get comcodeConfigsDocument => _comcodeConfigsDocument;
+  set comcodeConfigsDocument(dynamic value) {
+    _comcodeConfigsDocument = value;
   }
 }
 

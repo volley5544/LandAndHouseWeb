@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'loan_detail_card_component_model.dart';
@@ -19,6 +20,8 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
     this.installmentAmount,
     this.totalDueAmount,
     this.currentDueDate,
+    this.installmentNumber,
+    this.contractLink,
   });
 
   final String? contNo;
@@ -32,6 +35,8 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
   final String? installmentAmount;
   final String? totalDueAmount;
   final String? currentDueDate;
+  final String? installmentNumber;
+  final String? contractLink;
 
   @override
   State<LoanDetailCardComponentWidget> createState() =>
@@ -231,6 +236,59 @@ class _LoanDetailCardComponentWidgetState
                                   ),
                             ),
                           ],
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 5.0, 0.0),
+                                  child: Container(
+                                    width: 100.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    child: Text(
+                                      'ถ้าลูกค้ายังไม่ได้รับตั๋วสัญญาใช้เงิน ณ วันที่ทำสัญญา กรุณา ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  await actions.openTableauInApp(
+                                    '${widget.contractLink}',
+                                  );
+                                },
+                                child: Text(
+                                  'download',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -468,6 +526,44 @@ class _LoanDetailCardComponentWidgetState
                                         letterSpacing: 0.0,
                                       ),
                                 ),
+                              ],
+                            ),
+                          ),
+                        if (widget.totalDueAmount != '0')
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 12.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if ((widget.currentInstallmentNumber ==
+                                        widget.installmentNumber) &&
+                                    (widget.currentInstallmentNumber != '0') &&
+                                    (widget.installmentNumber != '0'))
+                                  Text(
+                                    '(ติดต่อสาขาเพื่อขอยอดปิดบัญชี หรือต่อสัญญา)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
                               ],
                             ),
                           ),

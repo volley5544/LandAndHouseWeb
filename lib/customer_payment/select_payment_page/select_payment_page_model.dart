@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import '/index.dart';
 import 'select_payment_page_widget.dart' show SelectPaymentPageWidget;
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
@@ -31,17 +30,10 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
   ApplicationRecord? configOutput;
   // Stores action output result for [Backend Call - API (get list of loan.)] action in SelectPaymentPage widget.
   ApiCallResponse? getLoanListOutput;
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // Model for LoanDetailCardComponent component.
   late LoanDetailCardComponentModel loanDetailCardComponentModel;
-  // State field(s) for Expandable widget.
-  late ExpandableController expandableExpandableController1;
-
-  // State field(s) for Expandable widget.
-  late ExpandableController expandableExpandableController2;
-
-  // State field(s) for Expandable widget.
-  late ExpandableController expandableExpandableController3;
-
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -49,16 +41,15 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
 
   @override
   void initState(BuildContext context) {
+    columnController = ScrollController();
     loanDetailCardComponentModel =
         createModel(context, () => LoanDetailCardComponentModel());
   }
 
   @override
   void dispose() {
+    columnController?.dispose();
     loanDetailCardComponentModel.dispose();
-    expandableExpandableController1.dispose();
-    expandableExpandableController2.dispose();
-    expandableExpandableController3.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }

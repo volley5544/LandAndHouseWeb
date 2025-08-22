@@ -16,3 +16,5 @@ export 'console_log_action.dart' show consoleLogAction;
 export 'console_log_action_check_version.dart'
     show consoleLogActionCheckVersion;
 export 'navigate_back_webview_action.dart' show navigateBackWebviewAction;
+export 'get_data_from_document.dart' show getDataFromDocument;
+export 'open_tableau_in_app.dart' show openTableauInApp;

@@ -45,6 +45,12 @@ class ApplicationRecord extends FirestoreRecord {
   String get topupNoData2Text => _topupNoData2Text ?? '';
   bool hasTopupNoData2Text() => _topupNoData2Text != null;
 
+  // "comcode_config" field.
+  ComcodeConfigModelStruct? _comcodeConfig;
+  ComcodeConfigModelStruct get comcodeConfig =>
+      _comcodeConfig ?? ComcodeConfigModelStruct();
+  bool hasComcodeConfig() => _comcodeConfig != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -55,6 +61,9 @@ class ApplicationRecord extends FirestoreRecord {
     _topupTextList = getDataList(snapshotData['topup_text_list']);
     _topupNoDataText = snapshotData['topup_no_data_text'] as String?;
     _topupNoData2Text = snapshotData['topup_no_data2_text'] as String?;
+    _comcodeConfig = snapshotData['comcode_config'] is ComcodeConfigModelStruct
+        ? snapshotData['comcode_config']
+        : ComcodeConfigModelStruct.maybeFromMap(snapshotData['comcode_config']);
   }
 
   static CollectionReference get collection =>
@@ -96,6 +105,7 @@ Map<String, dynamic> createApplicationRecordData({
   String? topupTextTitle,
   String? topupNoDataText,
   String? topupNoData2Text,
+  ComcodeConfigModelStruct? comcodeConfig,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -103,11 +113,16 @@ Map<String, dynamic> createApplicationRecordData({
       'topup_text_title': topupTextTitle,
       'topup_no_data_text': topupNoDataText,
       'topup_no_data2_text': topupNoData2Text,
+      'comcode_config': ComcodeConfigModelStruct().toMap(),
     }.withoutNulls,
   );
 
   // Handle nested data for "api_url" field.
   addApiUrlStructData(firestoreData, apiUrl, 'api_url');
+
+  // Handle nested data for "comcode_config" field.
+  addComcodeConfigModelStructData(
+      firestoreData, comcodeConfig, 'comcode_config');
 
   return firestoreData;
 }
@@ -124,7 +139,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
             e1?.topupWarnningTextList, e2?.topupWarnningTextList) &&
         listEquality.equals(e1?.topupTextList, e2?.topupTextList) &&
         e1?.topupNoDataText == e2?.topupNoDataText &&
-        e1?.topupNoData2Text == e2?.topupNoData2Text;
+        e1?.topupNoData2Text == e2?.topupNoData2Text &&
+        e1?.comcodeConfig == e2?.comcodeConfig;
   }
 
   @override
@@ -134,7 +150,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.topupWarnningTextList,
         e?.topupTextList,
         e?.topupNoDataText,
-        e?.topupNoData2Text
+        e?.topupNoData2Text,
+        e?.comcodeConfig
       ]);
 
   @override

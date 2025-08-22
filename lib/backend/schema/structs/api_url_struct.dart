@@ -16,6 +16,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? apiUrlProd,
     String? apiUrlLeadDev,
     String? apiUrlLeadProd,
+    String? ocrUrlDev,
+    String? ocrUrlProd,
+    String? contractUrl,
+    String? contractUrlDev,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -25,6 +29,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _apiUrlProd = apiUrlProd,
         _apiUrlLeadDev = apiUrlLeadDev,
         _apiUrlLeadProd = apiUrlLeadProd,
+        _ocrUrlDev = ocrUrlDev,
+        _ocrUrlProd = ocrUrlProd,
+        _contractUrl = contractUrl,
+        _contractUrlDev = contractUrlDev,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -83,6 +91,34 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasApiUrlLeadProd() => _apiUrlLeadProd != null;
 
+  // "ocr_url_dev" field.
+  String? _ocrUrlDev;
+  String get ocrUrlDev => _ocrUrlDev ?? '';
+  set ocrUrlDev(String? val) => _ocrUrlDev = val;
+
+  bool hasOcrUrlDev() => _ocrUrlDev != null;
+
+  // "ocr_url_prod" field.
+  String? _ocrUrlProd;
+  String get ocrUrlProd => _ocrUrlProd ?? '';
+  set ocrUrlProd(String? val) => _ocrUrlProd = val;
+
+  bool hasOcrUrlProd() => _ocrUrlProd != null;
+
+  // "contract_url" field.
+  String? _contractUrl;
+  String get contractUrl => _contractUrl ?? '';
+  set contractUrl(String? val) => _contractUrl = val;
+
+  bool hasContractUrl() => _contractUrl != null;
+
+  // "contract_url_dev" field.
+  String? _contractUrlDev;
+  String get contractUrlDev => _contractUrlDev ?? '';
+  set contractUrlDev(String? val) => _contractUrlDev = val;
+
+  bool hasContractUrlDev() => _contractUrlDev != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -92,6 +128,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         apiUrlProd: data['api_url_prod'] as String?,
         apiUrlLeadDev: data['api_url_lead_dev'] as String?,
         apiUrlLeadProd: data['api_url_lead_prod'] as String?,
+        ocrUrlDev: data['ocr_url_dev'] as String?,
+        ocrUrlProd: data['ocr_url_prod'] as String?,
+        contractUrl: data['contract_url'] as String?,
+        contractUrlDev: data['contract_url_dev'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -106,6 +146,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'api_url_prod': _apiUrlProd,
         'api_url_lead_dev': _apiUrlLeadDev,
         'api_url_lead_prod': _apiUrlLeadProd,
+        'ocr_url_dev': _ocrUrlDev,
+        'ocr_url_prod': _ocrUrlProd,
+        'contract_url': _contractUrl,
+        'contract_url_dev': _contractUrlDev,
       }.withoutNulls;
 
   @override
@@ -140,6 +184,22 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'api_url_lead_prod': serializeParam(
           _apiUrlLeadProd,
+          ParamType.String,
+        ),
+        'ocr_url_dev': serializeParam(
+          _ocrUrlDev,
+          ParamType.String,
+        ),
+        'ocr_url_prod': serializeParam(
+          _ocrUrlProd,
+          ParamType.String,
+        ),
+        'contract_url': serializeParam(
+          _contractUrl,
+          ParamType.String,
+        ),
+        'contract_url_dev': serializeParam(
+          _contractUrlDev,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -186,6 +246,26 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        ocrUrlDev: deserializeParam(
+          data['ocr_url_dev'],
+          ParamType.String,
+          false,
+        ),
+        ocrUrlProd: deserializeParam(
+          data['ocr_url_prod'],
+          ParamType.String,
+          false,
+        ),
+        contractUrl: deserializeParam(
+          data['contract_url'],
+          ParamType.String,
+          false,
+        ),
+        contractUrlDev: deserializeParam(
+          data['contract_url_dev'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -201,7 +281,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
         apiUrlDev == other.apiUrlDev &&
         apiUrlProd == other.apiUrlProd &&
         apiUrlLeadDev == other.apiUrlLeadDev &&
-        apiUrlLeadProd == other.apiUrlLeadProd;
+        apiUrlLeadProd == other.apiUrlLeadProd &&
+        ocrUrlDev == other.ocrUrlDev &&
+        ocrUrlProd == other.ocrUrlProd &&
+        contractUrl == other.contractUrl &&
+        contractUrlDev == other.contractUrlDev;
   }
 
   @override
@@ -213,7 +297,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
         apiUrlDev,
         apiUrlProd,
         apiUrlLeadDev,
-        apiUrlLeadProd
+        apiUrlLeadProd,
+        ocrUrlDev,
+        ocrUrlProd,
+        contractUrl,
+        contractUrlDev
       ]);
 }
 
@@ -226,6 +314,10 @@ ApiUrlStruct createApiUrlStruct({
   String? apiUrlProd,
   String? apiUrlLeadDev,
   String? apiUrlLeadProd,
+  String? ocrUrlDev,
+  String? ocrUrlProd,
+  String? contractUrl,
+  String? contractUrlDev,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -240,6 +332,10 @@ ApiUrlStruct createApiUrlStruct({
       apiUrlProd: apiUrlProd,
       apiUrlLeadDev: apiUrlLeadDev,
       apiUrlLeadProd: apiUrlLeadProd,
+      ocrUrlDev: ocrUrlDev,
+      ocrUrlProd: ocrUrlProd,
+      contractUrl: contractUrl,
+      contractUrlDev: contractUrlDev,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

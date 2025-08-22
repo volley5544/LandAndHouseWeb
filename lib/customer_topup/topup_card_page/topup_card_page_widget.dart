@@ -89,6 +89,8 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
       FFAppState().LeadUrlDev = '${_model.configOutput?.apiUrl.apiUrlLeadDev}';
       FFAppState().LeadUrlProd =
           '${_model.configOutput?.apiUrl.apiUrlLeadProd}';
+      FFAppState().ocrUrlDev = '${_model.configOutput?.apiUrl.ocrUrlDev}';
+      FFAppState().ocrUrlProd = '${_model.configOutput?.apiUrl.ocrUrlProd}';
       safeSetState(() {});
       FFAppState().saveTopupData = SaveTopupDataModelStruct(
         lifeInsureAmt: '',
@@ -309,7 +311,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                     IconThemeData(color: FlutterFlowTheme.of(context).primary),
                 automaticallyImplyLeading: false,
                 leading: Visibility(
-                  visible: false,
+                  visible: true,
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
