@@ -311,7 +311,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                     IconThemeData(color: FlutterFlowTheme.of(context).primary),
                 automaticallyImplyLeading: false,
                 leading: Visibility(
-                  visible: true,
+                  visible: false,
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
