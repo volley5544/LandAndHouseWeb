@@ -77,21 +77,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         '/application/configs',
         'comcode_config',
       );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            title: Text('output'),
-            content: Text(_model.comCodeConfigDoc!.toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       _model.wow = _model.comCodeConfigDoc;
       safeSetState(() {});
       FFAppState().hashThaiIdAppState = widget.hashThaiId!;
@@ -264,49 +249,15 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         builder: (alertDialogContext) {
           return AlertDialog(
             content: Text(functions
-                .getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!
-                .length
+                .getDataListFromMapJson(
+                    functions.getJsonDataFromMapJson(
+                        _model.comCodeConfigDoc, 'loan_type_code'),
+                    FFAppState().getLoanListSelected.barcodeDetails.comcode)!
+                .contains(FFAppState()
+                    .getLoanListSelected
+                    .contractDetails
+                    .loanTypeCode)
                 .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .getDataListFromMapJson(_model.comCodeConfigDoc, 'button_name')!
-                .firstOrNull!),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text((functions
-                .getDataListFromMapJson(_model.comCodeConfigDoc, 'button_name')!
-                .elementAtOrNull(functions.findIndexInList(
-                    functions
-                        .getDataListFromMapJson(
-                            _model.comCodeConfigDoc, 'comcode')
-                        ?.toList(),
-                    FFAppState()
-                        .getLoanListSelected
-                        .barcodeDetails
-                        .comcode)!))!),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(alertDialogContext),
@@ -422,16 +373,70 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                           .getLoanListSelected
                           .paymentDetails
                           .overdueTo,
-                      overdueAmount: FFAppState()
-                          .getLoanListSelected
-                          .paymentDetails
-                          .overdueAmount
-                          .toString(),
-                      installmentAmount: FFAppState()
-                          .getLoanListSelected
-                          .paymentDetails
-                          .installmentAmount
-                          .toString(),
+                      overdueAmount:
+                          '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? ((String currentDueDate, String currentDate) {
+                                  return DateTime.parse('${currentDueDate}')
+                                      .isAfter(
+                                          DateTime.parse('${currentDate}'));
+                                }(
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueDate,
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDateTime)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
+                                          'null'
+                                      ? functions.returnNumberWithComma2Decimal(
+                                          FFAppState()
+                                              .getLoanListSelected
+                                              .paymentDetails
+                                              .overdueAmount
+                                              .toString())
+                                      : '0.00')
+                                  : 'เกินกำหนดชำระ')
+                              : functions.returnNumberWithComma2Decimal(
+                                  FFAppState()
+                                      .getLoanListSelected
+                                      .paymentDetails
+                                      .overdueAmount
+                                      .toString()),
+                      installmentAmount:
+                          '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? ((String currentDueDate, String currentDate) {
+                                  return DateTime.parse('${currentDueDate}')
+                                      .isAfter(
+                                          DateTime.parse('${currentDate}'));
+                                }(
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueDate,
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDateTime)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
+                                          'null'
+                                      ? functions.returnNumberWithComma2Decimal(
+                                          FFAppState()
+                                              .getLoanListSelected
+                                              .paymentDetails
+                                              .currentDueAmount
+                                              .toString())
+                                      : '0.00')
+                                  : 'เกินกำหนดชำระ')
+                              : functions.returnNumberWithComma2Decimal(
+                                  FFAppState()
+                                      .getLoanListSelected
+                                      .paymentDetails
+                                      .currentDueAmount
+                                      .toString()),
                       totalDueAmount: FFAppState()
                           .getLoanListSelected
                           .paymentDetails
@@ -447,7 +452,89 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                           .totalInstallmentNumber
                           .toString(),
                       contractLink:
-                          '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}',
+                          '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.barcodeDetails.comcode}',
+                      isShowDownload: functions.checkContractException(
+                              functions
+                                  .getDataListFromMapJson(
+                                      _model.comCodeConfigDoc,
+                                      'exception_contract')
+                                  ?.toList(),
+                              functions
+                                  .getDataListFromMapJson(
+                                      _model.comCodeConfigDoc,
+                                      'exception_contract_comcode')
+                                  ?.toList(),
+                              FFAppState().getLoanListSelected.contractNo,
+                              FFAppState()
+                                  .getLoanListSelected
+                                  .barcodeDetails
+                                  .comcode)! ||
+                          (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
+                              !(functions.getDataListBoolFromMapJson(_model.comCodeConfigDoc, 'this_comcode_is_contract')!.elementAtOrNull(
+                                  functions.findIndexInList(
+                                      functions
+                                          .getDataListFromMapJson(
+                                              _model.comCodeConfigDoc,
+                                              'comcode')
+                                          ?.toList(),
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .barcodeDetails
+                                          .comcode)!))! &&
+                              functions
+                                  .getDataListFromMapJson(
+                                      functions.getJsonDataFromMapJson(
+                                          _model.comCodeConfigDoc, 'loan_type_code'),
+                                      FFAppState().getLoanListSelected.barcodeDetails.comcode)!
+                                  .contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) &&
+                              !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode)) ||
+                          (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && (DateTime.parse((functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date')!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate)))),
+                      installmentAmountColor:
+                          '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? ((String currentDueDate, String currentDate) {
+                                  return DateTime.parse('${currentDueDate}')
+                                      .isAfter(
+                                          DateTime.parse('${currentDate}'));
+                                }(
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueDate,
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDateTime)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
+                                          'null'
+                                      ? FlutterFlowTheme.of(context).primaryText
+                                      : FlutterFlowTheme.of(context)
+                                          .primaryText)
+                                  : Color(0xFFFF0000))
+                              : FlutterFlowTheme.of(context).primaryText,
+                      overdueAmountColor:
+                          '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? ((String currentDueDate, String currentDate) {
+                                  return DateTime.parse('${currentDueDate}')
+                                      .isAfter(
+                                          DateTime.parse('${currentDate}'));
+                                }(
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueDate,
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDateTime)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
+                                          'null'
+                                      ? FlutterFlowTheme.of(context).primaryText
+                                      : FlutterFlowTheme.of(context)
+                                          .primaryText)
+                                  : Color(0xFFFF0000))
+                              : FlutterFlowTheme.of(context).primaryText,
                     ),
                   ),
                   Expanded(
@@ -2341,36 +2428,80 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await actions.openTableauInApp(
-                                      '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}',
-                                    );
-                                  },
-                                  text: valueOrDefault<String>(
-                                    '${functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'button_name')?.elementAtOrNull(functions.findIndexInList(functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')?.toList(), FFAppState().getLoanListSelected.barcodeDetails.comcode)!)}',
-                                    'คู่สัญญา',
-                                  ),
-                                  options: FFButtonOptions(
-                                    height: 60.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context).info,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          letterSpacing: 0.0,
-                                        ),
-                                    borderRadius: BorderRadius.circular(12.0),
+                              if (functions
+                                      .getDataListFromMapJson(
+                                          _model.comCodeConfigDoc, 'comcode')!
+                                      .contains(FFAppState()
+                                          .getLoanListSelected
+                                          .barcodeDetails
+                                          .comcode) &&
+                                  (functions
+                                      .getDataListBoolFromMapJson(
+                                          _model.comCodeConfigDoc,
+                                          'this_comcode_is_contract')!
+                                      .elementAtOrNull(
+                                          functions.findIndexInList(
+                                              functions
+                                                  .getDataListFromMapJson(
+                                                      _model.comCodeConfigDoc,
+                                                      'comcode')
+                                                  ?.toList(),
+                                              FFAppState()
+                                                  .getLoanListSelected
+                                                  .barcodeDetails
+                                                  .comcode)!))! &&
+                                  functions
+                                      .getDataListFromMapJson(
+                                          functions.getJsonDataFromMapJson(
+                                              _model.comCodeConfigDoc,
+                                              'loan_type_code'),
+                                          FFAppState()
+                                              .getLoanListSelected
+                                              .barcodeDetails
+                                              .comcode)!
+                                      .contains(FFAppState()
+                                          .getLoanListSelected
+                                          .contractDetails
+                                          .loanTypeCode) &&
+                                  !functions
+                                      .getDataListFromMapJson(
+                                          _model.comCodeConfigDoc,
+                                          'check_contract_date')!
+                                      .contains(FFAppState()
+                                          .getLoanListSelected
+                                          .barcodeDetails
+                                          .comcode))
+                                Expanded(
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await actions.openTableauInApp(
+                                        '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}',
+                                      );
+                                    },
+                                    text: valueOrDefault<String>(
+                                      '${functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'button_name')?.elementAtOrNull(functions.findIndexInList(functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')?.toList(), FFAppState().getLoanListSelected.barcodeDetails.comcode)!)}',
+                                      'คู่สัญญา',
+                                    ),
+                                    options: FFButtonOptions(
+                                      height: 60.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: FlutterFlowTheme.of(context).info,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
                                   ),
                                 ),
-                              ),
                             ].divide(SizedBox(width: 12.0)),
                           ),
                         ),

@@ -51,6 +51,10 @@ bool? containString(
 }
 
 String? removeCommaFromNumText(String? numberText) {
+  // if (double.tryParse(numberText!) == null) {
+  //   return '0.00';
+  // }
+
   String result = numberText!.replaceAll(RegExp('[^A-Za-z0-9.]'), '');
 
   return result;
@@ -805,8 +809,17 @@ String? getDataFromMapJson(
   dynamic jsonDataInput,
   String? fieldName,
 ) {
-  Map<String, dynamic> mapDataInput = jsonDecode(jsonDataInput!);
+  Map<String, dynamic> mapDataInput = jsonDataInput!;
   dynamic jsonOutput = jsonEncode(mapDataInput[fieldName!]);
+  return jsonOutput;
+}
+
+dynamic getJsonDataFromMapJson(
+  dynamic jsonDataInput,
+  String? fieldName,
+) {
+  Map<String, dynamic> mapDataInput = jsonDataInput!;
+  dynamic jsonOutput = mapDataInput[fieldName!];
   return jsonOutput;
 }
 
@@ -814,8 +827,33 @@ List<String>? getDataListFromMapJson(
   dynamic jsonDataInput,
   String? fieldName,
 ) {
-  Map<String, dynamic> mapDataInput = jsonDecode(jsonDataInput!);
+  Map<String, dynamic> mapDataInput = jsonDataInput!;
   dynamic listOutput = mapDataInput[fieldName!];
   List<String> listOutput1 = listOutput.cast<String>();
   return listOutput1;
+}
+
+List<bool>? getDataListBoolFromMapJson(
+  dynamic jsonDataInput,
+  String? fieldName,
+) {
+  Map<String, dynamic> mapDataInput = jsonDataInput!;
+  dynamic listOutput = mapDataInput[fieldName!];
+  List<bool> listOutput1 = listOutput.cast<bool>();
+  return listOutput1;
+}
+
+bool? checkContractException(
+  List<String>? exceptionContractList,
+  List<String>? exceptionContractComcodeList,
+  String? contNo,
+  String? comcode,
+) {
+  for (int i = 0; i < exceptionContractList!.length; i++) {
+    if (exceptionContractList![i] == contNo! &&
+        exceptionContractComcodeList![i] == comcode!) {
+      return true;
+    }
+  }
+  return false;
 }
