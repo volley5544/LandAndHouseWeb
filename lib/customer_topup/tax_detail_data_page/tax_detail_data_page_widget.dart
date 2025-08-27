@@ -626,6 +626,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -658,6 +665,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -880,6 +896,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -911,6 +934,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1132,6 +1164,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -1163,6 +1202,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1384,6 +1432,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -1415,6 +1470,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1636,6 +1700,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -1667,6 +1738,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -1888,6 +1968,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                               Uint8List
                                                                   .fromList([]),
                                                           fit: BoxFit.contain,
+                                                          errorBuilder: (context,
+                                                                  error,
+                                                                  stackTrace) =>
+                                                              Image.asset(
+                                                            'assets/images/error_image.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
                                                         ),
                                                         allowRotation: false,
                                                         tag: valueOrDefault<
@@ -1919,6 +2006,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
+                                                      errorBuilder: (context,
+                                                              error,
+                                                              stackTrace) =>
+                                                          Image.asset(
+                                                        'assets/images/error_image.png',
+                                                        width: 250.0,
+                                                        height: 250.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -2136,6 +2232,13 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                             Uint8List.fromList(
                                                                 []),
                                                         fit: BoxFit.contain,
+                                                        errorBuilder: (context,
+                                                                error,
+                                                                stackTrace) =>
+                                                            Image.asset(
+                                                          'assets/images/error_image.png',
+                                                          fit: BoxFit.contain,
+                                                        ),
                                                       ),
                                                       allowRotation: false,
                                                       tag: valueOrDefault<
@@ -2165,6 +2268,15 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                     width: 250.0,
                                                     height: 250.0,
                                                     fit: BoxFit.cover,
+                                                    errorBuilder: (context,
+                                                            error,
+                                                            stackTrace) =>
+                                                        Image.asset(
+                                                      'assets/images/error_image.png',
+                                                      width: 250.0,
+                                                      height: 250.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
                                                 ),
                                               ),

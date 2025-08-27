@@ -160,7 +160,9 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                   r'''$.results[*].contract_no''',
                   true,
                 ) as List?)
-                    ?.cast<String>(),
+                    ?.map<String>((e) => e.toString())
+                    .toList()
+                    .cast<String>(),
                 widget.contNo)!)!;
         safeSetState(() {});
       }

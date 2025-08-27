@@ -153,7 +153,9 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                   r'''$.results[*].contract_no''',
                   true,
                 ) as List?)
-                    ?.cast<String>(),
+                    ?.map<String>((e) => e.toString())
+                    .toList()
+                    .cast<String>(),
                 widget.contNo)!)!;
         safeSetState(() {});
       }
