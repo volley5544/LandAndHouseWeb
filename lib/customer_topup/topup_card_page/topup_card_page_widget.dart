@@ -256,6 +256,14 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
         (e) => e..hashThaiId = FFAppState().hashThaiIdAppState,
       );
       safeSetState(() {});
+      logFirebaseEvent(
+        'topup_list_page',
+        parameters: {
+          'hash_id': FFAppState().hashThaiIdAppState,
+          'source': FFAppState().saveTopupData.source,
+          'refer_id': FFAppState().saveTopupData.referId,
+        },
+      );
       Navigator.pop(context);
     });
 
