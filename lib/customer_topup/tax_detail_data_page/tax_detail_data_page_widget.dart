@@ -620,15 +620,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model
-                                                                  .fullVehicleImageUrl,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_fullVehicleImageUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -639,36 +635,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model
-                                                              .fullVehicleImageUrl,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag1',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.fullVehicleImageUrl,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag1',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model
-                                                              .fullVehicleImageUrl,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_fullVehicleImageUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -897,14 +882,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model.imageRight,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_imageRightUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -915,34 +897,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model.imageRight,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag2',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.imageRight,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag2',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model.imageRight,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_imageRightUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -1170,14 +1143,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model.imageLeft,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_imageLeftUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -1188,34 +1158,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model.imageLeft,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag3',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.imageLeft,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag3',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model.imageLeft,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_imageLeftUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -1443,14 +1404,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model.imageFront,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_imageFrontUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -1461,34 +1419,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model.imageFront,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag4',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.imageFront,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag4',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model.imageFront,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_imageFrontUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -1716,14 +1665,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model.imageBack,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_imageBackUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -1734,34 +1680,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model.imageBack,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag5',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.imageBack,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag5',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model.imageBack,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_imageBackUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -1989,14 +1926,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          getCORSProxyUrl(
-                                                            valueOrDefault<
-                                                                String>(
-                                                              _model.imageMile,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
-                                                          ),
+                                                        image: Image.memory(
+                                                          _model.uploadedLocalFile_imageMileUploadAction
+                                                                  .bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -2007,34 +1941,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          _model.imageMile,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
+                                                        tag: 'imageTag6',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    _model.imageMile,
-                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                  ),
+                                                  tag: 'imageTag6',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      getCORSProxyUrl(
-                                                        valueOrDefault<String>(
-                                                          _model.imageMile,
-                                                          'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                        ),
-                                                      ),
+                                                    child: Image.memory(
+                                                      _model.uploadedLocalFile_imageMileUploadAction
+                                                              .bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -2258,15 +2183,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                         PageTransitionType.fade,
                                                     child:
                                                         FlutterFlowExpandedImageView(
-                                                      image: Image.network(
-                                                        getCORSProxyUrl(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            _model
-                                                                .circleImageUrl,
-                                                            'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                          ),
-                                                        ),
+                                                      image: Image.memory(
+                                                        _model.uploadedLocalFile_circleImageUploadAction
+                                                                .bytes ??
+                                                            Uint8List.fromList(
+                                                                []),
                                                         fit: BoxFit.contain,
                                                         errorBuilder: (context,
                                                                 error,
@@ -2277,33 +2198,23 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                         ),
                                                       ),
                                                       allowRotation: false,
-                                                      tag: valueOrDefault<
-                                                          String>(
-                                                        _model.circleImageUrl,
-                                                        'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                      ),
+                                                      tag: 'imageTag7',
                                                       useHeroAnimation: true,
                                                     ),
                                                   ),
                                                 );
                                               },
                                               child: Hero(
-                                                tag: valueOrDefault<String>(
-                                                  _model.circleImageUrl,
-                                                  'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                ),
+                                                tag: 'imageTag7',
                                                 transitionOnUserGestures: true,
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           8.0),
-                                                  child: Image.network(
-                                                    getCORSProxyUrl(
-                                                      valueOrDefault<String>(
-                                                        _model.circleImageUrl,
-                                                        'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                      ),
-                                                    ),
+                                                  child: Image.memory(
+                                                    _model.uploadedLocalFile_circleImageUploadAction
+                                                            .bytes ??
+                                                        Uint8List.fromList([]),
                                                     width: 250.0,
                                                     height: 250.0,
                                                     fit: BoxFit.cover,

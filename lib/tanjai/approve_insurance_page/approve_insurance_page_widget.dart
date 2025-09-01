@@ -533,9 +533,8 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                                             BorderRadius.circular(8.0),
                                                                         child: Image
                                                                             .network(
-                                                                          getCORSProxyUrl(
-                                                                            functions.stringToImgPath(listWaitingItem.insurerLogo)!,
-                                                                          ),
+                                                                          functions
+                                                                              .stringToImgPath(listWaitingItem.insurerLogo)!,
                                                                           width:
                                                                               70.0,
                                                                           height:
@@ -1522,9 +1521,8 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                                             BorderRadius.circular(8.0),
                                                                         child: Image
                                                                             .network(
-                                                                          getCORSProxyUrl(
-                                                                            functions.stringToImgPath(listDoneItem.insurerLogo)!,
-                                                                          ),
+                                                                          functions
+                                                                              .stringToImgPath(listDoneItem.insurerLogo)!,
                                                                           width:
                                                                               70.0,
                                                                           height:

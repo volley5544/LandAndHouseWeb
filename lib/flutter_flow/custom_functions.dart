@@ -19,7 +19,7 @@ int? findIndexInList(
 ) {
   // Find the index of an item
   int index = dataList!.indexOf(searchInput!);
-
+  print('');
   return index;
 }
 
@@ -856,4 +856,8 @@ bool? checkContractException(
     }
   }
   return false;
+}
+
+String? imagePathToString(String? imagePath) {
+  return '${imagePath!}';
 }

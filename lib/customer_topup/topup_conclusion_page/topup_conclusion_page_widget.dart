@@ -1722,8 +1722,10 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     0.0, 12.0, 0.0, 0.0),
                                             child: Builder(
                                               builder: (context) {
-                                                if (_model.idCardImageUrl !=
-                                                    'url') {
+                                                if (_model.idCardFile == null ||
+                                                    (_model.idCardFile?.bytes
+                                                            ?.isEmpty ??
+                                                        true)) {
                                                   return Builder(
                                                     builder: (context) =>
                                                         FFButtonWidget(
@@ -2217,15 +2219,11 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                 child:
                                                                     FlutterFlowExpandedImageView(
                                                                   image: Image
-                                                                      .network(
-                                                                    getCORSProxyUrl(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        _model
-                                                                            .idCardImageUrl,
-                                                                        'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                      ),
-                                                                    ),
+                                                                      .memory(
+                                                                    _model.idCardFile
+                                                                            ?.bytes ??
+                                                                        Uint8List.fromList(
+                                                                            []),
                                                                     fit: BoxFit
                                                                         .contain,
                                                                     errorBuilder: (context,
@@ -2240,12 +2238,8 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                   ),
                                                                   allowRotation:
                                                                       false,
-                                                                  tag: valueOrDefault<
-                                                                      String>(
-                                                                    _model
-                                                                        .idCardImageUrl,
-                                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                  ),
+                                                                  tag:
+                                                                      'imageTag1',
                                                                   useHeroAnimation:
                                                                       true,
                                                                 ),
@@ -2253,12 +2247,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             );
                                                           },
                                                           child: Hero(
-                                                            tag: valueOrDefault<
-                                                                String>(
-                                                              _model
-                                                                  .idCardImageUrl,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
+                                                            tag: 'imageTag1',
                                                             transitionOnUserGestures:
                                                                 true,
                                                             child: ClipRRect(
@@ -2267,15 +2256,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                       .circular(
                                                                           8.0),
                                                               child:
-                                                                  Image.network(
-                                                                getCORSProxyUrl(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    _model
-                                                                        .idCardImageUrl,
-                                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                  ),
-                                                                ),
+                                                                  Image.memory(
+                                                                _model.idCardFile
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
                                                                 width: double
                                                                     .infinity,
                                                                 height: double
@@ -2377,9 +2363,11 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     0.0, 12.0, 0.0, 0.0),
                                             child: Builder(
                                               builder: (context) {
-                                                if (_model
-                                                        .selfiePlusIdCardImageUrl !=
-                                                    'url') {
+                                                if (_model.selfiePlusIdCardFile ==
+                                                        null ||
+                                                    (_model.selfiePlusIdCardFile
+                                                            ?.bytes?.isEmpty ??
+                                                        true)) {
                                                   return FFButtonWidget(
                                                     onPressed: () async {
                                                       var _shouldSetState =
@@ -2552,15 +2540,11 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                 child:
                                                                     FlutterFlowExpandedImageView(
                                                                   image: Image
-                                                                      .network(
-                                                                    getCORSProxyUrl(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        _model
-                                                                            .selfiePlusIdCardImageUrl,
-                                                                        'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                      ),
-                                                                    ),
+                                                                      .memory(
+                                                                    _model.selfiePlusIdCardFile
+                                                                            ?.bytes ??
+                                                                        Uint8List.fromList(
+                                                                            []),
                                                                     fit: BoxFit
                                                                         .contain,
                                                                     errorBuilder: (context,
@@ -2575,12 +2559,8 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                   ),
                                                                   allowRotation:
                                                                       false,
-                                                                  tag: valueOrDefault<
-                                                                      String>(
-                                                                    _model
-                                                                        .selfiePlusIdCardImageUrl,
-                                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                  ),
+                                                                  tag:
+                                                                      'imageTag2',
                                                                   useHeroAnimation:
                                                                       true,
                                                                 ),
@@ -2588,12 +2568,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                             );
                                                           },
                                                           child: Hero(
-                                                            tag: valueOrDefault<
-                                                                String>(
-                                                              _model
-                                                                  .selfiePlusIdCardImageUrl,
-                                                              'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                            ),
+                                                            tag: 'imageTag2',
                                                             transitionOnUserGestures:
                                                                 true,
                                                             child: ClipRRect(
@@ -2602,15 +2577,12 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                                       .circular(
                                                                           8.0),
                                                               child:
-                                                                  Image.network(
-                                                                getCORSProxyUrl(
-                                                                  valueOrDefault<
-                                                                      String>(
-                                                                    _model
-                                                                        .selfiePlusIdCardImageUrl,
-                                                                    'https://firebasestorage.googleapis.com/v0/b/sawad-new-ibs.appspot.com/o/No_image_available.png?alt=media&token=15ea426e-3ea2-4b15-8f1b-947dc2daef37',
-                                                                  ),
-                                                                ),
+                                                                  Image.memory(
+                                                                _model.selfiePlusIdCardFile
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
                                                                 width: double
                                                                     .infinity,
                                                                 height: double
