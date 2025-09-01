@@ -620,11 +620,14 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.memory(
-                                                          _model.uploadedLocalFile_fullVehicleImageUploadAction
-                                                                  .bytes ??
-                                                              Uint8List
-                                                                  .fromList([]),
+                                                        image: Image.network(
+                                                          '${_model.fullVehicleImageUrlOutput}' !=
+                                                                  'null'
+                                                              ? functions
+                                                                  .stringToImgPath(
+                                                                      _model
+                                                                          .fullVehicleImageUrlOutput)!
+                                                              : 'https://picsum.photos/seed/506/600',
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -635,25 +638,39 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: 'imageTag1',
+                                                        tag: '${_model.fullVehicleImageUrlOutput}' !=
+                                                                'null'
+                                                            ? functions
+                                                                .stringToImgPath(
+                                                                    _model
+                                                                        .fullVehicleImageUrlOutput)!
+                                                            : 'https://picsum.photos/seed/506/600',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: 'imageTag1',
+                                                  tag: '${_model.fullVehicleImageUrlOutput}' !=
+                                                          'null'
+                                                      ? functions
+                                                          .stringToImgPath(_model
+                                                              .fullVehicleImageUrlOutput)!
+                                                      : 'https://picsum.photos/seed/506/600',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.memory(
-                                                      _model.uploadedLocalFile_fullVehicleImageUploadAction
-                                                              .bytes ??
-                                                          Uint8List.fromList(
-                                                              []),
+                                                    child: Image.network(
+                                                      '${_model.fullVehicleImageUrlOutput}' !=
+                                                              'null'
+                                                          ? functions
+                                                              .stringToImgPath(
+                                                                  _model
+                                                                      .fullVehicleImageUrlOutput)!
+                                                          : 'https://picsum.photos/seed/506/600',
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
