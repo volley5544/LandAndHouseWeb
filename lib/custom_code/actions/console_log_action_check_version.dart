@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 Future consoleLogActionCheckVersion() async {
   // Add your function code here!
-  print('VersionOfVolley5544WebIs:${FFAppState().webUatVersion}');
+  print('VersionOfVolley5544WebIs:${FFAppState().webProdVersion}');
   // js.context.callMethod('console.log', ['Hello from main.dart']);
   // js.context.callMethod('console.error', ['Error from main.dart']);
 }
