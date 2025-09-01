@@ -147,6 +147,36 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
         referId: '${widget.referId}',
       );
       safeSetState(() {});
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            title: Text('source'),
+            content: Text(FFAppState().saveTopupData.source),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            title: Text('refer_id'),
+            content: Text(FFAppState().saveTopupData.referId),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
       FFAppState().userAddressData = UserAllAddressDataModelStruct(
         currentAddress: UserAddressDataModelStruct(
           addressDetails: '',
@@ -318,21 +348,18 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                 iconTheme:
                     IconThemeData(color: FlutterFlowTheme.of(context).primary),
                 automaticallyImplyLeading: false,
-                leading: Visibility(
-                  visible: false,
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      await actions.navigateBackWebviewAction();
-                    },
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 24.0,
-                    ),
+                leading: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    await actions.navigateBackWebviewAction();
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primary,
+                    size: 24.0,
                   ),
                 ),
                 actions: [],

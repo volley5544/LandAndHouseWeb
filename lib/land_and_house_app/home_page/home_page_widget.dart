@@ -310,21 +310,18 @@ class _HomePageWidgetState extends State<HomePageWidget>
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondary,
             automaticallyImplyLeading: false,
-            leading: Visibility(
-              visible: false,
-              child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  await actions.navigateBackWebviewAction();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primary,
-                  size: 30.0,
-                ),
+            leading: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                await actions.navigateBackWebviewAction();
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: FlutterFlowTheme.of(context).primary,
+                size: 30.0,
               ),
             ),
             title: InkWell(
