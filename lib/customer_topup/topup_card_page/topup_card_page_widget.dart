@@ -147,36 +147,6 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
         referId: '${widget.referId}',
       );
       safeSetState(() {});
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            title: Text('source'),
-            content: Text(FFAppState().saveTopupData.source),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            title: Text('refer_id'),
-            content: Text(FFAppState().saveTopupData.referId),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       FFAppState().userAddressData = UserAllAddressDataModelStruct(
         currentAddress: UserAddressDataModelStruct(
           addressDetails: '',
