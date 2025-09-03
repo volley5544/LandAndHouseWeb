@@ -25,7 +25,8 @@ Future<String?> uploadFileFirebaseStorage(
 
   DateFormat dateFormat1 = DateFormat("yyyyMMM"); //yyyyMMddHHmmssSSS
   String folderName = dateFormat1.format(DateTime.now());
-  String uniqueFileName = '${file!.name!}'; //fileName + " " + timestamp;
+  String uniqueFileName =
+      '${DateTime.now().millisecondsSinceEpoch}.jpg'; //fileName + " " + timestamp;
 
   String pathUploaded =
       'users/${hashThaiId}/${uploadedFolderName!}/${contNo}/${uniqueFileName}'; //uploadedFolderName! + "/" + folderName + "/" + uniqueFileName;

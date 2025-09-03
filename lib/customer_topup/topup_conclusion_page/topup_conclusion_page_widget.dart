@@ -1743,7 +1743,9 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                         safeSetState(() {});
                                                         final selectedMedia =
                                                             await selectMedia(
-                                                          imageQuality: 30,
+                                                          maxWidth: 1920.00,
+                                                          maxHeight: 1920.00,
+                                                          imageQuality: 50,
                                                           multiImage: false,
                                                         );
                                                         if (selectedMedia !=
@@ -2383,7 +2385,9 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                       safeSetState(() {});
                                                       final selectedMedia =
                                                           await selectMedia(
-                                                        imageQuality: 30,
+                                                        maxWidth: 1920.00,
+                                                        maxHeight: 1920.00,
+                                                        imageQuality: 50,
                                                         multiImage: false,
                                                       );
                                                       if (selectedMedia !=

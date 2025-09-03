@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import '../../flutter_flow/flutter_flow_expanded_image_view.dart';
 import 'dart:io';
 
@@ -23,7 +25,7 @@ class ImageWidget5544 extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final String? imageFilePath1;
+  final FFUploadedFile? imageFilePath1;
 
   @override
   State<ImageWidget5544> createState() => _ImageWidget5544State();
@@ -45,24 +47,28 @@ class _ImageWidget5544State extends State<ImageWidget5544> {
             PageTransition(
               type: PageTransitionType.fade,
               child: FlutterFlowExpandedImageView(
-                image: Image.file(
-                  File(widget.imageFilePath1!),
+                image: Image.memory(
+                  widget.imageFilePath1!.bytes!,
                   fit: BoxFit.contain,
                 ),
                 allowRotation: false,
-                tag: Image.file(File(widget.imageFilePath1!)),
+                tag: Image.memory(
+                  widget.imageFilePath1!.bytes!,
+                ),
                 useHeroAnimation: true,
               ),
             ),
           );
         },
         child: Hero(
-          tag: Image.file(File(widget.imageFilePath1!)),
+          tag: Image.memory(
+            widget.imageFilePath1!.bytes!,
+          ),
           transitionOnUserGestures: true,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.file(
-              File(widget.imageFilePath1!),
+            child: Image.memory(
+              widget.imageFilePath1!.bytes!,
               width: 200.0,
               height: 200.0,
               fit: BoxFit.cover,

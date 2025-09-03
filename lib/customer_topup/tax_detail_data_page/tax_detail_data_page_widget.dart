@@ -1,4 +1,5 @@
 import '/components/error_message_component_widget.dart';
+import '/components/open_image_component_widget.dart';
 import '/customer_topup/camera_trigger_component/camera_trigger_component_widget.dart';
 import '/customer_topup/full_vehicle_image_example/full_vehicle_image_example_widget.dart';
 import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
@@ -13,6 +14,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'tax_detail_data_page_model.dart';
@@ -414,17 +416,108 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
                                           ),
-                                          child: Text(
-                                            'บังคับถ่ายรูปภาพหลักประกันเต็มคันมองเห็นป้ายทะเบียนชัดเจน*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
-                                                ),
+                                          child: Builder(
+                                            builder: (context) => InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              content: Text(functions
+                                                                  .imagePathToString(
+                                                                      _model
+                                                                          .fullVehicleImageUrl)!),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      'launch'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: Text(
+                                                                      'openImage'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (confirmDialogResponse) {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              OpenImageComponentWidget(
+                                                            imageUrl: _model
+                                                                .fullVehicleImageUrl,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                } else {
+                                                  await Clipboard.setData(ClipboardData(
+                                                      text: functions
+                                                          .imagePathToString(functions
+                                                              .stringToImgPath(
+                                                                  _model
+                                                                      .fullVehicleImageUrlOutput))!));
+                                                  await launchURL(functions
+                                                      .imagePathToString(_model
+                                                          .fullVehicleImageUrl)!);
+                                                }
+                                              },
+                                              child: Text(
+                                                'บังคับถ่ายรูปภาพหลักประกันเต็มคันมองเห็นป้ายทะเบียนชัดเจน*',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -491,7 +584,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -620,14 +715,11 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           .fade,
                                                       child:
                                                           FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          '${_model.fullVehicleImageUrlOutput}' !=
-                                                                  'null'
-                                                              ? functions
-                                                                  .stringToImgPath(
-                                                                      _model
-                                                                          .fullVehicleImageUrlOutput)!
-                                                              : 'https://picsum.photos/seed/506/600',
+                                                        image: Image.memory(
+                                                          _model.fullVehicleFile
+                                                                  ?.bytes ??
+                                                              Uint8List
+                                                                  .fromList([]),
                                                           fit: BoxFit.contain,
                                                           errorBuilder: (context,
                                                                   error,
@@ -638,39 +730,25 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                           ),
                                                         ),
                                                         allowRotation: false,
-                                                        tag: '${_model.fullVehicleImageUrlOutput}' !=
-                                                                'null'
-                                                            ? functions
-                                                                .stringToImgPath(
-                                                                    _model
-                                                                        .fullVehicleImageUrlOutput)!
-                                                            : 'https://picsum.photos/seed/506/600',
+                                                        tag: 'imageTag1',
                                                         useHeroAnimation: true,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Hero(
-                                                  tag: '${_model.fullVehicleImageUrlOutput}' !=
-                                                          'null'
-                                                      ? functions
-                                                          .stringToImgPath(_model
-                                                              .fullVehicleImageUrlOutput)!
-                                                      : 'https://picsum.photos/seed/506/600',
+                                                  tag: 'imageTag1',
                                                   transitionOnUserGestures:
                                                       true,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             8.0),
-                                                    child: Image.network(
-                                                      '${_model.fullVehicleImageUrlOutput}' !=
-                                                              'null'
-                                                          ? functions
-                                                              .stringToImgPath(
-                                                                  _model
-                                                                      .fullVehicleImageUrlOutput)!
-                                                          : 'https://picsum.photos/seed/506/600',
+                                                    child: Image.memory(
+                                                      _model.fullVehicleFile
+                                                              ?.bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
                                                       width: 250.0,
                                                       height: 250.0,
                                                       fit: BoxFit.cover,
@@ -774,7 +852,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -1035,7 +1115,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -1296,7 +1378,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -1557,7 +1641,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -1818,7 +1904,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             var _shouldSetState = false;
                                             final selectedMedia =
                                                 await selectMedia(
-                                              imageQuality: 30,
+                                              maxWidth: 1920.00,
+                                              maxHeight: 1920.00,
+                                              imageQuality: 50,
                                               multiImage: false,
                                             );
                                             if (selectedMedia != null &&
@@ -2074,7 +2162,9 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                           var _shouldSetState = false;
                                           final selectedMedia =
                                               await selectMedia(
-                                            imageQuality: 30,
+                                            maxWidth: 1920.00,
+                                            maxHeight: 1920.00,
+                                            imageQuality: 50,
                                             multiImage: false,
                                           );
                                           if (selectedMedia != null &&

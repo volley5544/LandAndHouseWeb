@@ -18,3 +18,5 @@ export 'console_log_action_check_version.dart'
 export 'navigate_back_webview_action.dart' show navigateBackWebviewAction;
 export 'get_data_from_document.dart' show getDataFromDocument;
 export 'open_tableau_in_app.dart' show openTableauInApp;
+export 'sanitize_image_picker.dart' show sanitizeImagePicker;
+export 'sanitize_web_bytes.dart' show sanitizeWebBytes;
