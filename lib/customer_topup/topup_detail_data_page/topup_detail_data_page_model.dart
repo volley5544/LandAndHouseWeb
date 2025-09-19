@@ -19,6 +19,16 @@ class TopupDetailDataPageModel
     updateFn(saveTopupLHData ??= SaveTopupLHModelStruct());
   }
 
+  List<dynamic> listInsurance = [];
+  void addToListInsurance(dynamic item) => listInsurance.add(item);
+  void removeFromListInsurance(dynamic item) => listInsurance.remove(item);
+  void removeAtIndexFromListInsurance(int index) =>
+      listInsurance.removeAt(index);
+  void insertAtIndexInListInsurance(int index, dynamic item) =>
+      listInsurance.insert(index, item);
+  void updateListInsuranceAtIndex(int index, Function(dynamic) updateFn) =>
+      listInsurance[index] = updateFn(listInsurance[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (Get topup detail )] action in TopupDetailDataPage widget.

@@ -13,6 +13,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'loan_detail_page_model.dart';
 export 'loan_detail_page_model.dart';
@@ -246,29 +247,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       }
 
       Navigator.pop(context);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .getDataListFromMapJson(
-                    functions.getJsonDataFromMapJson(
-                        _model.comCodeConfigDoc, 'loan_type_code'),
-                    FFAppState().getLoanListSelected.barcodeDetails.comcode)!
-                .contains(FFAppState()
-                    .getLoanListSelected
-                    .contractDetails
-                    .loanTypeCode)
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -318,7 +296,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'รายละเอียดสินเชื่อ1',
+                    'รายละเอียดสินเชื่อ',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Noto San Thai',
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -393,20 +371,18 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           .currentDateTime)
                                   ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
                                           'null'
-                                      ? functions.returnNumberWithComma2Decimal(
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .overdueAmount
-                                              .toString())
+                                      ? FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .overdueAmount
+                                          .toString()
                                       : '0.00')
                                   : 'เกินกำหนดชำระ')
-                              : functions.returnNumberWithComma2Decimal(
-                                  FFAppState()
-                                      .getLoanListSelected
-                                      .paymentDetails
-                                      .overdueAmount
-                                      .toString()),
+                              : FFAppState()
+                                  .getLoanListSelected
+                                  .paymentDetails
+                                  .overdueAmount
+                                  .toString(),
                       installmentAmount:
                           '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
                                   '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
@@ -425,20 +401,18 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           .currentDateTime)
                                   ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
                                           'null'
-                                      ? functions.returnNumberWithComma2Decimal(
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .currentDueAmount
-                                              .toString())
+                                      ? FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueAmount
+                                          .toString()
                                       : '0.00')
                                   : 'เกินกำหนดชำระ')
-                              : functions.returnNumberWithComma2Decimal(
-                                  FFAppState()
-                                      .getLoanListSelected
-                                      .paymentDetails
-                                      .currentDueAmount
-                                      .toString()),
+                              : FFAppState()
+                                  .getLoanListSelected
+                                  .paymentDetails
+                                  .currentDueAmount
+                                  .toString(),
                       totalDueAmount: FFAppState()
                           .getLoanListSelected
                           .paymentDetails
@@ -537,6 +511,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           .primaryText)
                                   : Color(0xFFFF0000))
                               : FlutterFlowTheme.of(context).primaryText,
+                      isShowVmi: FFAppState()
+                          .getLoanListSelected
+                          .insurances
+                          .isNotEmpty,
                     ),
                   ),
                   Expanded(
@@ -733,7 +711,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                             200),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 0.0),
+                                          0.0, 8.0, 0.0, 0.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
@@ -746,7 +724,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -832,7 +810,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -915,7 +893,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -998,7 +976,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1091,7 +1069,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1184,7 +1162,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1270,7 +1248,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1359,7 +1337,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1449,7 +1427,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1535,7 +1513,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1621,7 +1599,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                         24.0, 0.0, 24.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 50.0,
+                                                  height: 30.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1706,7 +1684,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                     'ข้อมูลการชำระ') {
                                   return Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
+                                        0.0, 8.0, 0.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1719,7 +1697,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       24.0, 0.0, 24.0, 0.0),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 50.0,
+                                                height: 30.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -1799,7 +1777,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       24.0, 0.0, 24.0, 0.0),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 50.0,
+                                                height: 30.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -1889,7 +1867,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       24.0, 0.0, 24.0, 0.0),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 50.0,
+                                                height: 30.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -1979,7 +1957,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                       24.0, 0.0, 24.0, 0.0),
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 50.0,
+                                                height: 30.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -2351,7 +2329,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                 200)
                               Container(
                                 width: double.infinity,
-                                height: 70.0,
+                                height: 50.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -2476,6 +2454,9 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                 Expanded(
                                   child: FFButtonWidget(
                                     onPressed: () async {
+                                      await Clipboard.setData(ClipboardData(
+                                          text:
+                                              '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}'));
                                       await actions.openTableauInApp(
                                         '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}',
                                       );

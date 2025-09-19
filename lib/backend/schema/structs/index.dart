@@ -1,8 +1,10 @@
 export '/backend/schema/util/schema_util.dart';
 
 export 'address_data_model_struct.dart';
+export 'agent_profile_model_struct.dart';
 export 'barcode_details_data_model_struct.dart';
 export 'branch_location_model_struct.dart';
+export 'brand_master_model_struct.dart';
 export 'chanod_data2_struct.dart';
 export 'chanod_data3_struct.dart';
 export 'chanod_data_list_struct.dart';
@@ -13,6 +15,10 @@ export 'customer_detail_struct.dart';
 export 'get_loan_list_a_p_i_data_type_struct.dart';
 export 'get_topup_data_a_p_i_data_type_struct.dart';
 export 'insurance_info_data_model_struct.dart';
+export 'lead_agent_data_model_struct.dart';
+export 'lead_agent_main_catagory_struct.dart';
+export 'lead_agent_sub_category_struct.dart';
+export 'model_car_master_model_struct.dart';
 export 'o_c_r_results_model_struct.dart';
 export 'payment_details_data_model_struct.dart';
 export 'payment_history_model_struct.dart';
@@ -37,4 +43,5 @@ export 'installments_struct.dart';
 export 'insurances_struct.dart';
 export 'loan_type_code_struct.dart';
 export 'payment_details_struct.dart';
+export 'products_struct.dart';
 export 'topup_detail_struct.dart';

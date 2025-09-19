@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class TopupDetailStruct extends FFFirebaseStruct {
@@ -23,6 +24,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
     String? interestPaidFlag,
     String? canTopupMsg,
     int? maxTransferAmount,
+    List<ProductsStruct>? products,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _totalInstallmentAmount = totalInstallmentAmount,
         _canTopup = canTopup,
@@ -39,6 +41,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
         _interestPaidFlag = interestPaidFlag,
         _canTopupMsg = canTopupMsg,
         _maxTransferAmount = maxTransferAmount,
+        _products = products,
         super(firestoreUtilData);
 
   // "total_installment_amount" field.
@@ -175,6 +178,17 @@ class TopupDetailStruct extends FFFirebaseStruct {
 
   bool hasMaxTransferAmount() => _maxTransferAmount != null;
 
+  // "products" field.
+  List<ProductsStruct>? _products;
+  List<ProductsStruct> get products => _products ?? const [];
+  set products(List<ProductsStruct>? val) => _products = val;
+
+  void updateProducts(Function(List<ProductsStruct>) updateFn) {
+    updateFn(_products ??= []);
+  }
+
+  bool hasProducts() => _products != null;
+
   static TopupDetailStruct fromMap(Map<String, dynamic> data) =>
       TopupDetailStruct(
         totalInstallmentAmount:
@@ -194,6 +208,10 @@ class TopupDetailStruct extends FFFirebaseStruct {
         interestPaidFlag: data['interest_paid_flag'] as String?,
         canTopupMsg: data['can_topup_msg'] as String?,
         maxTransferAmount: castToType<int>(data['max_transfer_amount']),
+        products: getStructList(
+          data['products'],
+          ProductsStruct.fromMap,
+        ),
       );
 
   static TopupDetailStruct? maybeFromMap(dynamic data) => data is Map
@@ -216,6 +234,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
         'interest_paid_flag': _interestPaidFlag,
         'can_topup_msg': _canTopupMsg,
         'max_transfer_amount': _maxTransferAmount,
+        'products': _products?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
   @override
@@ -279,6 +298,11 @@ class TopupDetailStruct extends FFFirebaseStruct {
         'max_transfer_amount': serializeParam(
           _maxTransferAmount,
           ParamType.int,
+        ),
+        'products': serializeParam(
+          _products,
+          ParamType.DataStruct,
+          isList: true,
         ),
       }.withoutNulls;
 
@@ -359,6 +383,12 @@ class TopupDetailStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        products: deserializeStructParam<ProductsStruct>(
+          data['products'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: ProductsStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -366,6 +396,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is TopupDetailStruct &&
         totalInstallmentAmount == other.totalInstallmentAmount &&
         canTopup == other.canTopup &&
@@ -381,7 +412,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         yield == other.yield &&
         interestPaidFlag == other.interestPaidFlag &&
         canTopupMsg == other.canTopupMsg &&
-        maxTransferAmount == other.maxTransferAmount;
+        maxTransferAmount == other.maxTransferAmount &&
+        listEquality.equals(products, other.products);
   }
 
   @override
@@ -400,7 +432,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         yield,
         interestPaidFlag,
         canTopupMsg,
-        maxTransferAmount
+        maxTransferAmount,
+        products
       ]);
 }
 

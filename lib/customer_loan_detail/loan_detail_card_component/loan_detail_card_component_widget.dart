@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,10 +29,12 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
     bool? isShowDownload,
     Color? installmentAmountColor,
     Color? overdueAmountColor,
+    bool? isShowVmi,
   })  : this.isShowDownload = isShowDownload ?? false,
         this.installmentAmountColor =
             installmentAmountColor ?? const Color(0xFF003063),
-        this.overdueAmountColor = overdueAmountColor ?? const Color(0xFF003063);
+        this.overdueAmountColor = overdueAmountColor ?? const Color(0xFF003063),
+        this.isShowVmi = isShowVmi ?? false;
 
   final String? contNo;
   final String? assetCode;
@@ -48,6 +52,7 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
   final bool isShowDownload;
   final Color installmentAmountColor;
   final Color overdueAmountColor;
+  final bool isShowVmi;
 
   @override
   State<LoanDetailCardComponentWidget> createState() =>
@@ -250,52 +255,64 @@ class _LoanDetailCardComponentWidgetState
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 12.0, 0.0),
-                                  child: Container(
-                                    width: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Text(
-                                      'กรมธรรม์',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            letterSpacing: 0.0,
-                                          ),
+                        if (widget.isShowVmi)
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 8.0, 0.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 12.0, 0.0),
+                                    child: Container(
+                                      width: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                      ),
+                                      child: Text(
+                                        'กรมธรรม์',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              letterSpacing: 0.0,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                'ดูรายละเอียด',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                              ),
-                            ],
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context
+                                        .pushNamed(VmiListPageWidget.routeName);
+                                  },
+                                  child: Text(
+                                    'ดูรายละเอียด',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
                         if (widget.isShowDownload)
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -430,7 +447,7 @@ class _LoanDetailCardComponentWidgetState
                             ],
                           ),
                         ),
-                        if (widget.overdueAmount != '0')
+                        if (double.parse((widget.overdueAmount!)) > 0)
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
@@ -464,8 +481,12 @@ class _LoanDetailCardComponentWidgetState
                                 ),
                                 Text(
                                   valueOrDefault<String>(
-                                    widget.overdueAmount,
-                                    'overdueAmount',
+                                    functions.returnNumberWithComma2Decimal(
+                                        valueOrDefault<String>(
+                                      widget.overdueAmount,
+                                      'overdueAmount',
+                                    )),
+                                    '0',
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -473,6 +494,7 @@ class _LoanDetailCardComponentWidgetState
                                         fontFamily: 'Noto San Thai',
                                         color: widget.overdueAmountColor,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                 ),
                               ],
@@ -513,17 +535,18 @@ class _LoanDetailCardComponentWidgetState
                                 ),
                               ),
                               Text(
-                                valueOrDefault<String>(
+                                '${valueOrDefault<String>(
                                   widget.currentInstallmentNumber,
                                   'currentInstallment',
-                                ),
+                                )}/${widget.installmentNumber}',
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Noto San Thai',
                                       color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
+                                          .primaryText,
                                       letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
                               ),
                             ],
@@ -561,8 +584,12 @@ class _LoanDetailCardComponentWidgetState
                               ),
                               Text(
                                 valueOrDefault<String>(
-                                  widget.installmentAmount,
-                                  'installmentAmount',
+                                  functions.returnNumberWithComma2Decimal(
+                                      valueOrDefault<String>(
+                                    widget.installmentAmount,
+                                    'installmentAmount',
+                                  )),
+                                  '0',
                                 ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -570,6 +597,7 @@ class _LoanDetailCardComponentWidgetState
                                       fontFamily: 'Noto San Thai',
                                       color: widget.installmentAmountColor,
                                       letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
                               ),
                             ],
@@ -611,22 +639,30 @@ class _LoanDetailCardComponentWidgetState
                                 ),
                                 Text(
                                   valueOrDefault<String>(
-                                    widget.totalDueAmount,
-                                    'totalDueAmount',
+                                    functions.returnNumberWithComma2Decimal(
+                                        valueOrDefault<String>(
+                                      widget.totalDueAmount,
+                                      'totalDueAmount',
+                                    )),
+                                    '0',
                                   ),
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Noto San Thai',
                                         color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
+                                            .primaryText,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                 ),
                               ],
                             ),
                           ),
-                        if (widget.totalDueAmount != '0')
+                        if ((widget.currentInstallmentNumber ==
+                                widget.installmentNumber) &&
+                            (widget.currentInstallmentNumber != '0') &&
+                            (widget.installmentNumber != '0'))
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
@@ -646,21 +682,17 @@ class _LoanDetailCardComponentWidgetState
                                     ),
                                   ),
                                 ),
-                                if ((widget.currentInstallmentNumber ==
-                                        widget.installmentNumber) &&
-                                    (widget.currentInstallmentNumber != '0') &&
-                                    (widget.installmentNumber != '0'))
-                                  Text(
-                                    '(ติดต่อสาขาเพื่อขอยอดปิดบัญชี หรือต่อสัญญา)',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .error,
-                                          letterSpacing: 0.0,
-                                        ),
-                                  ),
+                                Text(
+                                  '(ติดต่อสาขาเพื่อขอยอดปิดบัญชี หรือต่อสัญญา)',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color:
+                                            FlutterFlowTheme.of(context).error,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
                               ],
                             ),
                           ),

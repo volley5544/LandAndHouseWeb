@@ -2123,6 +2123,7 @@ class SaveNewTopupCall {
     String? carImageMile = '',
     String? source = '',
     String? referId = '',
+    String? productCode = '',
     String? apiUrl = '',
   }) async {
     final baseUrl = SrisawadApiGroup.getBaseUrl(
@@ -2132,6 +2133,7 @@ class SaveNewTopupCall {
     final savePdf = _serializeJson(savePdfJson);
     final ffApiRequestBody = '''
 {
+"product_code":"${escapeStringForJson(productCode)}",
 "save_pdf":${savePdf},
  "topup_receipt_file": "${escapeStringForJson(topupReceiptFile)}",
 "customer_image_2":"${escapeStringForJson(customerImage2)}",
@@ -2572,6 +2574,230 @@ class PaymentHistoryCall {
 
 /// End Srisawad api Group Code
 
+/// Start Agent API Group Code
+
+class AgentAPIGroup {
+  static String getBaseUrl({
+    String? url = '',
+  }) =>
+      'https://16742361ed73.ngrok-free.app/ssw_agent';
+  static Map<String, String> headers = {
+    'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+  };
+  static AgentProfileAPICall agentProfileAPICall = AgentProfileAPICall();
+  static GetLeadAgentByTypeCall getLeadAgentByTypeCall =
+      GetLeadAgentByTypeCall();
+  static AgentLeadSaveByLeadCall agentLeadSaveByLeadCall =
+      AgentLeadSaveByLeadCall();
+  static AgentLeadSaveCall agentLeadSaveCall = AgentLeadSaveCall();
+}
+
+class AgentProfileAPICall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'AgentProfileAPI',
+      apiUrl: '${baseUrl}/api/mgm/agents/profile',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  AgentProfileModelStruct? data(dynamic response) =>
+      AgentProfileModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
+}
+
+class GetLeadAgentByTypeCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? leadStatus = '',
+    String? product = '',
+    String? loanTypeCode = '',
+    String? paymentMethod = '',
+    String? paymentChannel = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "lead_status": "${escapeStringForJson(leadStatus)}",
+  "product": "${escapeStringForJson(product)}",
+  "loan_type_code": "${escapeStringForJson(loanTypeCode)}",
+  "payment_method": "${escapeStringForJson(paymentMethod)}",
+  "payment_channel": "${escapeStringForJson(paymentChannel)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetLeadAgentByType',
+      apiUrl: '${baseUrl}/api/mgm/leads/list',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<LeadAgentMainCatagoryStruct>? dataJson(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data[*]''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => LeadAgentMainCatagoryStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  String? statusCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class AgentLeadSaveByLeadCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? paymentMethod = '',
+    String? deductionPercent = '',
+    int? id,
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "payment_method": "${escapeStringForJson(paymentMethod)}",
+  "deduction_percent": "${escapeStringForJson(deductionPercent)}",
+  "id": "${id}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'AgentLeadSaveByLead',
+      apiUrl: '${baseUrl}/api/mgm/leads/save',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class AgentLeadSaveCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? paymentMethod = '',
+    String? deductionPercent = '',
+    String? paymentChannel = '',
+    String? paymentNumber = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "payment_method": "${escapeStringForJson(paymentMethod)}",
+  "deduction_percent": "${escapeStringForJson(deductionPercent)}",
+  "payment_channel": "${escapeStringForJson(paymentChannel)}",
+  "payment_number": "${escapeStringForJson(paymentNumber)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'AgentLeadSave',
+      apiUrl: '${baseUrl}/api/mgm/agents/save',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  AgentProfileModelStruct? data(dynamic response) =>
+      AgentProfileModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
+}
+
+/// End Agent API Group Code
+
 class CheckRateApiCall {
   static Future<ApiCallResponse> call({
     String? chanodNo = '',
@@ -2847,11 +3073,11 @@ class TopupLeadLHMobileAppCall {
     final paymentDetails = _serializeJson(paymentDetailsJson);
     final topupDetail = _serializeJson(topupDetailJson);
     final barcodeDetails = _serializeJson(barcodeDetailsJson);
-    final insurances = _serializeJson(insurancesJson);
+    final insurances = _serializeJson(insurancesJson, true);
     final ffApiRequestBody = '''
 {
-"thai_id":"${thaiId}",
-"hash_thai_id":"${hashThaiId}",
+  "thai_id": "${thaiId}",
+  "hash_thai_id": "${hashThaiId}",
   "contract_details": ${contractDetails},
   "car_details": ${carDetails},
   "payment_details": ${paymentDetails},
@@ -2889,7 +3115,6 @@ class TopupLeadLHMobileAppCall {
   "utm_source": "${utmSource}",
   "utm_medium": "${utmMedium}",
   "utm_campaign": "${utmCampaign}"
-
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'topupLeadLHMobileApp',
@@ -3801,6 +4026,170 @@ class ApproveInstallmentListApiCall {
         response,
         r'''$.results.data.waiting_approve[:].tenor_list''',
       );
+}
+
+class GetBrandsMasterAPICall {
+  static Future<ApiCallResponse> call({
+    String? apiUrl = '',
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getBrandsMasterAPI',
+      apiUrl: '${apiUrl}/api/insurance/master/get_brands',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<InsuranceInfoDataModelStruct>? approvedJson(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.approved''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => InsuranceInfoDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<TenorListDataModelStruct>? tenorListApproved(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.approved[:].tenor_list.*''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => TenorListDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<TenorListDataModelStruct>? tenorListWaiting(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.waiting_approve[:].tenor_list.*''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => TenorListDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<InsuranceInfoDataModelStruct>? waitingApprovedJson(
+          dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.waiting_approve''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => InsuranceInfoDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static dynamic tenorListJson(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data.waiting_approve[:].tenor_list''',
+      );
+  static List<BrandMasterModelStruct>? data(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => BrandMasterModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetModelMasterAPICall {
+  static Future<ApiCallResponse> call({
+    String? apiUrl = '',
+    String? token = '',
+    String? brandId = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "brand_id": "${escapeStringForJson(brandId)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'getModelMasterAPI',
+      apiUrl: '${apiUrl}/api/insurance/master/get_models',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static List<InsuranceInfoDataModelStruct>? approvedJson(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.approved''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => InsuranceInfoDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<TenorListDataModelStruct>? tenorListApproved(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.approved[:].tenor_list.*''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => TenorListDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<TenorListDataModelStruct>? tenorListWaiting(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.waiting_approve[:].tenor_list.*''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => TenorListDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<InsuranceInfoDataModelStruct>? waitingApprovedJson(
+          dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.waiting_approve''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => InsuranceInfoDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static dynamic tenorListJson(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data.waiting_approve[:].tenor_list''',
+      );
+  static List<BrandMasterModelStruct>? data(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => BrandMasterModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
 }
 
 class ApproveInstallmentAPISaveCall {

@@ -19,7 +19,7 @@ int? findIndexInList(
 ) {
   // Find the index of an item
   int index = dataList!.indexOf(searchInput!);
-
+  print('');
   return index;
 }
 
@@ -860,4 +860,80 @@ bool? checkContractException(
 
 String? imagePathToString(String? imagePath) {
   return '${imagePath!}';
+}
+
+dynamic generateListMapData() {
+  dynamic dataOutput = [
+    {
+      "ins_code": "112",
+      "ins_name": "ประกันคุ้มครองอุบัติเหตุกลุ่ม5544",
+      "effective_date": "2025-06-28T00:00:00Z",
+      "expired_date": "2026-06-28T00:00:00Z",
+      "remark": "",
+      "ins_url":
+          "https://tpbonline.thaipaiboon.com/TPB_images/PA113P2_certificate/JPM680602017NF58X-CF425062975.pdf"
+    },
+    {
+      "ins_code": "113",
+      "ins_name": "ประกันคุ้มครองอุบัติเหตุกลุ่ม",
+      "effective_date": "2025-06-28T00:00:00Z",
+      "expired_date": "2026-06-28T00:00:00Z",
+      "remark": "",
+      "ins_url":
+          "https://tpbonline.thaipaiboon.com/TPB_images/PA113P2_certificate/JPM680602017NF58X-CF425062975.pdf"
+    }
+  ];
+  return dataOutput;
+}
+
+String? showThaiIdNumberForm(String? thaiId) {
+  return '${thaiId![0]}-${thaiId![1]}${thaiId![2]}${thaiId![3]}${thaiId![4]}-${thaiId![5]}${thaiId![6]}${thaiId![7]}${thaiId![8]}${thaiId![9]}-${thaiId![10]}${thaiId![11]}-${thaiId![12]}';
+}
+
+List<LeadAgentSubCategoryStruct>? returnLeadAgentSubCatagoryEmptyList() {
+  List<LeadAgentSubCategoryStruct> outputList = [];
+
+  return outputList;
+}
+
+List<LeadAgentDataModelStruct>? combineLeadAgentDataModelList(
+  List<LeadAgentDataModelStruct>? list1,
+  List<LeadAgentDataModelStruct>? list2,
+  List<LeadAgentDataModelStruct>? list3,
+) {
+  List<LeadAgentDataModelStruct> outputList = list1! + list2! + list3!;
+  print('list1 : ${list1!.length}');
+  print('list2 : ${list2!.length}');
+  print('list3 : ${list3!.length}');
+  print('listCombined : ${outputList.length}');
+
+  return outputList;
+}
+
+String? combineStringFromList(List<String>? inputList) {
+  String output = '';
+
+  for (int i = 0; i < inputList!.length; i++) {
+    output = output + inputList![i];
+  }
+
+  return output;
+}
+
+List<String>? createUniqueValueList(List<String>? inputList) {
+  List<String> outputList = inputList!.toSet().toList();
+
+  return outputList;
+}
+
+int? getIndexInIntList(
+  List<int>? inputList,
+  int? value,
+) {
+  return inputList!.indexOf(value!);
+}
+
+List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
+    List<LeadAgentMainCatagoryStruct>? mainLeadData) {
+  return mainLeadData!;
 }

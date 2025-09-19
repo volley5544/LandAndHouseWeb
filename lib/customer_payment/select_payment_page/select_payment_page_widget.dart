@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/error_message_component_widget.dart';
 import '/customer_loan_detail/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -394,10 +395,72 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          if (false)
+                            wrapWithModel(
+                              model: _model.loanDetailCardComponentModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: LoanDetailCardComponentWidget(
+                                contNo:
+                                    FFAppState().getLoanListSelected.contractNo,
+                                assetCode: FFAppState()
+                                    .getLoanListSelected
+                                    .contractDetails
+                                    .collateralInformation,
+                                productTypeCode: FFAppState()
+                                    .getLoanListSelected
+                                    .contractDetails
+                                    .loanTypeCode,
+                                assetName: FFAppState()
+                                    .getLoanListSelected
+                                    .contractDetails
+                                    .loanTypeName,
+                                currentInstallmentNumber: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .currentInstallmentNumber
+                                    .toString(),
+                                overdueFrom: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .overdueFrom,
+                                overdueTo: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .overdueTo,
+                                overdueAmount: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .overdueAmount
+                                    .toString(),
+                                installmentAmount: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .installmentAmount
+                                    .toString(),
+                                totalDueAmount: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .currentDueAmount
+                                    .toString(),
+                                currentDueDate: functions.formatToThaiDate(
+                                    FFAppState()
+                                        .getLoanListSelected
+                                        .paymentDetails
+                                        .currentDueDate),
+                                installmentNumber: FFAppState()
+                                    .getLoanListSelected
+                                    .paymentDetails
+                                    .totalInstallmentNumber
+                                    .toString(),
+                                contractLink:
+                                    '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.barcodeDetails.comcode}',
+                                isShowDownload: false,
+                              ),
+                            ),
                           wrapWithModel(
-                            model: _model.loanDetailCardComponentModel,
+                            model: _model.loanDetailCardTopupComponentModel,
                             updateCallback: () => safeSetState(() {}),
-                            child: LoanDetailCardComponentWidget(
+                            child: LoanDetailCardTopupComponentWidget(
                               contNo:
                                   FFAppState().getLoanListSelected.contractNo,
                               assetCode: FFAppState()
@@ -408,48 +471,18 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                   .getLoanListSelected
                                   .contractDetails
                                   .loanTypeCode,
-                              assetName: FFAppState()
-                                  .getLoanListSelected
-                                  .contractDetails
-                                  .loanTypeName,
-                              currentInstallmentNumber: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .currentInstallmentNumber
-                                  .toString(),
-                              overdueFrom: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .overdueFrom,
-                              overdueTo: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .overdueTo,
-                              overdueAmount: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .overdueAmount
-                                  .toString(),
-                              installmentAmount: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .installmentAmount
-                                  .toString(),
-                              totalDueAmount: FFAppState()
-                                  .getLoanListSelected
-                                  .paymentDetails
-                                  .currentDueAmount
-                                  .toString(),
-                              currentDueDate: functions.formatToThaiDate(
-                                  FFAppState()
-                                      .getLoanListSelected
-                                      .paymentDetails
-                                      .currentDueDate),
+                              assetName: valueOrDefault<String>(
+                                FFAppState()
+                                    .getLoanListSelected
+                                    .contractDetails
+                                    .loanTypeName,
+                                'loan_type_code',
+                              ),
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 12.0, 10.0, 12.0),
+                                10.0, 24.0, 10.0, 12.0),
                             child: Container(
                               decoration: BoxDecoration(),
                               child: Text(

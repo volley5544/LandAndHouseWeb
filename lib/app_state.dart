@@ -583,6 +583,30 @@ class FFAppState extends ChangeNotifier {
   set comcodeConfigsDocument(dynamic value) {
     _comcodeConfigsDocument = value;
   }
+
+  DocumentReference? _topupProductConfig = FirebaseFirestore.instance
+      .doc('/topup_product_config/6W7o20770r1YGvuCdHVQ');
+  DocumentReference? get topupProductConfig => _topupProductConfig;
+  set topupProductConfig(DocumentReference? value) {
+    _topupProductConfig = value;
+  }
+
+  String _agentCode = '';
+  String get agentCode => _agentCode;
+  set agentCode(String value) {
+    _agentCode = value;
+  }
+
+  AgentProfileModelStruct _agentProfileDataType = AgentProfileModelStruct();
+  AgentProfileModelStruct get agentProfileDataType => _agentProfileDataType;
+  set agentProfileDataType(AgentProfileModelStruct value) {
+    _agentProfileDataType = value;
+  }
+
+  void updateAgentProfileDataTypeStruct(
+      Function(AgentProfileModelStruct) updateFn) {
+    updateFn(_agentProfileDataType);
+  }
 }
 
 void _safeInit(Function() initializeField) {

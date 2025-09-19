@@ -1,4 +1,6 @@
 export 'close_web.dart' show closeWeb;
+export 'save_image_refer.dart' show saveImageRefer;
+export 'share_image.dart' show shareImage;
 export 'convert_base64_to_f_f_files_copy.dart' show convertBase64ToFFFilesCopy;
 export 'open3_c_x_action.dart' show open3CXAction;
 export 'call_phone_number.dart' show callPhoneNumber;
@@ -18,5 +20,9 @@ export 'console_log_action_check_version.dart'
 export 'navigate_back_webview_action.dart' show navigateBackWebviewAction;
 export 'get_data_from_document.dart' show getDataFromDocument;
 export 'open_tableau_in_app.dart' show openTableauInApp;
+export 'launch_url_in_app.dart' show launchUrlInApp;
 export 'sanitize_image_picker.dart' show sanitizeImagePicker;
 export 'sanitize_web_bytes.dart' show sanitizeWebBytes;
+export 'url_launcher_action.dart' show urlLauncherAction;
+export 'share_link.dart' show shareLink;
+export 'copy_link_to_clipboard.dart' show copyLinkToClipboard;

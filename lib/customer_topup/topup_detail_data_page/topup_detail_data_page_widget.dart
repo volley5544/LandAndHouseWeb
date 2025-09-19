@@ -143,30 +143,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         (_model.getTopupDetailAPIOutput?.jsonBody ?? ''),
       );
       safeSetState(() {});
-      safeSetState(() {
-        _model.textController?.text = valueOrDefault<String>(
-          FFAppState()
-              .getTopupDataAPIResultAppstate
-              .defaultTopupAmount
-              .toString(),
-          'default_topup_amount',
-        );
-        _model.textFieldMask.updateMask(
-          newValue: TextEditingValue(
-            text: _model.textController!.text,
-          ),
-        );
-      });
-      safeSetState(() {
-        _model.textController?.text = functions.returnNumberWithCommaFullNumber(
-            _model.textController.text,
-            '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
-        _model.textFieldMask.updateMask(
-          newValue: TextEditingValue(
-            text: _model.textController!.text,
-          ),
-        );
-      });
       _model.inittopupCalculateAPIOutput =
           await SrisawadApiGroup.postToCalculatorToGetNewTopupCall.call(
         bearerAuth: FFAppState().accessToken,
@@ -179,10 +155,33 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
           FFAppState().getTopupDataAPIResultAppstate.contractNo,
           'contract_no',
         ),
-        loanAmount: FFAppState()
-            .getTopupDataAPIResultAppstate
-            .defaultTopupAmount
-            .toDouble(),
+        loanAmount: double.tryParse(
+            FFAppState().saveTopupData.products != ProductsStruct()
+                ? (((((FFAppState()
+                                            .getTopupDataAPIResultAppstate
+                                            .contractDetails
+                                            .closingBalance +
+                                        FFAppState()
+                                            .saveTopupData
+                                            .products
+                                            .productPrice) +
+                                    99) ~/
+                                100) *
+                            100) +
+                        ((FFAppState()
+                                    .getTopupDataAPIResultAppstate
+                                    .contractDetails
+                                    .closingBalance +
+                                FFAppState()
+                                    .saveTopupData
+                                    .products
+                                    .productPrice) ~/
+                            2000))
+                    .toString()
+                : FFAppState()
+                    .getTopupDataAPIResultAppstate
+                    .defaultTopupAmount
+                    .toString()),
         interestRate: double.parse(valueOrDefault<String>(
           FFAppState().getTopupDataAPIResultAppstate.interestRate.toString(),
           'interest_rate',
@@ -237,6 +236,33 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         (e) => e..feeAmount = FFAppState().getTopupCalculateAppState.feeAmount,
       );
       safeSetState(() {});
+      safeSetState(() {
+        _model.textController?.text =
+            (FFAppState().saveTopupData.products != ProductsStruct()
+                ? FFAppState().getTopupCalculateAppState.amount.toString()
+                : valueOrDefault<String>(
+                    FFAppState()
+                        .getTopupDataAPIResultAppstate
+                        .defaultTopupAmount
+                        .toString(),
+                    'default_topup_amount',
+                  ));
+        _model.textFieldMask.updateMask(
+          newValue: TextEditingValue(
+            text: _model.textController!.text,
+          ),
+        );
+      });
+      safeSetState(() {
+        _model.textController?.text = functions.returnNumberWithCommaFullNumber(
+            _model.textController.text,
+            '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
+        _model.textFieldMask.updateMask(
+          newValue: TextEditingValue(
+            text: _model.textController!.text,
+          ),
+        );
+      });
       logFirebaseEvent(
         'topup_step1',
         parameters: {
@@ -450,27 +476,32 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                context.pushNamed(
-                  TopupCardPageWidget.routeName,
-                  queryParameters: {
-                    'token': serializeParam(
-                      FFAppState().accessToken,
-                      ParamType.String,
-                    ),
-                    'hashThaiId': serializeParam(
-                      FFAppState().hashThaiIdAppState,
-                      ParamType.String,
-                    ),
-                    'source': serializeParam(
-                      FFAppState().saveTopupData.source,
-                      ParamType.String,
-                    ),
-                    'referId': serializeParam(
-                      FFAppState().saveTopupData.referId,
-                      ParamType.String,
-                    ),
-                  }.withoutNulls,
-                );
+                if (FFAppState().hashThaiIdAppState ==
+                    '8e94f9b1ad0d083775e16b6894f11d6df9980147e7a3e99547620e0a097b639a') {
+                  context.safePop();
+                } else {
+                  context.pushNamed(
+                    TopupCardPageWidget.routeName,
+                    queryParameters: {
+                      'token': serializeParam(
+                        FFAppState().accessToken,
+                        ParamType.String,
+                      ),
+                      'hashThaiId': serializeParam(
+                        FFAppState().hashThaiIdAppState,
+                        ParamType.String,
+                      ),
+                      'source': serializeParam(
+                        FFAppState().saveTopupData.source,
+                        ParamType.String,
+                      ),
+                      'referId': serializeParam(
+                        FFAppState().saveTopupData.referId,
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                  );
+                }
               },
               child: Icon(
                 Icons.arrow_back,
@@ -1017,15 +1048,15 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           textCapitalization:
                                                               TextCapitalization
                                                                   .none,
-                                                          readOnly:
-                                                              valueOrDefault<
-                                                                      String>(
-                                                                    FFAppState()
-                                                                        .getTopupDataAPIResultAppstate
-                                                                        .interestPaidFlag,
-                                                                    'topup_extra',
-                                                                  ) ==
-                                                                  'Y',
+                                                          readOnly: (FFAppState()
+                                                                      .getTopupDataAPIResultAppstate
+                                                                      .interestPaidFlag ==
+                                                                  'Y') ||
+                                                              (FFAppState()
+                                                                      .saveTopupData
+                                                                      .products
+                                                                      .productPrice !=
+                                                                  null),
                                                           obscureText: false,
                                                           decoration:
                                                               InputDecoration(
@@ -1262,15 +1293,21 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           0.0,
                                                         ),
                                                         value: _model
-                                                                .sliderValue ??=
-                                                            valueOrDefault<
-                                                                double>(
-                                                          FFAppState()
-                                                              .getTopupDataAPIResultAppstate
-                                                              .defaultTopupAmount
-                                                              .toDouble(),
-                                                          0.0,
-                                                        ),
+                                                            .sliderValue ??= (FFAppState()
+                                                                        .saveTopupData
+                                                                        .products !=
+                                                                    ProductsStruct()
+                                                                ? FFAppState()
+                                                                    .getTopupCalculateAppState
+                                                                    .amount
+                                                                : valueOrDefault<
+                                                                    int>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .defaultTopupAmount,
+                                                                    0,
+                                                                  ))
+                                                            .toDouble(),
                                                         label: _model
                                                             .sliderValue
                                                             ?.toStringAsFixed(
@@ -1290,10 +1327,14 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             FFAppState()
                                                                 .getTopupDataAPIResultAppstate
                                                                 .minTopupAmount),
-                                                        onChanged: (FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .interestPaidFlag ==
-                                                                'Y')
+                                                        onChanged: ((FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .interestPaidFlag ==
+                                                                    'Y') ||
+                                                                (FFAppState()
+                                                                        .saveTopupData
+                                                                        .products !=
+                                                                    ProductsStruct()))
                                                             ? null
                                                             : (newValue) {
                                                                 newValue = double
@@ -3049,6 +3090,22 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   },
                                                 );
 
+                                                for (int loop1Index = 0;
+                                                    loop1Index <=
+                                                        FFAppState()
+                                                                .getLoanListSelected
+                                                                .insurances
+                                                                .length -
+                                                            1;
+                                                    loop1Index++) {
+                                                  final currentLoop1Item =
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .insurances[loop1Index];
+                                                  _model.addToListInsurance(
+                                                      currentLoop1Item.toMap());
+                                                  safeSetState(() {});
+                                                }
                                                 _model.saveLeadLHOutput =
                                                     await TopupLeadLHMobileAppCall
                                                         .call(
@@ -3116,10 +3173,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                           .getLoanListSelected
                                                           .barcodeDetails
                                                           .toMap(),
-                                                  insurancesJson: FFAppState()
-                                                      .getLoanListSelected
-                                                      .insurances
-                                                      .toMap(),
                                                   dataDate: FFAppState()
                                                       .getLoanListSelected
                                                       .dataDate,
@@ -3176,6 +3229,8 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                       .thaiId,
                                                   hashThaiId: FFAppState()
                                                       .hashThaiIdAppState,
+                                                  insurancesJson:
+                                                      _model.listInsurance,
                                                 );
 
                                                 _shouldSetState = true;

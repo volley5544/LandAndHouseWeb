@@ -45,6 +45,7 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
     String? carImageMile,
     String? source,
     String? referId,
+    ProductsStruct? products,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _lifeInsureAmt = lifeInsureAmt,
         _transno = transno,
@@ -82,6 +83,7 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         _carImageMile = carImageMile,
         _source = source,
         _referId = referId,
+        _products = products,
         super(firestoreUtilData);
 
   // "life_insure_amt" field.
@@ -369,6 +371,17 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
 
   bool hasReferId() => _referId != null;
 
+  // "products" field.
+  ProductsStruct? _products;
+  ProductsStruct get products => _products ?? ProductsStruct();
+  set products(ProductsStruct? val) => _products = val;
+
+  void updateProducts(Function(ProductsStruct) updateFn) {
+    updateFn(_products ??= ProductsStruct());
+  }
+
+  bool hasProducts() => _products != null;
+
   static SaveTopupDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveTopupDataModelStruct(
         lifeInsureAmt: data['life_insure_amt'] as String?,
@@ -409,6 +422,9 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         carImageMile: data['car_image_mile'] as String?,
         source: data['source'] as String?,
         referId: data['refer_id'] as String?,
+        products: data['products'] is ProductsStruct
+            ? data['products']
+            : ProductsStruct.maybeFromMap(data['products']),
       );
 
   static SaveTopupDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -452,6 +468,7 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         'car_image_mile': _carImageMile,
         'source': _source,
         'refer_id': _referId,
+        'products': _products?.toMap(),
       }.withoutNulls;
 
   @override
@@ -599,6 +616,10 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         'refer_id': serializeParam(
           _referId,
           ParamType.String,
+        ),
+        'products': serializeParam(
+          _products,
+          ParamType.DataStruct,
         ),
       }.withoutNulls;
 
@@ -786,6 +807,12 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        products: deserializeStructParam(
+          data['products'],
+          ParamType.DataStruct,
+          false,
+          structBuilder: ProductsStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -829,7 +856,8 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         carImageRight == other.carImageRight &&
         carImageMile == other.carImageMile &&
         source == other.source &&
-        referId == other.referId;
+        referId == other.referId &&
+        products == other.products;
   }
 
   @override
@@ -869,7 +897,8 @@ class SaveTopupDataModelStruct extends FFFirebaseStruct {
         carImageRight,
         carImageMile,
         source,
-        referId
+        referId,
+        products
       ]);
 }
 
@@ -910,6 +939,7 @@ SaveTopupDataModelStruct createSaveTopupDataModelStruct({
   String? carImageMile,
   String? source,
   String? referId,
+  ProductsStruct? products,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -952,6 +982,7 @@ SaveTopupDataModelStruct createSaveTopupDataModelStruct({
       carImageMile: carImageMile,
       source: source,
       referId: referId,
+      products: products ?? (clearUnsetFields ? ProductsStruct() : null),
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
@@ -1015,6 +1046,14 @@ Map<String, dynamic> getSaveTopupDataModelFirestoreData(
     firestoreData,
     saveTopupDataModel.hasSavePdf() ? saveTopupDataModel.savePdf : null,
     'save_pdf',
+    forFieldValue,
+  );
+
+  // Handle nested data for "products" field.
+  addProductsStructData(
+    firestoreData,
+    saveTopupDataModel.hasProducts() ? saveTopupDataModel.products : null,
+    'products',
     forFieldValue,
   );
 

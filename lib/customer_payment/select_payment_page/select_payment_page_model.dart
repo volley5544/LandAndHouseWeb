@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/customer_loan_detail/loan_detail_card_component/loan_detail_card_component_widget.dart';
+import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import '/index.dart';
@@ -34,6 +35,8 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
   ScrollController? columnController;
   // Model for LoanDetailCardComponent component.
   late LoanDetailCardComponentModel loanDetailCardComponentModel;
+  // Model for LoanDetailCardTopupComponent component.
+  late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -44,12 +47,15 @@ class SelectPaymentPageModel extends FlutterFlowModel<SelectPaymentPageWidget> {
     columnController = ScrollController();
     loanDetailCardComponentModel =
         createModel(context, () => LoanDetailCardComponentModel());
+    loanDetailCardTopupComponentModel =
+        createModel(context, () => LoanDetailCardTopupComponentModel());
   }
 
   @override
   void dispose() {
     columnController?.dispose();
     loanDetailCardComponentModel.dispose();
+    loanDetailCardTopupComponentModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }

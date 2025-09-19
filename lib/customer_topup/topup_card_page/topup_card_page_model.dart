@@ -18,8 +18,6 @@ class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
   ApplicationRecord? configOutput;
   // Stores action output result for [Backend Call - API (userDetail)] action in topupCardPage widget.
   ApiCallResponse? userDetailOutput;
-  // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Text widget.
-  FFUploadedFile? test;
   Completer<ApiCallResponse>? apiRequestCompleter;
   // Model for EmptyComponentTopup component.
   late EmptyComponentTopupModel emptyComponentTopupModel;

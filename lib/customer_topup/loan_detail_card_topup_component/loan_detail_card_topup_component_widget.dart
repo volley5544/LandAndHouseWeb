@@ -1,6 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'loan_detail_card_topup_component_model.dart';
 export 'loan_detail_card_topup_component_model.dart';
@@ -106,6 +107,16 @@ class _LoanDetailCardTopupComponentWidgetState
                             borderRadius: BorderRadius.circular(8.0),
                             child: SvgPicture.asset(
                               'assets/images/LOANT.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        } else if (widget.productTypeCode == 'I') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/LOANL.svg',
                               width: 50.0,
                               height: 50.0,
                               fit: BoxFit.cover,
@@ -284,6 +295,9 @@ class _LoanDetailCardTopupComponentWidgetState
                                       } else if (widget.productTypeCode ==
                                           'V') {
                                         return 'สินเชื่อรถไถ';
+                                      } else if (widget.productTypeCode ==
+                                          'I') {
+                                        return 'สินเชื่อประกันภัย';
                                       } else {
                                         return 'สินเชื่อที่ดินและสิ่งปลูกสร้าง';
                                       }
@@ -327,19 +341,53 @@ class _LoanDetailCardTopupComponentWidgetState
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    valueOrDefault<String>(
-                                      widget.contNo,
-                                      'cont_no',
+                                  InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      if (!FFDevEnvironmentValues()
+                                          .isProduction) {
+                                        await Clipboard.setData(ClipboardData(
+                                            text: valueOrDefault<String>(
+                                          widget.contNo,
+                                          'cont_no',
+                                        )));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'copy to clipboard',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Text(
+                                      valueOrDefault<String>(
+                                        widget.contNo,
+                                        'cont_no',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            letterSpacing: 0.0,
+                                          ),
                                     ),
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ],
                               ),

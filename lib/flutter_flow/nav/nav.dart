@@ -502,6 +502,101 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: VmiListPageWidget.routeName,
+          path: VmiListPageWidget.routePath,
+          builder: (context, params) => VmiListPageWidget(),
+        ),
+        FFRoute(
+          name: SelectTopupProductPageWidget.routeName,
+          path: SelectTopupProductPageWidget.routePath,
+          builder: (context, params) => SelectTopupProductPageWidget(),
+        ),
+        FFRoute(
+          name: LeadAgentDetailCustomerPageWidget.routeName,
+          path: LeadAgentDetailCustomerPageWidget.routePath,
+          builder: (context, params) => LeadAgentDetailCustomerPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: ShareAgentReferPageWidget.routeName,
+          path: ShareAgentReferPageWidget.routePath,
+          builder: (context, params) => ShareAgentReferPageWidget(),
+        ),
+        FFRoute(
+          name: MyLeadDashboardPageWidget.routeName,
+          path: MyLeadDashboardPageWidget.routePath,
+          builder: (context, params) => MyLeadDashboardPageWidget(),
+        ),
+        FFRoute(
+          name: MyPayDashboardPageWidget.routeName,
+          path: MyPayDashboardPageWidget.routePath,
+          builder: (context, params) => MyPayDashboardPageWidget(),
+        ),
+        FFRoute(
+          name: LeadDetailMenuPageWidget.routeName,
+          path: LeadDetailMenuPageWidget.routePath,
+          builder: (context, params) => LeadDetailMenuPageWidget(),
+        ),
+        FFRoute(
+          name: VerifyTransferPageWidget.routeName,
+          path: VerifyTransferPageWidget.routePath,
+          builder: (context, params) => VerifyTransferPageWidget(),
+        ),
+        FFRoute(
+          name: ProductMenuPageWidget.routeName,
+          path: ProductMenuPageWidget.routePath,
+          builder: (context, params) => ProductMenuPageWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: LeadAgentDetailCarPageWidget.routeName,
+          path: LeadAgentDetailCarPageWidget.routePath,
+          builder: (context, params) => LeadAgentDetailCarPageWidget(),
+        ),
+        FFRoute(
+          name: CheckRateLHPageWidget.routeName,
+          path: CheckRateLHPageWidget.routePath,
+          builder: (context, params) => CheckRateLHPageWidget(),
+        ),
+        FFRoute(
+          name: LeadAgentReviewDetailPageWidget.routeName,
+          path: LeadAgentReviewDetailPageWidget.routePath,
+          builder: (context, params) => LeadAgentReviewDetailPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: LeadAgentDetailLHPageWidget.routeName,
+          path: LeadAgentDetailLHPageWidget.routePath,
+          builder: (context, params) => LeadAgentDetailLHPageWidget(),
+        ),
+        FFRoute(
+          name: SelectTopupProductPageCopyWidget.routeName,
+          path: SelectTopupProductPageCopyWidget.routePath,
+          builder: (context, params) => SelectTopupProductPageCopyWidget(),
+        ),
+        FFRoute(
+          name: AgentMainMenuPageWidget.routeName,
+          path: AgentMainMenuPageWidget.routePath,
+          builder: (context, params) => AgentMainMenuPageWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,7 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/error_message_component_widget.dart';
-import '/customer_topup/capture_picture_component/capture_picture_component_widget.dart';
 import '/customer_topup/empty_component_topup/empty_component_topup_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -366,35 +365,8 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                enableDrag: false,
-                                context: context,
-                                builder: (context) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      FocusScope.of(context).unfocus();
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                    },
-                                    child: Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: Container(
-                                        height: double.infinity,
-                                        child: CapturePictureComponentWidget(
-                                          imageType: 'test5544',
-                                          title: 'เทสถ่าย',
-                                          descriptionText: 'เทสๆๆ',
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ).then((value) =>
-                                  safeSetState(() => _model.test = value));
-
-                              safeSetState(() {});
+                              context.pushNamed(
+                                  SelectTopupProductPageWidget.routeName);
                             },
                             child: Text(
                               '(UAT v.${FFAppState().webUatVersion.toString()})',
@@ -698,19 +670,77 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                           'ยังไม่ได้ทำรายการเติมเงิน'
                                                       ? true
                                                       : false) {
-                                                    context.pushNamed(
-                                                      TopupDetailDataPageWidget
-                                                          .routeName,
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                            TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
-                                                        ),
-                                                      },
-                                                    );
+                                                    if (widget.hashThaiId ==
+                                                        '8e94f9b1ad0d083775e16b6894f11d6df9980147e7a3e99547620e0a097b639a') {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    content: Text(
+                                                                        'fbvb'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: Text(
+                                                                            'Cancel'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: Text(
+                                                                            'Confirm'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (!confirmDialogResponse) {
+                                                        context.pushNamed(
+                                                          SelectTopupProductPageCopyWidget
+                                                              .routeName,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            kTransitionInfoKey:
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+
+                                                      context.pushNamed(
+                                                        SelectTopupProductPageWidget
+                                                            .routeName,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .rightToLeft,
+                                                          ),
+                                                        },
+                                                      );
+                                                    } else {
+                                                      context.pushNamed(
+                                                          TopupDetailDataPageWidget
+                                                              .routeName);
+                                                    }
                                                   } else {
                                                     context.pushNamed(
                                                       TopupStatusPageWidget

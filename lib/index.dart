@@ -59,3 +59,33 @@ export '/customer_loan_detail/loan_detail_page/loan_detail_page_widget.dart'
     show LoanDetailPageWidget;
 export '/customer_payment/select_payment_page/select_payment_page_widget.dart'
     show SelectPaymentPageWidget;
+export '/customer_loan_detail/vmi_list_page/vmi_list_page_widget.dart'
+    show VmiListPageWidget;
+export '/customer_topup/select_topup_product_page/select_topup_product_page_widget.dart'
+    show SelectTopupProductPageWidget;
+export '/agent_customer/drop_lead/lead_agent_detail_customer_page/lead_agent_detail_customer_page_widget.dart'
+    show LeadAgentDetailCustomerPageWidget;
+export '/agent_customer/agent_detail/share_agent_refer_page/share_agent_refer_page_widget.dart'
+    show ShareAgentReferPageWidget;
+export '/agent_customer/agent_detail/my_lead_dashboard_page/my_lead_dashboard_page_widget.dart'
+    show MyLeadDashboardPageWidget;
+export '/agent_customer/agent_detail/my_pay_dashboard_page/my_pay_dashboard_page_widget.dart'
+    show MyPayDashboardPageWidget;
+export '/agent_customer/agent_detail/lead_detail_menu_page/lead_detail_menu_page_widget.dart'
+    show LeadDetailMenuPageWidget;
+export '/agent_customer/agent_detail/verify_transfer_page/verify_transfer_page_widget.dart'
+    show VerifyTransferPageWidget;
+export '/agent_customer/drop_lead/product_menu_page/product_menu_page_widget.dart'
+    show ProductMenuPageWidget;
+export '/agent_customer/drop_lead/lead_agent_detail_car_page/lead_agent_detail_car_page_widget.dart'
+    show LeadAgentDetailCarPageWidget;
+export '/agent_customer/check_rate/check_rate_l_h_page/check_rate_l_h_page_widget.dart'
+    show CheckRateLHPageWidget;
+export '/agent_customer/drop_lead/lead_agent_review_detail_page/lead_agent_review_detail_page_widget.dart'
+    show LeadAgentReviewDetailPageWidget;
+export '/agent_customer/drop_lead/lead_agent_detail_l_h_page/lead_agent_detail_l_h_page_widget.dart'
+    show LeadAgentDetailLHPageWidget;
+export '/customer_topup/select_topup_product_page_copy/select_topup_product_page_copy_widget.dart'
+    show SelectTopupProductPageCopyWidget;
+export '/agent_customer/agent_main_menu_page/agent_main_menu_page_widget.dart'
+    show AgentMainMenuPageWidget;

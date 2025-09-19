@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'schema/util/firestore_util.dart';
 
 import 'schema/application_record.dart';
+import 'schema/topup_product_config_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -12,6 +13,7 @@ export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
 export 'schema/application_record.dart';
+export 'schema/topup_product_config_record.dart';
 
 /// Functions to query ApplicationRecords (as a Stream and as a Future).
 Future<int> queryApplicationRecordCount({
@@ -45,6 +47,43 @@ Future<List<ApplicationRecord>> queryApplicationRecordOnce({
     queryCollectionOnce(
       ApplicationRecord.collection,
       ApplicationRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query TopupProductConfigRecords (as a Stream and as a Future).
+Future<int> queryTopupProductConfigRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      TopupProductConfigRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<TopupProductConfigRecord>> queryTopupProductConfigRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      TopupProductConfigRecord.collection,
+      TopupProductConfigRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<TopupProductConfigRecord>> queryTopupProductConfigRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      TopupProductConfigRecord.collection,
+      TopupProductConfigRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
