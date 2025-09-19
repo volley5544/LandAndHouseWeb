@@ -11,7 +11,12 @@ import 'lead_agent_detail_l_h_page_model.dart';
 export 'lead_agent_detail_l_h_page_model.dart';
 
 class LeadAgentDetailLHPageWidget extends StatefulWidget {
-  const LeadAgentDetailLHPageWidget({super.key});
+  const LeadAgentDetailLHPageWidget({
+    super.key,
+    this.product,
+  });
+
+  final String? product;
 
   static String routeName = 'LeadAgentDetailLHPage';
   static String routePath = '/leadAgentDetailLHPage';

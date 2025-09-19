@@ -516,12 +516,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentDetailCustomerPageWidget.routeName,
           path: LeadAgentDetailCustomerPageWidget.routePath,
-          builder: (context, params) => LeadAgentDetailCustomerPageWidget(
-            product: params.getParam(
-              'product',
-              ParamType.String,
-            ),
-          ),
+          builder: (context, params) => LeadAgentDetailCustomerPageWidget(),
         ),
         FFRoute(
           name: ShareAgentReferPageWidget.routeName,
@@ -561,7 +556,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentDetailCarPageWidget.routeName,
           path: LeadAgentDetailCarPageWidget.routePath,
-          builder: (context, params) => LeadAgentDetailCarPageWidget(),
+          builder: (context, params) => LeadAgentDetailCarPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: CheckRateLHPageWidget.routeName,
@@ -581,7 +581,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentDetailLHPageWidget.routeName,
           path: LeadAgentDetailLHPageWidget.routePath,
-          builder: (context, params) => LeadAgentDetailLHPageWidget(),
+          builder: (context, params) => LeadAgentDetailLHPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: SelectTopupProductPageCopyWidget.routeName,

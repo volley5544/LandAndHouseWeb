@@ -35,17 +35,20 @@ class LeadAgentDetailCustomerPageModel
   TextEditingController? textController5;
   String? Function(BuildContext, String?)? textController5Validator;
   // State field(s) for TextField widget.
+  final textFieldKey6 = GlobalKey();
   FocusNode? textFieldFocusNode6;
   TextEditingController? textController6;
+  String? textFieldSelectedOption6;
   String? Function(BuildContext, String?)? textController6Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode7;
   TextEditingController? textController7;
   String? Function(BuildContext, String?)? textController7Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode8;
-  TextEditingController? textController8;
-  String? Function(BuildContext, String?)? textController8Validator;
+  DateTime? datePicked;
+  // State field(s) for TextFieldTime widget.
+  FocusNode? textFieldTimeFocusNode;
+  TextEditingController? textFieldTimeTextController;
+  String? Function(BuildContext, String?)? textFieldTimeTextControllerValidator;
   // State field(s) for Checkbox widget.
   bool? checkboxValue1;
   // State field(s) for Checkbox widget.
@@ -76,12 +79,11 @@ class LeadAgentDetailCustomerPageModel
     textController5?.dispose();
 
     textFieldFocusNode6?.dispose();
-    textController6?.dispose();
 
     textFieldFocusNode7?.dispose();
     textController7?.dispose();
 
-    textFieldFocusNode8?.dispose();
-    textController8?.dispose();
+    textFieldTimeFocusNode?.dispose();
+    textFieldTimeTextController?.dispose();
   }
 }

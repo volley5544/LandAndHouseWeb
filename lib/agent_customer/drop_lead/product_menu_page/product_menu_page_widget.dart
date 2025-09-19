@@ -197,12 +197,6 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
                         onTap: () async {
                           context.pushNamed(
                             LeadAgentDetailCustomerPageWidget.routeName,
-                            queryParameters: {
-                              'product': serializeParam(
-                                'HL',
-                                ParamType.String,
-                              ),
-                            }.withoutNulls,
                             extra: <String, dynamic>{
                               kTransitionInfoKey: TransitionInfo(
                                 hasTransition: true,

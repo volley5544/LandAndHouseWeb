@@ -8,7 +8,12 @@ import 'lead_agent_detail_car_page_model.dart';
 export 'lead_agent_detail_car_page_model.dart';
 
 class LeadAgentDetailCarPageWidget extends StatefulWidget {
-  const LeadAgentDetailCarPageWidget({super.key});
+  const LeadAgentDetailCarPageWidget({
+    super.key,
+    this.product,
+  });
+
+  final String? product;
 
   static String routeName = 'LeadAgentDetailCarPage';
   static String routePath = '/leadAgentDetailCarPage';
@@ -29,7 +34,7 @@ class _LeadAgentDetailCarPageWidgetState
     super.initState();
     _model = createModel(context, () => LeadAgentDetailCarPageModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController1 ??= TextEditingController(text: widget.product);
     _model.textFieldFocusNode1 ??= FocusNode();
 
     _model.textController2 ??= TextEditingController();
@@ -222,6 +227,7 @@ class _LeadAgentDetailCarPageWidgetState
                                         autofocus: false,
                                         textCapitalization:
                                             TextCapitalization.words,
+                                        readOnly: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelStyle:

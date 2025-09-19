@@ -128,15 +128,8 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed(
-                    LeadAgentDetailCustomerPageWidget.routeName,
-                    queryParameters: {
-                      'product': serializeParam(
-                        'LH',
-                        ParamType.String,
-                      ),
-                    }.withoutNulls,
-                  );
+                  context
+                      .pushNamed(LeadAgentDetailCustomerPageWidget.routeName);
                 },
                 child: Text(
                   'ตัวแทน',

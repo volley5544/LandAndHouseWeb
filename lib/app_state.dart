@@ -607,6 +607,48 @@ class FFAppState extends ChangeNotifier {
       Function(AgentProfileModelStruct) updateFn) {
     updateFn(_agentProfileDataType);
   }
+
+  List<String> _productList = [
+    'รถมอเตอร์ไซค์',
+    'รถเก๋ง',
+    'รถกระบะ (ตอนเดียว)',
+    'รถกระบะ (แคป)',
+    'รถกระบะ (4 ประตู)',
+    'รถตู้',
+    'รถบรรทุก (4 ล้อ)',
+    'รถบรรทุก (6 ล้อ)',
+    'รถบรรทุก (10 ล้อ)',
+    'รถบรรทุก (12 ล้อ)',
+    'ที่ดินพร้อมสิ่งปลูกสร้าง',
+    'ที่ดินเปล่า'
+  ];
+  List<String> get productList => _productList;
+  set productList(List<String> value) {
+    _productList = value;
+  }
+
+  void addToProductList(String value) {
+    productList.add(value);
+  }
+
+  void removeFromProductList(String value) {
+    productList.remove(value);
+  }
+
+  void removeAtIndexFromProductList(int index) {
+    productList.removeAt(index);
+  }
+
+  void updateProductListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    productList[index] = updateFn(_productList[index]);
+  }
+
+  void insertAtIndexInProductList(int index, String value) {
+    productList.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {
