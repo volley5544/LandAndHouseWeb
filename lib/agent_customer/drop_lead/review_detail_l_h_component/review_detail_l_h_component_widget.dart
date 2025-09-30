@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'review_detail_l_h_component_model.dart';
 export 'review_detail_l_h_component_model.dart';
 
@@ -15,6 +17,9 @@ class ReviewDetailLHComponentWidget extends StatefulWidget {
     required this.ltv1Amount,
     required this.ltv2Amount,
     required this.utmmap1,
+    this.subDistrict,
+    this.district,
+    required this.province,
   });
 
   final String? chanodNO;
@@ -25,6 +30,9 @@ class ReviewDetailLHComponentWidget extends StatefulWidget {
   final String? ltv1Amount;
   final String? ltv2Amount;
   final String? utmmap1;
+  final String? subDistrict;
+  final String? district;
+  final String? province;
 
   @override
   State<ReviewDetailLHComponentWidget> createState() =>
@@ -58,6 +66,8 @@ class _ReviewDetailLHComponentWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -150,7 +160,7 @@ class _ReviewDetailLHComponentWidgetState
                       children: [
                         Text(
                           valueOrDefault<String>(
-                            widget.chanodNO != null && widget.chanodNO != ''
+                            FFAppState().isSearchByChanodNo
                                 ? 'เลขที่โฉนด'
                                 : 'เลขที่ดิน',
                             'เลขที่โฉนด',
@@ -202,7 +212,7 @@ class _ReviewDetailLHComponentWidgetState
                         decoration: BoxDecoration(),
                         child: Text(
                           valueOrDefault<String>(
-                            widget.chanodNO != null && widget.chanodNO != ''
+                            FFAppState().isSearchByChanodNo
                                 ? widget.chanodNO
                                 : widget.landNO,
                             '-',
@@ -222,7 +232,7 @@ class _ReviewDetailLHComponentWidgetState
                 ),
               ),
             ),
-            if (widget.landNO != null && widget.landNO != '')
+            if (widget.landNO != '')
               Container(
                 decoration: BoxDecoration(),
                 child: Row(
@@ -281,8 +291,12 @@ class _ReviewDetailLHComponentWidgetState
                         decoration: BoxDecoration(),
                         child: Text(
                           valueOrDefault<String>(
-                            widget.utmmap1,
-                            'utmmap',
+                            functions
+                                .rawangFormattedFunction(valueOrDefault<String>(
+                              widget.utmmap1,
+                              'utmmap',
+                            )),
+                            'rawang',
                           ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -353,7 +367,10 @@ class _ReviewDetailLHComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        '',
+                        valueOrDefault<String>(
+                          widget.subDistrict,
+                          '-',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),
@@ -422,7 +439,10 @@ class _ReviewDetailLHComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        '',
+                        valueOrDefault<String>(
+                          widget.district,
+                          '-',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),
@@ -491,7 +511,10 @@ class _ReviewDetailLHComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        '',
+                        valueOrDefault<String>(
+                          widget.province,
+                          '-',
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),
@@ -561,8 +584,13 @@ class _ReviewDetailLHComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          widget.rai,
-                          'rai',
+                          functions.returnNumberWithCommaFullNumber(
+                              valueOrDefault<String>(
+                                widget.rai,
+                                '0',
+                              ),
+                              '0'),
+                          '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
@@ -633,8 +661,13 @@ class _ReviewDetailLHComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          widget.ngan,
-                          'ngan',
+                          functions.returnNumberWithCommaFullNumber(
+                              valueOrDefault<String>(
+                                widget.ngan,
+                                '0',
+                              ),
+                              '0'),
+                          '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
@@ -705,8 +738,9 @@ class _ReviewDetailLHComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          widget.wa,
-                          'wa',
+                          functions.returnNumberWithCommaFullNumber(
+                              widget.wa, '0'),
+                          '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
@@ -771,8 +805,12 @@ class _ReviewDetailLHComponentWidgetState
                     children: [
                       Text(
                         valueOrDefault<String>(
-                          widget.ltv1Amount,
-                          'ltv1Amount',
+                          functions.returnNumberWithComma2Decimal(
+                              valueOrDefault<String>(
+                            widget.ltv1Amount,
+                            'ltv1Amount',
+                          )),
+                          '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
@@ -847,8 +885,12 @@ class _ReviewDetailLHComponentWidgetState
                     children: [
                       Text(
                         valueOrDefault<String>(
-                          widget.ltv2Amount,
-                          'ltv2amount',
+                          functions.returnNumberWithComma2Decimal(
+                              valueOrDefault<String>(
+                            widget.ltv2Amount,
+                            'ltv2amount',
+                          )),
+                          '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',

@@ -1,11 +1,11 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'select_topup_product_page_copy_widget.dart'
-    show SelectTopupProductPageCopyWidget;
+import 'select_topup_product_page_old_widget.dart'
+    show SelectTopupProductPageOldWidget;
 import 'package:flutter/material.dart';
 
-class SelectTopupProductPageCopyModel
-    extends FlutterFlowModel<SelectTopupProductPageCopyWidget> {
+class SelectTopupProductPageOldModel
+    extends FlutterFlowModel<SelectTopupProductPageOldWidget> {
   ///  Local state fields for this page.
 
   int? checkBoxSelected = 999;

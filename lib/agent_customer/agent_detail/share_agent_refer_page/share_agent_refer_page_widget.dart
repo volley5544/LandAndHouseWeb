@@ -433,6 +433,10 @@ class _ShareAgentReferPageWidgetState extends State<ShareAgentReferPageWidget> {
                                             .agentCode,
                                         ParamType.String,
                                       ),
+                                      'fromPage': serializeParam(
+                                        'shareAgentReferPage',
+                                        ParamType.String,
+                                      ),
                                     }.withoutNulls,
                                   );
                                 },

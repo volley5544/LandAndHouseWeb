@@ -1,3 +1,5 @@
+import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -14,9 +16,11 @@ class ProductMenuPageWidget extends StatefulWidget {
   const ProductMenuPageWidget({
     super.key,
     this.agentCode,
+    this.fromPage,
   });
 
   final String? agentCode;
+  final String? fromPage;
 
   static String routeName = 'ProductMenuPage';
   static String routePath = '/productMenuPage';
@@ -40,7 +44,20 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
       FFAppState().agentCode = widget.agentCode!;
+      FFAppState().doOwnLead =
+          widget.fromPage != null && widget.fromPage != '';
       safeSetState(() {});
+      if (FFAppState().agentProfileDataType == AgentProfileModelStruct()) {
+        _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
+          agentCode: FFAppState().agentCode,
+        );
+
+        FFAppState().agentProfileDataType =
+            AgentAPIGroup.agentProfileAPICall.data(
+          (_model.agentAPIOutput?.jsonBody ?? ''),
+        )!;
+        safeSetState(() {});
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -68,18 +85,21 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondary,
           automaticallyImplyLeading: false,
-          leading: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              context.safePop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: FlutterFlowTheme.of(context).primary,
-              size: 24.0,
+          leading: Visibility(
+            visible: widget.fromPage != null && widget.fromPage != '',
+            child: InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                context.safePop();
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: FlutterFlowTheme.of(context).primary,
+                size: 24.0,
+              ),
             ),
           ),
           actions: [],

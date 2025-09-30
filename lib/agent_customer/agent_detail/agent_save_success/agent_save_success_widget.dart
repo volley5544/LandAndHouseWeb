@@ -113,9 +113,7 @@ class _AgentSaveSuccessWidgetState extends State<AgentSaveSuccessWidget> {
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   Navigator.pop(context);
-                                  if (widget.from != 'byLead') {
-                                    context.safePop();
-                                  }
+                                  context.safePop();
                                 },
                                 text: 'กลับสู่หน้าแรก',
                                 options: FFButtonOptions(

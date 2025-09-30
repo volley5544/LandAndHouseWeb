@@ -5,31 +5,33 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
-import 'select_topup_product_page_copy_model.dart';
-export 'select_topup_product_page_copy_model.dart';
+import 'select_topup_product_page_old_model.dart';
+export 'select_topup_product_page_old_model.dart';
 
-class SelectTopupProductPageCopyWidget extends StatefulWidget {
-  const SelectTopupProductPageCopyWidget({super.key});
+class SelectTopupProductPageOldWidget extends StatefulWidget {
+  const SelectTopupProductPageOldWidget({super.key});
 
-  static String routeName = 'SelectTopupProductPageCopy';
-  static String routePath = '/selectTopupProductPageCopy';
+  static String routeName = 'SelectTopupProductPageOld';
+  static String routePath = '/selectTopupProductPageOld';
 
   @override
-  State<SelectTopupProductPageCopyWidget> createState() =>
-      _SelectTopupProductPageCopyWidgetState();
+  State<SelectTopupProductPageOldWidget> createState() =>
+      _SelectTopupProductPageOldWidgetState();
 }
 
-class _SelectTopupProductPageCopyWidgetState
-    extends State<SelectTopupProductPageCopyWidget> {
-  late SelectTopupProductPageCopyModel _model;
+class _SelectTopupProductPageOldWidgetState
+    extends State<SelectTopupProductPageOldWidget> {
+  late SelectTopupProductPageOldModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SelectTopupProductPageCopyModel());
+    _model = createModel(context, () => SelectTopupProductPageOldModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -140,102 +142,33 @@ class _SelectTopupProductPageCopyWidgetState
                             ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 12.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 150.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).primary,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Text(
-                                      'วงเงินคงเหลือที่ใช้ได้',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            fontSize: 24.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Text(
-                                      '60,000 บาท',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            fontSize: 24.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            thickness: 2.0,
-                            color: FlutterFlowTheme.of(context).alternate,
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 8.0, 24.0, 0.0),
+                                24.0, 0.0, 24.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(
-                                  'เลือกรายการ',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        fontSize: 20.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Text(
+                                    'เติมวงเงิน',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          fontSize: 20.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 20.0,
-                              decoration: BoxDecoration(),
-                              child: Text(
-                                'กรุณาเลือกรายการที่ต้องการ',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 12.0, 24.0, 8.0),
+                                24.0, 0.0, 24.0, 8.0),
                             child: InkWell(
                               splashColor: Colors.transparent,
                               focusColor: Colors.transparent,
@@ -330,7 +263,7 @@ class _SelectTopupProductPageCopyWidgetState
                                                                   fontFamily:
                                                                       'Noto San Thai',
                                                                   fontSize:
-                                                                      16.0,
+                                                                      17.0,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -495,6 +428,52 @@ class _SelectTopupProductPageCopyWidgetState
                               ),
                             ),
                           ),
+                          Divider(
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 8.0, 24.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  'ซื้อสินค้า',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        fontSize: 20.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 0.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 20.0,
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                'กรุณาเลือกสินค้าที่ต้องการ',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ),
+                          ),
                           Expanded(
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -572,7 +551,7 @@ class _SelectTopupProductPageCopyWidgetState
                                               },
                                               child: Container(
                                                 width: double.infinity,
-                                                height: 130.0,
+                                                height: 140.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -631,11 +610,34 @@ class _SelectTopupProductPageCopyWidgetState
                                                                   BorderRadius
                                                                       .circular(
                                                                           100.0),
-                                                              child:
-                                                                  Image.network(
-                                                                'https://firebasestorage.googleapis.com/v0/b/srisawad-mobile-app-qa-360402.appspot.com/o/ProductImg%2F1757930265331.jpg?alt=media&token=03f7fef5-b06b-4d01-b09f-1994a1658c3d',
-                                                                width: 200.0,
-                                                                height: 200.0,
+                                                              child: OctoImage(
+                                                                placeholderBuilder:
+                                                                    (_) => SizedBox
+                                                                        .expand(
+                                                                  child: Image(
+                                                                    image: BlurHashImage(listViewTopupProductConfigRecord.productImgHash.elementAtOrNull(functions.findIndexInList(
+                                                                        listViewTopupProductConfigRecord
+                                                                            .produceCode
+                                                                            .toList(),
+                                                                        installmentListItem
+                                                                            .productCode)!)!),
+                                                                    fit: BoxFit
+                                                                        .cover,
+                                                                  ),
+                                                                ),
+                                                                image:
+                                                                    NetworkImage(
+                                                                  functions.stringToImgPath(listViewTopupProductConfigRecord.productImg.elementAtOrNull(functions.findIndexInList(
+                                                                      listViewTopupProductConfigRecord
+                                                                          .produceCode
+                                                                          .toList(),
+                                                                      installmentListItem
+                                                                          .productCode)!))!,
+                                                                ),
+                                                                width: double
+                                                                    .infinity,
+                                                                height: double
+                                                                    .infinity,
                                                                 fit: BoxFit
                                                                     .cover,
                                                               ),
@@ -680,7 +682,7 @@ class _SelectTopupProductPageCopyWidgetState
                                                                               '${installmentListItem.productName}',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
-                                                                                    fontSize: 16.0,
+                                                                                    fontSize: 17.0,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),
@@ -729,7 +731,7 @@ class _SelectTopupProductPageCopyWidgetState
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
                                                                             0.0,
-                                                                            20.0,
+                                                                            16.0,
                                                                             0.0,
                                                                             0.0),
                                                                     child:
@@ -749,7 +751,7 @@ class _SelectTopupProductPageCopyWidgetState
                                                                               '${functions.returnNumberWithComma2Decimal('${installmentListItem.productPrice.toString()}')} บาท',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
-                                                                                    fontSize: 17.0,
+                                                                                    fontSize: 18.0,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.w600,
                                                                                   ),

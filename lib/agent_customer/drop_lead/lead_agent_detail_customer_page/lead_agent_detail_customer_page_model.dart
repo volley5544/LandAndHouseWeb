@@ -1,5 +1,9 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'lead_agent_detail_customer_page_widget.dart'
     show LeadAgentDetailCustomerPageWidget;
@@ -8,8 +12,32 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LeadAgentDetailCustomerPageModel
     extends FlutterFlowModel<LeadAgentDetailCustomerPageWidget> {
+  ///  Local state fields for this page.
+
+  List<MasterAgentVehicleDataModelStruct> masterLoanTypeData = [];
+  void addToMasterLoanTypeData(MasterAgentVehicleDataModelStruct item) =>
+      masterLoanTypeData.add(item);
+  void removeFromMasterLoanTypeData(MasterAgentVehicleDataModelStruct item) =>
+      masterLoanTypeData.remove(item);
+  void removeAtIndexFromMasterLoanTypeData(int index) =>
+      masterLoanTypeData.removeAt(index);
+  void insertAtIndexInMasterLoanTypeData(
+          int index, MasterAgentVehicleDataModelStruct item) =>
+      masterLoanTypeData.insert(index, item);
+  void updateMasterLoanTypeDataAtIndex(
+          int index, Function(MasterAgentVehicleDataModelStruct) updateFn) =>
+      masterLoanTypeData[index] = updateFn(masterLoanTypeData[index]);
+
+  MasterAgentVehicleDataModelStruct? productSelected;
+  void updateProductSelectedStruct(
+      Function(MasterAgentVehicleDataModelStruct) updateFn) {
+    updateFn(productSelected ??= MasterAgentVehicleDataModelStruct());
+  }
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailCustomerPage widget.
+  ApiCallResponse? apiResult3so;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
   // State field(s) for TextField widget.
@@ -34,21 +62,14 @@ class LeadAgentDetailCustomerPageModel
   FocusNode? textFieldFocusNode5;
   TextEditingController? textController5;
   String? Function(BuildContext, String?)? textController5Validator;
+  // State field(s) for DropDownLoanType widget.
+  String? dropDownLoanTypeValue;
+  FormFieldController<String>? dropDownLoanTypeValueController;
   // State field(s) for TextField widget.
-  final textFieldKey6 = GlobalKey();
   FocusNode? textFieldFocusNode6;
   TextEditingController? textController6;
-  String? textFieldSelectedOption6;
   String? Function(BuildContext, String?)? textController6Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode7;
-  TextEditingController? textController7;
-  String? Function(BuildContext, String?)? textController7Validator;
   DateTime? datePicked;
-  // State field(s) for TextFieldTime widget.
-  FocusNode? textFieldTimeFocusNode;
-  TextEditingController? textFieldTimeTextController;
-  String? Function(BuildContext, String?)? textFieldTimeTextControllerValidator;
   // State field(s) for Checkbox widget.
   bool? checkboxValue1;
   // State field(s) for Checkbox widget.
@@ -79,11 +100,6 @@ class LeadAgentDetailCustomerPageModel
     textController5?.dispose();
 
     textFieldFocusNode6?.dispose();
-
-    textFieldFocusNode7?.dispose();
-    textController7?.dispose();
-
-    textFieldTimeFocusNode?.dispose();
-    textFieldTimeTextController?.dispose();
+    textController6?.dispose();
   }
 }

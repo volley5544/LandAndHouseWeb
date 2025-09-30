@@ -31,6 +31,57 @@ List<InstallmentsStruct> reversedListInstallment(
   return reversedList;
 }
 
+String? addDashPhoneNumber(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง';
+  }
+
+  // กรองเฉพาะตัวเลข
+  String phoneNumber = input.replaceAll(RegExp(r'[^0-9]'), '');
+
+  // ตรวจสอบว่าเบอร์โทรศัพท์มีตัวหน้าสุดเป็นเลข 0 หรือไม่
+  if (phoneNumber.isNotEmpty && phoneNumber[0] != '0') {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง (ตัวแรกต้องเป็นเลข 0)';
+  }
+  // หากหมายเลขถูกต้อง และมีความยาว 10 ตัว
+  else if (phoneNumber.length == 10) {
+    return phoneNumber[0] +
+        phoneNumber[1] +
+        phoneNumber[2] +
+        '-' +
+        phoneNumber[3] +
+        phoneNumber[4] +
+        phoneNumber[5] +
+        '-' +
+        phoneNumber[6] +
+        phoneNumber[7] +
+        phoneNumber[8] +
+        phoneNumber[9];
+  }
+  // หากมีความยาว 9 ตัว
+  else if (phoneNumber.length == 9) {
+    return phoneNumber[0] +
+        phoneNumber[1] +
+        '-' +
+        phoneNumber[2] +
+        phoneNumber[3] +
+        phoneNumber[4] +
+        '-' +
+        phoneNumber[5] +
+        phoneNumber[6] +
+        phoneNumber[7] +
+        phoneNumber[8];
+  }
+  // หากมีความยาว 4 ตัว
+  else if (phoneNumber.length == 4) {
+    return phoneNumber[0] + phoneNumber[1] + phoneNumber[2] + phoneNumber[3];
+  }
+  // หากไม่ตรงตามเงื่อนไขใดๆ
+  else {
+    return 'หมายเลขโทรศัพท์ไม่ถูกต้อง';
+  }
+}
+
 bool? checkPhoneNumberCharCopy(String? text) {
   bool isPhoneNumber = false;
 
@@ -934,6 +985,203 @@ int? getIndexInIntList(
 }
 
 List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
-    List<LeadAgentMainCatagoryStruct>? mainLeadData) {
-  return mainLeadData!;
+  List<LeadAgentMainCatagoryStruct>? mainLeadData,
+  LeadAgentDataModelStruct? selectedLead,
+  String? paymentMethodNew,
+) {
+  List<LeadAgentMainCatagoryStruct> dataOutput = mainLeadData!;
+
+  List<LeadAgentSubCategoryStruct> subCategoryNew = dataOutput[dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead!.leadStatus) !=
+              -1
+          ? dataOutput
+              .map((data) => data.category)
+              .toList()
+              .toList()
+              .indexOf(selectedLead!.leadStatus) // เคสลูกค้าใหม่
+          : dataOutput![dataOutput
+                          .map((data) => data.category)
+                          .toList()
+                          .toList()
+                          .indexOf('ปิดการขาย')]
+                      .subCategory
+                      .map((sub) => sub.subject)
+                      .toList()
+                      .toList()
+                      .indexOf(selectedLead!.leadStatus) !=
+                  -1
+              ? dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('ปิดการขาย')
+              : dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('อยู่ระหว่างดำเนินการ')]
+      .subCategory;
+
+  print('donesub');
+
+  List<LeadAgentDataModelStruct> leadListNew = subCategoryNew[
+          selectedLead!.leadStatus == 'ลูกค้าใหม่'
+              ? 0
+              : subCategoryNew
+                  .map((items) => items.subject)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead.leadStatus)]
+      .items;
+
+  print('donelead');
+
+  dataOutput[dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead!.leadStatus) !=
+              -1
+          ? dataOutput
+              .map((data) => data.category)
+              .toList()
+              .toList()
+              .indexOf(selectedLead!.leadStatus)
+          : dataOutput![dataOutput
+                          .map((data) => data.category)
+                          .toList()
+                          .toList()
+                          .indexOf('ปิดการขาย')]
+                      .subCategory
+                      .map((sub) => sub.subject)
+                      .toList()
+                      .toList()
+                      .indexOf(selectedLead!.leadStatus) !=
+                  -1
+              ? dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('ปิดการขาย')
+              : dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('อยู่ระหว่างดำเนินการ')]
+      .subCategory[selectedLead!.leadStatus == 'ลูกค้าใหม่'
+          ? 0
+          : subCategoryNew
+              .map((items) => items.subject)
+              .toList()
+              .toList()
+              .indexOf(selectedLead.leadStatus)]
+      .items[leadListNew
+          .map((lead) => lead.id)
+          .toList()
+          .toList()
+          .indexOf(selectedLead!.id)]
+      .paymentMethod = '${paymentMethodNew!}';
+
+  print('doneupdate');
+
+  // dataOutput[dataOutput.indexOf(dataOutput.map((data) =>
+  //     data.category.indexOf(
+  //         data.category.indexOf(selectedLead!.leadStatus) != -1
+  //             ? selectedLead!.leadStatus
+  //             : 'ปิดการขาย'
+  //     )
+  // ))].subCategory[
+  // selectedLead!.leadStatus == 'ลูกค้าใหม่' || selectedLead!.leadStatus == 'อยู่ระหว่างติดต่อลูกค้า'
+  //     ? 0
+  //     : subCategoryNew.indexOf(subCategoryNew.map((items) =>
+  //     items.subject.indexOf(selectedLead.leadStatus)
+  // ))
+  // ].items[
+  // leadListNew.indexOf(leadListNew.map((lead) =>
+  //       lead.id.indexOf(selectedLead.id)
+  //   ,))
+  // ].paymentMethod = '${paymentMethodNew!}';
+
+  return dataOutput!;
+}
+
+List<MasterLoanTypeDataModelStruct>? generateDefaultLoanTypeData() {
+  List<MasterLoanTypeDataModelStruct> outputList = [];
+
+  MasterLoanTypeDataModelStruct loanType1 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '1',
+      loanTypeCode: 'H',
+      loanTypeName: 'ที่ดินพร้อมสิ่งปลูกสร้าง');
+  MasterLoanTypeDataModelStruct loanType2 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '2', loanTypeCode: 'L', loanTypeName: 'ที่ดินเปล่า');
+  MasterLoanTypeDataModelStruct loanType3 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '3', loanTypeCode: 'M', loanTypeName: 'รถมอเตอร์ไซค์');
+  MasterLoanTypeDataModelStruct loanType4 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '4', loanTypeCode: 'C', loanTypeName: 'รถเก๋ง');
+  MasterLoanTypeDataModelStruct loanType5 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '5', loanTypeCode: 'CA', loanTypeName: 'รถกระบะ (ตอนเดียว)');
+  MasterLoanTypeDataModelStruct loanType6 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '6', loanTypeCode: 'CB', loanTypeName: 'รถกระบะ (แคป)');
+  MasterLoanTypeDataModelStruct loanType7 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '7', loanTypeCode: 'CC', loanTypeName: 'รถกระบะ (4 ประตู)');
+  MasterLoanTypeDataModelStruct loanType8 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '8', loanTypeCode: 'V', loanTypeName: 'รถตู้');
+  MasterLoanTypeDataModelStruct loanType9 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '9', loanTypeCode: 'TA', loanTypeName: 'รถบรรทุก(4 ล้อ)');
+  MasterLoanTypeDataModelStruct loanType10 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '10', loanTypeCode: 'TB', loanTypeName: 'รถบรรทุก(6 ล้อ)');
+  MasterLoanTypeDataModelStruct loanType11 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '11', loanTypeCode: 'TC', loanTypeName: 'รถบรรทุก(10 ล้อ)');
+  MasterLoanTypeDataModelStruct loanType12 = MasterLoanTypeDataModelStruct(
+      loanTypeId: '12', loanTypeCode: 'TD', loanTypeName: 'รถบรรทุก(12 ล้อ)');
+
+  outputList.addAll([
+    loanType1,
+    loanType2,
+    loanType3,
+    loanType4,
+    loanType5,
+    loanType6,
+    loanType7,
+    loanType8,
+    loanType9,
+    loanType10,
+    loanType11,
+    loanType12
+  ]);
+
+  return outputList;
+}
+
+List<String>? generateListYear(
+  int? start,
+  int? end,
+) {
+  List<String> yearList = [];
+
+  for (int year = start!; year >= end!; year--) {
+    yearList.add(year.toString());
+  }
+
+  return yearList;
+}
+
+List<ProductsStruct>? generateTopupProductList(
+  List<ProductsStruct>? productData,
+  String? defaultTopupAmount,
+) {
+  List<ProductsStruct> topupMoney = [
+    ProductsStruct(
+        productPrice: double.parse(defaultTopupAmount!).toInt(),
+        productCode: '5544',
+        productName: 'รับวงเงินออนไลน์เพิ่ม',
+        productDescription: 'โอนเงินเข้าบัญชีธนาคารภายใน 1 วัน')
+  ];
+
+  List<ProductsStruct> productOutput = topupMoney + productData!;
+
+  return productOutput;
 }

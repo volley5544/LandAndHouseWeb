@@ -66,6 +66,16 @@ class MyLeadDashboardPageModel
           int index, Function(LeadAgentDataModelStruct) updateFn) =>
       allLeadList[index] = updateFn(allLeadList[index]);
 
+  List<LeadAgentDataModelStruct> temp = [];
+  void addToTemp(LeadAgentDataModelStruct item) => temp.add(item);
+  void removeFromTemp(LeadAgentDataModelStruct item) => temp.remove(item);
+  void removeAtIndexFromTemp(int index) => temp.removeAt(index);
+  void insertAtIndexInTemp(int index, LeadAgentDataModelStruct item) =>
+      temp.insert(index, item);
+  void updateTempAtIndex(
+          int index, Function(LeadAgentDataModelStruct) updateFn) =>
+      temp[index] = updateFn(temp[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (GetLeadAgentByType)] action in MyLeadDashboardPage widget.

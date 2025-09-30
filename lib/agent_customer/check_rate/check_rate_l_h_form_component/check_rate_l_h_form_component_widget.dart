@@ -3329,193 +3329,745 @@ class _CheckRateLHFormComponentWidgetState
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 0.0),
-                          child: Container(
-                            height: 25.0,
-                            decoration: BoxDecoration(),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 100.0,
-                                  child: VerticalDivider(
-                                    width: 3.0,
-                                    thickness: 3.0,
-                                    color: Color(0x7FDB771A),
-                                  ),
-                                ),
-                                Text(
-                                  'ประเมินราคาที่ดิน',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 18.0,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ].divide(SizedBox(width: 12.0)),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 3.0, 0.0, 0.0),
+                                16.0, 0.0, 0.0, 0.0),
                             child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              child: Column(
+                              height: 25.0,
+                              decoration: BoxDecoration(),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 10.0, 16.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(),
-                                            child: Text(
-                                              FFAppState()
-                                                          .chanodOutput
-                                                          .chanodNo !=
-                                                      ''
-                                                  ? 'เลขโฉนด ${FFAppState().chanodOutput.chanodNo}'
-                                                  : 'เลขที่ดิน${FFAppState().chanodOutput.landNo}',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    fontSize: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 16.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 22.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 22.0;
-                                                      } else {
-                                                        return 22.0;
-                                                      }
-                                                    }(),
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  SizedBox(
+                                    height: 100.0,
+                                    child: VerticalDivider(
+                                      width: 3.0,
+                                      thickness: 3.0,
+                                      color: Color(0x7FDB771A),
                                     ),
                                   ),
-                                  Builder(
-                                    builder: (context) {
-                                      if (FFAppState()
-                                              .chanodOutput
-                                              .ltv1Amount !=
-                                          0) {
-                                        return Container(
-                                          decoration: BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 20.0, 16.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง) ${FFAppState().addressOutput.keyword}',
-                                                          style: FlutterFlowTheme
+                                  Text(
+                                    'ประเมินราคาที่ดิน',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 18.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 12.0)),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 3.0, 0.0, 0.0),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 10.0, 16.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              decoration: BoxDecoration(),
+                                              child: Text(
+                                                FFAppState()
+                                                            .chanodOutput
+                                                            .chanodNo !=
+                                                        ''
+                                                    ? 'เลขโฉนด ${FFAppState().chanodOutput.chanodNo}'
+                                                    : 'เลขที่ดิน${FFAppState().chanodOutput.landNo}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: FlutterFlowTheme.of(
+                                                              .primaryText,
+                                                          fontSize: () {
+                                                            if (MediaQuery.sizeOf(
                                                                         context)
-                                                                    .secondaryText,
-                                                                fontSize: () {
+                                                                    .width <
+                                                                kBreakpointSmall) {
+                                                              return 16.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointMedium) {
+                                                              return 22.0;
+                                                            } else if (MediaQuery
+                                                                        .sizeOf(
+                                                                            context)
+                                                                    .width <
+                                                                kBreakpointLarge) {
+                                                              return 22.0;
+                                                            } else {
+                                                              return 22.0;
+                                                            }
+                                                          }(),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Builder(
+                                      builder: (context) {
+                                        if (FFAppState()
+                                                .chanodOutput
+                                                .ltv1Amount !=
+                                            0) {
+                                          return Container(
+                                            decoration: BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(16.0, 20.0,
+                                                          16.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Text(
+                                                            'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง) ${FFAppState().addressOutput.keyword}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 16.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 22.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 22.0;
+                                                                    } else {
+                                                                      return 22.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 12.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    20.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                functions.returnNumberWithCommaFullNumber(
+                                                                    FFAppState()
+                                                                        .chanodOutput
+                                                                        .ltv1Amount
+                                                                        .toString(),
+                                                                    '0'),
+                                                                '-',
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: Color(
+                                                                        0xFF003063),
+                                                                    fontSize:
+                                                                        () {
+                                                                      if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointSmall) {
+                                                                        return 26.0;
+                                                                      } else if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointMedium) {
+                                                                        return 32.0;
+                                                                      } else if (MediaQuery.sizeOf(context)
+                                                                              .width <
+                                                                          kBreakpointLarge) {
+                                                                        return 32.0;
+                                                                      } else {
+                                                                        return 32.0;
+                                                                      }
+                                                                    }(),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'บาท',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          () {
+                                                                        if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointSmall) {
+                                                                          return 16.0;
+                                                                        } else if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointMedium) {
+                                                                          return 22.0;
+                                                                        } else if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointLarge) {
+                                                                          return 22.0;
+                                                                        } else {
+                                                                          return 22.0;
+                                                                        }
+                                                                      }(),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 2.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            decoration: BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(16.0, 20.0,
+                                                          16.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Text(
+                                                            'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง) ${FFAppState().addressOutput.keyword}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 16.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 22.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 22.0;
+                                                                    } else {
+                                                                      return 22.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                12.0,
+                                                                20.0,
+                                                                12.0,
+                                                                0.0),
+                                                    child: Container(
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Expanded(
+                                                            child: RichText(
+                                                              textScaler:
+                                                                  MediaQuery.of(
+                                                                          context)
+                                                                      .textScaler,
+                                                              text: TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text:
+                                                                        'ไม่พบราคาประเมิน',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              () {
+                                                                            if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointSmall) {
+                                                                              return 16.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointMedium) {
+                                                                              return 20.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointLarge) {
+                                                                              return 20.0;
+                                                                            } else {
+                                                                              return 20.0;
+                                                                            }
+                                                                          }(),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                  ),
+                                                                  TextSpan(
+                                                                    text:
+                                                                        '  เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              () {
+                                                                            if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointSmall) {
+                                                                              return 16.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointMedium) {
+                                                                              return 20.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointLarge) {
+                                                                              return 20.0;
+                                                                            } else {
+                                                                              return 20.0;
+                                                                            }
+                                                                          }(),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                  )
+                                                                ],
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 2.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    Builder(
+                                      builder: (context) {
+                                        if (FFAppState()
+                                                .chanodOutput
+                                                .ltv2Amount !=
+                                            0) {
+                                          return Container(
+                                            decoration: BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(15.0, 20.0,
+                                                          15.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Text(
+                                                            'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง) ${FFAppState().addressOutput.keyword}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 16.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 22.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 22.0;
+                                                                    } else {
+                                                                      return 22.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 12.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Builder(
+                                                        builder: (context) {
+                                                          if (true) {
+                                                            return Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          2.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Container(
+                                                                width: () {
                                                                   if (MediaQuery.sizeOf(
                                                                               context)
                                                                           .width <
                                                                       kBreakpointSmall) {
-                                                                    return 16.0;
+                                                                    return 70.0;
                                                                   } else if (MediaQuery.sizeOf(
                                                                               context)
                                                                           .width <
                                                                       kBreakpointMedium) {
-                                                                    return 22.0;
+                                                                    return 90.0;
                                                                   } else if (MediaQuery.sizeOf(
                                                                               context)
                                                                           .width <
                                                                       kBreakpointLarge) {
-                                                                    return 22.0;
+                                                                    return 90.0;
                                                                   } else {
-                                                                    return 22.0;
+                                                                    return 90.0;
                                                                   }
                                                                 }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
+                                                                height: () {
+                                                                  if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointSmall) {
+                                                                    return 25.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointMedium) {
+                                                                    return 35.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointLarge) {
+                                                                    return 35.0;
+                                                                  } else {
+                                                                    return 35.0;
+                                                                  }
+                                                                }(),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Color(
+                                                                      0xFFFF0000),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .only(
+                                                                    bottomLeft:
+                                                                        Radius.circular(
+                                                                            40.0),
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            40.0),
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            40.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            40.0),
+                                                                  ),
+                                                                ),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    'เริ่มต้นที่',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          fontSize:
+                                                                              () {
+                                                                            if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointSmall) {
+                                                                              return 14.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointMedium) {
+                                                                              return 18.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointLarge) {
+                                                                              return 18.0;
+                                                                            } else {
+                                                                              return 18.0;
+                                                                            }
+                                                                          }(),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                        ),
+                                                            );
+                                                          } else {
+                                                            return Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Container(
+                                                                  width: 70.0,
+                                                                  height: 25.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .only(
+                                                                      bottomLeft:
+                                                                          Radius.circular(
+                                                                              40.0),
+                                                                      bottomRight:
+                                                                          Radius.circular(
+                                                                              40.0),
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              40.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              40.0),
+                                                                    ),
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        '*',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              color: FlutterFlowTheme.of(context).error,
+                                                                              fontSize: 18.0,
+                                                                              letterSpacing: 0.0,
+                                                                            ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            4.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Text(
+                                                                          'เริ่มต้นที่',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: FlutterFlowTheme.of(context).error,
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          }
+                                                        },
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  20.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Row(
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 12.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         mainAxisAlignment:
@@ -3531,7 +4083,7 @@ class _CheckRateLHFormComponentWidgetState
                                                               functions.returnNumberWithCommaFullNumber(
                                                                   FFAppState()
                                                                       .chanodOutput
-                                                                      .ltv1Amount
+                                                                      .ltv2Amount
                                                                       .toString(),
                                                                   '0'),
                                                               '-',
@@ -3612,541 +4164,48 @@ class _CheckRateLHFormComponentWidgetState
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Divider(
-                                                thickness: 2.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      } else {
-                                        return Container(
-                                          decoration: BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 20.0, 16.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (ไม่จดจำนอง) ${FFAppState().addressOutput.keyword}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                fontSize: () {
-                                                                  if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointSmall) {
-                                                                    return 16.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointMedium) {
-                                                                    return 22.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointLarge) {
-                                                                    return 22.0;
-                                                                  } else {
-                                                                    return 22.0;
-                                                                  }
-                                                                }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                        ),
+                                                      Divider(
+                                                        thickness: 2.0,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
                                                       ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(12.0, 20.0,
-                                                          12.0, 0.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Expanded(
-                                                          child: RichText(
-                                                            textScaler:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .textScaler,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      'ไม่พบราคาประเมิน',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        fontSize:
-                                                                            () {
-                                                                          if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointSmall) {
-                                                                            return 16.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointMedium) {
-                                                                            return 20.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointLarge) {
-                                                                            return 20.0;
-                                                                          } else {
-                                                                            return 20.0;
-                                                                          }
-                                                                        }(),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
-                                                                ),
-                                                                TextSpan(
-                                                                  text:
-                                                                      '  เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        fontSize:
-                                                                            () {
-                                                                          if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointSmall) {
-                                                                            return 16.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointMedium) {
-                                                                            return 20.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointLarge) {
-                                                                            return 20.0;
-                                                                          } else {
-                                                                            return 20.0;
-                                                                          }
-                                                                        }(),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                )
-                                                              ],
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Noto San Thai',
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                  ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ].divide(
-                                                          SizedBox(width: 8.0)),
-                                                    ),
+                                                    ],
                                                   ),
                                                 ),
-                                              ),
-                                              Divider(
-                                                thickness: 2.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  Builder(
-                                    builder: (context) {
-                                      if (FFAppState()
-                                              .chanodOutput
-                                              .ltv2Amount !=
-                                          0) {
-                                        return Container(
-                                          decoration: BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 20.0, 15.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง) ${FFAppState().addressOutput.keyword}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                fontSize: () {
-                                                                  if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointSmall) {
-                                                                    return 16.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointMedium) {
-                                                                    return 22.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointLarge) {
-                                                                    return 22.0;
-                                                                  } else {
-                                                                    return 22.0;
-                                                                  }
-                                                                }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Builder(
-                                                      builder: (context) {
-                                                        if (true) {
-                                                          return Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        2.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Container(
-                                                              width: () {
-                                                                if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointSmall) {
-                                                                  return 70.0;
-                                                                } else if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointMedium) {
-                                                                  return 90.0;
-                                                                } else if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointLarge) {
-                                                                  return 90.0;
-                                                                } else {
-                                                                  return 90.0;
-                                                                }
-                                                              }(),
-                                                              height: () {
-                                                                if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointSmall) {
-                                                                  return 25.0;
-                                                                } else if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointMedium) {
-                                                                  return 35.0;
-                                                                } else if (MediaQuery.sizeOf(
-                                                                            context)
-                                                                        .width <
-                                                                    kBreakpointLarge) {
-                                                                  return 35.0;
-                                                                } else {
-                                                                  return 35.0;
-                                                                }
-                                                              }(),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: Color(
-                                                                    0xFFFF0000),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          40.0),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          40.0),
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          40.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          40.0),
-                                                                ),
-                                                              ),
-                                                              child: Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
-                                                                child: Text(
-                                                                  'เริ่มต้นที่',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                        fontSize:
-                                                                            () {
-                                                                          if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointSmall) {
-                                                                            return 14.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointMedium) {
-                                                                            return 18.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointLarge) {
-                                                                            return 18.0;
-                                                                          } else {
-                                                                            return 18.0;
-                                                                          }
-                                                                        }(),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          );
-                                                        } else {
-                                                          return Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Container(
-                                                                width: 70.0,
-                                                                height: 25.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .only(
-                                                                    bottomLeft:
-                                                                        Radius.circular(
-                                                                            40.0),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            40.0),
-                                                                    topLeft: Radius
-                                                                        .circular(
-                                                                            40.0),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            40.0),
-                                                                  ),
-                                                                ),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Text(
-                                                                      '*',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Noto San Thai',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).error,
-                                                                            fontSize:
-                                                                                18.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                          ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'เริ่มต้นที่',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Noto San Thai',
-                                                                              color: FlutterFlowTheme.of(context).error,
-                                                                              letterSpacing: 0.0,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        }
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 0.0, 12.0, 0.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            functions.returnNumberWithCommaFullNumber(
-                                                                FFAppState()
-                                                                    .chanodOutput
-                                                                    .ltv2Amount
-                                                                    .toString(),
-                                                                '0'),
-                                                            '-',
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: Color(
-                                                                    0xFF003063),
-                                                                fontSize: () {
-                                                                  if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointSmall) {
-                                                                    return 26.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointMedium) {
-                                                                    return 32.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointLarge) {
-                                                                    return 32.0;
-                                                                  } else {
-                                                                    return 32.0;
-                                                                  }
-                                                                }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      8.0,
-                                                                      0.0),
+                                              ],
+                                            ),
+                                          );
+                                        } else {
+                                          return Container(
+                                            decoration: BoxDecoration(),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(15.0, 20.0,
+                                                          15.0, 0.0),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(),
                                                           child: Text(
-                                                            'บาท',
+                                                            'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง) ${FFAppState().addressOutput.keyword}',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
                                                                   fontSize: () {
                                                                     if (MediaQuery.sizeOf(context)
                                                                             .width <
@@ -4172,252 +4231,189 @@ class _CheckRateLHFormComponentWidgetState
                                                                 ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    Divider(
-                                                      thickness: 2.0,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      } else {
-                                        return Container(
-                                          decoration: BoxDecoration(),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        15.0, 20.0, 15.0, 0.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(),
-                                                        child: Text(
-                                                          'ราคาประเมินเบื้องต้น ไม่รวมสิ่งปลูกสร้าง (จดจำนอง) ${FFAppState().addressOutput.keyword}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                fontSize: () {
-                                                                  if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointSmall) {
-                                                                    return 16.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointMedium) {
-                                                                    return 22.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointLarge) {
-                                                                    return 22.0;
-                                                                  } else {
-                                                                    return 22.0;
-                                                                  }
-                                                                }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(12.0, 20.0,
-                                                          12.0, 0.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Expanded(
-                                                          child: RichText(
-                                                            textScaler:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .textScaler,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      'ไม่พบราคาประเมิน',
-                                                                  style: FlutterFlowTheme.of(
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                12.0,
+                                                                20.0,
+                                                                12.0,
+                                                                0.0),
+                                                    child: Container(
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Expanded(
+                                                            child: RichText(
+                                                              textScaler:
+                                                                  MediaQuery.of(
                                                                           context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        fontSize:
-                                                                            () {
-                                                                          if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointSmall) {
-                                                                            return 16.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointMedium) {
-                                                                            return 20.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointLarge) {
-                                                                            return 20.0;
-                                                                          } else {
-                                                                            return 20.0;
-                                                                          }
-                                                                        }(),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
-                                                                ),
-                                                                TextSpan(
-                                                                  text:
-                                                                      '  เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        fontSize:
-                                                                            () {
-                                                                          if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointSmall) {
-                                                                            return 16.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointMedium) {
-                                                                            return 20.0;
-                                                                          } else if (MediaQuery.sizeOf(context).width <
-                                                                              kBreakpointLarge) {
-                                                                            return 20.0;
-                                                                          } else {
-                                                                            return 20.0;
-                                                                          }
-                                                                        }(),
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                )
-                                                              ],
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Noto San Thai',
-                                                                    letterSpacing:
-                                                                        0.0,
+                                                                      .textScaler,
+                                                              text: TextSpan(
+                                                                children: [
+                                                                  TextSpan(
+                                                                    text:
+                                                                        'ไม่พบราคาประเมิน',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              () {
+                                                                            if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointSmall) {
+                                                                              return 16.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointMedium) {
+                                                                              return 20.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointLarge) {
+                                                                              return 20.0;
+                                                                            } else {
+                                                                              return 20.0;
+                                                                            }
+                                                                          }(),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
                                                                   ),
+                                                                  TextSpan(
+                                                                    text:
+                                                                        '  เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              () {
+                                                                            if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointSmall) {
+                                                                              return 16.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointMedium) {
+                                                                              return 20.0;
+                                                                            } else if (MediaQuery.sizeOf(context).width <
+                                                                                kBreakpointLarge) {
+                                                                              return 20.0;
+                                                                            } else {
+                                                                              return 20.0;
+                                                                            }
+                                                                          }(),
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.normal,
+                                                                        ),
+                                                                  )
+                                                                ],
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ].divide(
-                                                          SizedBox(width: 8.0)),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                              Divider(
-                                                thickness: 2.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                              ),
-                                            ],
+                                                Divider(
+                                                  thickness: 2.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 0.0, 10.0, 0.0),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  1.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
                                           ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 0.0, 10.0, 0.0),
-                                      child: Container(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                1.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                        ),
-                                        child: Text(
-                                          'หมายเหตุ : \n\n*ถ้าต้องการมากกว่าราคาประเมิน กรุณาติดต่อสาขาใกล้ท่าน\n*วงเงินจริงขึ้นอยู่กับเงื่อนไขของบริษัท ตามคุณสมบัติผู้ขอสินเชื่อ\n*ราคาประเมินเบื้องต้นเท่านั้น อาจมีการเปลี่ยนตามเงื่อนไขของบริษัทฯ\n*สินเชื่อบ้านและที่ดิน อัตราดอกเบี้ยที่แท้จริง 14.61% - 15.00% ต่อปี ระยะเวลาผ่อนสูงสุด 72 งวด\n*กู้เท่าที่จำเป็นและชำระคืนไหว\n*เงื่อนไขอนุมัติสินเชื่อเป็นไปตามที่บริษัทฯ กำหนด',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                fontSize: () {
-                                                  if (MediaQuery.sizeOf(context)
-                                                          .width <
-                                                      kBreakpointSmall) {
-                                                    return 12.0;
-                                                  } else if (MediaQuery.sizeOf(
-                                                              context)
-                                                          .width <
-                                                      kBreakpointMedium) {
-                                                    return 16.0;
-                                                  } else if (MediaQuery.sizeOf(
-                                                              context)
-                                                          .width <
-                                                      kBreakpointLarge) {
-                                                    return 16.0;
-                                                  } else {
-                                                    return 16.0;
-                                                  }
-                                                }(),
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
+                                          child: Text(
+                                            'หมายเหตุ : \n\n*ถ้าต้องการมากกว่าราคาประเมิน กรุณาติดต่อสาขาใกล้ท่าน\n*วงเงินจริงขึ้นอยู่กับเงื่อนไขของบริษัท ตามคุณสมบัติผู้ขอสินเชื่อ\n*ราคาประเมินเบื้องต้นเท่านั้น อาจมีการเปลี่ยนตามเงื่อนไขของบริษัทฯ\n*สินเชื่อบ้านและที่ดิน อัตราดอกเบี้ยที่แท้จริง 14.61% - 15.00% ต่อปี ระยะเวลาผ่อนสูงสุด 72 งวด\n*กู้เท่าที่จำเป็นและชำระคืนไหว\n*เงื่อนไขอนุมัติสินเชื่อเป็นไปตามที่บริษัทฯ กำหนด',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .error,
+                                                  fontSize: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 12.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 16.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 16.0;
+                                                    } else {
+                                                      return 16.0;
+                                                    }
+                                                  }(),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ].addToStart(SizedBox(height: 12.0)),
+                        ]
+                            .addToStart(SizedBox(height: 12.0))
+                            .addToEnd(SizedBox(height: 30.0)),
+                      ),
                     ),
                   );
                 }
@@ -5082,6 +5078,9 @@ class _CheckRateLHFormComponentWidgetState
                                                 FFAppState().AppStateAREAWA,
                                         );
                                         safeSetState(() {});
+                                        FFAppState().isSearchByChanodNo =
+                                            _model.isSearchByChanod;
+                                        safeSetState(() {});
                                       }
                                       _model.isFormState = false;
                                       safeSetState(() {});
@@ -5095,16 +5094,76 @@ class _CheckRateLHFormComponentWidgetState
                                       await widget.updateFormState?.call(
                                         _model.isFormState,
                                       );
+                                      FFAppState()
+                                          .updateSaveLeadAgentDataStruct(
+                                        (e) => e
+                                          ..landDistrict = FFAppState()
+                                              .addressOutput
+                                              .districtName
+                                          ..landSubdistrict = FFAppState()
+                                              .addressOutput
+                                              .subdistrictName
+                                          ..landProvince = FFAppState()
+                                              .addressOutput
+                                              .provinceName
+                                          ..landPostcode =
+                                              FFAppState().addressOutput.zipCode
+                                          ..landAreaRai = FFAppState()
+                                                  .chanodOutput
+                                                  .hasLandAreaRai()
+                                              ? FFAppState()
+                                                  .chanodOutput
+                                                  .landAreaRai
+                                              : ''
+                                          ..landAreaNgan = FFAppState()
+                                                  .chanodOutput
+                                                  .hasLandAreaNgan()
+                                              ? FFAppState()
+                                                  .chanodOutput
+                                                  .landAreaNgan
+                                              : ''
+                                          ..landAreaWa = FFAppState()
+                                                  .chanodOutput
+                                                  .hasLandAreaWa()
+                                              ? FFAppState()
+                                                  .chanodOutput
+                                                  .landAreaWa
+                                              : ''
+                                          ..landNo = FFAppState()
+                                                      .chanodOutput
+                                                      .landNo !=
+                                                  ''
+                                              ? FFAppState().chanodOutput.landNo
+                                              : ''
+                                          ..utmmap = FFAppState()
+                                                      .chanodOutput
+                                                      .utmmap !=
+                                                  ''
+                                              ? FFAppState().chanodOutput.utmmap
+                                              : ''
+                                          ..surveyNo = ''
+                                          ..ltv1Amount = FFAppState()
+                                              .chanodOutput
+                                              .ltv1Amount
+                                              .toString()
+                                          ..ltv2Amount = FFAppState()
+                                              .chanodOutput
+                                              .ltv2Amount
+                                              .toString()
+                                          ..carRegistration = FFAppState()
+                                                      .chanodOutput
+                                                      .chanodNo !=
+                                                  ''
+                                              ? FFAppState()
+                                                  .chanodOutput
+                                                  .chanodNo
+                                              : '',
+                                      );
+                                      safeSetState(() {});
 
                                       context.pushNamed(
                                         LeadAgentReviewDetailPageWidget
                                             .routeName,
-                                        queryParameters: {
-                                          'product': serializeParam(
-                                            'L',
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
                                         extra: <String, dynamic>{
                                           kTransitionInfoKey: TransitionInfo(
                                             hasTransition: true,

@@ -1,3 +1,6 @@
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'my_pay_dashboard_page_widget.dart' show MyPayDashboardPageWidget;
@@ -5,8 +8,32 @@ import 'package:flutter/material.dart';
 
 class MyPayDashboardPageModel
     extends FlutterFlowModel<MyPayDashboardPageWidget> {
+  ///  Local state fields for this page.
+
+  AgentCommissionDataModelStruct? commissionData;
+  void updateCommissionDataStruct(
+      Function(AgentCommissionDataModelStruct) updateFn) {
+    updateFn(commissionData ??= AgentCommissionDataModelStruct());
+  }
+
+  List<AgentCommissionLeadDataModelStruct> showingLeadData = [];
+  void addToShowingLeadData(AgentCommissionLeadDataModelStruct item) =>
+      showingLeadData.add(item);
+  void removeFromShowingLeadData(AgentCommissionLeadDataModelStruct item) =>
+      showingLeadData.remove(item);
+  void removeAtIndexFromShowingLeadData(int index) =>
+      showingLeadData.removeAt(index);
+  void insertAtIndexInShowingLeadData(
+          int index, AgentCommissionLeadDataModelStruct item) =>
+      showingLeadData.insert(index, item);
+  void updateShowingLeadDataAtIndex(
+          int index, Function(AgentCommissionLeadDataModelStruct) updateFn) =>
+      showingLeadData[index] = updateFn(showingLeadData[index]);
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (GetCommissionLead)] action in MyPayDashboardPage widget.
+  ApiCallResponse? getCommissionLeadApiOutput;
   // State field(s) for SearchTextField widget.
   FocusNode? searchTextFieldFocusNode;
   TextEditingController? searchTextFieldTextController;

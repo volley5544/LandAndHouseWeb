@@ -1,7 +1,10 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'review_detail_customer_component_model.dart';
 export 'review_detail_customer_component_model.dart';
 
@@ -59,6 +62,8 @@ class _ReviewDetailCustomerComponentWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -298,7 +303,7 @@ class _ReviewDetailCustomerComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          widget.idcard,
+                          functions.showThaiIdNumberForm('${widget.idcard}'),
                           'idcard',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -370,7 +375,10 @@ class _ReviewDetailCustomerComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          functions.formatPhoneNumber(widget.phonenumber),
+                          functions.addDashPhoneNumber(valueOrDefault<String>(
+                            widget.phonenumber,
+                            'phoneNumber',
+                          )),
                           'phoneNumber',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -441,10 +449,10 @@ class _ReviewDetailCustomerComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        valueOrDefault<String>(
+                        '${functions.returnNumberWithComma2Decimal(valueOrDefault<String>(
                           widget.amount,
                           'amount',
-                        ),
+                        ))} บาท',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),
@@ -537,7 +545,14 @@ class _ReviewDetailCustomerComponentWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'ทะเบียนรถ',
+                    ('${FFAppState().saveLeadAgentData.loanTypeCode}' ==
+                                'LH') ||
+                            ('${FFAppState().saveLeadAgentData.loanTypeCode}' ==
+                                'LA')
+                        ? (FFAppState().isSearchByChanodNo
+                            ? 'เลขที่โฉนด'
+                            : 'เลขที่ดิน')
+                        : 'ทะเบียนรถ',
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily: 'Noto San Thai',
                           color: Color(0xB2646464),
@@ -631,10 +646,12 @@ class _ReviewDetailCustomerComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        valueOrDefault<String>(
-                          widget.time,
-                          'time',
-                        ),
+                        widget.time != ''
+                            ? '${dateTimeFormat("Hm", functions.parseStringDateToDateTime(valueOrDefault<String>(
+                                  widget.time,
+                                  'time',
+                                )))} น.'
+                            : 'ไม่ระบุเวลา',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),
@@ -682,6 +699,13 @@ class _ReviewDetailCustomerComponentWidgetState
                                   letterSpacing: 0.0,
                                   decoration: TextDecoration.underline,
                                 ),
+                            mouseCursor: SystemMouseCursors.click,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                await actions.launchUrlInApp(
+                                  'https://www.sawad.co.th/',
+                                );
+                              },
                           )
                         ],
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -725,6 +749,12 @@ class _ReviewDetailCustomerComponentWidgetState
                                     onChanged: (newValue) async {
                                       safeSetState(() =>
                                           _model.checkboxValue1 = newValue!);
+
+                                      if (!newValue!) {
+                                        safeSetState(() {
+                                          _model.checkboxValue1 = true;
+                                        });
+                                      }
                                     },
                                     side: (FlutterFlowTheme.of(context)
                                                 .alternate !=
@@ -773,10 +803,15 @@ class _ReviewDetailCustomerComponentWidgetState
                                         FlutterFlowTheme.of(context).alternate,
                                   ),
                                   child: Checkbox(
-                                    value: _model.checkboxValue2 ??= true,
+                                    value: _model.checkboxValue2 ??= false,
                                     onChanged: (newValue) async {
                                       safeSetState(() =>
                                           _model.checkboxValue2 = newValue!);
+                                      if (newValue!) {
+                                        safeSetState(() {
+                                          _model.checkboxValue2 = false;
+                                        });
+                                      }
                                     },
                                     side: (FlutterFlowTheme.of(context)
                                                 .alternate !=

@@ -1,3 +1,5 @@
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'select_topup_product_page_widget.dart'
@@ -20,6 +22,15 @@ class SelectTopupProductPageModel
       tempListPageState.insert(index, item);
   void updateTempListPageStateAtIndex(int index, Function(String) updateFn) =>
       tempListPageState[index] = updateFn(tempListPageState[index]);
+
+  List<ProductsStruct> productData = [];
+  void addToProductData(ProductsStruct item) => productData.add(item);
+  void removeFromProductData(ProductsStruct item) => productData.remove(item);
+  void removeAtIndexFromProductData(int index) => productData.removeAt(index);
+  void insertAtIndexInProductData(int index, ProductsStruct item) =>
+      productData.insert(index, item);
+  void updateProductDataAtIndex(int index, Function(ProductsStruct) updateFn) =>
+      productData[index] = updateFn(productData[index]);
 
   @override
   void initState(BuildContext context) {}

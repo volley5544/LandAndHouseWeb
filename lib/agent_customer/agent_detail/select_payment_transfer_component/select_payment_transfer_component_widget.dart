@@ -186,7 +186,7 @@ class _SelectPaymentTransferComponentWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'รับเต็มจำนวน  (${widget.reductPercent}%)',
+                                    'รับครั้งเดียว (หัก ${widget.reductPercent}%)',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(

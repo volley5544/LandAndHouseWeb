@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/pages/loading/loading_widget.dart';
@@ -72,6 +73,66 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
         url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
       );
 
+      if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {
+        await showDialog(
+          context: context,
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage:
+                      'พบข้อผิดพลาด connnection (${(_model.agentAPIOutput?.statusCode ?? 200).toString()})',
+                ),
+              ),
+            );
+          },
+        );
+
+        Navigator.pop(context);
+        return;
+      }
+      if ('${getJsonField(
+            (_model.agentAPIOutput?.jsonBody ?? ''),
+            r'''$.code''',
+          ).toString()}' !=
+          '200') {
+        await showDialog(
+          context: context,
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage: '${getJsonField(
+                    (_model.agentAPIOutput?.jsonBody ?? ''),
+                    r'''$.message''',
+                  ).toString()}',
+                ),
+              ),
+            );
+          },
+        );
+
+        Navigator.pop(context);
+        return;
+      }
       FFAppState().agentProfileDataType =
           AgentAPIGroup.agentProfileAPICall.data(
         (_model.agentAPIOutput?.jsonBody ?? ''),
@@ -132,7 +193,7 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                       .pushNamed(LeadAgentDetailCustomerPageWidget.routeName);
                 },
                 child: Text(
-                  'ตัวแทน',
+                  'ตัวแทน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Noto San Thai',
                         color: FlutterFlowTheme.of(context).primaryText,

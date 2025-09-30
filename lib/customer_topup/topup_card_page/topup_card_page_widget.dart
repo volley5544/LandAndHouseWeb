@@ -366,7 +366,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed(
-                                  SelectTopupProductPageWidget.routeName);
+                                  SelectTopupProductPageOldWidget.routeName);
                             },
                             child: Text(
                               '(UAT v.${FFAppState().webUatVersion.toString()})',
@@ -536,19 +536,26 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'กรุณาเลือกสัญญาที่ต้องการเติมวงเงินเวลาทำการ',
-                                    textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {},
+                                    child: Text(
+                                      'กรุณาเลือกสัญญาที่ต้องการเติมวงเงินเวลาทำการ',
+                                      textAlign: TextAlign.start,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -670,60 +677,31 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                           'ยังไม่ได้ทำรายการเติมเงิน'
                                                       ? true
                                                       : false) {
-                                                    if (widget.hashThaiId ==
-                                                        '8e94f9b1ad0d083775e16b6894f11d6df9980147e7a3e99547620e0a097b639a') {
-                                                      var confirmDialogResponse =
-                                                          await showDialog<
-                                                                  bool>(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    content: Text(
-                                                                        'fbvb'),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed: () => Navigator.pop(
-                                                                            alertDialogContext,
-                                                                            false),
-                                                                        child: Text(
-                                                                            'Cancel'),
-                                                                      ),
-                                                                      TextButton(
-                                                                        onPressed: () => Navigator.pop(
-                                                                            alertDialogContext,
-                                                                            true),
-                                                                        child: Text(
-                                                                            'Confirm'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              ) ??
-                                                              false;
-                                                      if (!confirmDialogResponse) {
-                                                        context.pushNamed(
-                                                          SelectTopupProductPageCopyWidget
-                                                              .routeName,
-                                                          extra: <String,
-                                                              dynamic>{
-                                                            kTransitionInfoKey:
-                                                                TransitionInfo(
-                                                              hasTransition:
-                                                                  true,
-                                                              transitionType:
-                                                                  PageTransitionType
-                                                                      .rightToLeft,
-                                                            ),
-                                                          },
-                                                        );
-
-                                                        return;
-                                                      }
+                                                    if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') ||
+                                                        ('${loanListItem.contractDetails.loanTypeCode}' ==
+                                                            'H') ||
+                                                        (loanListItem
+                                                                .topupDetail
+                                                                .canTopup ==
+                                                            'G') ||
+                                                        (loanListItem
+                                                                .topupDetail
+                                                                .canTopup ==
+                                                            'A') ||
+                                                        (loanListItem
+                                                                .topupDetail
+                                                                .canTopup ==
+                                                            'L')) {
+                                                      FFAppState()
+                                                          .updateSaveTopupDataStruct(
+                                                        (e) => e
+                                                          ..products =
+                                                              ProductsStruct(),
+                                                      );
+                                                      safeSetState(() {});
 
                                                       context.pushNamed(
-                                                        SelectTopupProductPageWidget
+                                                        TopupDetailDataPageWidget
                                                             .routeName,
                                                         extra: <String,
                                                             dynamic>{
@@ -738,8 +716,19 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                       );
                                                     } else {
                                                       context.pushNamed(
-                                                          TopupDetailDataPageWidget
-                                                              .routeName);
+                                                        SelectTopupProductPageWidget
+                                                            .routeName,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          kTransitionInfoKey:
+                                                              TransitionInfo(
+                                                            hasTransition: true,
+                                                            transitionType:
+                                                                PageTransitionType
+                                                                    .rightToLeft,
+                                                          ),
+                                                        },
+                                                      );
                                                     }
                                                   } else {
                                                     context.pushNamed(

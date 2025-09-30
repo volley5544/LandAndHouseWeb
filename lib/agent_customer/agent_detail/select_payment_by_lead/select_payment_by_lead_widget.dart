@@ -1,4 +1,3 @@
-import '/agent_customer/agent_detail/agent_save_success/agent_save_success_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -179,7 +178,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'รับเต็มจำนวน  (${widget.reductPercent}%)',
+                                    'รับครั้งเดียว (หัก ${widget.reductPercent}%)',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -324,9 +323,10 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             if (_shouldSetState) safeSetState(() {});
                             return;
                           }
-                          if (AgentAPIGroup.agentLeadSaveByLeadCall.code(
+                          if ('${getJsonField(
                                 (_model.apiResultyyt?.jsonBody ?? ''),
-                              ) !=
+                                r'''$.code''',
+                              ).toString()}' !=
                               '200') {
                             await showDialog(
                               context: context,
@@ -351,27 +351,6 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             return;
                           }
                           Navigator.pop(context, _model.paymentMethodState);
-                          await showDialog(
-                            context: context,
-                            builder: (dialogContext) {
-                              return Dialog(
-                                elevation: 0,
-                                insetPadding: EdgeInsets.zero,
-                                backgroundColor: Colors.transparent,
-                                alignment: AlignmentDirectional(0.0, 0.0)
-                                    .resolve(Directionality.of(context)),
-                                child: Container(
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.5,
-                                  width: MediaQuery.sizeOf(context).width * 0.9,
-                                  child: AgentSaveSuccessWidget(
-                                    from: 'byLead',
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-
                           if (_shouldSetState) safeSetState(() {});
                         },
                         text: 'บันทึกข้อมูล',

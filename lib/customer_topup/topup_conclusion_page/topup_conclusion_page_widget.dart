@@ -4423,9 +4423,14 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                 ? FFAppState().topupUrlProd
                                                 : FFAppState().topupUrlDev,
                                             productCode: FFAppState()
-                                                .saveTopupData
-                                                .products
-                                                .productCode,
+                                                        .saveTopupData
+                                                        .products ==
+                                                    ProductsStruct()
+                                                ? ''
+                                                : FFAppState()
+                                                    .saveTopupData
+                                                    .products
+                                                    .productCode,
                                           );
 
                                           _shouldSetState = true;

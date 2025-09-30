@@ -25,6 +25,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
     String? canTopupMsg,
     int? maxTransferAmount,
     List<ProductsStruct>? products,
+    double? defaultTransferAmount,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _totalInstallmentAmount = totalInstallmentAmount,
         _canTopup = canTopup,
@@ -42,6 +43,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
         _canTopupMsg = canTopupMsg,
         _maxTransferAmount = maxTransferAmount,
         _products = products,
+        _defaultTransferAmount = defaultTransferAmount,
         super(firestoreUtilData);
 
   // "total_installment_amount" field.
@@ -189,6 +191,16 @@ class TopupDetailStruct extends FFFirebaseStruct {
 
   bool hasProducts() => _products != null;
 
+  // "default_transfer_amount" field.
+  double? _defaultTransferAmount;
+  double get defaultTransferAmount => _defaultTransferAmount ?? 0.0;
+  set defaultTransferAmount(double? val) => _defaultTransferAmount = val;
+
+  void incrementDefaultTransferAmount(double amount) =>
+      defaultTransferAmount = defaultTransferAmount + amount;
+
+  bool hasDefaultTransferAmount() => _defaultTransferAmount != null;
+
   static TopupDetailStruct fromMap(Map<String, dynamic> data) =>
       TopupDetailStruct(
         totalInstallmentAmount:
@@ -212,6 +224,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
           data['products'],
           ProductsStruct.fromMap,
         ),
+        defaultTransferAmount:
+            castToType<double>(data['default_transfer_amount']),
       );
 
   static TopupDetailStruct? maybeFromMap(dynamic data) => data is Map
@@ -235,6 +249,7 @@ class TopupDetailStruct extends FFFirebaseStruct {
         'can_topup_msg': _canTopupMsg,
         'max_transfer_amount': _maxTransferAmount,
         'products': _products?.map((e) => e.toMap()).toList(),
+        'default_transfer_amount': _defaultTransferAmount,
       }.withoutNulls;
 
   @override
@@ -303,6 +318,10 @@ class TopupDetailStruct extends FFFirebaseStruct {
           _products,
           ParamType.DataStruct,
           isList: true,
+        ),
+        'default_transfer_amount': serializeParam(
+          _defaultTransferAmount,
+          ParamType.double,
         ),
       }.withoutNulls;
 
@@ -389,6 +408,11 @@ class TopupDetailStruct extends FFFirebaseStruct {
           true,
           structBuilder: ProductsStruct.fromSerializableMap,
         ),
+        defaultTransferAmount: deserializeParam(
+          data['default_transfer_amount'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -413,7 +437,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         interestPaidFlag == other.interestPaidFlag &&
         canTopupMsg == other.canTopupMsg &&
         maxTransferAmount == other.maxTransferAmount &&
-        listEquality.equals(products, other.products);
+        listEquality.equals(products, other.products) &&
+        defaultTransferAmount == other.defaultTransferAmount;
   }
 
   @override
@@ -433,7 +458,8 @@ class TopupDetailStruct extends FFFirebaseStruct {
         interestPaidFlag,
         canTopupMsg,
         maxTransferAmount,
-        products
+        products,
+        defaultTransferAmount
       ]);
 }
 
@@ -453,6 +479,7 @@ TopupDetailStruct createTopupDetailStruct({
   String? interestPaidFlag,
   String? canTopupMsg,
   int? maxTransferAmount,
+  double? defaultTransferAmount,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -474,6 +501,7 @@ TopupDetailStruct createTopupDetailStruct({
       interestPaidFlag: interestPaidFlag,
       canTopupMsg: canTopupMsg,
       maxTransferAmount: maxTransferAmount,
+      defaultTransferAmount: defaultTransferAmount,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

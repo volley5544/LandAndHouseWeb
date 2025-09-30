@@ -61,8 +61,8 @@ export '/customer_payment/select_payment_page/select_payment_page_widget.dart'
     show SelectPaymentPageWidget;
 export '/customer_loan_detail/vmi_list_page/vmi_list_page_widget.dart'
     show VmiListPageWidget;
-export '/customer_topup/select_topup_product_page/select_topup_product_page_widget.dart'
-    show SelectTopupProductPageWidget;
+export '/customer_topup/select_topup_product_page_old/select_topup_product_page_old_widget.dart'
+    show SelectTopupProductPageOldWidget;
 export '/agent_customer/drop_lead/lead_agent_detail_customer_page/lead_agent_detail_customer_page_widget.dart'
     show LeadAgentDetailCustomerPageWidget;
 export '/agent_customer/agent_detail/share_agent_refer_page/share_agent_refer_page_widget.dart'
@@ -85,7 +85,11 @@ export '/agent_customer/drop_lead/lead_agent_review_detail_page/lead_agent_revie
     show LeadAgentReviewDetailPageWidget;
 export '/agent_customer/drop_lead/lead_agent_detail_l_h_page/lead_agent_detail_l_h_page_widget.dart'
     show LeadAgentDetailLHPageWidget;
-export '/customer_topup/select_topup_product_page_copy/select_topup_product_page_copy_widget.dart'
-    show SelectTopupProductPageCopyWidget;
+export '/customer_topup/select_topup_product_page/select_topup_product_page_widget.dart'
+    show SelectTopupProductPageWidget;
 export '/agent_customer/agent_main_menu_page/agent_main_menu_page_widget.dart'
     show AgentMainMenuPageWidget;
+export '/agent_customer/drop_lead/lead_succes_page/lead_succes_page_widget.dart'
+    show LeadSuccesPageWidget;
+export '/agent_customer/drop_lead/lead_dupe_page/lead_dupe_page_widget.dart'
+    show LeadDupePageWidget;

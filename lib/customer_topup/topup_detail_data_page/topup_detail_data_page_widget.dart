@@ -476,32 +476,27 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                if (FFAppState().hashThaiIdAppState ==
-                    '8e94f9b1ad0d083775e16b6894f11d6df9980147e7a3e99547620e0a097b639a') {
-                  context.safePop();
-                } else {
-                  context.pushNamed(
-                    TopupCardPageWidget.routeName,
-                    queryParameters: {
-                      'token': serializeParam(
-                        FFAppState().accessToken,
-                        ParamType.String,
-                      ),
-                      'hashThaiId': serializeParam(
-                        FFAppState().hashThaiIdAppState,
-                        ParamType.String,
-                      ),
-                      'source': serializeParam(
-                        FFAppState().saveTopupData.source,
-                        ParamType.String,
-                      ),
-                      'referId': serializeParam(
-                        FFAppState().saveTopupData.referId,
-                        ParamType.String,
-                      ),
-                    }.withoutNulls,
-                  );
-                }
+                context.goNamed(
+                  TopupCardPageWidget.routeName,
+                  queryParameters: {
+                    'token': serializeParam(
+                      FFAppState().accessToken,
+                      ParamType.String,
+                    ),
+                    'hashThaiId': serializeParam(
+                      FFAppState().hashThaiIdAppState,
+                      ParamType.String,
+                    ),
+                    'source': serializeParam(
+                      FFAppState().saveTopupData.source,
+                      ParamType.String,
+                    ),
+                    'referId': serializeParam(
+                      FFAppState().saveTopupData.referId,
+                      ParamType.String,
+                    ),
+                  }.withoutNulls,
+                );
               },
               child: Icon(
                 Icons.arrow_back,

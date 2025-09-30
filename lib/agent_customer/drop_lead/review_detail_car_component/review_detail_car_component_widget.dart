@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'review_detail_car_component_model.dart';
 export 'review_detail_car_component_model.dart';
@@ -508,10 +509,16 @@ class _ReviewDetailCarComponentWidgetState
                     child: Container(
                       decoration: BoxDecoration(),
                       child: Text(
-                        valueOrDefault<String>(
-                          widget.rateAmount,
-                          'rateamount',
-                        ),
+                        widget.rateAmount == '0'
+                            ? 'ไม่พบเรท'
+                            : '${valueOrDefault<String>(
+                                functions.returnNumberWithComma2Decimal(
+                                    valueOrDefault<String>(
+                                  widget.rateAmount,
+                                  'rateamount',
+                                )),
+                                '0',
+                              )} บาท',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
                               color: Color(0xFF003063),

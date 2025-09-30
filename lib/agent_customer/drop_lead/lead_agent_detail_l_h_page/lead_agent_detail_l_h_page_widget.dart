@@ -11,12 +11,7 @@ import 'lead_agent_detail_l_h_page_model.dart';
 export 'lead_agent_detail_l_h_page_model.dart';
 
 class LeadAgentDetailLHPageWidget extends StatefulWidget {
-  const LeadAgentDetailLHPageWidget({
-    super.key,
-    this.product,
-  });
-
-  final String? product;
+  const LeadAgentDetailLHPageWidget({super.key});
 
   static String routeName = 'LeadAgentDetailLHPage';
   static String routePath = '/leadAgentDetailLHPage';
@@ -43,6 +38,7 @@ class _LeadAgentDetailLHPageWidgetState
       FFAppState().chanodOutput = ChanodDataModelStruct();
       FFAppState().addressOutput = AddressDataModelStruct();
       FFAppState().addressDataOriginal = [];
+      FFAppState().isSearchByChanodNo = false;
       safeSetState(() {});
       showDialog(
         context: context,

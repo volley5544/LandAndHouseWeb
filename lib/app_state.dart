@@ -649,6 +649,30 @@ class FFAppState extends ChangeNotifier {
   void insertAtIndexInProductList(int index, String value) {
     productList.insert(index, value);
   }
+
+  SaveLeadAgentDataModelStruct _saveLeadAgentData =
+      SaveLeadAgentDataModelStruct();
+  SaveLeadAgentDataModelStruct get saveLeadAgentData => _saveLeadAgentData;
+  set saveLeadAgentData(SaveLeadAgentDataModelStruct value) {
+    _saveLeadAgentData = value;
+  }
+
+  void updateSaveLeadAgentDataStruct(
+      Function(SaveLeadAgentDataModelStruct) updateFn) {
+    updateFn(_saveLeadAgentData);
+  }
+
+  bool _isSearchByChanodNo = false;
+  bool get isSearchByChanodNo => _isSearchByChanodNo;
+  set isSearchByChanodNo(bool value) {
+    _isSearchByChanodNo = value;
+  }
+
+  bool _doOwnLead = false;
+  bool get doOwnLead => _doOwnLead;
+  set doOwnLead(bool value) {
+    _doOwnLead = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

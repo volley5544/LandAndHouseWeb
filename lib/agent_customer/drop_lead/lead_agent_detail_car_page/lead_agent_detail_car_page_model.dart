@@ -1,43 +1,132 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/index.dart';
 import 'lead_agent_detail_car_page_widget.dart'
     show LeadAgentDetailCarPageWidget;
 import 'package:flutter/material.dart';
 
 class LeadAgentDetailCarPageModel
     extends FlutterFlowModel<LeadAgentDetailCarPageWidget> {
+  ///  Local state fields for this page.
+
+  List<MasterAgentVehicleDataModelStruct> vehicelMasterPageState = [];
+  void addToVehicelMasterPageState(MasterAgentVehicleDataModelStruct item) =>
+      vehicelMasterPageState.add(item);
+  void removeFromVehicelMasterPageState(
+          MasterAgentVehicleDataModelStruct item) =>
+      vehicelMasterPageState.remove(item);
+  void removeAtIndexFromVehicelMasterPageState(int index) =>
+      vehicelMasterPageState.removeAt(index);
+  void insertAtIndexInVehicelMasterPageState(
+          int index, MasterAgentVehicleDataModelStruct item) =>
+      vehicelMasterPageState.insert(index, item);
+  void updateVehicelMasterPageStateAtIndex(
+          int index, Function(MasterAgentVehicleDataModelStruct) updateFn) =>
+      vehicelMasterPageState[index] = updateFn(vehicelMasterPageState[index]);
+
+  List<MasterAgentGearModelStruct> gearMasterPageState = [];
+  void addToGearMasterPageState(MasterAgentGearModelStruct item) =>
+      gearMasterPageState.add(item);
+  void removeFromGearMasterPageState(MasterAgentGearModelStruct item) =>
+      gearMasterPageState.remove(item);
+  void removeAtIndexFromGearMasterPageState(int index) =>
+      gearMasterPageState.removeAt(index);
+  void insertAtIndexInGearMasterPageState(
+          int index, MasterAgentGearModelStruct item) =>
+      gearMasterPageState.insert(index, item);
+  void updateGearMasterPageStateAtIndex(
+          int index, Function(MasterAgentGearModelStruct) updateFn) =>
+      gearMasterPageState[index] = updateFn(gearMasterPageState[index]);
+
+  List<MasterAgentBrandModelStruct> brandMasterPageState = [];
+  void addToBrandMasterPageState(MasterAgentBrandModelStruct item) =>
+      brandMasterPageState.add(item);
+  void removeFromBrandMasterPageState(MasterAgentBrandModelStruct item) =>
+      brandMasterPageState.remove(item);
+  void removeAtIndexFromBrandMasterPageState(int index) =>
+      brandMasterPageState.removeAt(index);
+  void insertAtIndexInBrandMasterPageState(
+          int index, MasterAgentBrandModelStruct item) =>
+      brandMasterPageState.insert(index, item);
+  void updateBrandMasterPageStateAtIndex(
+          int index, Function(MasterAgentBrandModelStruct) updateFn) =>
+      brandMasterPageState[index] = updateFn(brandMasterPageState[index]);
+
+  List<MasterAgentModelModelStruct> modelMasterPageState = [];
+  void addToModelMasterPageState(MasterAgentModelModelStruct item) =>
+      modelMasterPageState.add(item);
+  void removeFromModelMasterPageState(MasterAgentModelModelStruct item) =>
+      modelMasterPageState.remove(item);
+  void removeAtIndexFromModelMasterPageState(int index) =>
+      modelMasterPageState.removeAt(index);
+  void insertAtIndexInModelMasterPageState(
+          int index, MasterAgentModelModelStruct item) =>
+      modelMasterPageState.insert(index, item);
+  void updateModelMasterPageStateAtIndex(
+          int index, Function(MasterAgentModelModelStruct) updateFn) =>
+      modelMasterPageState[index] = updateFn(modelMasterPageState[index]);
+
+  List<MasterAgentCCModelStruct> ccMasterPageState = [];
+  void addToCcMasterPageState(MasterAgentCCModelStruct item) =>
+      ccMasterPageState.add(item);
+  void removeFromCcMasterPageState(MasterAgentCCModelStruct item) =>
+      ccMasterPageState.remove(item);
+  void removeAtIndexFromCcMasterPageState(int index) =>
+      ccMasterPageState.removeAt(index);
+  void insertAtIndexInCcMasterPageState(
+          int index, MasterAgentCCModelStruct item) =>
+      ccMasterPageState.insert(index, item);
+  void updateCcMasterPageStateAtIndex(
+          int index, Function(MasterAgentCCModelStruct) updateFn) =>
+      ccMasterPageState[index] = updateFn(ccMasterPageState[index]);
+
+  bool canNextButton = false;
+
+  AgentCarRateDataModelStruct? carRateData;
+  void updateCarRateDataStruct(Function(AgentCarRateDataModelStruct) updateFn) {
+    updateFn(carRateData ??= AgentCarRateDataModelStruct());
+  }
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in LeadAgentDetailCarPage widget.
+  ApiCallResponse? apiResultGear;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
+  // State field(s) for DropDownVehicle widget.
+  String? dropDownVehicleValue;
+  FormFieldController<String>? dropDownVehicleValueController;
+  // State field(s) for DropDownGear widget.
+  String? dropDownGearValue;
+  FormFieldController<String>? dropDownGearValueController;
+  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in DropDownGear widget.
+  ApiCallResponse? apiResultBrand;
+  // State field(s) for DropDownBrand widget.
+  String? dropDownBrandValue;
+  FormFieldController<String>? dropDownBrandValueController;
+  // State field(s) for DropDownYear widget.
+  String? dropDownYearValue;
+  FormFieldController<String>? dropDownYearValueController;
+  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in DropDownYear widget.
+  ApiCallResponse? apiResultModel;
+  // State field(s) for DropDownModel widget.
+  String? dropDownModelValue;
+  FormFieldController<String>? dropDownModelValueController;
+  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in DropDownModel widget.
+  ApiCallResponse? apiResultCC;
+  // State field(s) for DropDownCC widget.
+  String? dropDownCCValue;
+  FormFieldController<String>? dropDownCCValueController;
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode5;
-  TextEditingController? textController5;
-  String? Function(BuildContext, String?)? textController5Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode6;
-  TextEditingController? textController6;
-  String? Function(BuildContext, String?)? textController6Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode7;
-  TextEditingController? textController7;
-  String? Function(BuildContext, String?)? textController7Validator;
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - API (AgentCheckRate)] action in Button widget.
+  ApiCallResponse? apiResultCheckRate;
 
   @override
   void initState(BuildContext context) {
@@ -48,25 +137,7 @@ class LeadAgentDetailCarPageModel
   @override
   void dispose() {
     progressBarComponentModel.dispose();
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
-
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
-
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
-
-    textFieldFocusNode5?.dispose();
-    textController5?.dispose();
-
-    textFieldFocusNode6?.dispose();
-    textController6?.dispose();
-
-    textFieldFocusNode7?.dispose();
-    textController7?.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
   }
 }

@@ -2,20 +2,20 @@ import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_
 import '/agent_customer/drop_lead/review_detail_car_component/review_detail_car_component_widget.dart';
 import '/agent_customer/drop_lead/review_detail_customer_component/review_detail_customer_component_widget.dart';
 import '/agent_customer/drop_lead/review_detail_l_h_component/review_detail_l_h_component_widget.dart';
+import '/backend/api_requests/api_calls.dart';
+import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/pages/loading/loading_widget.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'lead_agent_review_detail_page_model.dart';
 export 'lead_agent_review_detail_page_model.dart';
 
 class LeadAgentReviewDetailPageWidget extends StatefulWidget {
-  const LeadAgentReviewDetailPageWidget({
-    super.key,
-    this.product,
-  });
-
-  final String? product;
+  const LeadAgentReviewDetailPageWidget({super.key});
 
   static String routeName = 'LeadAgentReviewDetailPage';
   static String routePath = '/leadAgentReviewDetailPage';
@@ -48,6 +48,8 @@ class _LeadAgentReviewDetailPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -107,78 +109,110 @@ class _LeadAgentReviewDetailPageWidgetState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            wrapWithModel(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 12.0, 0.0),
+                            child: wrapWithModel(
                               model: _model.progressBarComponentModel,
                               updateCallback: () => safeSetState(() {}),
                               child: ProgressBarComponentWidget(
                                 step: '3',
                               ),
                             ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 12.0, 0.0),
+                            child: wrapWithModel(
+                              model: _model.reviewDetailCustomerComponentModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: ReviewDetailCustomerComponentWidget(
+                                name:
+                                    '${FFAppState().saveLeadAgentData.firstName}',
+                                lastname:
+                                    '${FFAppState().saveLeadAgentData.lastName}',
+                                idcard:
+                                    '${FFAppState().saveLeadAgentData.registerId}',
+                                phonenumber:
+                                    '${FFAppState().saveLeadAgentData.mobilePhoneNumber}',
+                                amount:
+                                    '${FFAppState().saveLeadAgentData.loanAmount}',
+                                product:
+                                    '${FFAppState().saveLeadAgentData.loanTypeName}',
+                                carregister:
+                                    '${(FFAppState().saveLeadAgentData.loanTypeCode == 'LH') || (FFAppState().saveLeadAgentData.loanTypeCode == 'LA') ? (FFAppState().isSearchByChanodNo ? FFAppState().saveLeadAgentData.carRegistration : FFAppState().saveLeadAgentData.landNo) : (FFAppState().saveLeadAgentData.carRegistration != '' ? FFAppState().saveLeadAgentData.carRegistration : 'ไม่ระบุทะเบียนรถ')}',
+                                time:
+                                    '${FFAppState().saveLeadAgentData.contactTime}',
+                              ),
+                            ),
+                          ),
+                          if ((FFAppState().saveLeadAgentData.loanTypeCode !=
+                                  'LH') &&
+                              (FFAppState().saveLeadAgentData.loanTypeCode !=
+                                  'LA'))
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 16.0, 0.0, 0.0),
+                                  12.0, 16.0, 12.0, 0.0),
                               child: wrapWithModel(
-                                model:
-                                    _model.reviewDetailCustomerComponentModel,
+                                model: _model.reviewDetailCarComponentModel,
                                 updateCallback: () => safeSetState(() {}),
-                                child: ReviewDetailCustomerComponentWidget(
-                                  name: '-',
-                                  lastname: '-',
-                                  idcard: '-',
-                                  phonenumber: '-',
-                                  amount: '-',
-                                  product: '-',
-                                  carregister: '-',
-                                  time: '-',
+                                child: ReviewDetailCarComponentWidget(
+                                  gear:
+                                      '${FFAppState().saveLeadAgentData.carGear == 'no_gear' ? 'ไม่ระบุเกียร์' : FFAppState().saveLeadAgentData.carGear}',
+                                  brand:
+                                      '${FFAppState().saveLeadAgentData.brandName != '' ? FFAppState().saveLeadAgentData.brandName : 'ไม่ระบุยี่ห้อรถ'}',
+                                  model:
+                                      '${FFAppState().saveLeadAgentData.carModel != '' ? FFAppState().saveLeadAgentData.carModel : 'ไม่ระบุรุ่นรถ'}',
+                                  year:
+                                      '${FFAppState().saveLeadAgentData.carYear != '' ? FFAppState().saveLeadAgentData.carYear : 'ไม่ระบุปีผลิต'}',
+                                  productDetail:
+                                      '${FFAppState().saveLeadAgentData.productDetail != '' ? FFAppState().saveLeadAgentData.productDetail : 'ไม่ระบุรายละเอียดสินค้า'}',
+                                  rateAmount:
+                                      '${FFAppState().saveLeadAgentData.estimatePrice}',
                                 ),
                               ),
                             ),
-                            if (widget.product != 'LH')
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: wrapWithModel(
-                                  model: _model.reviewDetailCarComponentModel,
-                                  updateCallback: () => safeSetState(() {}),
-                                  child: ReviewDetailCarComponentWidget(
-                                    gear: '-',
-                                    brand: '-',
-                                    model: '-',
-                                    year: '-',
-                                    productDetail: '-',
-                                    rateAmount: '-',
-                                  ),
+                          if ((FFAppState().saveLeadAgentData.loanTypeCode ==
+                                  'LH') ||
+                              (FFAppState().saveLeadAgentData.loanTypeCode ==
+                                  'LA'))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 16.0, 12.0, 16.0),
+                              child: wrapWithModel(
+                                model: _model.reviewDetailLHComponentModel,
+                                updateCallback: () => safeSetState(() {}),
+                                child: ReviewDetailLHComponentWidget(
+                                  chanodNO:
+                                      '${FFAppState().saveLeadAgentData.carRegistration}',
+                                  landNO:
+                                      '${FFAppState().saveLeadAgentData.landNo}',
+                                  rai:
+                                      '${FFAppState().saveLeadAgentData.landAreaRai}',
+                                  ngan:
+                                      '${FFAppState().saveLeadAgentData.landAreaNgan}',
+                                  wa: '${FFAppState().saveLeadAgentData.landAreaWa}',
+                                  ltv1Amount:
+                                      '${FFAppState().saveLeadAgentData.ltv1Amount}',
+                                  ltv2Amount:
+                                      '${FFAppState().saveLeadAgentData.ltv2Amount}',
+                                  utmmap1:
+                                      '${FFAppState().saveLeadAgentData.utmmap}',
+                                  subDistrict:
+                                      '${FFAppState().saveLeadAgentData.landSubdistrict}',
+                                  district:
+                                      '${FFAppState().saveLeadAgentData.landDistrict}',
+                                  province:
+                                      '${FFAppState().saveLeadAgentData.landProvince}',
                                 ),
                               ),
-                            if (widget.product == 'LH')
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 16.0),
-                                child: wrapWithModel(
-                                  model: _model.reviewDetailLHComponentModel,
-                                  updateCallback: () => safeSetState(() {}),
-                                  child: ReviewDetailLHComponentWidget(
-                                    chanodNO: '-',
-                                    landNO: '-',
-                                    rai: '-',
-                                    ngan: '-',
-                                    wa: '-',
-                                    ltv1Amount: '-',
-                                    ltv2Amount: '-',
-                                    utmmap1: '-',
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
+                            ),
+                        ].addToEnd(SizedBox(height: 30.0)),
                       ),
                     ),
                   ),
@@ -196,8 +230,8 @@ class _LeadAgentReviewDetailPageWidgetState
                         children: [
                           Expanded(
                             child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                context.safePop();
                               },
                               text: valueOrDefault<String>(
                                 'ย้อนกลับ',
@@ -223,26 +257,297 @@ class _LeadAgentReviewDetailPageWidgetState
                             ),
                           ),
                           Expanded(
-                            child: FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
-                              },
-                              text: 'ถัดไป',
-                              options: FFButtonOptions(
-                                height: 60.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                    ),
-                                borderRadius: BorderRadius.circular(12.0),
+                            child: Builder(
+                              builder: (context) => FFButtonWidget(
+                                onPressed: () async {
+                                  var _shouldSetState = false;
+                                  var confirmDialogResponse = await showDialog<
+                                          bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            content:
+                                                Text('ยืนยันข้อมูลใช่หรือไม่'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('ยกเลิก'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('ยืนยัน'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                                  if (!confirmDialogResponse) {
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+                                  showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(dialogContext)
+                                                .unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: LoadingWidget(),
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  _model.apiResulthto =
+                                      await AgentAPIGroup.mgmLeadsSaveCall.call(
+                                    agentId:
+                                        FFAppState().saveLeadAgentData.agentId,
+                                    agentCode: FFAppState()
+                                        .saveLeadAgentData
+                                        .agentCode,
+                                    firstName: FFAppState()
+                                        .saveLeadAgentData
+                                        .firstName,
+                                    lastName:
+                                        FFAppState().saveLeadAgentData.lastName,
+                                    registerId: FFAppState()
+                                        .saveLeadAgentData
+                                        .registerId,
+                                    mobilePhoneNumber: FFAppState()
+                                        .saveLeadAgentData
+                                        .mobilePhoneNumber,
+                                    contactTime: FFAppState()
+                                        .saveLeadAgentData
+                                        .contactTime,
+                                    loanAmount: FFAppState()
+                                        .saveLeadAgentData
+                                        .loanAmount,
+                                    loanTypeId: FFAppState()
+                                        .saveLeadAgentData
+                                        .loanTypeId,
+                                    loanTypeCode: FFAppState()
+                                        .saveLeadAgentData
+                                        .loanTypeCode,
+                                    loanTypeName: FFAppState()
+                                        .saveLeadAgentData
+                                        .loanTypeName,
+                                    carGear:
+                                        FFAppState().saveLeadAgentData.carGear,
+                                    brandName: FFAppState()
+                                        .saveLeadAgentData
+                                        .brandName,
+                                    carYear:
+                                        FFAppState().saveLeadAgentData.carYear,
+                                    carModel:
+                                        FFAppState().saveLeadAgentData.carModel,
+                                    carCc: FFAppState().saveLeadAgentData.carCc,
+                                    productDetail: FFAppState()
+                                        .saveLeadAgentData
+                                        .productDetail,
+                                    estimatePrice: FFAppState()
+                                        .saveLeadAgentData
+                                        .estimatePrice,
+                                    landDistrict: FFAppState()
+                                        .saveLeadAgentData
+                                        .landDistrict,
+                                    landSubdistrict: FFAppState()
+                                        .saveLeadAgentData
+                                        .landSubdistrict,
+                                    landProvince: FFAppState()
+                                        .saveLeadAgentData
+                                        .landProvince,
+                                    landPostcode: FFAppState()
+                                        .saveLeadAgentData
+                                        .landPostcode,
+                                    landAreaRai: FFAppState()
+                                        .saveLeadAgentData
+                                        .landAreaRai,
+                                    landAreaNgan: FFAppState()
+                                        .saveLeadAgentData
+                                        .landAreaNgan,
+                                    landAreaWa: FFAppState()
+                                        .saveLeadAgentData
+                                        .landAreaWa,
+                                    landNo:
+                                        FFAppState().saveLeadAgentData.landNo,
+                                    utmmap:
+                                        FFAppState().saveLeadAgentData.utmmap,
+                                    surveyNo:
+                                        FFAppState().saveLeadAgentData.surveyNo,
+                                    ltv1Amount: FFAppState()
+                                        .saveLeadAgentData
+                                        .ltv1Amount,
+                                    ltv2Amount: FFAppState()
+                                        .saveLeadAgentData
+                                        .ltv2Amount,
+                                    agentGroupId: FFAppState()
+                                        .agentProfileDataType
+                                        .agentGroupId,
+                                    privacyConsentFlag: 'Y',
+                                    privacyConsentDate:
+                                        getCurrentTimestamp.toString(),
+                                    paymentMethod: FFAppState()
+                                        .agentProfileDataType
+                                        .paymentMethod,
+                                    deductionPercent: FFAppState()
+                                        .agentProfileDataType
+                                        .deductionPercent,
+                                    paymentChannel: FFAppState()
+                                        .agentProfileDataType
+                                        .paymentChannel,
+                                    accountNumber: FFAppState()
+                                        .agentProfileDataType
+                                        .accountNumber,
+                                    promptpayNumber: FFAppState()
+                                        .agentProfileDataType
+                                        .promptpayNumber,
+                                  );
+
+                                  _shouldSetState = true;
+                                  if ((_model.apiResulthto?.statusCode ??
+                                          200) !=
+                                      200) {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: ErrorMessageComponentWidget(
+                                              textMessage:
+                                                  'พบข้อผิดพลาด connection(${(_model.apiResulthto?.statusCode ?? 200).toString()})',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+
+                                    Navigator.pop(context);
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+                                  if ('${getJsonField(
+                                        (_model.apiResulthto?.jsonBody ?? ''),
+                                        r'''$.code''',
+                                      ).toString()}' !=
+                                      '200') {
+                                    if ('${getJsonField(
+                                          (_model.apiResulthto?.jsonBody ?? ''),
+                                          r'''$.code''',
+                                        ).toString()}' ==
+                                        '201') {
+                                      Navigator.pop(context);
+
+                                      context.pushNamed(
+                                        LeadDupePageWidget.routeName,
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.rightToLeft,
+                                          ),
+                                        },
+                                      );
+
+                                      if (_shouldSetState) safeSetState(() {});
+                                      return;
+                                    } else {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(dialogContext)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child:
+                                                  ErrorMessageComponentWidget(
+                                                textMessage: '${getJsonField(
+                                                  (_model.apiResulthto
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.message''',
+                                                ).toString()}',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+
+                                      Navigator.pop(context);
+                                      if (_shouldSetState) safeSetState(() {});
+                                      return;
+                                    }
+                                  }
+                                  Navigator.pop(context);
+
+                                  context.goNamed(
+                                    LeadSuccesPageWidget.routeName,
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.rightToLeft,
+                                      ),
+                                    },
+                                  );
+
+                                  if (_shouldSetState) safeSetState(() {});
+                                },
+                                text: 'ถัดไป',
+                                options: FFButtonOptions(
+                                  height: 60.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
                               ),
                             ),
                           ),
