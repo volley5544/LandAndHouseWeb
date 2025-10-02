@@ -470,7 +470,8 @@ class _LeadAgentDetailCarPageWidgetState
                                               .saveLeadAgentData
                                               .loanTypeCode !=
                                           '') &&
-                                  (_model.gearMasterPageState.isNotEmpty))
+                                  (_model.gearMasterPageState.isNotEmpty) &&
+                                  (_model.stateNumber! >= 1))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -551,6 +552,20 @@ class _LeadAgentDetailCarPageWidgetState
                                                 var _shouldSetState = false;
                                                 _model.canNextButton = false;
                                                 safeSetState(() {});
+                                                _model.brandMasterPageState =
+                                                    [];
+                                                _model.modelMasterPageState =
+                                                    [];
+                                                _model.ccMasterPageState = [];
+                                                safeSetState(() {});
+                                                if (!(_model.dropDownGearValue !=
+                                                        null &&
+                                                    _model.dropDownGearValue !=
+                                                        '')) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
                                                 showDialog(
                                                   context: context,
                                                   builder: (dialogContext) {
@@ -689,17 +704,33 @@ class _LeadAgentDetailCarPageWidgetState
                                                 }
                                                 safeSetState(() {
                                                   _model
-                                                      .dropDownBrandValueController
+                                                      .dropDownCCValueController
                                                       ?.reset();
-                                                  _model
-                                                      .dropDownYearValueController
-                                                      ?.reset();
+                                                });
+                                                safeSetState(() {
                                                   _model
                                                       .dropDownModelValueController
                                                       ?.reset();
+                                                });
+                                                safeSetState(() {
+                                                  _model
+                                                      .dropDownYearValueController
+                                                      ?.reset();
+                                                });
+                                                safeSetState(() {
+                                                  _model
+                                                      .dropDownBrand11ValueController
+                                                      ?.reset();
+                                                });
+                                                safeSetState(() {
+                                                  _model
+                                                      .dropDownModelValueController
+                                                      ?.value = '';
+                                                });
+                                                safeSetState(() {
                                                   _model
                                                       .dropDownCCValueController
-                                                      ?.reset();
+                                                      ?.value = '';
                                                 });
                                                 safeSetState(() {
                                                   _model.textController
@@ -726,6 +757,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                   _model.canNextButton = true;
                                                   safeSetState(() {});
                                                 }
+                                                safeSetState(() {});
+                                                _model.stateNumber = 2;
+                                                safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
@@ -789,7 +823,8 @@ class _LeadAgentDetailCarPageWidgetState
                                 ),
                               if ((_model.dropDownGearValue != null &&
                                       _model.dropDownGearValue != '') &&
-                                  (_model.brandMasterPageState.isNotEmpty))
+                                  (_model.brandMasterPageState.isNotEmpty) &&
+                                  (_model.stateNumber! >= 2))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -851,9 +886,10 @@ class _LeadAgentDetailCarPageWidgetState
                                                   16.0, 0.0, 16.0, 0.0),
                                           child: FlutterFlowDropDown<String>(
                                             controller: _model
-                                                    .dropDownBrandValueController ??=
+                                                    .dropDownBrand11ValueController ??=
                                                 FormFieldController<String>(
-                                              _model.dropDownBrandValue ??= '',
+                                              _model.dropDownBrand11Value ??=
+                                                  '',
                                             ),
                                             options: List<String>.from(_model
                                                 .brandMasterPageState
@@ -865,7 +901,13 @@ class _LeadAgentDetailCarPageWidgetState
                                                 .toList(),
                                             onChanged: (val) async {
                                               safeSetState(() => _model
-                                                  .dropDownBrandValue = val);
+                                                  .dropDownBrand11Value = val);
+                                              if (!(_model.dropDownBrand11Value !=
+                                                      null &&
+                                                  _model.dropDownBrand11Value !=
+                                                      '')) {
+                                                return;
+                                              }
                                               safeSetState(() {
                                                 _model
                                                     .dropDownYearValueController
@@ -879,25 +921,11 @@ class _LeadAgentDetailCarPageWidgetState
                                               safeSetState(() {
                                                 _model.textController?.clear();
                                               });
+                                              _model.stateNumber = 3;
+                                              safeSetState(() {});
                                             },
                                             width: 200.0,
                                             height: 40.0,
-                                            searchHintTextStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            searchTextStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      letterSpacing: 0.0,
-                                                    ),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -907,7 +935,6 @@ class _LeadAgentDetailCarPageWidgetState
                                                       letterSpacing: 0.0,
                                                     ),
                                             hintText: 'ระบุยี่ห้อรถ',
-                                            searchHintText: 'ค้นหา ...',
                                             icon: Icon(
                                               Icons.keyboard_arrow_down_rounded,
                                               color:
@@ -925,8 +952,9 @@ class _LeadAgentDetailCarPageWidgetState
                                             margin:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     12.0, 0.0, 12.0, 0.0),
+                                            hidesUnderline: true,
                                             isOverButton: false,
-                                            isSearchable: true,
+                                            isSearchable: false,
                                             isMultiSelect: false,
                                           ),
                                         ),
@@ -935,8 +963,10 @@ class _LeadAgentDetailCarPageWidgetState
                                   ).animateOnPageLoad(animationsMap[
                                       'columnOnPageLoadAnimation2']!),
                                 ),
-                              if (_model.dropDownBrandValue != null &&
-                                  _model.dropDownBrandValue != '')
+                              if (('${_model.dropDownBrand11Value}' != '') &&
+                                  ('${_model.dropDownBrand11Value}' !=
+                                      'null') &&
+                                  (_model.stateNumber! >= 3))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -1011,6 +1041,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                 var _shouldSetState = false;
                                                 _model.canNextButton = false;
                                                 safeSetState(() {});
+                                                if (!(_model.dropDownYearValue !=
+                                                        null &&
+                                                    _model.dropDownYearValue !=
+                                                        '')) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
                                                 showDialog(
                                                   context: context,
                                                   builder: (dialogContext) {
@@ -1050,8 +1088,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .loanTypeCode,
                                                   carGear:
                                                       _model.dropDownGearValue,
-                                                  carBrand:
-                                                      _model.dropDownBrandValue,
+                                                  carBrand: _model
+                                                      .dropDownBrand11Value,
                                                   carYear:
                                                       _model.dropDownYearValue,
                                                 );
@@ -1182,6 +1220,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                   _model.canNextButton = true;
                                                   safeSetState(() {});
                                                 }
+                                                _model.stateNumber = 4;
+                                                safeSetState(() {});
+                                                safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
@@ -1243,11 +1284,12 @@ class _LeadAgentDetailCarPageWidgetState
                                   ).animateOnPageLoad(animationsMap[
                                       'columnOnPageLoadAnimation3']!),
                                 ),
-                              if ((_model.dropDownBrandValue != null &&
-                                      _model.dropDownBrandValue != '') &&
+                              if ((_model.dropDownBrand11Value != null &&
+                                      _model.dropDownBrand11Value != '') &&
                                   (_model.dropDownYearValue != null &&
                                       _model.dropDownYearValue != '') &&
-                                  (_model.modelMasterPageState.isNotEmpty))
+                                  (_model.modelMasterPageState.isNotEmpty) &&
+                                  (_model.stateNumber! >= 4))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -1329,6 +1371,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                 var _shouldSetState = false;
                                                 _model.canNextButton = false;
                                                 safeSetState(() {});
+                                                if (!(_model.dropDownModelValue !=
+                                                        null &&
+                                                    _model.dropDownModelValue !=
+                                                        '')) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
                                                 showDialog(
                                                   context: context,
                                                   builder: (dialogContext) {
@@ -1368,8 +1418,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .loanTypeCode,
                                                   carGear:
                                                       _model.dropDownGearValue,
-                                                  carBrand:
-                                                      _model.dropDownBrandValue,
+                                                  carBrand: _model
+                                                      .dropDownBrand11Value,
                                                   carYear:
                                                       _model.dropDownYearValue,
                                                   carModel:
@@ -1497,6 +1547,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                   _model.canNextButton = true;
                                                   safeSetState(() {});
                                                 }
+                                                _model.stateNumber = 5;
+                                                safeSetState(() {});
+                                                safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
@@ -1560,7 +1613,8 @@ class _LeadAgentDetailCarPageWidgetState
                                 ),
                               if ((_model.dropDownModelValue != null &&
                                       _model.dropDownModelValue != '') &&
-                                  (_model.ccMasterPageState.isNotEmpty))
+                                  (_model.ccMasterPageState.isNotEmpty) &&
+                                  (_model.stateNumber! >= 5))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -1640,6 +1694,9 @@ class _LeadAgentDetailCarPageWidgetState
                                               safeSetState(() {
                                                 _model.textController?.clear();
                                               });
+                                              _model.stateNumber = 6;
+                                              safeSetState(() {});
+                                              safeSetState(() {});
                                             },
                                             width: 200.0,
                                             height: 40.0,
@@ -1700,14 +1757,15 @@ class _LeadAgentDetailCarPageWidgetState
                                       _model.dropDownVehicleValue != '') &&
                                   (_model.dropDownGearValue != null &&
                                       _model.dropDownGearValue != '') &&
-                                  (_model.dropDownBrandValue != null &&
-                                      _model.dropDownBrandValue != '') &&
+                                  (_model.dropDownBrand11Value != null &&
+                                      _model.dropDownBrand11Value != '') &&
                                   (_model.dropDownYearValue != null &&
                                       _model.dropDownYearValue != '') &&
                                   (_model.dropDownModelValue != null &&
                                       _model.dropDownModelValue != '') &&
                                   (_model.dropDownCCValue != null &&
-                                      _model.dropDownCCValue != ''))
+                                      _model.dropDownCCValue != '') &&
+                                  (_model.stateNumber! >= 6))
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 16.0, 0.0, 0.0),
@@ -1958,9 +2016,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                     safeSetState(() {});
                                                   return;
                                                 }
-                                                if (!(_model.dropDownBrandValue !=
+                                                if (!(_model.dropDownBrand11Value !=
                                                         null &&
-                                                    _model.dropDownBrandValue !=
+                                                    _model.dropDownBrand11Value !=
                                                         '')) {
                                                   await showDialog(
                                                     context: context,
@@ -2103,8 +2161,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .loanTypeCode,
                                                   carGear:
                                                       _model.dropDownGearValue,
-                                                  carBrand:
-                                                      _model.dropDownBrandValue,
+                                                  carBrand: _model
+                                                      .dropDownBrand11Value,
                                                   carYear:
                                                       _model.dropDownYearValue,
                                                   carModel:
@@ -2348,11 +2406,11 @@ class _LeadAgentDetailCarPageWidgetState
                                                 ? _model.dropDownGearValue
                                                 : ''
                                             ..brandName = _model
-                                                            .dropDownBrandValue !=
+                                                            .dropDownBrand11Value !=
                                                         null &&
-                                                    _model.dropDownBrandValue !=
+                                                    _model.dropDownBrand11Value !=
                                                         ''
-                                                ? _model.dropDownBrandValue
+                                                ? _model.dropDownBrand11Value
                                                 : ''
                                             ..carYear = _model
                                                             .dropDownYearValue !=

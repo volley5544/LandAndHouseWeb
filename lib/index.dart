@@ -93,3 +93,5 @@ export '/agent_customer/drop_lead/lead_succes_page/lead_succes_page_widget.dart'
     show LeadSuccesPageWidget;
 export '/agent_customer/drop_lead/lead_dupe_page/lead_dupe_page_widget.dart'
     show LeadDupePageWidget;
+export '/agent_customer/drop_lead/lead_agent_consent_page/lead_agent_consent_page_widget.dart'
+    show LeadAgentConsentPageWidget;

@@ -74,6 +74,8 @@ class LeadAgentDetailCustomerPageModel
   bool? checkboxValue1;
   // State field(s) for Checkbox widget.
   bool? checkboxValue2;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  bool? confirmOutput;
 
   @override
   void initState(BuildContext context) {

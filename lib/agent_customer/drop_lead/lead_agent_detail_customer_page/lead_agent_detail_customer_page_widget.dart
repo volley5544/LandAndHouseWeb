@@ -2,6 +2,7 @@ import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/confirm_dialog_component_widget.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -1819,30 +1820,69 @@ class _LeadAgentDetailCustomerPageWidgetState
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
-                              child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
-                                },
-                                text: valueOrDefault<String>(
-                                  'ย้อนกลับ',
-                                  'ย้อนกลับ',
-                                ),
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).info,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  borderRadius: BorderRadius.circular(12.0),
+                              child: Builder(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: () async {
+                                    var _shouldSetState = false;
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: ConfirmDialogComponentWidget(
+                                              textMessage:
+                                                  'คุณต้องการจะยกเลิกทำรายการนี้หรือไม่?',
+                                              cancelButtonText: 'ยกเลิก',
+                                              confirmButtonText: 'ยืนยัน',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(
+                                        () => _model.confirmOutput = value));
+
+                                    _shouldSetState = true;
+                                    if (!_model.confirmOutput!) {
+                                      if (_shouldSetState) safeSetState(() {});
+                                      return;
+                                    }
+                                    context.safePop();
+                                    if (_shouldSetState) safeSetState(() {});
+                                  },
+                                  text: valueOrDefault<String>(
+                                    'ย้อนกลับ',
+                                    'ย้อนกลับ',
+                                  ),
+                                  options: FFButtonOptions(
+                                    height: 60.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).info,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
                                 ),
                               ),
                             ),
@@ -1862,8 +1902,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                                           (_model.dropDownLoanTypeValue ==
                                                   null ||
                                               _model.dropDownLoanTypeValue ==
-                                                  '') ||
-                                          !_model.checkboxValue1!)
+                                                  ''))
                                       ? null
                                       : () async {
                                           if (!false) {
@@ -2210,7 +2249,10 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                   .productSelected?.vehicleCode,
                                               loanTypeName: _model
                                                   .productSelected?.vehicleName,
-                                              privacyConsentFlag: 'Y',
+                                              privacyConsentFlag:
+                                                  _model.checkboxValue1!
+                                                      ? 'Y'
+                                                      : 'N',
                                               privacyConsentDate:
                                                   getCurrentTimestamp
                                                       .toString(),

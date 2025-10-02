@@ -601,6 +601,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: LeadDupePageWidget.routeName,
           path: LeadDupePageWidget.routePath,
           builder: (context, params) => LeadDupePageWidget(),
+        ),
+        FFRoute(
+          name: LeadAgentConsentPageWidget.routeName,
+          path: LeadAgentConsentPageWidget.routePath,
+          builder: (context, params) => LeadAgentConsentPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

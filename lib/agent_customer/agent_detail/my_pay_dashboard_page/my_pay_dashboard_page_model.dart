@@ -34,6 +34,8 @@ class MyPayDashboardPageModel
 
   // Stores action output result for [Backend Call - API (GetCommissionLead)] action in MyPayDashboardPage widget.
   ApiCallResponse? getCommissionLeadApiOutput;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Text widget.
+  dynamic advanceSearchOutput;
   // State field(s) for SearchTextField widget.
   FocusNode? searchTextFieldFocusNode;
   TextEditingController? searchTextFieldTextController;

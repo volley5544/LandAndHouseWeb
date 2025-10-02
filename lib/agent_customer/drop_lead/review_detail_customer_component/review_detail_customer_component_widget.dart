@@ -745,17 +745,23 @@ class _ReviewDetailCustomerComponentWidgetState
                                         FlutterFlowTheme.of(context).alternate,
                                   ),
                                   child: Checkbox(
-                                    value: _model.checkboxValue1 ??= true,
-                                    onChanged: (newValue) async {
-                                      safeSetState(() =>
-                                          _model.checkboxValue1 = newValue!);
+                                    value: _model.checkboxValue1 ??=
+                                        FFAppState()
+                                                .saveLeadAgentData
+                                                .privacyConsentFlag ==
+                                            'Y',
+                                    onChanged: true
+                                        ? null
+                                        : (newValue) async {
+                                            safeSetState(() => _model
+                                                .checkboxValue1 = newValue!);
 
-                                      if (!newValue!) {
-                                        safeSetState(() {
-                                          _model.checkboxValue1 = true;
-                                        });
-                                      }
-                                    },
+                                            if (!newValue!) {
+                                              safeSetState(() {
+                                                _model.checkboxValue1 = true;
+                                              });
+                                            }
+                                          },
                                     side: (FlutterFlowTheme.of(context)
                                                 .alternate !=
                                             null)
@@ -767,8 +773,9 @@ class _ReviewDetailCustomerComponentWidgetState
                                         : null,
                                     activeColor:
                                         FlutterFlowTheme.of(context).primary,
-                                    checkColor:
-                                        FlutterFlowTheme.of(context).info,
+                                    checkColor: true
+                                        ? null
+                                        : FlutterFlowTheme.of(context).info,
                                   ),
                                 ),
                                 Text(
@@ -803,16 +810,22 @@ class _ReviewDetailCustomerComponentWidgetState
                                         FlutterFlowTheme.of(context).alternate,
                                   ),
                                   child: Checkbox(
-                                    value: _model.checkboxValue2 ??= false,
-                                    onChanged: (newValue) async {
-                                      safeSetState(() =>
-                                          _model.checkboxValue2 = newValue!);
-                                      if (newValue!) {
-                                        safeSetState(() {
-                                          _model.checkboxValue2 = false;
-                                        });
-                                      }
-                                    },
+                                    value: _model.checkboxValue2 ??=
+                                        FFAppState()
+                                                .saveLeadAgentData
+                                                .privacyConsentFlag !=
+                                            'Y',
+                                    onChanged: true
+                                        ? null
+                                        : (newValue) async {
+                                            safeSetState(() => _model
+                                                .checkboxValue2 = newValue!);
+                                            if (newValue!) {
+                                              safeSetState(() {
+                                                _model.checkboxValue2 = false;
+                                              });
+                                            }
+                                          },
                                     side: (FlutterFlowTheme.of(context)
                                                 .alternate !=
                                             null)
@@ -824,8 +837,9 @@ class _ReviewDetailCustomerComponentWidgetState
                                         : null,
                                     activeColor:
                                         FlutterFlowTheme.of(context).primary,
-                                    checkColor:
-                                        FlutterFlowTheme.of(context).info,
+                                    checkColor: true
+                                        ? null
+                                        : FlutterFlowTheme.of(context).info,
                                   ),
                                 ),
                                 Text(

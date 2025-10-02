@@ -2580,7 +2580,7 @@ class AgentAPIGroup {
   static String getBaseUrl({
     String? url = '',
   }) =>
-      'https://40656cfae1c7.ngrok-free.app/ssw_agent';
+      'https://6393b224fcc6.ngrok-free.app/ssw_agent';
   static Map<String, String> headers = {
     'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
   };

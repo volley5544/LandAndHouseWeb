@@ -91,6 +91,8 @@ class LeadAgentDetailCarPageModel
     updateFn(carRateData ??= AgentCarRateDataModelStruct());
   }
 
+  int? stateNumber = 1;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - API (AgentRateSearch)] action in LeadAgentDetailCarPage widget.
@@ -105,9 +107,9 @@ class LeadAgentDetailCarPageModel
   FormFieldController<String>? dropDownGearValueController;
   // Stores action output result for [Backend Call - API (AgentRateSearch)] action in DropDownGear widget.
   ApiCallResponse? apiResultBrand;
-  // State field(s) for DropDownBrand widget.
-  String? dropDownBrandValue;
-  FormFieldController<String>? dropDownBrandValueController;
+  // State field(s) for DropDownBrand11 widget.
+  String? dropDownBrand11Value;
+  FormFieldController<String>? dropDownBrand11ValueController;
   // State field(s) for DropDownYear widget.
   String? dropDownYearValue;
   FormFieldController<String>? dropDownYearValueController;

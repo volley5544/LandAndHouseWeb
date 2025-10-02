@@ -673,6 +673,12 @@ class FFAppState extends ChangeNotifier {
   set doOwnLead(bool value) {
     _doOwnLead = value;
   }
+
+  String _debugText1 = '';
+  String get debugText1 => _debugText1;
+  set debugText1(String value) {
+    _debugText1 = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

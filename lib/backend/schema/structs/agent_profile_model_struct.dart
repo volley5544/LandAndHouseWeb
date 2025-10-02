@@ -10,12 +10,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
   AgentProfileModelStruct({
     int? id,
     String? agentCode,
-    String? password,
-    String? stringPassword,
-    String? accessToken,
-    String? expiresAt,
-    String? tokenType,
-    String? emailActivateToken,
     String? companyNameTh,
     String? companyNameEn,
     String? companyAddress,
@@ -115,12 +109,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
-        _password = password,
-        _stringPassword = stringPassword,
-        _accessToken = accessToken,
-        _expiresAt = expiresAt,
-        _tokenType = tokenType,
-        _emailActivateToken = emailActivateToken,
         _companyNameTh = companyNameTh,
         _companyNameEn = companyNameEn,
         _companyAddress = companyAddress,
@@ -234,48 +222,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
   set agentCode(String? val) => _agentCode = val;
 
   bool hasAgentCode() => _agentCode != null;
-
-  // "password" field.
-  String? _password;
-  String get password => _password ?? '';
-  set password(String? val) => _password = val;
-
-  bool hasPassword() => _password != null;
-
-  // "string_password" field.
-  String? _stringPassword;
-  String get stringPassword => _stringPassword ?? '';
-  set stringPassword(String? val) => _stringPassword = val;
-
-  bool hasStringPassword() => _stringPassword != null;
-
-  // "access_token" field.
-  String? _accessToken;
-  String get accessToken => _accessToken ?? '';
-  set accessToken(String? val) => _accessToken = val;
-
-  bool hasAccessToken() => _accessToken != null;
-
-  // "expires_at" field.
-  String? _expiresAt;
-  String get expiresAt => _expiresAt ?? '';
-  set expiresAt(String? val) => _expiresAt = val;
-
-  bool hasExpiresAt() => _expiresAt != null;
-
-  // "token_type" field.
-  String? _tokenType;
-  String get tokenType => _tokenType ?? '';
-  set tokenType(String? val) => _tokenType = val;
-
-  bool hasTokenType() => _tokenType != null;
-
-  // "email_activate_token" field.
-  String? _emailActivateToken;
-  String get emailActivateToken => _emailActivateToken ?? '';
-  set emailActivateToken(String? val) => _emailActivateToken = val;
-
-  bool hasEmailActivateToken() => _emailActivateToken != null;
 
   // "company_name_th" field.
   String? _companyNameTh;
@@ -953,12 +899,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
       AgentProfileModelStruct(
         id: castToType<int>(data['id']),
         agentCode: data['agent_code'] as String?,
-        password: data['password'] as String?,
-        stringPassword: data['string_password'] as String?,
-        accessToken: data['access_token'] as String?,
-        expiresAt: data['expires_at'] as String?,
-        tokenType: data['token_type'] as String?,
-        emailActivateToken: data['email_activate_token'] as String?,
         companyNameTh: data['company_name_th'] as String?,
         companyNameEn: data['company_name_en'] as String?,
         companyAddress: data['company_address'] as String?,
@@ -1064,12 +1004,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
   Map<String, dynamic> toMap() => {
         'id': _id,
         'agent_code': _agentCode,
-        'password': _password,
-        'string_password': _stringPassword,
-        'access_token': _accessToken,
-        'expires_at': _expiresAt,
-        'token_type': _tokenType,
-        'email_activate_token': _emailActivateToken,
         'company_name_th': _companyNameTh,
         'company_name_en': _companyNameEn,
         'company_address': _companyAddress,
@@ -1176,30 +1110,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         ),
         'agent_code': serializeParam(
           _agentCode,
-          ParamType.String,
-        ),
-        'password': serializeParam(
-          _password,
-          ParamType.String,
-        ),
-        'string_password': serializeParam(
-          _stringPassword,
-          ParamType.String,
-        ),
-        'access_token': serializeParam(
-          _accessToken,
-          ParamType.String,
-        ),
-        'expires_at': serializeParam(
-          _expiresAt,
-          ParamType.String,
-        ),
-        'token_type': serializeParam(
-          _tokenType,
-          ParamType.String,
-        ),
-        'email_activate_token': serializeParam(
-          _emailActivateToken,
           ParamType.String,
         ),
         'company_name_th': serializeParam(
@@ -1598,36 +1508,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         ),
         agentCode: deserializeParam(
           data['agent_code'],
-          ParamType.String,
-          false,
-        ),
-        password: deserializeParam(
-          data['password'],
-          ParamType.String,
-          false,
-        ),
-        stringPassword: deserializeParam(
-          data['string_password'],
-          ParamType.String,
-          false,
-        ),
-        accessToken: deserializeParam(
-          data['access_token'],
-          ParamType.String,
-          false,
-        ),
-        expiresAt: deserializeParam(
-          data['expires_at'],
-          ParamType.String,
-          false,
-        ),
-        tokenType: deserializeParam(
-          data['token_type'],
-          ParamType.String,
-          false,
-        ),
-        emailActivateToken: deserializeParam(
-          data['email_activate_token'],
           ParamType.String,
           false,
         ),
@@ -2121,12 +2001,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
     return other is AgentProfileModelStruct &&
         id == other.id &&
         agentCode == other.agentCode &&
-        password == other.password &&
-        stringPassword == other.stringPassword &&
-        accessToken == other.accessToken &&
-        expiresAt == other.expiresAt &&
-        tokenType == other.tokenType &&
-        emailActivateToken == other.emailActivateToken &&
         companyNameTh == other.companyNameTh &&
         companyNameEn == other.companyNameEn &&
         companyAddress == other.companyAddress &&
@@ -2229,12 +2103,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
   int get hashCode => const ListEquality().hash([
         id,
         agentCode,
-        password,
-        stringPassword,
-        accessToken,
-        expiresAt,
-        tokenType,
-        emailActivateToken,
         companyNameTh,
         companyNameEn,
         companyAddress,
@@ -2337,12 +2205,6 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
 AgentProfileModelStruct createAgentProfileModelStruct({
   int? id,
   String? agentCode,
-  String? password,
-  String? stringPassword,
-  String? accessToken,
-  String? expiresAt,
-  String? tokenType,
-  String? emailActivateToken,
   String? companyNameTh,
   String? companyNameEn,
   String? companyAddress,
@@ -2447,12 +2309,6 @@ AgentProfileModelStruct createAgentProfileModelStruct({
     AgentProfileModelStruct(
       id: id,
       agentCode: agentCode,
-      password: password,
-      stringPassword: stringPassword,
-      accessToken: accessToken,
-      expiresAt: expiresAt,
-      tokenType: tokenType,
-      emailActivateToken: emailActivateToken,
       companyNameTh: companyNameTh,
       companyNameEn: companyNameEn,
       companyAddress: companyAddress,

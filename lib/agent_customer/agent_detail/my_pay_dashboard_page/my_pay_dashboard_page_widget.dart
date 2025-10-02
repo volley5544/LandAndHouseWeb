@@ -1,3 +1,4 @@
+import '/agent_customer/agent_detail/my_commission_advance_search_component/my_commission_advance_search_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -8,7 +9,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/loading/loading_widget.dart';
-import 'dart:ui';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:styled_divider/styled_divider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -16,7 +16,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'my_pay_dashboard_page_model.dart';
 export 'my_pay_dashboard_page_model.dart';
@@ -1369,18 +1368,144 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                           ),
                                         ].divide(SizedBox(width: 12.0)),
                                       ),
-                                      Text(
-                                        'ค้นหาแบบละเอียด',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Noto San Thai',
-                                              fontSize: 12.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
+                                      Builder(
+                                        builder: (context) => InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            var _shouldSetState = false;
+                                            await showDialog(
+                                              barrierColor: Color(0xB3000000),
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        MyCommissionAdvanceSearchComponentWidget(
+                                                      showingLeadData: _model
+                                                          .commissionData!
+                                                          .details,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then((value) => safeSetState(() =>
+                                                _model.advanceSearchOutput =
+                                                    value));
+
+                                            _shouldSetState = true;
+                                            if (!(_model.advanceSearchOutput !=
+                                                null)) {
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                            _model.showingLeadData = _model
+                                                .commissionData!.details
+                                                .where((e) =>
+                                                    ('${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.product''',
+                                                            ).toString()}' !=
+                                                            ''
+                                                        ? ('${e.product}' ==
+                                                            '${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.product''',
+                                                            ).toString()}')
+                                                        : true) &&
+                                                    ('${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.loanTypeName''',
+                                                            ).toString()}' !=
+                                                            ''
+                                                        ? ('${e.loanTypeName}' ==
+                                                            '${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.loanTypeName''',
+                                                            ).toString()}')
+                                                        : true) &&
+                                                    ('${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.paymentMethod''',
+                                                            ).toString()}' !=
+                                                            ''
+                                                        ? ('${e.paymentMethod}' ==
+                                                            '${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.paymentMethod''',
+                                                            ).toString()}')
+                                                        : true) &&
+                                                    ('${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.paymentChannel''',
+                                                            ).toString()}' !=
+                                                            ''
+                                                        ? ('${e.paymentChannel}' ==
+                                                            '${getJsonField(
+                                                              _model
+                                                                  .advanceSearchOutput,
+                                                              r'''$.paymentChannel''',
+                                                            ).toString()}')
+                                                        : true))
+                                                .toList()
+                                                .cast<
+                                                    AgentCommissionLeadDataModelStruct>();
+                                            safeSetState(() {});
+                                            safeSetState(() {
+                                              _model.choiceChipsValueController
+                                                  ?.reset();
+                                            });
+                                            safeSetState(() {
+                                              _model
+                                                  .searchTextFieldTextController
+                                                  ?.clear();
+                                            });
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                          },
+                                          child: Text(
+                                            'ค้นหาแบบละเอียด',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  fontSize: 12.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -2008,7 +2133,7 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                           BoxDecoration(),
                                                                       child:
                                                                           Text(
-                                                                        'คุณศรีมาลา',
+                                                                        'คุณ${leadListItemsItem.firstName}',
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .override(
@@ -2047,19 +2172,19 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                           'Noto San Thai',
                                                                       color:
                                                                           () {
-                                                                        if (double.parse(e.comWaitingPayAmt) >
+                                                                        if (double.parse(leadListItemsItem.comWaitingPayAmt) >
                                                                             0) {
                                                                           return FlutterFlowTheme.of(context)
                                                                               .error;
-                                                                        } else if (double.parse(e.comWaitingApproveAmt) >
+                                                                        } else if (double.parse(leadListItemsItem.comWaitingApproveAmt) >
                                                                             0) {
                                                                           return FlutterFlowTheme.of(context)
                                                                               .secondaryText;
-                                                                        } else if (double.parse(e.comNextPayAmt) >
+                                                                        } else if (double.parse(leadListItemsItem.comNextPayAmt) >
                                                                             0) {
                                                                           return Color(
                                                                               0xFF3AA9FA);
-                                                                        } else if (double.parse(e.comReceivedAmt) >
+                                                                        } else if (double.parse(leadListItemsItem.comReceivedAmt) >
                                                                             0) {
                                                                           return Color(
                                                                               0xFF4AC225);
@@ -3145,7 +3270,7 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                               children: [
                                                                                 Builder(
                                                                                   builder: (context) {
-                                                                                    if (!(double.parse(e.comWaitingApproveAmt) > 0)) {
+                                                                                    if (!(double.parse(leadListItemsItem.comWaitingApproveAmt) > 0)) {
                                                                                       return Row(
                                                                                         mainAxisSize: MainAxisSize.max,
                                                                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

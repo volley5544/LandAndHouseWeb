@@ -12,6 +12,10 @@ import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
+
+
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
@@ -30,6 +34,17 @@ void main() async {
   // Start final custom actions code
   await actions.consoleLogActionCheckVersion();
   await actions.consoleLogAction();
+  // web.window.addEventListener(
+  //   'fromFlutterMobile',
+  //   (web.Event event) {
+  //     if (event is web.CustomEvent) {
+  //       print("📩 Got message from Mobile: ${event.detail}");
+  //       FFAppState().debugText1 = 'event.detail';
+  //     } else {
+  //       print("⚠️ Received non-custom event: ${event.type}");
+  //     }
+  //   } as web.EventListener?,
+  // );
   // End final custom actions code
 
   runApp(ChangeNotifierProvider(
