@@ -68,6 +68,12 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
         },
       );
 
+      await actions.listenWebviewEventCamera(
+        (cameraBase64) async {
+          FFAppState().debugText1 = cameraBase64;
+          safeSetState(() {});
+        },
+      );
       _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
         agentCode: widget.agentCode,
         url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
@@ -189,8 +195,7 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context
-                      .pushNamed(LeadAgentDetailCustomerPageWidget.routeName);
+                  await actions.openCameraWebview();
                 },
                 child: Text(
                   'ตัวแทน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
@@ -423,6 +428,30 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                               ),
                             ),
                           ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 0.0),
+                        child: Text(
+                          FFAppState().debugText1,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 0.0),
+                        child: Text(
+                          FFAppState().debugText2,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                       ),
                     ].divide(SizedBox(height: 16.0)),

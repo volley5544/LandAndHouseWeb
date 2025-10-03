@@ -18,6 +18,7 @@ export 'console_log_action.dart' show consoleLogAction;
 export 'console_log_action_check_version.dart'
     show consoleLogActionCheckVersion;
 export 'navigate_back_webview_action.dart' show navigateBackWebviewAction;
+export 'open_camera_webview.dart' show openCameraWebview;
 export 'get_data_from_document.dart' show getDataFromDocument;
 export 'open_tableau_in_app.dart' show openTableauInApp;
 export 'launch_url_in_app.dart' show launchUrlInApp;
@@ -26,3 +27,4 @@ export 'sanitize_web_bytes.dart' show sanitizeWebBytes;
 export 'url_launcher_action.dart' show urlLauncherAction;
 export 'share_link.dart' show shareLink;
 export 'copy_link_to_clipboard.dart' show copyLinkToClipboard;
+export 'listen_webview_event_camera.dart' show listenWebviewEventCamera;

@@ -679,6 +679,18 @@ class FFAppState extends ChangeNotifier {
   set debugText1(String value) {
     _debugText1 = value;
   }
+
+  String _debugText2 = '';
+  String get debugText2 => _debugText2;
+  set debugText2(String value) {
+    _debugText2 = value;
+  }
+
+  bool _readConsent = false;
+  bool get readConsent => _readConsent;
+  set readConsent(bool value) {
+    _readConsent = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {
