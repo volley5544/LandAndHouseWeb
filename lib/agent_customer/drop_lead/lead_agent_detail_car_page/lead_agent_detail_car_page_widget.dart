@@ -1,17 +1,22 @@
+import '/agent_customer/drop_lead/image_source_component/image_source_component_widget.dart';
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
+import '/agent_customer/drop_lead/review_detail_customer_component/review_detail_customer_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/loading/loading_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -46,103 +51,130 @@ class _LeadAgentDetailCarPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
-                .resolve(Directionality.of(context)),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(dialogContext).unfocus();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: LoadingWidget(),
-            ),
+      await Future.wait([
+        Future(() async {
+          while (true) {
+            safeSetState(() {});
+            await Future.delayed(
+              Duration(
+                milliseconds: 1000,
+              ),
+            );
+          }
+        }),
+        Future(() async {
+          showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(0.0, 0.0)
+                    .resolve(Directionality.of(context)),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(dialogContext).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: LoadingWidget(),
+                ),
+              );
+            },
           );
-        },
-      );
 
-      _model.canNextButton = false;
-      safeSetState(() {});
-      _model.apiResultGear = await AgentAPIGroup.agentRateSearchCall.call(
-        carVehicleCode: FFAppState().saveLeadAgentData.loanTypeCode,
-      );
+          _model.canNextButton = false;
+          safeSetState(() {});
+          await actions.listenWebviewEventCamera(
+            (cameraBase64) async {
+              _model.bluebookBase64 = cameraBase64;
+              safeSetState(() {});
+              _model.generateBluebookFile =
+                  await actions.convertBase64ToFFFiles(
+                _model.bluebookBase64,
+                '01',
+              );
+              _model.bluebookFile = _model.generateBluebookFile;
+              safeSetState(() {});
+            },
+          );
+          _model.apiResultGear = await AgentAPIGroup.agentRateSearchCall.call(
+            carVehicleCode: FFAppState().saveLeadAgentData.loanTypeCode,
+          );
 
-      if ((_model.apiResultGear?.statusCode ?? 200) != 200) {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage:
-                      'พบข้อผิดพลาด connection (${(_model.apiResultGear?.statusCode ?? 200).toString()})',
-                ),
-              ),
+          if ((_model.apiResultGear?.statusCode ?? 200) != 200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          'พบข้อผิดพลาด connection (${(_model.apiResultGear?.statusCode ?? 200).toString()})',
+                    ),
+                  ),
+                );
+              },
             );
-          },
-        );
 
-        return;
-      }
-      if (AgentAPIGroup.agentRateSearchCall.code(
-            (_model.apiResultGear?.jsonBody ?? ''),
-          ) !=
-          200) {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage: '${AgentAPIGroup.agentRateSearchCall.message(
-                    (_model.apiResultGear?.jsonBody ?? ''),
-                  )}',
-                ),
-              ),
+            return;
+          }
+          if (AgentAPIGroup.agentRateSearchCall.code(
+                (_model.apiResultGear?.jsonBody ?? ''),
+              ) !=
+              200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage: '${AgentAPIGroup.agentRateSearchCall.message(
+                        (_model.apiResultGear?.jsonBody ?? ''),
+                      )}',
+                    ),
+                  ),
+                );
+              },
             );
-          },
-        );
 
-        return;
-      }
-      _model.gearMasterPageState = AgentAPIGroup.agentRateSearchCall
-          .gear(
-            (_model.apiResultGear?.jsonBody ?? ''),
-          )!
-          .toList()
-          .cast<MasterAgentGearModelStruct>();
-      _model.brandMasterPageState = [];
-      _model.modelMasterPageState = [];
-      _model.ccMasterPageState = [];
-      safeSetState(() {});
-      if (!(_model.gearMasterPageState.isNotEmpty)) {
-        _model.canNextButton = true;
-        safeSetState(() {});
-      }
-      Navigator.pop(context);
+            return;
+          }
+          _model.gearMasterPageState = AgentAPIGroup.agentRateSearchCall
+              .gear(
+                (_model.apiResultGear?.jsonBody ?? ''),
+              )!
+              .toList()
+              .cast<MasterAgentGearModelStruct>();
+          _model.brandMasterPageState = [];
+          _model.modelMasterPageState = [];
+          _model.ccMasterPageState = [];
+          safeSetState(() {});
+          if (!(_model.gearMasterPageState.isNotEmpty)) {
+            _model.canNextButton = true;
+            safeSetState(() {});
+          }
+          Navigator.pop(context);
+        }),
+      ]);
     });
 
     _model.textController ??= TextEditingController();
@@ -217,6 +249,25 @@ class _LeadAgentDetailCarPageWidgetState
             delay: 0.0.ms,
             duration: 600.0.ms,
             begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'imageOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -30.0),
             end: Offset(0.0, 0.0),
           ),
         ],
@@ -310,6 +361,33 @@ class _LeadAgentDetailCarPageWidgetState
                                 updateCallback: () => safeSetState(() {}),
                                 child: ProgressBarComponentWidget(
                                   step: '2',
+                                ),
+                              ),
+                              wrapWithModel(
+                                model:
+                                    _model.reviewDetailCustomerComponentModel,
+                                updateCallback: () => safeSetState(() {}),
+                                child: ReviewDetailCustomerComponentWidget(
+                                  name:
+                                      FFAppState().saveLeadAgentData.firstName,
+                                  lastname:
+                                      FFAppState().saveLeadAgentData.lastName,
+                                  idcard:
+                                      FFAppState().saveLeadAgentData.registerId,
+                                  phonenumber: FFAppState()
+                                      .saveLeadAgentData
+                                      .mobilePhoneNumber,
+                                  amount:
+                                      FFAppState().saveLeadAgentData.loanAmount,
+                                  product: FFAppState()
+                                      .saveLeadAgentData
+                                      .loanTypeName,
+                                  carregister: FFAppState()
+                                      .saveLeadAgentData
+                                      .carRegistration,
+                                  time: FFAppState()
+                                      .saveLeadAgentData
+                                      .contactTime,
                                 ),
                               ),
                               Padding(
@@ -2345,6 +2423,364 @@ class _LeadAgentDetailCarPageWidgetState
                                   ).animateOnPageLoad(animationsMap[
                                       'columnOnPageLoadAnimation6']!),
                                 ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 22.0,
+                                            child: VerticalDivider(
+                                              thickness: 4.0,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                          ),
+                                          Text(
+                                            'แนบรูป',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ].divide(SizedBox(width: 12.0)),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(
+                                          'เล่มรถ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                fontSize: () {
+                                                  if (MediaQuery.sizeOf(context)
+                                                          .width <
+                                                      kBreakpointSmall) {
+                                                    return 14.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointMedium) {
+                                                    return 20.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointLarge) {
+                                                    return 20.0;
+                                                  } else {
+                                                    return 20.0;
+                                                  }
+                                                }(),
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                    if (_model.bluebookFile != null &&
+                                        (_model.bluebookFile?.bytes
+                                                ?.isNotEmpty ??
+                                            false))
+                                      Align(
+                                        alignment: AlignmentDirectional(
+                                            valueOrDefault<double>(
+                                              () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 0.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 0.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return -1.0;
+                                                } else {
+                                                  return -1.0;
+                                                }
+                                              }(),
+                                              0.0,
+                                            ),
+                                            0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 8.0, 0.0, 0.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  child:
+                                                      FlutterFlowExpandedImageView(
+                                                    image: Image.memory(
+                                                      _model.bluebookFile
+                                                              ?.bytes ??
+                                                          Uint8List.fromList(
+                                                              []),
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                    allowRotation: false,
+                                                    tag: 'imageTag',
+                                                    useHeroAnimation: true,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Hero(
+                                              tag: 'imageTag',
+                                              transitionOnUserGestures: true,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                child: Image.memory(
+                                                  _model.bluebookFile?.bytes ??
+                                                      Uint8List.fromList([]),
+                                                  width: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 200.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 300.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 300.0;
+                                                    } else {
+                                                      return 300.0;
+                                                    }
+                                                  }(),
+                                                  height: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 200.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 300.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 300.0;
+                                                    } else {
+                                                      return 300.0;
+                                                    }
+                                                  }(),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ).animateOnPageLoad(animationsMap[
+                                              'imageOnPageLoadAnimation']!),
+                                        ),
+                                      ),
+                                    Builder(
+                                      builder: (context) => Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 0.0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            var _shouldSetState = false;
+                                            await showAlignedDialog(
+                                              context: context,
+                                              isGlobal: false,
+                                              avoidOverflow: false,
+                                              targetAnchor:
+                                                  AlignmentDirectional(
+                                                          0.0, -1.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              followerAnchor:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              builder: (dialogContext) {
+                                                return Material(
+                                                  color: Colors.transparent,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        ImageSourceComponentWidget(
+                                                      cameraType: 'normal',
+                                                      actionName: 'bluebook',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ).then((value) => safeSetState(() =>
+                                                _model.bluebookFileOutput =
+                                                    value));
+
+                                            _shouldSetState = true;
+                                            if (!(_model.bluebookFileOutput !=
+                                                    null &&
+                                                (_model.bluebookFileOutput
+                                                        ?.bytes?.isNotEmpty ??
+                                                    false))) {
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
+                                            _model.bluebookFile =
+                                                _model.bluebookFileOutput;
+                                            safeSetState(() {});
+                                            if (_shouldSetState)
+                                              safeSetState(() {});
+                                          },
+                                          text: 'แนบรูป',
+                                          icon: Icon(
+                                            Icons.attach_file_sharp,
+                                            size: () {
+                                              if (MediaQuery.sizeOf(context)
+                                                      .width <
+                                                  kBreakpointSmall) {
+                                                return 25.0;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointMedium) {
+                                                return 30.0;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointLarge) {
+                                                return 30.0;
+                                              } else {
+                                                return 30.0;
+                                              }
+                                            }(),
+                                          ),
+                                          options: FFButtonOptions(
+                                            width: () {
+                                              if (MediaQuery.sizeOf(context)
+                                                      .width <
+                                                  kBreakpointSmall) {
+                                                return MediaQuery.sizeOf(
+                                                        context)
+                                                    .width;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointMedium) {
+                                                return MediaQuery.sizeOf(
+                                                        context)
+                                                    .width;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointLarge) {
+                                                return 600.0;
+                                              } else {
+                                                return 600.0;
+                                              }
+                                            }(),
+                                            height: () {
+                                              if (MediaQuery.sizeOf(context)
+                                                      .width <
+                                                  kBreakpointSmall) {
+                                                return 70.0;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointMedium) {
+                                                return 90.0;
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointLarge) {
+                                                return 90.0;
+                                              } else {
+                                                return 90.0;
+                                              }
+                                            }(),
+                                            padding: EdgeInsets.all(0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconColor: Color(0xFF1D71B8),
+                                            color: Color(0xFFD9EBFF),
+                                            textStyle: FlutterFlowTheme.of(
+                                                    context)
+                                                .titleSmall
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: Color(0xFF1D71B8),
+                                                  fontSize: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 16.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 22.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 22.0;
+                                                    } else {
+                                                      return 22.0;
+                                                    }
+                                                  }(),
+                                                  letterSpacing: 0.0,
+                                                ),
+                                            elevation: 0.0,
+                                            borderRadius:
+                                                BorderRadius.circular(16.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ].addToEnd(SizedBox(height: 30.0)),
                           ),
                         ),

@@ -15,7 +15,16 @@ import 'lead_agent_review_detail_page_model.dart';
 export 'lead_agent_review_detail_page_model.dart';
 
 class LeadAgentReviewDetailPageWidget extends StatefulWidget {
-  const LeadAgentReviewDetailPageWidget({super.key});
+  const LeadAgentReviewDetailPageWidget({
+    super.key,
+    this.imageCarBack,
+    this.chanodFrontFile,
+    this.chanodBackFile,
+  });
+
+  final FFUploadedFile? imageCarBack;
+  final FFUploadedFile? chanodFrontFile;
+  final FFUploadedFile? chanodBackFile;
 
   static String routeName = 'LeadAgentReviewDetailPage';
   static String routePath = '/leadAgentReviewDetailPage';
@@ -415,6 +424,9 @@ class _LeadAgentReviewDetailPageWidgetState
                                     promptpayNumber: FFAppState()
                                         .agentProfileDataType
                                         .promptpayNumber,
+                                    imageCarBook: widget.imageCarBack,
+                                    imageChanodFront: widget.chanodFrontFile,
+                                    imageChanodBack: widget.chanodBackFile,
                                   );
 
                                   _shouldSetState = true;

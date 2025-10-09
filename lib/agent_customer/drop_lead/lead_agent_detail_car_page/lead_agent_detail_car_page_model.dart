@@ -1,4 +1,5 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
+import '/agent_customer/drop_lead/review_detail_customer_component/review_detail_customer_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
@@ -93,12 +94,20 @@ class LeadAgentDetailCarPageModel
 
   int? stateNumber = 1;
 
+  String? bluebookBase64;
+
+  FFUploadedFile? bluebookFile;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCarPage widget.
+  FFUploadedFile? generateBluebookFile;
   // Stores action output result for [Backend Call - API (AgentRateSearch)] action in LeadAgentDetailCarPage widget.
   ApiCallResponse? apiResultGear;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
+  // Model for ReviewDetailCustomerComponent component.
+  late ReviewDetailCustomerComponentModel reviewDetailCustomerComponentModel;
   // State field(s) for DropDownVehicle widget.
   String? dropDownVehicleValue;
   FormFieldController<String>? dropDownVehicleValueController;
@@ -129,16 +138,21 @@ class LeadAgentDetailCarPageModel
   String? Function(BuildContext, String?)? textControllerValidator;
   // Stores action output result for [Backend Call - API (AgentCheckRate)] action in Button widget.
   ApiCallResponse? apiResultCheckRate;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  FFUploadedFile? bluebookFileOutput;
 
   @override
   void initState(BuildContext context) {
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
+    reviewDetailCustomerComponentModel =
+        createModel(context, () => ReviewDetailCustomerComponentModel());
   }
 
   @override
   void dispose() {
     progressBarComponentModel.dispose();
+    reviewDetailCustomerComponentModel.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
   }

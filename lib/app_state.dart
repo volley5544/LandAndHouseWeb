@@ -691,6 +691,18 @@ class FFAppState extends ChangeNotifier {
   set readConsent(bool value) {
     _readConsent = value;
   }
+
+  String _platform = '';
+  String get platform => _platform;
+  set platform(String value) {
+    _platform = value;
+  }
+
+  bool _useNewCameraAction = false;
+  bool get useNewCameraAction => _useNewCameraAction;
+  set useNewCameraAction(bool value) {
+    _useNewCameraAction = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

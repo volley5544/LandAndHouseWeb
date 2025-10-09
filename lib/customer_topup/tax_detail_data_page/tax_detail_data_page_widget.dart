@@ -49,6 +49,38 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
           'hash_id': FFAppState().hashThaiIdAppState,
         },
       );
+      await Future.wait([
+        Future(() async {
+          while (true) {
+            safeSetState(() {});
+            await Future.delayed(
+              Duration(
+                milliseconds: 1000,
+              ),
+            );
+          }
+        }),
+        Future(() async {
+          await actions.listenWebviewEventCamera(
+            (cameraBase64) async {
+              if (true) {
+                _model.fullVehicleBase64 = cameraBase64;
+                safeSetState(() {});
+                _model.generateFullVehicleFile =
+                    await actions.convertBase64ToFFFiles(
+                  _model.fullVehicleBase64,
+                  '01',
+                );
+                _model.fullVehicleFile = _model.generateFullVehicleFile;
+                safeSetState(() {});
+              } else if (false) {
+              } else if (false) {
+              } else if (false) {
+              } else if (false) {}
+            },
+          );
+        }),
+      ]);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -582,6 +614,16 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                         return FFButtonWidget(
                                           onPressed: () async {
                                             var _shouldSetState = false;
+                                            if (FFAppState()
+                                                .useNewCameraAction) {
+                                              await actions.openCameraWebview(
+                                                'normal',
+                                                'fullVehicle',
+                                              );
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                              return;
+                                            }
                                             final selectedMedia =
                                                 await selectMedia(
                                               maxWidth: 1920.00,

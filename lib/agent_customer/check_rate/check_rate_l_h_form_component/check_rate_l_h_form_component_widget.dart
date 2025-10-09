@@ -5164,6 +5164,18 @@ class _CheckRateLHFormComponentWidgetState
                                       context.pushNamed(
                                         LeadAgentReviewDetailPageWidget
                                             .routeName,
+                                        queryParameters: {
+                                          'chanodFrontFile': serializeParam(
+                                            _model
+                                                .uploadedLocalFile_uploadDataSqdComponent,
+                                            ParamType.FFUploadedFile,
+                                          ),
+                                          'chanodBackFile': serializeParam(
+                                            _model
+                                                .uploadedLocalFile_uploadDataSqd2Component,
+                                            ParamType.FFUploadedFile,
+                                          ),
+                                        }.withoutNulls,
                                         extra: <String, dynamic>{
                                           kTransitionInfoKey: TransitionInfo(
                                             hasTransition: true,

@@ -37,8 +37,24 @@ class TaxDetailDataPageModel extends FlutterFlowModel<TaxDetailDataPageWidget> {
 
   FFUploadedFile? mileFile;
 
+  String? fullVehicleBase64;
+
+  String? circleBase64;
+
+  String? rightBase64;
+
+  String? leftBase64;
+
+  String? frontBase64;
+
+  String? backBase64;
+
+  String? mileBase64;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateFullVehicleFile;
   // Model for LoanDetailCardTopupComponent component.
   late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   bool isDataUploading_fullVehicleImageUploadAction = false;

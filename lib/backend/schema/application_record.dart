@@ -51,6 +51,11 @@ class ApplicationRecord extends FirestoreRecord {
       _comcodeConfig ?? ComcodeConfigModelStruct();
   bool hasComcodeConfig() => _comcodeConfig != null;
 
+  // "use_new_camera_action" field.
+  bool? _useNewCameraAction;
+  bool get useNewCameraAction => _useNewCameraAction ?? false;
+  bool hasUseNewCameraAction() => _useNewCameraAction != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -64,6 +69,7 @@ class ApplicationRecord extends FirestoreRecord {
     _comcodeConfig = snapshotData['comcode_config'] is ComcodeConfigModelStruct
         ? snapshotData['comcode_config']
         : ComcodeConfigModelStruct.maybeFromMap(snapshotData['comcode_config']);
+    _useNewCameraAction = snapshotData['use_new_camera_action'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -106,6 +112,7 @@ Map<String, dynamic> createApplicationRecordData({
   String? topupNoDataText,
   String? topupNoData2Text,
   ComcodeConfigModelStruct? comcodeConfig,
+  bool? useNewCameraAction,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -114,6 +121,7 @@ Map<String, dynamic> createApplicationRecordData({
       'topup_no_data_text': topupNoDataText,
       'topup_no_data2_text': topupNoData2Text,
       'comcode_config': ComcodeConfigModelStruct().toMap(),
+      'use_new_camera_action': useNewCameraAction,
     }.withoutNulls,
   );
 
@@ -140,7 +148,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         listEquality.equals(e1?.topupTextList, e2?.topupTextList) &&
         e1?.topupNoDataText == e2?.topupNoDataText &&
         e1?.topupNoData2Text == e2?.topupNoData2Text &&
-        e1?.comcodeConfig == e2?.comcodeConfig;
+        e1?.comcodeConfig == e2?.comcodeConfig &&
+        e1?.useNewCameraAction == e2?.useNewCameraAction;
   }
 
   @override
@@ -151,7 +160,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.topupTextList,
         e?.topupNoDataText,
         e?.topupNoData2Text,
-        e?.comcodeConfig
+        e?.comcodeConfig,
+        e?.useNewCameraAction
       ]);
 
   @override

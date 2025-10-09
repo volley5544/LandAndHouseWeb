@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-Future openCameraWebview() async {
+Future openCameraWebview(String? cameraType, String? actionName) async {
   // Add your function code here!
-  print("CameraAction5544");
+  print("${actionName!}CameraAction5544${cameraType!}");
+
+  //ใส่cameraTypeตามกล้องที่อยากใช้Mask
+//idCard
+//idCardPlusSelfie
+//nromal,empty string
 }

@@ -22,7 +22,7 @@ class MarkdownViewerWidget extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final Future Function()? rebuildPage;
+  final Future Function(bool? isBottom)? rebuildPage;
 
   @override
   State<MarkdownViewerWidget> createState() => _MarkdownViewerWidgetState();
@@ -47,10 +47,11 @@ class _MarkdownViewerWidgetState extends State<MarkdownViewerWidget> {
 
       if (atBottom) {
         print("✅ Reached bottom of Markdown");
-        FFAppState().readConsent = true;
-        await widget.rebuildPage;
+        await widget.rebuildPage?.call(true); // ✅ Call the function properly
       } else {
         print("⬆️ Not at bottom yet");
+        await widget.rebuildPage
+            ?.call(false); // optional if you want to notify top
       }
     }
   }

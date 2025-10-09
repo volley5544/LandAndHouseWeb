@@ -17,9 +17,11 @@ class AgentMainMenuPageWidget extends StatefulWidget {
   const AgentMainMenuPageWidget({
     super.key,
     this.agentCode,
-  });
+    String? platform,
+  }) : this.platform = platform ?? 'web';
 
   final String? agentCode;
+  final String platform;
 
   static String routeName = 'AgentMainMenuPage';
   static String routePath = '/agentMainMenuPage';
@@ -41,110 +43,134 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setDarkModeSetting(context, ThemeMode.light);
-      FFAppState().agentCode = widget.agentCode!;
-      safeSetState(() {});
-      showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
-                .resolve(Directionality.of(context)),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(dialogContext).unfocus();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: Container(
-                height: double.infinity,
-                width: double.infinity,
-                child: LoadingWidget(),
+      await Future.wait([
+        Future(() async {
+          while (true) {
+            safeSetState(() {});
+            await Future.delayed(
+              Duration(
+                milliseconds: 1000,
               ),
-            ),
-          );
-        },
-      );
-
-      await actions.listenWebviewEventCamera(
-        (cameraBase64) async {
-          FFAppState().debugText1 = cameraBase64;
+            );
+          }
+        }),
+        Future(() async {
+          setDarkModeSetting(context, ThemeMode.light);
+          FFAppState().agentCode = widget.agentCode!;
+          FFAppState().platform = widget.platform;
           safeSetState(() {});
-        },
-      );
-      _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
-        agentCode: widget.agentCode,
-        url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
-      );
-
-      if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage:
-                      'พบข้อผิดพลาด connnection (${(_model.agentAPIOutput?.statusCode ?? 200).toString()})',
+          showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(0.0, 0.0)
+                    .resolve(Directionality.of(context)),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(dialogContext).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: LoadingWidget(),
+                  ),
                 ),
-              ),
-            );
-          },
-        );
+              );
+            },
+          );
 
-        Navigator.pop(context);
-        return;
-      }
-      if ('${getJsonField(
+          await actions.listenWebviewEventCamera(
+            (cameraBase64) async {
+              _model.base64 = cameraBase64;
+              safeSetState(() {});
+              FFAppState().debugText2 = cameraBase64;
+              safeSetState(() {});
+              _model.generateFFUploadFile =
+                  await actions.convertBase64ToFFFiles(
+                _model.base64,
+                '01',
+              );
+              _model.idCardFile = _model.generateFFUploadFile;
+              safeSetState(() {});
+            },
+          );
+          _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
+            agentCode: widget.agentCode,
+            url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
+          );
+
+          if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          'พบข้อผิดพลาด connnection (${(_model.agentAPIOutput?.statusCode ?? 200).toString()})',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+          if ('${getJsonField(
+                (_model.agentAPIOutput?.jsonBody ?? ''),
+                r'''$.code''',
+              ).toString()}' !=
+              '200') {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage: '${getJsonField(
+                        (_model.agentAPIOutput?.jsonBody ?? ''),
+                        r'''$.message''',
+                      ).toString()}',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+          FFAppState().agentProfileDataType =
+              AgentAPIGroup.agentProfileAPICall.data(
             (_model.agentAPIOutput?.jsonBody ?? ''),
-            r'''$.code''',
-          ).toString()}' !=
-          '200') {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage: '${getJsonField(
-                    (_model.agentAPIOutput?.jsonBody ?? ''),
-                    r'''$.message''',
-                  ).toString()}',
-                ),
-              ),
-            );
-          },
-        );
-
-        Navigator.pop(context);
-        return;
-      }
-      FFAppState().agentProfileDataType =
-          AgentAPIGroup.agentProfileAPICall.data(
-        (_model.agentAPIOutput?.jsonBody ?? ''),
-      )!;
-      safeSetState(() {});
-      Navigator.pop(context);
+          )!;
+          safeSetState(() {});
+          Navigator.pop(context);
+        }),
+      ]);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -195,7 +221,10 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  await actions.openCameraWebview();
+                  await actions.openCameraWebview(
+                    'idCardPlusSelfie',
+                    'home',
+                  );
                 },
                 child: Text(
                   'ตัวแทน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
@@ -430,21 +459,28 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
-                        child: Text(
-                          FFAppState().debugText1,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto San Thai',
-                                    letterSpacing: 0.0,
-                                  ),
+                      if (_model.idCardFile != null &&
+                          (_model.idCardFile?.bytes?.isNotEmpty ?? false))
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(),
+                          child: Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.memory(
+                                _model.idCardFile?.bytes ??
+                                    Uint8List.fromList([]),
+                                width: 200.0,
+                                height: 200.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(),
                         child: Text(
                           FFAppState().debugText2,
                           style:

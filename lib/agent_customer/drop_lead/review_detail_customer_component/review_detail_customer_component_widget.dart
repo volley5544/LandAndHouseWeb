@@ -604,264 +604,272 @@ class _ReviewDetailCustomerComponentWidgetState
                 ].divide(SizedBox(width: 12.0)),
               ),
             ),
-            Container(
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'เวลาที่สะดวกให้ติดต่อ',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Text(
-                        widget.time != ''
-                            ? '${dateTimeFormat("Hm", functions.parseStringDateToDateTime(valueOrDefault<String>(
-                                  widget.time,
-                                  'time',
-                                )))} น.'
-                            : 'ไม่ระบุเวลา',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                  ),
-                ].divide(SizedBox(width: 12.0)),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                    ),
-                    child: RichText(
-                      textScaler: MediaQuery.of(context).textScaler,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                'ข้าพเจ้าให้ความยินยอมกับบริษัทฯ ในการเก็บรวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าในการติดต่อเพื่อเสนอผลิตภัณฑ์และบริการของบริษัทฯและรับรองว่าได้อ่านและรับทราบประกาศความเป็นส่วนตัวแล้ว \n',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  letterSpacing: 0.0,
-                                ),
+            if (false)
+              Container(
+                decoration: BoxDecoration(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'เวลาที่สะดวกให้ติดต่อ',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: 14.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
                           ),
-                          TextSpan(
-                            text: 'ประกาศความเป็นส่วนตัวแล้ว ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  letterSpacing: 0.0,
-                                  decoration: TextDecoration.underline,
-                                ),
-                            mouseCursor: SystemMouseCursors.click,
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () async {
-                                await actions.launchUrlInApp(
-                                  'https://www.sawad.co.th/',
-                                );
-                              },
-                          )
-                        ],
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              letterSpacing: 0.0,
-                            ),
+                    ),
+                    Text(
+                      ':',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: () {
+                              if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointSmall) {
+                                return 16.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointMedium) {
+                                return 22.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointLarge) {
+                                return 22.0;
+                              } else {
+                                return 22.0;
+                              }
+                            }(),
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Text(
+                          widget.time != ''
+                              ? '${dateTimeFormat("Hm", functions.parseStringDateToDateTime(valueOrDefault<String>(
+                                    widget.time,
+                                    'time',
+                                  )))} น.'
+                              : 'ไม่ระบุเวลา',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xFF003063),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                    child: Container(
+                  ].divide(SizedBox(width: 12.0)),
+                ),
+              ),
+            if (false)
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
                       width: double.infinity,
-                      height: 50.0,
-                      decoration: BoxDecoration(),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Theme(
-                                  data: ThemeData(
-                                    checkboxTheme: CheckboxThemeData(
-                                      visualDensity: VisualDensity.compact,
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                    ),
-                                    unselectedWidgetColor:
-                                        FlutterFlowTheme.of(context).alternate,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                      child: RichText(
+                        textScaler: MediaQuery.of(context).textScaler,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'ข้าพเจ้าให้ความยินยอมกับบริษัทฯ ในการเก็บรวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าในการติดต่อเพื่อเสนอผลิตภัณฑ์และบริการของบริษัทฯและรับรองว่าได้อ่านและรับทราบประกาศความเป็นส่วนตัวแล้ว \n',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    letterSpacing: 0.0,
                                   ),
-                                  child: Checkbox(
-                                    value: _model.checkboxValue1 ??=
-                                        FFAppState()
-                                                .saveLeadAgentData
-                                                .privacyConsentFlag ==
-                                            'Y',
-                                    onChanged: true
-                                        ? null
-                                        : (newValue) async {
-                                            safeSetState(() => _model
-                                                .checkboxValue1 = newValue!);
-
-                                            if (!newValue!) {
-                                              safeSetState(() {
-                                                _model.checkboxValue1 = true;
-                                              });
-                                            }
-                                          },
-                                    side: (FlutterFlowTheme.of(context)
-                                                .alternate !=
-                                            null)
-                                        ? BorderSide(
-                                            width: 2,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          )
-                                        : null,
-                                    activeColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    checkColor: true
-                                        ? null
-                                        : FlutterFlowTheme.of(context).info,
-                                  ),
-                                ),
-                                Text(
-                                  'ยินยอม',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ],
                             ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Theme(
-                                  data: ThemeData(
-                                    checkboxTheme: CheckboxThemeData(
-                                      visualDensity: VisualDensity.compact,
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(24.0),
-                                      ),
-                                    ),
-                                    unselectedWidgetColor:
-                                        FlutterFlowTheme.of(context).alternate,
+                            TextSpan(
+                              text: 'ประกาศความเป็นส่วนตัวแล้ว ',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    letterSpacing: 0.0,
+                                    decoration: TextDecoration.underline,
                                   ),
-                                  child: Checkbox(
-                                    value: _model.checkboxValue2 ??=
-                                        FFAppState()
-                                                .saveLeadAgentData
-                                                .privacyConsentFlag !=
-                                            'Y',
-                                    onChanged: true
-                                        ? null
-                                        : (newValue) async {
-                                            safeSetState(() => _model
-                                                .checkboxValue2 = newValue!);
-                                            if (newValue!) {
-                                              safeSetState(() {
-                                                _model.checkboxValue2 = false;
-                                              });
-                                            }
-                                          },
-                                    side: (FlutterFlowTheme.of(context)
-                                                .alternate !=
-                                            null)
-                                        ? BorderSide(
-                                            width: 2,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          )
-                                        : null,
-                                    activeColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    checkColor: true
-                                        ? null
-                                        : FlutterFlowTheme.of(context).info,
+                              mouseCursor: SystemMouseCursors.click,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  await actions.launchUrlInApp(
+                                    'https://www.sawad.co.th/',
+                                  );
+                                },
+                            )
+                          ],
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    letterSpacing: 0.0,
                                   ),
-                                ),
-                                Text(
-                                  'ไม่ยินยอม',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 50.0,
+                        decoration: BoxDecoration(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Theme(
+                                    data: ThemeData(
+                                      checkboxTheme: CheckboxThemeData(
+                                        visualDensity: VisualDensity.compact,
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                      ),
+                                      unselectedWidgetColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                    ),
+                                    child: Checkbox(
+                                      value: _model.checkboxValue1 ??=
+                                          FFAppState()
+                                                  .saveLeadAgentData
+                                                  .privacyConsentFlag ==
+                                              'Y',
+                                      onChanged: true
+                                          ? null
+                                          : (newValue) async {
+                                              safeSetState(() => _model
+                                                  .checkboxValue1 = newValue!);
+
+                                              if (!newValue!) {
+                                                safeSetState(() {
+                                                  _model.checkboxValue1 = true;
+                                                });
+                                              }
+                                            },
+                                      side: (FlutterFlowTheme.of(context)
+                                                  .alternate !=
+                                              null)
+                                          ? BorderSide(
+                                              width: 2,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                            )
+                                          : null,
+                                      activeColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      checkColor: true
+                                          ? null
+                                          : FlutterFlowTheme.of(context).info,
+                                    ),
+                                  ),
+                                  Text(
+                                    'ยินยอม',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Theme(
+                                    data: ThemeData(
+                                      checkboxTheme: CheckboxThemeData(
+                                        visualDensity: VisualDensity.compact,
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                      ),
+                                      unselectedWidgetColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                    ),
+                                    child: Checkbox(
+                                      value: _model.checkboxValue2 ??=
+                                          FFAppState()
+                                                  .saveLeadAgentData
+                                                  .privacyConsentFlag !=
+                                              'Y',
+                                      onChanged: true
+                                          ? null
+                                          : (newValue) async {
+                                              safeSetState(() => _model
+                                                  .checkboxValue2 = newValue!);
+                                              if (newValue!) {
+                                                safeSetState(() {
+                                                  _model.checkboxValue2 = false;
+                                                });
+                                              }
+                                            },
+                                      side: (FlutterFlowTheme.of(context)
+                                                  .alternate !=
+                                              null)
+                                          ? BorderSide(
+                                              width: 2,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                            )
+                                          : null,
+                                      activeColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      checkColor: true
+                                          ? null
+                                          : FlutterFlowTheme.of(context).info,
+                                    ),
+                                  ),
+                                  Text(
+                                    'ไม่ยินยอม',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
           ]
               .divide(SizedBox(height: 8.0))
               .addToStart(SizedBox(height: 8.0))

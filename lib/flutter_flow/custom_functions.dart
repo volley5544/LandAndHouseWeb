@@ -19,7 +19,7 @@ int? findIndexInList(
 ) {
   // Find the index of an item
   int index = dataList!.indexOf(searchInput!);
-
+  print('');
   return index;
 }
 

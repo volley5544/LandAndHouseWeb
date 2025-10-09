@@ -90,6 +90,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
           '${_model.configOutput?.apiUrl.apiUrlLeadProd}';
       FFAppState().ocrUrlDev = '${_model.configOutput?.apiUrl.ocrUrlDev}';
       FFAppState().ocrUrlProd = '${_model.configOutput?.apiUrl.ocrUrlProd}';
+      FFAppState().useNewCameraAction = _model.configOutput!.useNewCameraAction;
       safeSetState(() {});
       FFAppState().saveTopupData = SaveTopupDataModelStruct(
         lifeInsureAmt: '',

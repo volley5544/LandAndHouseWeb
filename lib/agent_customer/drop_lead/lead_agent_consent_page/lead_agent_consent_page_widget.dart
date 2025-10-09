@@ -94,7 +94,9 @@ class _LeadAgentConsentPageWidgetState
                     child: custom_widgets.MarkdownViewerWidget(
                       width: double.infinity,
                       height: MediaQuery.sizeOf(context).height * 0.7,
-                      rebuildPage: () async {
+                      rebuildPage: (isBottom) async {
+                        FFAppState().readConsent = isBottom!;
+                        safeSetState(() {});
                         safeSetState(() {});
                       },
                     ),

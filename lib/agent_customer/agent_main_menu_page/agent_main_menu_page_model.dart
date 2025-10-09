@@ -5,8 +5,16 @@ import 'agent_main_menu_page_widget.dart' show AgentMainMenuPageWidget;
 import 'package:flutter/material.dart';
 
 class AgentMainMenuPageModel extends FlutterFlowModel<AgentMainMenuPageWidget> {
+  ///  Local state fields for this page.
+
+  String? base64;
+
+  FFUploadedFile? idCardFile;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in AgentMainMenuPage widget.
+  FFUploadedFile? generateFFUploadFile;
   // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in AgentMainMenuPage widget.
   ApiCallResponse? agentAPIOutput;
 

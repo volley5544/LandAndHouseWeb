@@ -570,7 +570,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentReviewDetailPageWidget.routeName,
           path: LeadAgentReviewDetailPageWidget.routePath,
-          builder: (context, params) => LeadAgentReviewDetailPageWidget(),
+          builder: (context, params) => LeadAgentReviewDetailPageWidget(
+            imageCarBack: params.getParam(
+              'imageCarBack',
+              ParamType.FFUploadedFile,
+            ),
+            chanodFrontFile: params.getParam(
+              'chanodFrontFile',
+              ParamType.FFUploadedFile,
+            ),
+            chanodBackFile: params.getParam(
+              'chanodBackFile',
+              ParamType.FFUploadedFile,
+            ),
+          ),
         ),
         FFRoute(
           name: LeadAgentDetailLHPageWidget.routeName,
@@ -588,6 +601,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AgentMainMenuPageWidget(
             agentCode: params.getParam(
               'agentCode',
+              ParamType.String,
+            ),
+            platform: params.getParam(
+              'platform',
               ParamType.String,
             ),
           ),
