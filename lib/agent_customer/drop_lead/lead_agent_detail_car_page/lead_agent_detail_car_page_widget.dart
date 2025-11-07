@@ -2720,6 +2720,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                     },
                                                   );
 
+                                                  Navigator.pop(context);
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
                                                   return;
@@ -2772,6 +2773,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                     },
                                                   );
 
+                                                  Navigator.pop(context);
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
                                                   return;
