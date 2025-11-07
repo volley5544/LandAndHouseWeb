@@ -113,9 +113,7 @@ class _LeadAgentDetailCarPageWidgetState
             },
           );
           _model.provinceApiOutput = await APIMasterGroup.getProvinceCall.call(
-            url: FFDevEnvironmentValues().isProduction
-                ? FFAppState().apiUrlDocData.agentWebApiUrl
-                : FFAppState().apiUrlDocData.agentWebLeadUrlUat,
+            url: FFAppState().apiUrlDocData.tanjaiApiUrl,
           );
 
           _model.getVehicleMaster = await AgentAPIGroup.rateGetVehicleCall.call(

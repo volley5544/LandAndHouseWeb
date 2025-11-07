@@ -113,7 +113,7 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
             agentCode: widget.agentCode,
             url: FFDevEnvironmentValues().isProduction
                 ? FFAppState().apiUrlDocData.agentWebApiUrl
-                : FFAppState().apiUrlDocData.agentWebLeadUrlUat,
+                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
           );
 
           if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {
