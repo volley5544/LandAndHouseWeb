@@ -1,5 +1,6 @@
 import '/agent_customer/drop_lead/review_detail_agent_component/review_detail_agent_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/components/banner_agent_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'verify_agent_widget.dart' show VerifyAgentWidget;
@@ -10,6 +11,8 @@ class VerifyAgentModel extends FlutterFlowModel<VerifyAgentWidget> {
 
   // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in VerifyAgent widget.
   ApiCallResponse? agentAPIOutput;
+  // Stores action output result for [Backend Call - Read Document] action in VerifyAgent widget.
+  ApplicationRecord? queryUrl;
   // Model for BannerAgentComponent component.
   late BannerAgentComponentModel bannerAgentComponentModel;
   // Model for ReviewDetailAgentComponent component.

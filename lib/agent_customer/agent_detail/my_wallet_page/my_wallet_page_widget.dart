@@ -64,6 +64,9 @@ class _MyWalletPageWidgetState extends State<MyWalletPageWidget> {
       _model.commissionMonthlyApiOutput =
           await AgentAPIGroup.commissionMonthlyApiCall.call(
         agentCode: FFAppState().agentProfileDataType.agentCode,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
       if ((_model.commissionMonthlyApiOutput?.statusCode ?? 200) == 200) {

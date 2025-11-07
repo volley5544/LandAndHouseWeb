@@ -73,6 +73,9 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
       _model.getCommissionLeadApiOutput =
           await AgentAPIGroup.getCommissionLeadCall.call(
         agentCode: FFAppState().agentCode,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
       if ((_model.getCommissionLeadApiOutput?.statusCode ?? 200) != 200) {

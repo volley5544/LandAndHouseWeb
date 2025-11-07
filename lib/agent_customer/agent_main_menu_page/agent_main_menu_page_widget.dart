@@ -111,7 +111,9 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
           safeSetState(() {});
           _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
             agentCode: widget.agentCode,
-            url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                : FFAppState().apiUrlDocData.agentWebLeadUrlUat,
           );
 
           if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {

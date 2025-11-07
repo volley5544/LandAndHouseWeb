@@ -89,7 +89,9 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
       _model.getLeadAgentApiOutput =
           await AgentAPIGroup.getLeadAgentByTypeCall.call(
         agentCode: FFAppState().agentCode,
-        url: 'https://16742361ed73.ngrok-free.app/ssw_agent',
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
       if ((_model.getLeadAgentApiOutput?.statusCode ?? 200) != 200) {

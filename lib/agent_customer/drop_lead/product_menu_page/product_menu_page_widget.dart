@@ -1,5 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/structs/index.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -42,6 +42,10 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
+      _model.queryUrl =
+          await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
+      FFAppState().apiUrlDocData = _model.queryUrl!.apiUrl;
+      safeSetState(() {});
       FFAppState().agentCode = widget.agentCode!;
       FFAppState().doOwnLead =
           widget.fromPage != null && widget.fromPage != '';
@@ -49,6 +53,9 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
       if (FFAppState().agentProfileDataType == AgentProfileModelStruct()) {
         _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
           agentCode: FFAppState().agentCode,
+          url: FFDevEnvironmentValues().isProduction
+              ? FFAppState().apiUrlDocData.agentWebApiUrl
+              : FFAppState().apiUrlDocData.agentWebApiUrlUat,
         );
 
         FFAppState().agentProfileDataType =

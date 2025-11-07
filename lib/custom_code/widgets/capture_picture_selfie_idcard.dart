@@ -211,114 +211,6 @@ class _CapturePictureSelfieIdcardState
                           ),
                         ),
                       ),
-                      // Visibility(
-                      //   visible: widget.imagesType == 'idCard',
-                      //   child: CustomPaint(
-                      //     size: Size.infinite,
-                      //     painter: HolePainterIdCard(
-                      //       topCircleRect: Rect.fromCenter(
-                      //         center: Offset(
-                      //             MediaQuery.sizeOf(context).width / 2,
-                      //             (MediaQuery.sizeOf(context).height / 2) *
-                      //                 0.75),
-                      //         width: MediaQuery.sizeOf(context).width * 0.98,
-                      //         height: MediaQuery.sizeOf(context).height * 0.3,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Visibility(
-                      //   visible: widget.imagesType == 'idCard',
-                      //   child: Container(
-                      //       width: double.infinity,
-                      //       height: MediaQuery.of(context).size.height * 0.75,
-                      //       decoration: BoxDecoration(),
-                      //       child: Container(
-                      //           width: double.infinity,
-                      //           height: double.infinity,
-                      //           child: Container(
-                      //             width: double.infinity,
-                      //             height: double.infinity,
-                      //             child: Stack(
-                      //               children: [
-                      //                 Align(
-                      //                   alignment:
-                      //                       AlignmentDirectional(0.0, 0.0),
-                      //                   child: Container(
-                      //                     width:
-                      //                         MediaQuery.sizeOf(context).width *
-                      //                             0.98,
-                      //                     height: MediaQuery.sizeOf(context)
-                      //                             .height *
-                      //                         0.3,
-                      //                     decoration: BoxDecoration(
-                      //                       border: Border.all(
-                      //                         color: Colors.white,
-                      //                         width: 7.0,
-                      //                       ),
-                      //                     ),
-                      //                     child: Stack(
-                      //                       children: [
-                      //                         Align(
-                      //                           alignment: AlignmentDirectional(
-                      //                               -1.0, -1.0),
-                      //                           child: Padding(
-                      //                             padding: EdgeInsetsDirectional
-                      //                                 .fromSTEB(
-                      //                                     0.0, 0.0, 8.0, 12.0),
-                      //                             child: Container(
-                      //                               width: MediaQuery.sizeOf(
-                      //                                           context)
-                      //                                       .width *
-                      //                                   0.15,
-                      //                               height: MediaQuery.sizeOf(
-                      //                                           context)
-                      //                                       .width *
-                      //                                   0.15,
-                      //                               decoration: BoxDecoration(
-                      //                                 shape: BoxShape.circle,
-                      //                                 border: Border.all(
-                      //                                   color: Colors.white,
-                      //                                   width: 5.0,
-                      //                                 ),
-                      //                               ),
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                         Align(
-                      //                           alignment: AlignmentDirectional(
-                      //                               1.0, 1.0),
-                      //                           child: Padding(
-                      //                             padding: EdgeInsetsDirectional
-                      //                                 .fromSTEB(
-                      //                                     0.0, 0.0, 8.0, 12.0),
-                      //                             child: Container(
-                      //                               width: MediaQuery.sizeOf(
-                      //                                           context)
-                      //                                       .width *
-                      //                                   0.25,
-                      //                               height: MediaQuery.sizeOf(
-                      //                                           context)
-                      //                                       .height *
-                      //                                   0.13,
-                      //                               decoration: BoxDecoration(
-                      //                                 border: Border.all(
-                      //                                   color: Colors.white,
-                      //                                   width: 5.0,
-                      //                                 ),
-                      //                               ),
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                       ],
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ))),
-                      // ),
-
                       Visibility(
                         visible: widget.imagesType == 'idCard',
                         child: CustomPaint(
@@ -330,11 +222,119 @@ class _CapturePictureSelfieIdcardState
                                   (MediaQuery.sizeOf(context).height / 2) *
                                       0.75),
                               width: MediaQuery.sizeOf(context).width * 0.98,
-                              height: MediaQuery.sizeOf(context).height * 0.35,
+                              height: MediaQuery.sizeOf(context).height * 0.3,
                             ),
                           ),
                         ),
                       ),
+                      Visibility(
+                        visible: widget.imagesType == 'idCard',
+                        child: Container(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.75,
+                            decoration: BoxDecoration(),
+                            child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.sizeOf(context).width *
+                                                  0.98,
+                                          height: MediaQuery.sizeOf(context)
+                                                  .height *
+                                              0.3,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.white,
+                                              width: 7.0,
+                                            ),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.0, -1.0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 12.0),
+                                                  child: Container(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.15,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.15,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 5.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment: AlignmentDirectional(
+                                                    1.0, 1.0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 12.0),
+                                                  child: Container(
+                                                    width: MediaQuery.sizeOf(
+                                                                context)
+                                                            .width *
+                                                        0.25,
+                                                    height: MediaQuery.sizeOf(
+                                                                context)
+                                                            .height *
+                                                        0.13,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 5.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ))),
+                      ),
+
+                      // Visibility(
+                      //   visible: widget.imagesType == 'idCard',
+                      //   child: CustomPaint(
+                      //     size: Size.infinite,
+                      //     painter: HolePainterIdCard(
+                      //       topCircleRect: Rect.fromCenter(
+                      //         center: Offset(
+                      //             MediaQuery.sizeOf(context).width / 2,
+                      //             (MediaQuery.sizeOf(context).height / 2) *
+                      //                 0.75),
+                      //         width: MediaQuery.sizeOf(context).width * 0.98,
+                      //         height: MediaQuery.sizeOf(context).height * 0.35,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       // Visibility(
                       //   visible: widget.imagesType == 'idCard',
                       //   child: Container(

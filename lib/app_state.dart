@@ -560,7 +560,7 @@ class FFAppState extends ChangeNotifier {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 48;
+  int _webUatVersion = 50;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;

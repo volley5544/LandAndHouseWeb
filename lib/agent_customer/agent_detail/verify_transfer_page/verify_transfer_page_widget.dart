@@ -277,6 +277,13 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                                 .agentProfileDataType
                                                 .promptpayNumber,
                                     paymentChannel: _model.paymentChannel,
+                                    url: FFDevEnvironmentValues().isProduction
+                                        ? FFAppState()
+                                            .apiUrlDocData
+                                            .agentWebApiUrl
+                                        : FFAppState()
+                                            .apiUrlDocData
+                                            .agentWebApiUrlUat,
                                   );
 
                                   _shouldSetState = true;

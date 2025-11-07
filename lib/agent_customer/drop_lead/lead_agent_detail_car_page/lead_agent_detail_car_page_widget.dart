@@ -14,10 +14,12 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/loading/loading_widget.dart';
+import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -111,11 +113,16 @@ class _LeadAgentDetailCarPageWidgetState
             },
           );
           _model.provinceApiOutput = await APIMasterGroup.getProvinceCall.call(
-            url: 'https://is-dev.swpfin.com/ssw_tanjai_api_dev',
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                : FFAppState().apiUrlDocData.agentWebLeadUrlUat,
           );
 
           _model.getVehicleMaster = await AgentAPIGroup.rateGetVehicleCall.call(
             categoryCode: widget.product,
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
           );
 
           if ((_model.getVehicleMaster?.statusCode ?? 200) != 200) {
@@ -655,6 +662,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .call(
                                                 carVehicleCode:
                                                     _model.dropDownVehicleValue,
+                                                url: FFDevEnvironmentValues()
+                                                        .isProduction
+                                                    ? FFAppState()
+                                                        .apiUrlDocData
+                                                        .agentWebApiUrl
+                                                    : FFAppState()
+                                                        .apiUrlDocData
+                                                        .agentWebApiUrlUat,
                                               );
 
                                               _shouldSetState = true;
@@ -1017,6 +1032,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .loanTypeCode,
                                                   carGear:
                                                       _model.dropDownGearValue,
+                                                  url: FFDevEnvironmentValues()
+                                                          .isProduction
+                                                      ? FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrl
+                                                      : FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrlUat,
                                                 );
 
                                                 _shouldSetState = true;
@@ -1523,6 +1546,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                       .dropDownBrand11Value,
                                                   carYear:
                                                       _model.dropDownYearValue,
+                                                  url: FFDevEnvironmentValues()
+                                                          .isProduction
+                                                      ? FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrl
+                                                      : FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrlUat,
                                                 );
 
                                                 _shouldSetState = true;
@@ -1864,6 +1895,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                       _model.dropDownYearValue,
                                                   carModel:
                                                       _model.dropDownModelValue,
+                                                  url: FFDevEnvironmentValues()
+                                                          .isProduction
+                                                      ? FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrl
+                                                      : FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrlUat,
                                                 );
 
                                                 _shouldSetState = true;
@@ -2631,6 +2670,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                   thaiId: FFAppState()
                                                       .saveLeadAgentData
                                                       .registerId,
+                                                  url: FFDevEnvironmentValues()
+                                                          .isProduction
+                                                      ? FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrl
+                                                      : FFAppState()
+                                                          .apiUrlDocData
+                                                          .agentWebApiUrlUat,
                                                 );
 
                                                 _shouldSetState = true;
@@ -3579,68 +3626,86 @@ class _LeadAgentDetailCarPageWidgetState
                                         hoverColor: Colors.transparent,
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
-                                          final _datePickedTime =
-                                              await showTimePicker(
-                                            context: context,
-                                            initialTime: TimeOfDay.fromDateTime(
-                                                getCurrentTimestamp),
-                                            builder: (context, child) {
-                                              return wrapInMaterialTimePickerTheme(
-                                                context,
-                                                child!,
-                                                headerBackgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                headerForegroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                headerTextStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 32.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                pickerBackgroundColor:
-                                                    FlutterFlowTheme.of(context)
+                                          await showModalBottomSheet<bool>(
+                                              context: context,
+                                              builder: (context) {
+                                                final _datePickedCupertinoTheme =
+                                                    CupertinoTheme.of(context);
+                                                return ScrollConfiguration(
+                                                  behavior:
+                                                      const MaterialScrollBehavior()
+                                                          .copyWith(
+                                                    dragDevices: {
+                                                      PointerDeviceKind.mouse,
+                                                      PointerDeviceKind.touch,
+                                                      PointerDeviceKind.stylus,
+                                                      PointerDeviceKind.unknown
+                                                    },
+                                                  ),
+                                                  child: Container(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            3,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .secondaryBackground,
-                                                pickerForegroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                selectedDateTimeBackgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                selectedDateTimeForegroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .info,
-                                                actionButtonForegroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                iconSize: 24.0,
-                                              );
-                                            },
-                                          );
-                                          if (_datePickedTime != null) {
-                                            safeSetState(() {
-                                              _model.datePicked = DateTime(
-                                                getCurrentTimestamp.year,
-                                                getCurrentTimestamp.month,
-                                                getCurrentTimestamp.day,
-                                                _datePickedTime.hour,
-                                                _datePickedTime.minute,
-                                              );
-                                            });
-                                          } else if (_model.datePicked !=
-                                              null) {
-                                            safeSetState(() {
-                                              _model.datePicked =
-                                                  getCurrentTimestamp;
-                                            });
-                                          }
+                                                    child: CupertinoTheme(
+                                                      data:
+                                                          _datePickedCupertinoTheme
+                                                              .copyWith(
+                                                        textTheme:
+                                                            _datePickedCupertinoTheme
+                                                                .textTheme
+                                                                .copyWith(
+                                                          dateTimePickerTextStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .headlineMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                        ),
+                                                      ),
+                                                      child:
+                                                          CupertinoDatePicker(
+                                                        mode:
+                                                            CupertinoDatePickerMode
+                                                                .time,
+                                                        minimumDate:
+                                                            DateTime(1900),
+                                                        initialDateTime:
+                                                            getCurrentTimestamp,
+                                                        maximumDate:
+                                                            DateTime(2050),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryBackground,
+                                                        use24hFormat: false,
+                                                        onDateTimeChanged:
+                                                            (newDateTime) =>
+                                                                safeSetState(
+                                                                    () {
+                                                          _model.datePicked =
+                                                              newDateTime;
+                                                        }),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              });
                                         },
                                         child: Container(
                                           width: double.infinity,

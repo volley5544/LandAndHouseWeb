@@ -1,6 +1,7 @@
 import '/agent_customer/drop_lead/confirm_agent_register/confirm_agent_register_widget.dart';
 import '/agent_customer/drop_lead/review_detail_agent_component/review_detail_agent_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/components/banner_agent_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -41,8 +42,15 @@ class _VerifyAgentWidgetState extends State<VerifyAgentWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
         agentCode: widget.agentCode,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
+      _model.queryUrl =
+          await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
+      FFAppState().apiUrlDocData = _model.queryUrl!.apiUrl;
+      safeSetState(() {});
       FFAppState().agentProfileDataType =
           AgentAPIGroup.agentProfileAPICall.data(
         (_model.agentAPIOutput?.jsonBody ?? ''),

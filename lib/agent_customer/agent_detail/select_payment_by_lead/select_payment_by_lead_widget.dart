@@ -308,6 +308,9 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             loanAmount: widget.loanAmount,
                             defaultComPercent: widget.defaultComPercent,
                             agentWht: widget.agentWht,
+                            url: FFDevEnvironmentValues().isProduction
+                                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
                           );
 
                           _shouldSetState = true;

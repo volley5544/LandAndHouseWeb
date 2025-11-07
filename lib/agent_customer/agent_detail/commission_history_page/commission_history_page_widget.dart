@@ -11,6 +11,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'commission_history_page_model.dart';
 export 'commission_history_page_model.dart';
 
@@ -65,6 +66,9 @@ class _CommissionHistoryPageWidgetState
 
       _model.commissionOutput = await AgentAPIGroup.commissionHistoryCall.call(
         leadId: widget.leadId,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
       if ((_model.commissionOutput?.statusCode ?? 200) != 200) {
@@ -149,6 +153,8 @@ class _CommissionHistoryPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Builder(
       builder: (context) => GestureDetector(
         onTap: () {

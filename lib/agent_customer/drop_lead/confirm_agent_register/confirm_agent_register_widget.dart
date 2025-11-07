@@ -311,6 +311,9 @@ class _ConfirmAgentRegisterWidgetState
                           agentCode:
                               FFAppState().agentProfileDataType.agentCode,
                           isConfirmed: widget.typeButton,
+                          url: FFDevEnvironmentValues().isProduction
+                              ? FFAppState().apiUrlDocData.agentWebApiUrl
+                              : FFAppState().apiUrlDocData.agentWebApiUrlUat,
                         );
 
                         _shouldSetState = true;

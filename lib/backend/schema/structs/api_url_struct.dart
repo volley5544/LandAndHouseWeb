@@ -26,6 +26,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? agentWebUrlUat,
     String? agentWebLeadUrl,
     String? agentWebLeadUrlUat,
+    String? agentWebApiUrl,
+    String? agentWebApiUrlUat,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -45,6 +47,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _agentWebUrlUat = agentWebUrlUat,
         _agentWebLeadUrl = agentWebLeadUrl,
         _agentWebLeadUrlUat = agentWebLeadUrlUat,
+        _agentWebApiUrl = agentWebApiUrl,
+        _agentWebApiUrlUat = agentWebApiUrlUat,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -173,6 +177,20 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasAgentWebLeadUrlUat() => _agentWebLeadUrlUat != null;
 
+  // "agent_web_api_url" field.
+  String? _agentWebApiUrl;
+  String get agentWebApiUrl => _agentWebApiUrl ?? '';
+  set agentWebApiUrl(String? val) => _agentWebApiUrl = val;
+
+  bool hasAgentWebApiUrl() => _agentWebApiUrl != null;
+
+  // "agent_web_api_url_uat" field.
+  String? _agentWebApiUrlUat;
+  String get agentWebApiUrlUat => _agentWebApiUrlUat ?? '';
+  set agentWebApiUrlUat(String? val) => _agentWebApiUrlUat = val;
+
+  bool hasAgentWebApiUrlUat() => _agentWebApiUrlUat != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -192,6 +210,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebUrlUat: data['agent_web_url_uat'] as String?,
         agentWebLeadUrl: data['agent_web_lead_url'] as String?,
         agentWebLeadUrlUat: data['agent_web_lead_url_uat'] as String?,
+        agentWebApiUrl: data['agent_web_api_url'] as String?,
+        agentWebApiUrlUat: data['agent_web_api_url_uat'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -216,6 +236,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'agent_web_url_uat': _agentWebUrlUat,
         'agent_web_lead_url': _agentWebLeadUrl,
         'agent_web_lead_url_uat': _agentWebLeadUrlUat,
+        'agent_web_api_url': _agentWebApiUrl,
+        'agent_web_api_url_uat': _agentWebApiUrlUat,
       }.withoutNulls;
 
   @override
@@ -290,6 +312,14 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'agent_web_lead_url_uat': serializeParam(
           _agentWebLeadUrlUat,
+          ParamType.String,
+        ),
+        'agent_web_api_url': serializeParam(
+          _agentWebApiUrl,
+          ParamType.String,
+        ),
+        'agent_web_api_url_uat': serializeParam(
+          _agentWebApiUrlUat,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -386,6 +416,16 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentWebApiUrl: deserializeParam(
+          data['agent_web_api_url'],
+          ParamType.String,
+          false,
+        ),
+        agentWebApiUrlUat: deserializeParam(
+          data['agent_web_api_url_uat'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -411,7 +451,9 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebUrl == other.agentWebUrl &&
         agentWebUrlUat == other.agentWebUrlUat &&
         agentWebLeadUrl == other.agentWebLeadUrl &&
-        agentWebLeadUrlUat == other.agentWebLeadUrlUat;
+        agentWebLeadUrlUat == other.agentWebLeadUrlUat &&
+        agentWebApiUrl == other.agentWebApiUrl &&
+        agentWebApiUrlUat == other.agentWebApiUrlUat;
   }
 
   @override
@@ -433,7 +475,9 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebUrl,
         agentWebUrlUat,
         agentWebLeadUrl,
-        agentWebLeadUrlUat
+        agentWebLeadUrlUat,
+        agentWebApiUrl,
+        agentWebApiUrlUat
       ]);
 }
 
@@ -456,6 +500,8 @@ ApiUrlStruct createApiUrlStruct({
   String? agentWebUrlUat,
   String? agentWebLeadUrl,
   String? agentWebLeadUrlUat,
+  String? agentWebApiUrl,
+  String? agentWebApiUrlUat,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -480,6 +526,8 @@ ApiUrlStruct createApiUrlStruct({
       agentWebUrlUat: agentWebUrlUat,
       agentWebLeadUrl: agentWebLeadUrl,
       agentWebLeadUrlUat: agentWebLeadUrlUat,
+      agentWebApiUrl: agentWebApiUrl,
+      agentWebApiUrlUat: agentWebApiUrlUat,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

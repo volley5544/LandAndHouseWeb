@@ -2639,7 +2639,7 @@ class AgentAPIGroup {
   static String getBaseUrl({
     String? url = '',
   }) =>
-      'https://is-dev.swpfin.com/ssw_agent';
+      '${url}';
   static Map<String, String> headers = {
     'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
   };

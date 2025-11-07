@@ -76,6 +76,9 @@ class _LeadAgentDetailLHPageWidgetState
       safeSetState(() {});
       _model.getAssetTypeMaster = await AgentAPIGroup.rateGetVehicleCall.call(
         categoryCode: 'L',
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
       );
 
       if ((_model.getAssetTypeMaster?.statusCode ?? 200) != 200) {
