@@ -1,9 +1,9 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/components/confirm_dialog_component_widget.dart';
 import '/components/error_message_component_widget.dart';
+import '/customer_topup/capture_picture_component/capture_picture_component_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,6 +13,7 @@ import '/pages/loading/loading_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,7 +24,12 @@ import 'lead_agent_detail_customer_page_model.dart';
 export 'lead_agent_detail_customer_page_model.dart';
 
 class LeadAgentDetailCustomerPageWidget extends StatefulWidget {
-  const LeadAgentDetailCustomerPageWidget({super.key});
+  const LeadAgentDetailCustomerPageWidget({
+    super.key,
+    this.product,
+  });
+
+  final String? product;
 
   static String routeName = 'LeadAgentDetailCustomerPage';
   static String routePath = '/leadAgentDetailCustomerPage';
@@ -46,115 +52,124 @@ class _LeadAgentDetailCustomerPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
-                .resolve(Directionality.of(context)),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(dialogContext).unfocus();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: LoadingWidget(),
-            ),
-          );
-        },
-      );
-
-      _model.apiResult3so = await AgentAPIGroup.rateGetVehicleCall.call();
-
-      if ((_model.apiResult3so?.statusCode ?? 200) != 200) {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage:
-                      'พบข้อผิดพลาด connection (${(_model.apiResult3so?.statusCode ?? 200).toString()})',
-                ),
-              ),
-            );
-          },
-        );
-
-        Navigator.pop(context);
-        return;
-      }
-      if (AgentAPIGroup.rateGetVehicleCall.code(
-            (_model.apiResult3so?.jsonBody ?? ''),
-          ) !=
-          '200') {
-        await showDialog(
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage: '${AgentAPIGroup.rateGetVehicleCall.message(
-                    (_model.apiResult3so?.jsonBody ?? ''),
-                  )}',
-                ),
-              ),
-            );
-          },
-        );
-
-        Navigator.pop(context);
-        return;
-      }
-      _model.masterLoanTypeData = AgentAPIGroup.rateGetVehicleCall
-          .data(
-            (_model.apiResult3so?.jsonBody ?? ''),
-          )!
-          .toList()
-          .cast<MasterAgentVehicleDataModelStruct>();
+      FFAppState().saveLeadAgentData = SaveLeadAgentDataModelStruct();
       safeSetState(() {});
-      Navigator.pop(context);
+      _model.appConfig = await queryApplicationRecordOnce(
+        singleRecord: true,
+      ).then((s) => s.firstOrNull);
+      if (FFAppState().platform == 'mobile') {
+        await Future.wait([
+          Future(() async {
+            while (true) {
+              safeSetState(() {});
+              await Future.delayed(
+                Duration(
+                  milliseconds: 1000,
+                ),
+              );
+            }
+          }),
+          Future(() async {
+            await actions.listenWebviewEventCamera(
+              context,
+              (cameraBase64, actionNameOutput) async {
+                var _shouldSetState = false;
+                if (actionNameOutput != 'idCardOCR') {
+                  return;
+                }
+                _model.idCardBase64 = cameraBase64;
+                safeSetState(() {});
+                _model.generateIdCardFile =
+                    await actions.convertBase64ToFFFiles(
+                  _model.idCardBase64,
+                  '11',
+                );
+                _shouldSetState = true;
+                _model.idCardImageUrlCallback =
+                    await actions.uploadFileFirebaseStorage(
+                  'Topup${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
+                  _model.generateIdCardFile,
+                  FFAppState().getLoanListSelected.contractNo,
+                  FFAppState().hashThaiIdAppState,
+                );
+                _shouldSetState = true;
+                _model.idCardFile = _model.generateIdCardFile;
+                safeSetState(() {});
+                _model.visionOutputThaiIdmobile =
+                    await SrisawadApiGroup.visionThaiIdCall.call(
+                  file: _model.idCardFile,
+                  apiUrl: 'https://dev.swpfin.com:7076',
+                );
+
+                _shouldSetState = true;
+                if ((_model.visionOutputThaiIdmobile?.statusCode ?? 200) !=
+                    200) {
+                  return;
+                }
+                FFAppState().updateSaveLeadAgentDataStruct(
+                  (e) => e
+                    ..firstName = getJsonField(
+                      (_model.visionOutputThaiIdmobile?.jsonBody ?? ''),
+                      r'''$.first_name''',
+                    ).toString()
+                    ..lastName = getJsonField(
+                      (_model.visionOutputThaiIdmobile?.jsonBody ?? ''),
+                      r'''$.last_name''',
+                    ).toString()
+                    ..registerId = getJsonField(
+                      (_model.visionOutputThaiIdmobile?.jsonBody ?? ''),
+                      r'''$.thai_id''',
+                    ).toString(),
+                );
+                safeSetState(() {});
+                safeSetState(() {
+                  _model.firstNameTextController?.text =
+                      FFAppState().saveLeadAgentData.firstName;
+                });
+                safeSetState(() {
+                  _model.lastNameTextController?.text =
+                      FFAppState().saveLeadAgentData.lastName;
+                });
+                if (functions.checkIdCard(
+                    '${FFAppState().saveLeadAgentData.registerId}')!) {
+                  safeSetState(() {
+                    _model.idcardTextController?.text =
+                        functions.showThaiIdNumberForm(
+                            '${FFAppState().saveLeadAgentData.registerId}')!;
+                    _model.idcardMask.updateMask(
+                      newValue: TextEditingValue(
+                        text: _model.idcardTextController!.text,
+                      ),
+                    );
+                  });
+                }
+              },
+            );
+          }),
+        ]);
+        return;
+      }
     });
 
-    _model.textController1 ??= TextEditingController();
+    _model.firstNameTextController ??= TextEditingController();
+    _model.firstNameFocusNode ??= FocusNode();
+
+    _model.lastNameTextController ??= TextEditingController();
+    _model.lastNameFocusNode ??= FocusNode();
+
+    _model.idcardTextController ??= TextEditingController();
+    _model.idcardFocusNode ??= FocusNode();
+
+    _model.idcardMask = MaskTextInputFormatter(mask: '#-####-#####-##-#');
+    _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
-
-    _model.textFieldMask3 = MaskTextInputFormatter(mask: '#-####-#####-##-#');
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
-
-    _model.textFieldMask4 = MaskTextInputFormatter(mask: '###-###-####');
+    _model.textFieldMask1 = MaskTextInputFormatter(mask: '###-###-####');
     _model.textController5 ??= TextEditingController();
-    _model.textFieldFocusNode5 ??= FocusNode();
-    _model.textFieldFocusNode5!.addListener(
+    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.textFieldFocusNode2!.addListener(
       () async {
-        if ((_model.textFieldFocusNode5?.hasFocus ?? false)) {
+        if ((_model.textFieldFocusNode2?.hasFocus ?? false)) {
           safeSetState(() {
             _model.textController5?.text =
                 functions.removeCommaFromNumText(_model.textController5.text)!;
@@ -174,7 +189,7 @@ class _LeadAgentDetailCustomerPageWidgetState
       },
     );
     _model.textController6 ??= TextEditingController();
-    _model.textFieldFocusNode6 ??= FocusNode();
+    _model.textFieldFocusNode3 ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -190,940 +205,1633 @@ class _LeadAgentDetailCustomerPageWidgetState
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
-            automaticallyImplyLeading: false,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.safePop();
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: FlutterFlowTheme.of(context).primary,
-                size: 24.0,
-              ),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).secondary,
+          automaticallyImplyLeading: false,
+          leading: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              context.safePop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: FlutterFlowTheme.of(context).primary,
+              size: 24.0,
             ),
-            actions: [],
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'กรอกข้อมูลลูกค้า',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              centerTitle: true,
-              expandedTitleScale: 1.0,
-            ),
-            elevation: 2.0,
           ),
-          body: SafeArea(
-            top: true,
-            child: Align(
-              alignment: AlignmentDirectional(0.0, 0.0),
-              child: Container(
-                width: double.infinity,
-                constraints: BoxConstraints(
-                  maxWidth: 670.0,
-                ),
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              wrapWithModel(
-                                model: _model.progressBarComponentModel,
-                                updateCallback: () => safeSetState(() {}),
-                                child: ProgressBarComponentWidget(
-                                  step: '1',
-                                ),
+          actions: [],
+          flexibleSpace: FlexibleSpaceBar(
+            title: Text(
+              'กรอกข้อมูลลูกค้า',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Noto San Thai',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 18.0,
+                    letterSpacing: 0.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+            centerTitle: true,
+            expandedTitleScale: 1.0,
+          ),
+          elevation: 2.0,
+        ),
+        body: SafeArea(
+          top: true,
+          child: Align(
+            alignment: AlignmentDirectional(0.0, 0.0),
+            child: Container(
+              width: double.infinity,
+              constraints: BoxConstraints(
+                maxWidth: 670.0,
+              ),
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            wrapWithModel(
+                              model: _model.progressBarComponentModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: ProgressBarComponentWidget(
+                                step: '1',
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 22.0,
-                                      child: VerticalDivider(
-                                        thickness: 4.0,
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 22.0,
+                                    child: VerticalDivider(
+                                      thickness: 4.0,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'ข้อมูลของลูกค้า',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 8.0)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'ชื่อ',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          '*',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 16.0, 0.0),
+                                            child: TextFormField(
+                                              controller: _model
+                                                  .firstNameTextController,
+                                              focusNode:
+                                                  _model.firstNameFocusNode,
+                                              autofocus: false,
+                                              textCapitalization:
+                                                  TextCapitalization.words,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                labelStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                hintText: 'ระบุชื่อ',
+                                                hintStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                enabledBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                focusedErrorBorder:
+                                                    UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .error,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(4.0),
+                                                    topRight:
+                                                        Radius.circular(4.0),
+                                                  ),
+                                                ),
+                                                contentPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(0.0, 16.0,
+                                                            16.0, 8.0),
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        lineHeight: 3.0,
+                                                      ),
+                                              validator: _model
+                                                  .firstNameTextControllerValidator
+                                                  .asValidator(context),
+                                              inputFormatters: [
+                                                if (!isAndroid && !isiOS)
+                                                  TextInputFormatter
+                                                      .withFunction(
+                                                          (oldValue, newValue) {
+                                                    return TextEditingValue(
+                                                      selection:
+                                                          newValue.selection,
+                                                      text: newValue.text
+                                                          .toCapitalization(
+                                                              TextCapitalization
+                                                                  .words),
+                                                    );
+                                                  }),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Builder(
+                                        builder: (context) => Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 16.0, 0.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              var _shouldSetState = false;
+                                              if (FFAppState().platform ==
+                                                  'mobile') {
+                                                await actions.openCameraWebview(
+                                                  'idCard',
+                                                  'idCardOCR',
+                                                );
+                                              } else {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  isDismissible: false,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(context)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child: Container(
+                                                          height:
+                                                              double.infinity,
+                                                          child:
+                                                              CapturePictureComponentWidget(
+                                                            imageType: 'idCard',
+                                                            title:
+                                                                'ถ่ายรูปภาพบัตรประชาชน',
+                                                            descriptionText:
+                                                                'กรุณาถ่ายรูปโดยให้บัตรประชาชนพอดีกับกรอบ',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) => safeSetState(
+                                                    () => _model
+                                                            .cameraTriggerComponentReturn =
+                                                        value));
+
+                                                _shouldSetState = true;
+                                                if (!(_model.cameraTriggerComponentReturn !=
+                                                        null &&
+                                                    (_model
+                                                            .cameraTriggerComponentReturn
+                                                            ?.bytes
+                                                            ?.isNotEmpty ??
+                                                        false))) {
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                                _model.idCardFile = _model
+                                                    .cameraTriggerComponentReturn;
+                                                safeSetState(() {});
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child: LoadingWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                _model.visionOutputThaiId =
+                                                    await SrisawadApiGroup
+                                                        .visionThaiIdCall
+                                                        .call(
+                                                  file: _model.idCardFile,
+                                                  apiUrl:
+                                                      'https://dev.swpfin.com:7076',
+                                                );
+
+                                                _shouldSetState = true;
+                                                if ((_model.visionOutputThaiId
+                                                            ?.statusCode ??
+                                                        200) !=
+                                                    200) {
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              ErrorMessageComponentWidget(
+                                                            textMessage:
+                                                                'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+
+                                                  Navigator.pop(context);
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                                FFAppState()
+                                                    .updateSaveLeadAgentDataStruct(
+                                                  (e) => e
+                                                    ..firstName = getJsonField(
+                                                      (_model.visionOutputThaiId
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.first_name''',
+                                                    ).toString()
+                                                    ..lastName = getJsonField(
+                                                      (_model.visionOutputThaiId
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.last_name''',
+                                                    ).toString()
+                                                    ..registerId = getJsonField(
+                                                      (_model.visionOutputThaiId
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.thai_id''',
+                                                    ).toString(),
+                                                );
+                                                safeSetState(() {});
+                                                safeSetState(() {
+                                                  _model.firstNameTextController
+                                                          ?.text =
+                                                      FFAppState()
+                                                          .saveLeadAgentData
+                                                          .firstName;
+                                                });
+                                                safeSetState(() {
+                                                  _model.lastNameTextController
+                                                          ?.text =
+                                                      FFAppState()
+                                                          .saveLeadAgentData
+                                                          .lastName;
+                                                });
+                                                safeSetState(() {
+                                                  _model.idcardTextController
+                                                          ?.text =
+                                                      valueOrDefault<String>(
+                                                    functions.showThaiIdNumberForm(
+                                                        '${FFAppState().saveLeadAgentData.registerId}'),
+                                                    'idcard',
+                                                  );
+                                                  _model.idcardMask.updateMask(
+                                                    newValue: TextEditingValue(
+                                                      text: _model
+                                                          .idcardTextController!
+                                                          .text,
+                                                    ),
+                                                  );
+                                                });
+                                                Navigator.pop(context);
+                                              }
+
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                            },
+                                            child: Icon(
+                                              Icons.camera_alt,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 36.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'นามสกุล',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          '*',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      child: TextFormField(
+                                        controller:
+                                            _model.lastNameTextController,
+                                        focusNode: _model.lastNameFocusNode,
+                                        autofocus: false,
+                                        textCapitalization:
+                                            TextCapitalization.words,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelLarge
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          hintText: 'ระบุนามสกุล',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          errorBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 16.0, 16.0, 8.0),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              lineHeight: 1.0,
+                                            ),
+                                        validator: _model
+                                            .lastNameTextControllerValidator
+                                            .asValidator(context),
+                                        inputFormatters: [
+                                          if (!isAndroid && !isiOS)
+                                            TextInputFormatter.withFunction(
+                                                (oldValue, newValue) {
+                                              return TextEditingValue(
+                                                selection: newValue.selection,
+                                                text: newValue.text
+                                                    .toCapitalization(
+                                                        TextCapitalization
+                                                            .words),
+                                              );
+                                            }),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'เลขบัตรประชาชน',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          '*',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      child: TextFormField(
+                                        controller: _model.idcardTextController,
+                                        focusNode: _model.idcardFocusNode,
+                                        autofocus: false,
+                                        textCapitalization:
+                                            TextCapitalization.words,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelLarge
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          hintText: 'ระบุเลขบัตรประชาชน',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          errorBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 16.0, 16.0, 8.0),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              lineHeight: 1.0,
+                                            ),
+                                        keyboardType: TextInputType.number,
+                                        validator: _model
+                                            .idcardTextControllerValidator
+                                            .asValidator(context),
+                                        inputFormatters: [_model.idcardMask],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'เบอร์โทรศัพท์',
+                                          textAlign: TextAlign.start,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 12.0,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          '*',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      child: TextFormField(
+                                        controller: _model.textController4,
+                                        focusNode: _model.textFieldFocusNode1,
+                                        autofocus: false,
+                                        textCapitalization:
+                                            TextCapitalization.words,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelLarge
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          hintText: 'ระบุเบอร์โทรศัพท์',
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          errorBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .error,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 16.0, 16.0, 8.0),
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              lineHeight: 1.0,
+                                            ),
+                                        keyboardType: TextInputType.number,
+                                        validator: _model
+                                            .textController4Validator
+                                            .asValidator(context),
+                                        inputFormatters: [
+                                          _model.textFieldMask1
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Builder(
+                                    builder: (context) => FFButtonWidget(
+                                      onPressed: () async {
+                                        if (!(_model.lastNameTextController
+                                                    .text !=
+                                                '')) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'กรุณาระบุนามสกุล',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          return;
+                                        }
+                                        if (!(_model.idcardTextController.text !=
+                                                '')) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'กรุณาระบุเลขบัตรประชาชน',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          return;
+                                        }
+                                        if (!functions.checkIdCard(
+                                            functions.removeDash(_model
+                                                .idcardTextController.text))!) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'เลขบัตรประชาชนไม่ถูกต้อง',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          return;
+                                        }
+                                        if (!(_model.textController4.text !=
+                                                '')) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'กรุณาระบุเบอร์โทรศัพท์',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          return;
+                                        }
+                                        if (!functions.checkPhoneNumberChar(
+                                            functions.removeDash(_model
+                                                .textController4.text))!) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return Dialog(
+                                                elevation: 0,
+                                                insetPadding: EdgeInsets.zero,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                alignment: AlignmentDirectional(
+                                                        0.0, 0.0)
+                                                    .resolve(Directionality.of(
+                                                        context)),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    FocusScope.of(dialogContext)
+                                                        .unfocus();
+                                                    FocusManager
+                                                        .instance.primaryFocus
+                                                        ?.unfocus();
+                                                  },
+                                                  child:
+                                                      ErrorMessageComponentWidget(
+                                                    textMessage:
+                                                        'เบอร์โทรศัพท์ไม่ถูกต้อง',
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                          return;
+                                        }
+                                        FFAppState().saveLeadAgentData =
+                                            SaveLeadAgentDataModelStruct(
+                                          agentGroupId: FFAppState()
+                                              .agentProfileDataType
+                                              .agentGroupId,
+                                          agentId: FFAppState()
+                                              .agentProfileDataType
+                                              .id
+                                              .toString(),
+                                          agentCode: FFAppState()
+                                              .agentProfileDataType
+                                              .agentCode,
+                                          firstName: _model
+                                              .firstNameTextController.text,
+                                          lastName: _model
+                                              .lastNameTextController.text,
+                                          registerId: functions.removeDash(
+                                              _model.idcardTextController.text),
+                                          mobilePhoneNumber:
+                                              functions.removeDash(
+                                                  _model.textController4.text),
+                                        );
+                                        safeSetState(() {});
+                                        if (_model.appConfig!.isUseOtp) {
+                                          context.pushNamed(
+                                              LeadAgentConsentPageWidget
+                                                  .routeName);
+                                        } else {
+                                          if (widget.product == 'L') {
+                                            context.pushNamed(
+                                                LeadAgentDetailLHPageWidget
+                                                    .routeName);
+                                          } else {
+                                            context.pushNamed(
+                                              LeadAgentDetailCarPageWidget
+                                                  .routeName,
+                                              queryParameters: {
+                                                'product': serializeParam(
+                                                  widget.product,
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          }
+                                        }
+                                      },
+                                      text: 'ถัดไป',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 60.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                              letterSpacing: 0.0,
+                                            ),
+                                        elevation: 0.0,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
                                       ),
                                     ),
-                                    Text(
-                                      'ข้อมูลของลูกค้า',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ].divide(SizedBox(width: 8.0)),
-                                ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'ชื่อ',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
+                            ),
+                            if (false)
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  if (false)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'วงเงินที่ต้องการ',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryText,
-                                                  letterSpacing: 0.0,
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            '*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        8.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  '*',
+                                                  style: FlutterFlowTheme.of(
                                                           context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: TextFormField(
-                                          controller: _model.textController1,
-                                          focusNode: _model.textFieldFocusNode1,
-                                          autofocus: false,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelLarge
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      letterSpacing: 0.0,
+                                          Container(
+                                            width: double.infinity,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              child: TextFormField(
+                                                controller:
+                                                    _model.textController5,
+                                                focusNode:
+                                                    _model.textFieldFocusNode2,
+                                                autofocus: false,
+                                                textCapitalization:
+                                                    TextCapitalization.words,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            fontSize: 12.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  hintText:
+                                                      'ระบุวงเงินที่ต้องการ',
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            fontSize: 12.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      width: 2.0,
                                                     ),
-                                            hintText: 'ระบุชื่อ',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(4.0),
+                                                      topRight:
+                                                          Radius.circular(4.0),
                                                     ),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(4.0),
+                                                      topRight:
+                                                          Radius.circular(4.0),
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(4.0),
+                                                      topRight:
+                                                          Radius.circular(4.0),
+                                                    ),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .error,
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(4.0),
+                                                      topRight:
+                                                          Radius.circular(4.0),
+                                                    ),
+                                                  ),
+                                                  contentPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 16.0,
+                                                              16.0, 8.0),
+                                                ),
+                                                style:
                                                     FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
+                                                        .bodyLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          lineHeight: 1.0,
+                                                        ),
+                                                maxLines: null,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                validator: _model
+                                                    .textController5Validator
+                                                    .asValidator(context),
+                                                inputFormatters: [
+                                                  if (!isAndroid && !isiOS)
+                                                    TextInputFormatter
+                                                        .withFunction((oldValue,
+                                                            newValue) {
+                                                      return TextEditingValue(
+                                                        selection:
+                                                            newValue.selection,
+                                                        text: newValue.text
+                                                            .toCapitalization(
+                                                                TextCapitalization
+                                                                    .words),
+                                                      );
+                                                    }),
+                                                ],
                                               ),
                                             ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            errorBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedErrorBorder:
-                                                UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 16.0, 8.0),
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                lineHeight: 3.0,
-                                              ),
-                                          maxLines: null,
-                                          validator: _model
-                                              .textController1Validator
-                                              .asValidator(context),
-                                          inputFormatters: [
-                                            if (!isAndroid && !isiOS)
-                                              TextInputFormatter.withFunction(
-                                                  (oldValue, newValue) {
-                                                return TextEditingValue(
-                                                  selection: newValue.selection,
-                                                  text: newValue.text
-                                                      .toCapitalization(
-                                                          TextCapitalization
-                                                              .words),
-                                                );
-                                              }),
-                                          ],
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'นามสกุล',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
+                                  if (false)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'เวลาที่สะดวกให้ติดต่อ',
+                                                  textAlign: TextAlign.start,
+                                                  style: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryText,
-                                                  fontSize: 12.0,
-                                                  letterSpacing: 0.0,
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
                                                 ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            '*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
+                                          InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              final _datePickedTime =
+                                                  await showTimePicker(
+                                                context: context,
+                                                initialTime:
+                                                    TimeOfDay.fromDateTime(
+                                                        getCurrentTimestamp),
+                                                builder: (context, child) {
+                                                  return wrapInMaterialTimePickerTheme(
+                                                    context,
+                                                    child!,
+                                                    headerBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    headerForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .info,
+                                                    headerTextStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineLarge
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              fontSize: 32.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                    pickerBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .secondaryBackground,
+                                                    pickerForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    selectedDateTimeBackgroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    selectedDateTimeForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .info,
+                                                    actionButtonForegroundColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    iconSize: 24.0,
+                                                  );
+                                                },
+                                              );
+                                              if (_datePickedTime != null) {
+                                                safeSetState(() {
+                                                  _model.datePicked = DateTime(
+                                                    getCurrentTimestamp.year,
+                                                    getCurrentTimestamp.month,
+                                                    getCurrentTimestamp.day,
+                                                    _datePickedTime.hour,
+                                                    _datePickedTime.minute,
+                                                  );
+                                                });
+                                              } else if (_model.datePicked !=
+                                                  null) {
+                                                safeSetState(() {
+                                                  _model.datePicked =
+                                                      getCurrentTimestamp;
+                                                });
+                                              }
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(),
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    -1.0, 0.0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 16.0, 0.0),
+                                                  child: Text(
+                                                    _model.datePicked != null
+                                                        ? dateTimeFormat("Hm",
+                                                            _model.datePicked)
+                                                        : 'ระบุเวลาที่สะดวกให้ติดต่อ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
                                                 ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: TextFormField(
-                                          controller: _model.textController2,
-                                          focusNode: _model.textFieldFocusNode2,
-                                          autofocus: false,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelLarge
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            hintText: 'ระบุนามสกุล',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            errorBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedErrorBorder:
-                                                UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 16.0, 8.0),
+                                          Divider(
+                                            thickness: 2.0,
+                                            indent: 16.0,
+                                            endIndent: 16.0,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
                                           ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                lineHeight: 1.0,
-                                              ),
-                                          maxLines: null,
-                                          validator: _model
-                                              .textController2Validator
-                                              .asValidator(context),
-                                          inputFormatters: [
-                                            if (!isAndroid && !isiOS)
-                                              TextInputFormatter.withFunction(
-                                                  (oldValue, newValue) {
-                                                return TextEditingValue(
-                                                  selection: newValue.selection,
-                                                  text: newValue.text
-                                                      .toCapitalization(
-                                                          TextCapitalization
-                                                              .words),
-                                                );
-                                              }),
-                                          ],
-                                        ),
+                                        ],
                                       ),
                                     ),
-                                  ],
-                                ),
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'เลขบัตรประชาชน',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  fontSize: 12.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            '*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: TextFormField(
-                                          controller: _model.textController3,
-                                          focusNode: _model.textFieldFocusNode3,
-                                          autofocus: false,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelLarge
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            hintText: 'ระบุเลขบัตรประชาชน',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            errorBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedErrorBorder:
-                                                UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 16.0, 8.0),
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                lineHeight: 1.0,
-                                              ),
-                                          maxLines: null,
-                                          keyboardType: TextInputType.number,
-                                          validator: _model
-                                              .textController3Validator
-                                              .asValidator(context),
-                                          inputFormatters: [
-                                            _model.textFieldMask3
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'เบอร์โทรศัพท์',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  fontSize: 12.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            '*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: TextFormField(
-                                          controller: _model.textController4,
-                                          focusNode: _model.textFieldFocusNode4,
-                                          autofocus: false,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelLarge
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            hintText: 'ระบุเบอร์โทรศัพท์',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            errorBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedErrorBorder:
-                                                UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 16.0, 8.0),
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                lineHeight: 1.0,
-                                              ),
-                                          maxLines: null,
-                                          keyboardType: TextInputType.number,
-                                          validator: _model
-                                              .textController4Validator
-                                              .asValidator(context),
-                                          inputFormatters: [
-                                            _model.textFieldMask4
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            'วงเงินที่ต้องการ',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  fontSize: 12.0,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 0.0, 0.0),
-                                          child: Text(
-                                            '*',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: TextFormField(
-                                          controller: _model.textController5,
-                                          focusNode: _model.textFieldFocusNode5,
-                                          autofocus: false,
-                                          textCapitalization:
-                                              TextCapitalization.words,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelLarge
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            hintText: 'ระบุวงเงินที่ต้องการ',
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .labelMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      fontSize: 12.0,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            enabledBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            errorBorder: UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            focusedErrorBorder:
-                                                UnderlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topLeft: Radius.circular(4.0),
-                                                topRight: Radius.circular(4.0),
-                                              ),
-                                            ),
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 16.0, 8.0),
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyLarge
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                lineHeight: 1.0,
-                                              ),
-                                          maxLines: null,
-                                          keyboardType: TextInputType.number,
-                                          validator: _model
-                                              .textController5Validator
-                                              .asValidator(context),
-                                          inputFormatters: [
-                                            if (!isAndroid && !isiOS)
-                                              TextInputFormatter.withFunction(
-                                                  (oldValue, newValue) {
-                                                return TextEditingValue(
-                                                  selection: newValue.selection,
-                                                  text: newValue.text
-                                                      .toCapitalization(
-                                                          TextCapitalization
-                                                              .words),
-                                                );
-                                              }),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            if (false)
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
@@ -1247,174 +1955,9 @@ class _LeadAgentDetailCustomerPageWidgetState
                                   ],
                                 ),
                               ),
-                              if ((_model.productSelected?.vehicleCode !=
-                                      'LH') &&
-                                  (_model.productSelected?.vehicleCode != 'LA'))
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 16.0, 0.0, 0.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              'ทะเบียนรถ',
-                                              textAlign: TextAlign.start,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          child: TextFormField(
-                                            controller: _model.textController6,
-                                            focusNode:
-                                                _model.textFieldFocusNode6,
-                                            autofocus: false,
-                                            textCapitalization:
-                                                TextCapitalization.words,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              labelStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              hintText: 'ระบุทะเบียน',
-                                              hintStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              enabledBorder:
-                                                  UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(4.0),
-                                                  topRight:
-                                                      Radius.circular(4.0),
-                                                ),
-                                              ),
-                                              focusedBorder:
-                                                  UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(4.0),
-                                                  topRight:
-                                                      Radius.circular(4.0),
-                                                ),
-                                              ),
-                                              errorBorder: UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(4.0),
-                                                  topRight:
-                                                      Radius.circular(4.0),
-                                                ),
-                                              ),
-                                              focusedErrorBorder:
-                                                  UnderlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.only(
-                                                  topLeft: Radius.circular(4.0),
-                                                  topRight:
-                                                      Radius.circular(4.0),
-                                                ),
-                                              ),
-                                              contentPadding:
-                                                  EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 16.0, 16.0, 8.0),
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  fontSize: 14.0,
-                                                  letterSpacing: 0.0,
-                                                  lineHeight: 1.0,
-                                                ),
-                                            maxLines: null,
-                                            validator: _model
-                                                .textController6Validator
-                                                .asValidator(context),
-                                            inputFormatters: [
-                                              if (!isAndroid && !isiOS)
-                                                TextInputFormatter.withFunction(
-                                                    (oldValue, newValue) {
-                                                  return TextEditingValue(
-                                                    selection:
-                                                        newValue.selection,
-                                                    text: newValue.text
-                                                        .toCapitalization(
-                                                            TextCapitalization
-                                                                .words),
-                                                  );
-                                                }),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                            if ((_model.productSelected?.vehicleCode != 'LH') &&
+                                (_model.productSelected?.vehicleCode != 'LA') &&
+                                false)
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
@@ -1430,7 +1973,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                                               EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 0.0, 0.0, 0.0),
                                           child: Text(
-                                            'เวลาที่สะดวกให้ติดต่อ',
+                                            'ทะเบียนรถ',
                                             textAlign: TextAlign.start,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium
@@ -1446,116 +1989,129 @@ class _LeadAgentDetailCustomerPageWidgetState
                                         ),
                                       ],
                                     ),
-                                    InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        final _datePickedTime =
-                                            await showTimePicker(
-                                          context: context,
-                                          initialTime: TimeOfDay.fromDateTime(
-                                              getCurrentTimestamp),
-                                          builder: (context, child) {
-                                            return wrapInMaterialTimePickerTheme(
-                                              context,
-                                              child!,
-                                              headerBackgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              headerForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              headerTextStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 32.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                              pickerBackgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              pickerForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              selectedDateTimeBackgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              selectedDateTimeForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              actionButtonForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              iconSize: 24.0,
-                                            );
-                                          },
-                                        );
-                                        if (_datePickedTime != null) {
-                                          safeSetState(() {
-                                            _model.datePicked = DateTime(
-                                              getCurrentTimestamp.year,
-                                              getCurrentTimestamp.month,
-                                              getCurrentTimestamp.day,
-                                              _datePickedTime.hour,
-                                              _datePickedTime.minute,
-                                            );
-                                          });
-                                        } else if (_model.datePicked != null) {
-                                          safeSetState(() {
-                                            _model.datePicked =
-                                                getCurrentTimestamp;
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 50.0,
-                                        decoration: BoxDecoration(),
-                                        child: Align(
-                                          alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            child: Text(
-                                              _model.datePicked != null
-                                                  ? dateTimeFormat(
-                                                      "Hm", _model.datePicked)
-                                                  : 'ระบุเวลาที่สะดวกให้ติดต่อ',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 50.0,
+                                      decoration: BoxDecoration(),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        child: TextFormField(
+                                          controller: _model.textController6,
+                                          focusNode: _model.textFieldFocusNode3,
+                                          autofocus: false,
+                                          textCapitalization:
+                                              TextCapitalization.words,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelLarge
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      fontSize: 12.0,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            hintText: 'ระบุทะเบียน',
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      fontSize: 12.0,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
                                             ),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(4.0),
+                                                topRight: Radius.circular(4.0),
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 16.0, 16.0, 8.0),
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                                lineHeight: 1.0,
+                                              ),
+                                          maxLines: null,
+                                          validator: _model
+                                              .textController6Validator
+                                              .asValidator(context),
+                                          inputFormatters: [
+                                            if (!isAndroid && !isiOS)
+                                              TextInputFormatter.withFunction(
+                                                  (oldValue, newValue) {
+                                                return TextEditingValue(
+                                                  selection: newValue.selection,
+                                                  text: newValue.text
+                                                      .toCapitalization(
+                                                          TextCapitalization
+                                                              .words),
+                                                );
+                                              }),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                    Divider(
-                                      thickness: 2.0,
-                                      indent: 16.0,
-                                      endIndent: 16.0,
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
                                     ),
                                   ],
                                 ),
                               ),
+                            if (false)
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
@@ -1802,11 +2358,12 @@ class _LeadAgentDetailCustomerPageWidgetState
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                          ],
                         ),
                       ),
                     ),
+                  ),
+                  if (false)
                     Container(
                       width: double.infinity,
                       height: 100.0,
@@ -1889,11 +2446,14 @@ class _LeadAgentDetailCustomerPageWidgetState
                             Expanded(
                               child: Builder(
                                 builder: (context) => FFButtonWidget(
-                                  onPressed: ((_model.textController1.text ==
+                                  onPressed: ((_model.firstNameTextController
+                                                      .text ==
                                                   '') ||
-                                          (_model.textController2.text ==
+                                          (_model.lastNameTextController
+                                                      .text ==
                                                   '') ||
-                                          (_model.textController3.text ==
+                                          (_model.idcardTextController
+                                                      .text ==
                                                   '') ||
                                           (_model.textController4.text ==
                                                   '') ||
@@ -1906,7 +2466,8 @@ class _LeadAgentDetailCustomerPageWidgetState
                                       ? null
                                       : () async {
                                           if (!false) {
-                                            if (!(_model.textController1.text !=
+                                            if (!(_model.firstNameTextController
+                                                        .text !=
                                                     '')) {
                                               await showDialog(
                                                 context: context,
@@ -1944,7 +2505,8 @@ class _LeadAgentDetailCustomerPageWidgetState
 
                                               return;
                                             }
-                                            if (!(_model.textController2.text !=
+                                            if (!(_model.lastNameTextController
+                                                        .text !=
                                                     '')) {
                                               await showDialog(
                                                 context: context,
@@ -1982,7 +2544,8 @@ class _LeadAgentDetailCustomerPageWidgetState
 
                                               return;
                                             }
-                                            if (!(_model.textController3.text !=
+                                            if (!(_model.idcardTextController
+                                                        .text !=
                                                     '')) {
                                               await showDialog(
                                                 context: context,
@@ -2022,7 +2585,8 @@ class _LeadAgentDetailCustomerPageWidgetState
                                             }
                                             if (!functions.checkIdCard(
                                                 functions.removeDash(_model
-                                                    .textController3.text))!) {
+                                                    .idcardTextController
+                                                    .text))!) {
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -2226,12 +2790,13 @@ class _LeadAgentDetailCustomerPageWidgetState
                                               agentCode: FFAppState()
                                                   .agentProfileDataType
                                                   .agentCode,
-                                              firstName:
-                                                  _model.textController1.text,
-                                              lastName:
-                                                  _model.textController2.text,
+                                              firstName: _model
+                                                  .firstNameTextController.text,
+                                              lastName: _model
+                                                  .lastNameTextController.text,
                                               registerId: functions.removeDash(
-                                                  _model.textController3.text),
+                                                  _model.idcardTextController
+                                                      .text),
                                               mobilePhoneNumber:
                                                   functions.removeDash(_model
                                                       .textController4.text),
@@ -2328,8 +2893,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                         ),
                       ),
                     ),
-                  ],
-                ),
+                ],
               ),
             ),
           ),

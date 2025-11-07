@@ -58,8 +58,32 @@ class _ProgressBarComponentWidgetState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: MediaQuery.sizeOf(context).width * 0.12,
-              height: MediaQuery.sizeOf(context).width * 0.12,
+              width: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
+              height: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
               decoration: BoxDecoration(
                 color: valueOrDefault<Color>(
                   widget.step == '1'
@@ -107,7 +131,20 @@ class _ProgressBarComponentWidgetState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     StyledDivider(
-                      thickness: 3.0,
+                      thickness: () {
+                        if (MediaQuery.sizeOf(context).width <
+                            kBreakpointSmall) {
+                          return 3.0;
+                        } else if (MediaQuery.sizeOf(context).width <
+                            kBreakpointMedium) {
+                          return 3.0;
+                        } else if (MediaQuery.sizeOf(context).width <
+                            kBreakpointLarge) {
+                          return 5.0;
+                        } else {
+                          return 5.0;
+                        }
+                      }(),
                       color: widget.step != '1'
                           ? FlutterFlowTheme.of(context).primary
                           : Color(0x80646464),
@@ -118,8 +155,32 @@ class _ProgressBarComponentWidgetState
               ),
             ),
             Container(
-              width: MediaQuery.sizeOf(context).width * 0.12,
-              height: MediaQuery.sizeOf(context).width * 0.12,
+              width: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
+              height: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
               decoration: BoxDecoration(
                 color: valueOrDefault<Color>(
                   widget.step == '2'
@@ -167,7 +228,20 @@ class _ProgressBarComponentWidgetState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     StyledDivider(
-                      thickness: 3.0,
+                      thickness: () {
+                        if (MediaQuery.sizeOf(context).width <
+                            kBreakpointSmall) {
+                          return 3.0;
+                        } else if (MediaQuery.sizeOf(context).width <
+                            kBreakpointMedium) {
+                          return 3.0;
+                        } else if (MediaQuery.sizeOf(context).width <
+                            kBreakpointLarge) {
+                          return 5.0;
+                        } else {
+                          return 5.0;
+                        }
+                      }(),
                       color: widget.step == '3'
                           ? FlutterFlowTheme.of(context).primary
                           : Color(0x80646464),
@@ -178,8 +252,32 @@ class _ProgressBarComponentWidgetState
               ),
             ),
             Container(
-              width: MediaQuery.sizeOf(context).width * 0.12,
-              height: MediaQuery.sizeOf(context).width * 0.12,
+              width: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
+              height: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return 50.0;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return 65.0;
+                } else {
+                  return 65.0;
+                }
+              }(),
               decoration: BoxDecoration(
                 color: valueOrDefault<Color>(
                   widget.step == '3'

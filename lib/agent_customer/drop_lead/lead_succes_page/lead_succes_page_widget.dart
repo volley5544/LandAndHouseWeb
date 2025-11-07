@@ -102,15 +102,37 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                   ),
                 ),
               ),
-              Text(
-                'เพิ่มข้อมูลเรียบร้อยแล้ว',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      fontSize: 16.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.normal,
+              Container(
+                decoration: BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'บันทึกข้อมูลเรียบร้อยแล้ว',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            fontSize: 16.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.normal,
+                          ),
                     ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      child: Text(
+                        'สามารถตรวจสอบสถานะคำขอสินเชื่อ จากตัวแทน',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Noto San Thai',
+                              color: FlutterFlowTheme.of(context).primary,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Column(
                 mainAxisSize: MainAxisSize.max,
@@ -127,6 +149,10 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                             queryParameters: {
                               'agentCode': serializeParam(
                                 FFAppState().agentProfileDataType.agentCode,
+                                ParamType.String,
+                              ),
+                              'platform': serializeParam(
+                                FFAppState().platform,
                                 ParamType.String,
                               ),
                             }.withoutNulls,

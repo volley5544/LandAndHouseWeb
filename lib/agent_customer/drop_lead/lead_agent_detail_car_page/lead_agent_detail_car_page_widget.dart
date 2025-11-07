@@ -5,6 +5,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
+import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -26,7 +27,12 @@ import 'lead_agent_detail_car_page_model.dart';
 export 'lead_agent_detail_car_page_model.dart';
 
 class LeadAgentDetailCarPageWidget extends StatefulWidget {
-  const LeadAgentDetailCarPageWidget({super.key});
+  const LeadAgentDetailCarPageWidget({
+    super.key,
+    this.product,
+  });
+
+  final String? product;
 
   static String routeName = 'LeadAgentDetailCarPage';
   static String routePath = '/leadAgentDetailCarPage';
@@ -86,7 +92,12 @@ class _LeadAgentDetailCarPageWidgetState
           _model.canNextButton = false;
           safeSetState(() {});
           await actions.listenWebviewEventCamera(
-            (cameraBase64) async {
+            context,
+            (cameraBase64, actionNameOutput) async {
+              var _shouldSetState = false;
+              if (actionNameOutput != 'bluebook') {
+                return;
+              }
               _model.bluebookBase64 = cameraBase64;
               safeSetState(() {});
               _model.generateBluebookFile =
@@ -94,15 +105,20 @@ class _LeadAgentDetailCarPageWidgetState
                 _model.bluebookBase64,
                 '01',
               );
+              _shouldSetState = true;
               _model.bluebookFile = _model.generateBluebookFile;
               safeSetState(() {});
             },
           );
-          _model.apiResultGear = await AgentAPIGroup.agentRateSearchCall.call(
-            carVehicleCode: FFAppState().saveLeadAgentData.loanTypeCode,
+          _model.provinceApiOutput = await APIMasterGroup.getProvinceCall.call(
+            url: 'https://is-dev.swpfin.com/ssw_tanjai_api_dev',
           );
 
-          if ((_model.apiResultGear?.statusCode ?? 200) != 200) {
+          _model.getVehicleMaster = await AgentAPIGroup.rateGetVehicleCall.call(
+            categoryCode: widget.product,
+          );
+
+          if ((_model.getVehicleMaster?.statusCode ?? 200) != 200) {
             await showDialog(
               context: context,
               builder: (dialogContext) {
@@ -119,19 +135,20 @@ class _LeadAgentDetailCarPageWidgetState
                     },
                     child: ErrorMessageComponentWidget(
                       textMessage:
-                          'พบข้อผิดพลาด connection (${(_model.apiResultGear?.statusCode ?? 200).toString()})',
+                          'พบข้อผิดพลาด connection (${(_model.getVehicleMaster?.statusCode ?? 200).toString()})',
                     ),
                   ),
                 );
               },
             );
 
+            Navigator.pop(context);
             return;
           }
-          if (AgentAPIGroup.agentRateSearchCall.code(
-                (_model.apiResultGear?.jsonBody ?? ''),
+          if (AgentAPIGroup.rateGetVehicleCall.code(
+                (_model.getVehicleMaster?.jsonBody ?? ''),
               ) !=
-              200) {
+              '200') {
             await showDialog(
               context: context,
               builder: (dialogContext) {
@@ -147,8 +164,8 @@ class _LeadAgentDetailCarPageWidgetState
                       FocusManager.instance.primaryFocus?.unfocus();
                     },
                     child: ErrorMessageComponentWidget(
-                      textMessage: '${AgentAPIGroup.agentRateSearchCall.message(
-                        (_model.apiResultGear?.jsonBody ?? ''),
+                      textMessage: '${AgentAPIGroup.rateGetVehicleCall.message(
+                        (_model.getVehicleMaster?.jsonBody ?? ''),
                       )}',
                     ),
                   ),
@@ -156,19 +173,17 @@ class _LeadAgentDetailCarPageWidgetState
               },
             );
 
+            Navigator.pop(context);
             return;
           }
-          _model.gearMasterPageState = AgentAPIGroup.agentRateSearchCall
-              .gear(
-                (_model.apiResultGear?.jsonBody ?? ''),
+          _model.vehicelMasterPageState = AgentAPIGroup.rateGetVehicleCall
+              .data(
+                (_model.getVehicleMaster?.jsonBody ?? ''),
               )!
               .toList()
-              .cast<MasterAgentGearModelStruct>();
-          _model.brandMasterPageState = [];
-          _model.modelMasterPageState = [];
-          _model.ccMasterPageState = [];
+              .cast<MasterAgentVehicleDataModelStruct>();
           safeSetState(() {});
-          if (!(_model.gearMasterPageState.isNotEmpty)) {
+          if (!(_model.vehicelMasterPageState.isNotEmpty)) {
             _model.canNextButton = true;
             safeSetState(() {});
           }
@@ -177,9 +192,62 @@ class _LeadAgentDetailCarPageWidgetState
       ]);
     });
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
+    _model.rateFromApiTextController ??= TextEditingController();
+    _model.rateFromApiFocusNode ??= FocusNode();
 
+    _model.carregisTextController ??= TextEditingController();
+    _model.carregisFocusNode ??= FocusNode();
+
+    _model.loanAmountTextController ??= TextEditingController();
+    _model.loanAmountFocusNode ??= FocusNode();
+    _model.loanAmountFocusNode!.addListener(
+      () async {
+        if ((_model.loanAmountFocusNode?.hasFocus ?? false)) {
+          safeSetState(() {
+            _model.loanAmountTextController?.text = functions
+                .removeCommaFromNumText(_model.loanAmountTextController.text)!;
+          });
+        } else {
+          if ((_model.loanAmountTextController.text != '0') &&
+              (double.parse(_model.loanAmountTextController.text) <
+                  999999999)) {
+            safeSetState(() {
+              _model.loanAmountTextController?.text =
+                  functions.returnNumberWithComma2Decimal(
+                      _model.loanAmountTextController.text)!;
+            });
+          } else {
+            if (!(double.parse(_model.loanAmountTextController.text) <
+                999999999)) {
+              await showDialog(
+                context: context,
+                builder: (dialogContext) {
+                  return Dialog(
+                    elevation: 0,
+                    insetPadding: EdgeInsets.zero,
+                    backgroundColor: Colors.transparent,
+                    alignment: AlignmentDirectional(0.0, 0.0)
+                        .resolve(Directionality.of(context)),
+                    child: GestureDetector(
+                      onTap: () {
+                        FocusScope.of(dialogContext).unfocus();
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      },
+                      child: MessageComponentWidget(
+                        textMessage: 'กรุณากรอกวงเงินไม่เกิน 999,999,999 บาท',
+                      ),
+                    ),
+                  );
+                },
+              );
+            }
+            safeSetState(() {
+              _model.loanAmountTextController?.text = '';
+            });
+          }
+        }
+      },
+    );
     animationsMap.addAll({
       'columnOnPageLoadAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -211,7 +279,7 @@ class _LeadAgentDetailCarPageWidgetState
           MoveEffect(
             curve: Curves.easeInOut,
             delay: 0.0.ms,
-            duration: 600.0.ms,
+            duration: 800.0.ms,
             begin: Offset(0.0, -20.0),
             end: Offset(0.0, 0.0),
           ),
@@ -253,6 +321,54 @@ class _LeadAgentDetailCarPageWidgetState
           ),
         ],
       ),
+      'columnOnPageLoadAnimation7': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation8': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation9': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation10': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
       'imageOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -268,6 +384,18 @@ class _LeadAgentDetailCarPageWidgetState
             delay: 0.0.ms,
             duration: 600.0.ms,
             begin: Offset(0.0, -30.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation11': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
             end: Offset(0.0, 0.0),
           ),
         ],
@@ -352,6 +480,7 @@ class _LeadAgentDetailCarPageWidgetState
                         padding: EdgeInsetsDirectional.fromSTEB(
                             12.0, 0.0, 12.0, 0.0),
                         child: SingleChildScrollView(
+                          controller: _model.columnController,
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -377,11 +506,8 @@ class _LeadAgentDetailCarPageWidgetState
                                   phonenumber: FFAppState()
                                       .saveLeadAgentData
                                       .mobilePhoneNumber,
-                                  amount:
-                                      FFAppState().saveLeadAgentData.loanAmount,
-                                  product: FFAppState()
-                                      .saveLeadAgentData
-                                      .loanTypeName,
+                                  amount: '',
+                                  product: '',
                                   carregister: FFAppState()
                                       .saveLeadAgentData
                                       .carRegistration,
@@ -469,75 +595,283 @@ class _LeadAgentDetailCarPageWidgetState
                                       width: double.infinity,
                                       height: 50.0,
                                       decoration: BoxDecoration(),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        child: FlutterFlowDropDown<String>(
-                                          controller: _model
-                                                  .dropDownVehicleValueController ??=
-                                              FormFieldController<String>(
-                                            _model.dropDownVehicleValue ??=
-                                                FFAppState()
-                                                    .saveLeadAgentData
-                                                    .loanTypeName,
-                                          ),
-                                          options: [
-                                            FFAppState()
-                                                .saveLeadAgentData
-                                                .loanTypeName
-                                          ],
-                                          onChanged: (val) async {
-                                            safeSetState(() => _model
-                                                .dropDownVehicleValue = val);
-                                            _model.canNextButton = false;
-                                            safeSetState(() {});
-                                          },
-                                          width: 200.0,
-                                          height: 40.0,
-                                          searchHintTextStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    letterSpacing: 0.0,
-                                                    lineHeight: 1.0,
-                                                  ),
-                                          searchTextStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          hintText: 'ระบุประเภทรถ',
-                                          searchHintText: 'เลือกประเภทรถ',
-                                          icon: Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryText,
-                                            size: 24.0,
-                                          ),
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          elevation: 2.0,
-                                          borderColor: Colors.transparent,
-                                          borderWidth: 0.0,
-                                          borderRadius: 8.0,
-                                          margin:
+                                      child: Builder(
+                                        builder: (context) => Padding(
+                                          padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 0.0, 12.0, 0.0),
-                                          disabled: true,
-                                          isOverButton: false,
-                                          isSearchable: true,
-                                          isMultiSelect: false,
+                                                  16.0, 0.0, 16.0, 0.0),
+                                          child: FlutterFlowDropDown<String>(
+                                            controller: _model
+                                                    .dropDownVehicleValueController ??=
+                                                FormFieldController<String>(
+                                                    null),
+                                            options: List<String>.from(_model
+                                                .vehicelMasterPageState
+                                                .map((e) => e.vehicleCode)
+                                                .toList()),
+                                            optionLabels: _model
+                                                .vehicelMasterPageState
+                                                .map((e) => e.vehicleName)
+                                                .toList(),
+                                            onChanged: (val) async {
+                                              safeSetState(() => _model
+                                                  .dropDownVehicleValue = val);
+                                              var _shouldSetState = false;
+                                              showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: LoadingWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
+                                              _model.canNextButton = false;
+                                              safeSetState(() {});
+                                              _model.apiResultGear =
+                                                  await AgentAPIGroup
+                                                      .agentRateSearchCall
+                                                      .call(
+                                                carVehicleCode:
+                                                    _model.dropDownVehicleValue,
+                                              );
+
+                                              _shouldSetState = true;
+                                              if ((_model.apiResultGear
+                                                          ?.statusCode ??
+                                                      200) !=
+                                                  200) {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child:
+                                                            ErrorMessageComponentWidget(
+                                                          textMessage:
+                                                              'พบข้อผิดพลาด connection (${(_model.apiResultGear?.statusCode ?? 200).toString()})',
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              if (AgentAPIGroup
+                                                      .agentRateSearchCall
+                                                      .code(
+                                                    (_model.apiResultGear
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  ) !=
+                                                  200) {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                                  0.0, 0.0)
+                                                              .resolve(
+                                                                  Directionality.of(
+                                                                      context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child:
+                                                            ErrorMessageComponentWidget(
+                                                          textMessage:
+                                                              '${AgentAPIGroup.agentRateSearchCall.message(
+                                                            (_model.apiResultGear
+                                                                    ?.jsonBody ??
+                                                                ''),
+                                                          )}',
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              _model.gearMasterPageState =
+                                                  AgentAPIGroup
+                                                      .agentRateSearchCall
+                                                      .gear(
+                                                        (_model.apiResultGear
+                                                                ?.jsonBody ??
+                                                            ''),
+                                                      )!
+                                                      .toList()
+                                                      .cast<
+                                                          MasterAgentGearModelStruct>();
+                                              _model.brandMasterPageState = [];
+                                              _model.modelMasterPageState = [];
+                                              _model.ccMasterPageState = [];
+                                              _model.stateNumber = 1;
+                                              safeSetState(() {});
+                                              FFAppState()
+                                                  .updateSaveLeadAgentDataStruct(
+                                                (e) => e
+                                                  ..loanTypeCode = _model
+                                                      .dropDownVehicleValue
+                                                  ..loanTypeId = _model
+                                                      .vehicelMasterPageState
+                                                      .elementAtOrNull(functions
+                                                          .findIndexInList(
+                                                              _model
+                                                                  .vehicelMasterPageState
+                                                                  .map((e) => e
+                                                                      .vehicleCode)
+                                                                  .toList(),
+                                                              _model
+                                                                  .dropDownVehicleValue)!)
+                                                      ?.vehicleId
+                                                  ..loanTypeName = _model
+                                                      .vehicelMasterPageState
+                                                      .elementAtOrNull(functions
+                                                          .findIndexInList(
+                                                              _model
+                                                                  .vehicelMasterPageState
+                                                                  .map((e) => e
+                                                                      .vehicleCode)
+                                                                  .toList(),
+                                                              _model
+                                                                  .dropDownVehicleValue)!)
+                                                      ?.vehicleName,
+                                              );
+                                              safeSetState(() {});
+                                              safeSetState(() {
+                                                _model
+                                                    .dropDownGearValueController
+                                                    ?.reset();
+                                                _model
+                                                    .dropDownBrand11ValueController
+                                                    ?.reset();
+                                                _model
+                                                    .dropDownYearValueController
+                                                    ?.reset();
+                                                _model
+                                                    .dropDownModelValueController
+                                                    ?.reset();
+                                                _model.dropDownCCValueController
+                                                    ?.reset();
+                                              });
+                                              if (!(_model.gearMasterPageState
+                                                  .isNotEmpty)) {
+                                                _model.canNextButton = true;
+                                                safeSetState(() {});
+                                              }
+                                              Navigator.pop(context);
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                            },
+                                            width: 200.0,
+                                            height: 40.0,
+                                            searchHintTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      letterSpacing: 0.0,
+                                                      lineHeight: 1.0,
+                                                    ),
+                                            searchTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            hintText: 'ระบุประเภทรถ',
+                                            searchHintText: 'ค้นหา ...',
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 24.0,
+                                            ),
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            elevation: 2.0,
+                                            borderColor: Colors.transparent,
+                                            borderWidth: 0.0,
+                                            borderRadius: 8.0,
+                                            margin:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 0.0, 12.0, 0.0),
+                                            isOverButton: false,
+                                            isSearchable: true,
+                                            isMultiSelect: false,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -811,7 +1145,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       ?.value = '';
                                                 });
                                                 safeSetState(() {
-                                                  _model.textController
+                                                  _model
+                                                      .rateFromApiTextController
                                                       ?.clear();
                                                 });
                                                 _model.brandMasterPageState =
@@ -829,14 +1164,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                     [];
                                                 _model.ccMasterPageState = [];
                                                 safeSetState(() {});
+                                                _model.stateNumber = 2;
+                                                safeSetState(() {});
                                                 if (!(_model
                                                     .brandMasterPageState
                                                     .isNotEmpty)) {
                                                   _model.canNextButton = true;
                                                   safeSetState(() {});
                                                 }
-                                                safeSetState(() {});
-                                                _model.stateNumber = 2;
                                                 safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
@@ -997,13 +1332,30 @@ class _LeadAgentDetailCarPageWidgetState
                                                     ?.reset();
                                               });
                                               safeSetState(() {
-                                                _model.textController?.clear();
+                                                _model.rateFromApiTextController
+                                                    ?.clear();
                                               });
                                               _model.stateNumber = 3;
                                               safeSetState(() {});
                                             },
                                             width: 200.0,
                                             height: 40.0,
+                                            searchHintTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            searchTextStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily:
+                                                          'Noto San Thai',
+                                                      letterSpacing: 0.0,
+                                                    ),
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
@@ -1013,6 +1365,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                       letterSpacing: 0.0,
                                                     ),
                                             hintText: 'ระบุยี่ห้อรถ',
+                                            searchHintText: 'ค้นหา ...',
                                             icon: Icon(
                                               Icons.keyboard_arrow_down_rounded,
                                               color:
@@ -1032,7 +1385,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                     12.0, 0.0, 12.0, 0.0),
                                             hidesUnderline: true,
                                             isOverButton: false,
-                                            isSearchable: false,
+                                            isSearchable: true,
                                             isMultiSelect: false,
                                           ),
                                         ),
@@ -1276,7 +1629,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       ?.reset();
                                                 });
                                                 safeSetState(() {
-                                                  _model.textController
+                                                  _model
+                                                      .rateFromApiTextController
                                                       ?.clear();
                                                 });
                                                 _model.modelMasterPageState =
@@ -1300,6 +1654,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                 }
                                                 _model.stateNumber = 4;
                                                 safeSetState(() {});
+                                                await _model.columnController
+                                                    ?.animateTo(
+                                                  _model.columnController!
+                                                      .position.maxScrollExtent,
+                                                  duration: Duration(
+                                                      milliseconds: 500),
+                                                  curve: Curves.ease,
+                                                );
                                                 safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
@@ -1605,7 +1967,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       ?.reset();
                                                 });
                                                 safeSetState(() {
-                                                  _model.textController
+                                                  _model
+                                                      .rateFromApiTextController
                                                       ?.clear();
                                                 });
                                                 _model.ccMasterPageState =
@@ -1627,6 +1990,14 @@ class _LeadAgentDetailCarPageWidgetState
                                                 }
                                                 _model.stateNumber = 5;
                                                 safeSetState(() {});
+                                                await _model.columnController
+                                                    ?.animateTo(
+                                                  _model.columnController!
+                                                      .position.maxScrollExtent,
+                                                  duration: Duration(
+                                                      milliseconds: 100),
+                                                  curve: Curves.ease,
+                                                );
                                                 safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
@@ -1770,10 +2141,19 @@ class _LeadAgentDetailCarPageWidgetState
                                               safeSetState(() =>
                                                   _model.dropDownCCValue = val);
                                               safeSetState(() {
-                                                _model.textController?.clear();
+                                                _model.rateFromApiTextController
+                                                    ?.clear();
                                               });
                                               _model.stateNumber = 6;
                                               safeSetState(() {});
+                                              await _model.columnController
+                                                  ?.animateTo(
+                                                _model.columnController!
+                                                    .position.maxScrollExtent,
+                                                duration:
+                                                    Duration(milliseconds: 100),
+                                                curve: Curves.ease,
+                                              );
                                               safeSetState(() {});
                                             },
                                             width: 200.0,
@@ -1890,10 +2270,10 @@ class _LeadAgentDetailCarPageWidgetState
                                                     .fromSTEB(
                                                         16.0, 0.0, 16.0, 0.0),
                                                 child: TextFormField(
-                                                  controller:
-                                                      _model.textController,
-                                                  focusNode:
-                                                      _model.textFieldFocusNode,
+                                                  controller: _model
+                                                      .rateFromApiTextController,
+                                                  focusNode: _model
+                                                      .rateFromApiFocusNode,
                                                   autofocus: false,
                                                   textCapitalization:
                                                       TextCapitalization.words,
@@ -2015,7 +2395,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                       ),
                                                   maxLines: null,
                                                   validator: _model
-                                                      .textControllerValidator
+                                                      .rateFromApiTextControllerValidator
                                                       .asValidator(context),
                                                   inputFormatters: [
                                                     if (!isAndroid && !isiOS)
@@ -2361,7 +2741,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                 if (_model.carRateData !=
                                                     null) {
                                                   safeSetState(() {
-                                                    _model.textController
+                                                    _model.rateFromApiTextController
                                                             ?.text =
                                                         functions
                                                             .returnNumberWithComma2Decimal(
@@ -2369,23 +2749,27 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     .carRateData
                                                                     ?.rate)!;
                                                   });
-                                                  if (_model.textController
+                                                  if (_model.rateFromApiTextController
                                                               .text ==
                                                           '0.00'
                                                       ? true
                                                       : false) {
                                                     safeSetState(() {
-                                                      _model.textController
+                                                      _model
+                                                          .rateFromApiTextController
                                                           ?.text = 'ไม่พบเรท';
                                                     });
                                                   }
                                                 } else {
                                                   safeSetState(() {
-                                                    _model.textController
+                                                    _model
+                                                        .rateFromApiTextController
                                                         ?.text = 'ไม่พบเรท';
                                                   });
                                                 }
 
+                                                _model.stateNumber = 7;
+                                                safeSetState(() {});
                                                 Navigator.pop(context);
                                                 if (_shouldSetState)
                                                   safeSetState(() {});
@@ -2423,364 +2807,1376 @@ class _LeadAgentDetailCarPageWidgetState
                                   ).animateOnPageLoad(animationsMap[
                                       'columnOnPageLoadAnimation6']!),
                                 ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 8.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 0.0),
-                                      child: Row(
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 16.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
                                         children: [
-                                          SizedBox(
-                                            height: 22.0,
-                                            child: VerticalDivider(
-                                              thickness: 4.0,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 0.0, 0.0),
+                                            child: Text(
+                                              'ทะเบียนรถ',
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
                                             ),
                                           ),
-                                          Text(
-                                            'แนบรูป',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ].divide(SizedBox(width: 12.0)),
+                                        ],
                                       ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Text(
-                                          'เล่มรถ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: () {
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                child: TextFormField(
+                                                  controller: _model
+                                                      .carregisTextController,
+                                                  focusNode:
+                                                      _model.carregisFocusNode,
+                                                  autofocus: false,
+                                                  textCapitalization:
+                                                      TextCapitalization.words,
+                                                  obscureText: false,
+                                                  decoration: InputDecoration(
+                                                    labelStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .labelLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    hintText: 'ระบุทะเบียนรถ',
+                                                    hintStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    enabledBorder:
+                                                        UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                4.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                4.0),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                4.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                4.0),
+                                                      ),
+                                                    ),
+                                                    errorBorder:
+                                                        UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                4.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                4.0),
+                                                      ),
+                                                    ),
+                                                    focusedErrorBorder:
+                                                        UnderlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                4.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                4.0),
+                                                      ),
+                                                    ),
+                                                    contentPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 16.0,
+                                                                16.0, 8.0),
+                                                  ),
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyLarge
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                        lineHeight: 3.0,
+                                                      ),
+                                                  maxLines: null,
+                                                  validator: _model
+                                                      .carregisTextControllerValidator
+                                                      .asValidator(context),
+                                                  inputFormatters: [
+                                                    if (!isAndroid && !isiOS)
+                                                      TextInputFormatter
+                                                          .withFunction(
+                                                              (oldValue,
+                                                                  newValue) {
+                                                        return TextEditingValue(
+                                                          selection: newValue
+                                                              .selection,
+                                                          text: newValue.text
+                                                              .toCapitalization(
+                                                                  TextCapitalization
+                                                                      .words),
+                                                        );
+                                                      }),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ).animateOnPageLoad(animationsMap[
+                                      'columnOnPageLoadAnimation7']!),
+                                ),
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 16.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 0.0, 0.0),
+                                            child: Text(
+                                              'จังหวัดทะเบียนรถ',
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 50.0,
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                child:
+                                                    FlutterFlowDropDown<String>(
+                                                  controller: _model
+                                                          .dropDownProvinceValueController ??=
+                                                      FormFieldController<
+                                                          String>(null),
+                                                  options: APIMasterGroup
+                                                      .getProvinceCall
+                                                      .provth(
+                                                    (_model.provinceApiOutput
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  )!,
+                                                  onChanged: (val) =>
+                                                      safeSetState(() => _model
+                                                              .dropDownProvinceValue =
+                                                          val),
+                                                  width: 200.0,
+                                                  height: 40.0,
+                                                  searchHintTextStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  searchTextStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  hintText:
+                                                      'ระบุจังหวัดทะเบียนรถ',
+                                                  searchHintText: 'ค้นหา ...',
+                                                  icon: Icon(
+                                                    Icons
+                                                        .keyboard_arrow_down_rounded,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    size: 24.0,
+                                                  ),
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                  elevation: 2.0,
+                                                  borderColor:
+                                                      Colors.transparent,
+                                                  borderWidth: 0.0,
+                                                  borderRadius: 8.0,
+                                                  margin: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 12.0, 0.0),
+                                                  isOverButton: false,
+                                                  isSearchable: true,
+                                                  isMultiSelect: false,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ).animateOnPageLoad(animationsMap[
+                                      'columnOnPageLoadAnimation8']!),
+                                ),
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 22.0,
+                                              child: VerticalDivider(
+                                                thickness: 4.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            ),
+                                            Text(
+                                              'ข้อมูลเพิ่มเติม',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    'วงเงินที่ต้องการ',
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  ' *',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .error,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 50.0,
+                                                    decoration: BoxDecoration(),
+                                                    child: Builder(
+                                                      builder: (context) =>
+                                                          Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .loanAmountTextController,
+                                                          focusNode: _model
+                                                              .loanAmountFocusNode,
+                                                          autofocus: false,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .words,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'กรอกวงเงินที่ต้องการ',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        16.0,
+                                                                        16.0,
+                                                                        8.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                lineHeight: 3.0,
+                                                              ),
+                                                          maxLines: null,
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          validator: _model
+                                                              .loanAmountTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                          inputFormatters: [
+                                                            if (!isAndroid &&
+                                                                !isiOS)
+                                                              TextInputFormatter
+                                                                  .withFunction(
+                                                                      (oldValue,
+                                                                          newValue) {
+                                                                return TextEditingValue(
+                                                                  selection:
+                                                                      newValue
+                                                                          .selection,
+                                                                  text: newValue
+                                                                      .text
+                                                                      .toCapitalization(
+                                                                          TextCapitalization
+                                                                              .words),
+                                                                );
+                                                              }),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'columnOnPageLoadAnimation9']!),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if ((_model.loanAmountTextController.text !=
+                                          '') &&
+                                  (double.parse((functions
+                                          .removeCommaFromNumText(_model
+                                              .loanAmountTextController
+                                              .text)!)) >
+                                      0) &&
+                                  (FFAppState().platform == 'mobile'))
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 22.0,
+                                              child: VerticalDivider(
+                                                thickness: 4.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            ),
+                                            Text(
+                                              'ค่าคอมที่คาดว่าจะได้รับ',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '${valueOrDefault<String>(
+                                                      functions.returnNumberWithComma2Decimal(((double.parse(
+                                                                  (functions.removeCommaFromNumText(_model
+                                                                      .loanAmountTextController
+                                                                      .text)!))) *
+                                                              (double.parse((FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .paymentMethod ==
+                                                                      'installment'
+                                                                  ? (FFAppState()
+                                                                              .agentProfileDataType
+                                                                              .defaultPercent !=
+                                                                          ''
+                                                                      ? FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .defaultPercent
+                                                                      : '0')
+                                                                  : (FFAppState()
+                                                                              .agentProfileDataType
+                                                                              .actualPercent !=
+                                                                          ''
+                                                                      ? FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .actualPercent
+                                                                      : '0')))) /
+                                                              100)
+                                                          .toString()),
+                                                      '0',
+                                                    )} บาท',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 24.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'columnOnPageLoadAnimation10']!),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 16.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 0.0, 0.0, 0.0),
+                                            child: Text(
+                                              'เวลาที่สะดวกให้ติดต่อ',
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 12.0,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          final _datePickedTime =
+                                              await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.fromDateTime(
+                                                getCurrentTimestamp),
+                                            builder: (context, child) {
+                                              return wrapInMaterialTimePickerTheme(
+                                                context,
+                                                child!,
+                                                headerBackgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                headerForegroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                headerTextStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineLarge
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 32.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                pickerBackgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                pickerForegroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                selectedDateTimeBackgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                selectedDateTimeForegroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .info,
+                                                actionButtonForegroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                iconSize: 24.0,
+                                              );
+                                            },
+                                          );
+                                          if (_datePickedTime != null) {
+                                            safeSetState(() {
+                                              _model.datePicked = DateTime(
+                                                getCurrentTimestamp.year,
+                                                getCurrentTimestamp.month,
+                                                getCurrentTimestamp.day,
+                                                _datePickedTime.hour,
+                                                _datePickedTime.minute,
+                                              );
+                                            });
+                                          } else if (_model.datePicked !=
+                                              null) {
+                                            safeSetState(() {
+                                              _model.datePicked =
+                                                  getCurrentTimestamp;
+                                            });
+                                          }
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(),
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(-1.0, 0.0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              child: Text(
+                                                _model.datePicked != null
+                                                    ? dateTimeFormat(
+                                                        "Hm", _model.datePicked)
+                                                    : 'ระบุเวลาที่สะดวกให้ติดต่อ',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 12.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Divider(
+                                        thickness: 2.0,
+                                        indent: 16.0,
+                                        endIndent: 16.0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 22.0,
+                                              child: VerticalDivider(
+                                                thickness: 4.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            ),
+                                            Text(
+                                              'แนบรูป',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 12.0, 12.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              'เล่มรถ',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        fontSize: () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return 14.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return 20.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 20.0;
+                                                          } else {
+                                                            return 20.0;
+                                                          }
+                                                        }(),
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(5.0, 0.0, 0.0, 0.0),
+                                              child: Text(
+                                                '*',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (_model.bluebookFile != null &&
+                                          (_model.bluebookFile?.bytes
+                                                  ?.isNotEmpty ??
+                                              false))
+                                        Align(
+                                          alignment: AlignmentDirectional(
+                                              valueOrDefault<double>(
+                                                () {
                                                   if (MediaQuery.sizeOf(context)
                                                           .width <
                                                       kBreakpointSmall) {
-                                                    return 14.0;
+                                                    return 0.0;
                                                   } else if (MediaQuery.sizeOf(
                                                               context)
                                                           .width <
                                                       kBreakpointMedium) {
-                                                    return 20.0;
+                                                    return 0.0;
                                                   } else if (MediaQuery.sizeOf(
                                                               context)
                                                           .width <
                                                       kBreakpointLarge) {
-                                                    return 20.0;
+                                                    return -1.0;
                                                   } else {
-                                                    return 20.0;
+                                                    return -1.0;
                                                   }
                                                 }(),
-                                                letterSpacing: 0.0,
+                                                0.0,
                                               ),
-                                        ),
-                                      ],
-                                    ),
-                                    if (_model.bluebookFile != null &&
-                                        (_model.bluebookFile?.bytes
-                                                ?.isNotEmpty ??
-                                            false))
-                                      Align(
-                                        alignment: AlignmentDirectional(
-                                            valueOrDefault<double>(
-                                              () {
-                                                if (MediaQuery.sizeOf(context)
-                                                        .width <
-                                                    kBreakpointSmall) {
-                                                  return 0.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointMedium) {
-                                                  return 0.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointLarge) {
-                                                  return -1.0;
-                                                } else {
-                                                  return -1.0;
-                                                }
-                                              }(),
-                                              0.0,
-                                            ),
-                                            0.0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 8.0, 0.0, 0.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  child:
-                                                      FlutterFlowExpandedImageView(
-                                                    image: Image.memory(
-                                                      _model.bluebookFile
-                                                              ?.bytes ??
-                                                          Uint8List.fromList(
-                                                              []),
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                    allowRotation: false,
-                                                    tag: 'imageTag',
-                                                    useHeroAnimation: true,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Hero(
-                                              tag: 'imageTag',
-                                              transitionOnUserGestures: true,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: Image.memory(
-                                                  _model.bluebookFile?.bytes ??
-                                                      Uint8List.fromList([]),
-                                                  width: () {
-                                                    if (MediaQuery.sizeOf(
-                                                                context)
-                                                            .width <
-                                                        kBreakpointSmall) {
-                                                      return 200.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointMedium) {
-                                                      return 300.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointLarge) {
-                                                      return 300.0;
-                                                    } else {
-                                                      return 300.0;
-                                                    }
-                                                  }(),
-                                                  height: () {
-                                                    if (MediaQuery.sizeOf(
-                                                                context)
-                                                            .width <
-                                                        kBreakpointSmall) {
-                                                      return 200.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointMedium) {
-                                                      return 300.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointLarge) {
-                                                      return 300.0;
-                                                    } else {
-                                                      return 300.0;
-                                                    }
-                                                  }(),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ).animateOnPageLoad(animationsMap[
-                                              'imageOnPageLoadAnimation']!),
-                                        ),
-                                      ),
-                                    Builder(
-                                      builder: (context) => Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            var _shouldSetState = false;
-                                            await showAlignedDialog(
-                                              context: context,
-                                              isGlobal: false,
-                                              avoidOverflow: false,
-                                              targetAnchor:
-                                                  AlignmentDirectional(
-                                                          0.0, -1.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              followerAnchor:
-                                                  AlignmentDirectional(0.0, 0.0)
-                                                      .resolve(
-                                                          Directionality.of(
-                                                              context)),
-                                              builder: (dialogContext) {
-                                                return Material(
-                                                  color: Colors.transparent,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      FocusScope.of(
-                                                              dialogContext)
-                                                          .unfocus();
-                                                      FocusManager
-                                                          .instance.primaryFocus
-                                                          ?.unfocus();
-                                                    },
+                                              0.0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 8.0, 0.0, 0.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                await Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
                                                     child:
-                                                        ImageSourceComponentWidget(
-                                                      cameraType: 'normal',
-                                                      actionName: 'bluebook',
+                                                        FlutterFlowExpandedImageView(
+                                                      image: Image.memory(
+                                                        _model.bluebookFile
+                                                                ?.bytes ??
+                                                            Uint8List.fromList(
+                                                                []),
+                                                        fit: BoxFit.contain,
+                                                      ),
+                                                      allowRotation: false,
+                                                      tag: 'imageTag',
+                                                      useHeroAnimation: true,
                                                     ),
                                                   ),
                                                 );
                                               },
-                                            ).then((value) => safeSetState(() =>
-                                                _model.bluebookFileOutput =
-                                                    value));
+                                              child: Hero(
+                                                tag: 'imageTag',
+                                                transitionOnUserGestures: true,
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  child: Image.memory(
+                                                    _model.bluebookFile
+                                                            ?.bytes ??
+                                                        Uint8List.fromList([]),
+                                                    width: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 200.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 300.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 300.0;
+                                                      } else {
+                                                        return 300.0;
+                                                      }
+                                                    }(),
+                                                    height: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 200.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 300.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 300.0;
+                                                      } else {
+                                                        return 300.0;
+                                                      }
+                                                    }(),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            ).animateOnPageLoad(animationsMap[
+                                                'imageOnPageLoadAnimation']!),
+                                          ),
+                                        ),
+                                      Builder(
+                                        builder: (context) => Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              var _shouldSetState = false;
+                                              await showAlignedDialog(
+                                                context: context,
+                                                isGlobal: false,
+                                                avoidOverflow: false,
+                                                targetAnchor:
+                                                    AlignmentDirectional(
+                                                            0.0, -1.0)
+                                                        .resolve(
+                                                            Directionality.of(
+                                                                context)),
+                                                followerAnchor:
+                                                    AlignmentDirectional(
+                                                            0.0, 0.0)
+                                                        .resolve(
+                                                            Directionality.of(
+                                                                context)),
+                                                builder: (dialogContext) {
+                                                  return Material(
+                                                    color: Colors.transparent,
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ImageSourceComponentWidget(
+                                                        cameraType: 'normal',
+                                                        actionName: 'bluebook',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) => safeSetState(
+                                                  () => _model
+                                                          .bluebookFileOutput =
+                                                      value));
 
-                                            _shouldSetState = true;
-                                            if (!(_model.bluebookFileOutput !=
-                                                    null &&
-                                                (_model.bluebookFileOutput
-                                                        ?.bytes?.isNotEmpty ??
-                                                    false))) {
+                                              _shouldSetState = true;
+                                              if (!(_model.bluebookFileOutput !=
+                                                      null &&
+                                                  (_model.bluebookFileOutput
+                                                          ?.bytes?.isNotEmpty ??
+                                                      false))) {
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              _model.bluebookFile =
+                                                  _model.bluebookFileOutput;
+                                              safeSetState(() {});
                                               if (_shouldSetState)
                                                 safeSetState(() {});
-                                              return;
-                                            }
-                                            _model.bluebookFile =
-                                                _model.bluebookFileOutput;
-                                            safeSetState(() {});
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                          },
-                                          text: 'แนบรูป',
-                                          icon: Icon(
-                                            Icons.attach_file_sharp,
-                                            size: () {
-                                              if (MediaQuery.sizeOf(context)
-                                                      .width <
-                                                  kBreakpointSmall) {
-                                                return 25.0;
-                                              } else if (MediaQuery.sizeOf(
+                                            },
+                                            text: 'แนบรูป',
+                                            icon: Icon(
+                                              Icons.attach_file_sharp,
+                                              size: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 25.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 30.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 30.0;
+                                                } else {
+                                                  return 30.0;
+                                                }
+                                              }(),
+                                            ),
+                                            options: FFButtonOptions(
+                                              width: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return MediaQuery.sizeOf(
                                                           context)
-                                                      .width <
-                                                  kBreakpointMedium) {
-                                                return 30.0;
-                                              } else if (MediaQuery.sizeOf(
+                                                      .width;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return MediaQuery.sizeOf(
                                                           context)
-                                                      .width <
-                                                  kBreakpointLarge) {
-                                                return 30.0;
-                                              } else {
-                                                return 30.0;
-                                              }
-                                            }(),
-                                          ),
-                                          options: FFButtonOptions(
-                                            width: () {
-                                              if (MediaQuery.sizeOf(context)
-                                                      .width <
-                                                  kBreakpointSmall) {
-                                                return MediaQuery.sizeOf(
-                                                        context)
-                                                    .width;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointMedium) {
-                                                return MediaQuery.sizeOf(
-                                                        context)
-                                                    .width;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointLarge) {
-                                                return 600.0;
-                                              } else {
-                                                return 600.0;
-                                              }
-                                            }(),
-                                            height: () {
-                                              if (MediaQuery.sizeOf(context)
-                                                      .width <
-                                                  kBreakpointSmall) {
-                                                return 70.0;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointMedium) {
-                                                return 90.0;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointLarge) {
-                                                return 90.0;
-                                              } else {
-                                                return 90.0;
-                                              }
-                                            }(),
-                                            padding: EdgeInsets.all(0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconColor: Color(0xFF1D71B8),
-                                            color: Color(0xFFD9EBFF),
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: Color(0xFF1D71B8),
-                                                  fontSize: () {
-                                                    if (MediaQuery.sizeOf(
-                                                                context)
-                                                            .width <
-                                                        kBreakpointSmall) {
-                                                      return 16.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointMedium) {
-                                                      return 22.0;
-                                                    } else if (MediaQuery
-                                                                .sizeOf(context)
-                                                            .width <
-                                                        kBreakpointLarge) {
-                                                      return 22.0;
-                                                    } else {
-                                                      return 22.0;
-                                                    }
-                                                  }(),
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(16.0),
+                                                      .width;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 600.0;
+                                                } else {
+                                                  return 600.0;
+                                                }
+                                              }(),
+                                              height: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 70.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 90.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 90.0;
+                                                } else {
+                                                  return 90.0;
+                                                }
+                                              }(),
+                                              padding: EdgeInsets.all(0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconColor: Color(0xFF1D71B8),
+                                              color: Color(0xFFD9EBFF),
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: Color(0xFF1D71B8),
+                                                    fontSize: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 16.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 22.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 22.0;
+                                                      } else {
+                                                        return 22.0;
+                                                      }
+                                                    }(),
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                              elevation: 0.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              if ((_model.stateNumber! >= 7) ||
+                                  _model.canNextButton)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 22.0,
+                                              child: VerticalDivider(
+                                                thickness: 4.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                              ),
+                                            ),
+                                            Text(
+                                              'ยินยอมให้เก็บข้อมูลส่วนตัว',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 16.0, 0.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      12.0, 0.0, 12.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Icon(
+                                                    Icons.check_circle,
+                                                    color: Color(0xFF24DB1A),
+                                                    size: 24.0,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Text(
+                                                      'ยินยอมให้เก็บข้อมูลส่วนตัวแล้ว',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: Color(
+                                                                0xFF24DB1A),
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ).animateOnPageLoad(animationsMap[
+                                            'columnOnPageLoadAnimation11']!),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                             ].addToEnd(SizedBox(height: 30.0)),
                           ),
                         ),
@@ -2827,88 +4223,229 @@ class _LeadAgentDetailCarPageWidgetState
                               ),
                             ),
                             Expanded(
-                              child: FFButtonWidget(
-                                onPressed: !_model.canNextButton
-                                    ? null
-                                    : () async {
-                                        FFAppState()
-                                            .updateSaveLeadAgentDataStruct(
-                                          (e) => e
-                                            ..carGear = _model
-                                                            .dropDownGearValue !=
-                                                        null &&
-                                                    _model.dropDownGearValue !=
-                                                        ''
-                                                ? _model.dropDownGearValue
-                                                : ''
-                                            ..brandName = _model
-                                                            .dropDownBrand11Value !=
-                                                        null &&
-                                                    _model.dropDownBrand11Value !=
-                                                        ''
-                                                ? _model.dropDownBrand11Value
-                                                : ''
-                                            ..carYear = _model
-                                                            .dropDownYearValue !=
-                                                        null &&
-                                                    _model.dropDownYearValue !=
-                                                        ''
-                                                ? _model.dropDownYearValue
-                                                : ''
-                                            ..carModel = _model
-                                                            .dropDownModelValue !=
-                                                        null &&
-                                                    _model.dropDownModelValue !=
-                                                        ''
-                                                ? _model.dropDownModelValue
-                                                : ''
-                                            ..carCc = _model.dropDownCCValue !=
-                                                        null &&
-                                                    _model.dropDownCCValue != ''
-                                                ? _model.dropDownCCValue
-                                                : ''
-                                            ..productDetail = _model
-                                                            .dropDownCCValue !=
-                                                        null &&
-                                                    _model.dropDownCCValue != ''
-                                                ? _model.dropDownCCValue
-                                                : ''
-                                            ..estimatePrice =
-                                                _model.carRateData != null
-                                                    ? _model.carRateData?.rate
-                                                    : '0',
-                                        );
-                                        safeSetState(() {});
+                              child: Builder(
+                                builder: (context) => FFButtonWidget(
+                                  onPressed: (!_model.canNextButton ||
+                                          (_model.loanAmountTextController
+                                                      .text ==
+                                                  '') ||
+                                          (_model.bluebookFile == null ||
+                                              (_model.bluebookFile?.bytes
+                                                      ?.isEmpty ??
+                                                  true)))
+                                      ? null
+                                      : () async {
+                                          if (!(_model.loanAmountTextController
+                                                      .text !=
+                                                  '')) {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        MessageComponentWidget(
+                                                      textMessage:
+                                                          'กรุณากรอกวงเงินที่ต้องการ',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
 
-                                        context.pushNamed(
-                                          LeadAgentReviewDetailPageWidget
-                                              .routeName,
-                                          extra: <String, dynamic>{
-                                            kTransitionInfoKey: TransitionInfo(
-                                              hasTransition: true,
-                                              transitionType: PageTransitionType
-                                                  .rightToLeft,
-                                            ),
-                                          },
-                                        );
-                                      },
-                                text: 'ถัดไป',
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  disabledColor: Color(0x7FDB771A),
+                                            return;
+                                          }
+                                          if (!(_model.bluebookFile != null &&
+                                              (_model.bluebookFile?.bytes
+                                                      ?.isNotEmpty ??
+                                                  false))) {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (dialogContext) {
+                                                return Dialog(
+                                                  elevation: 0,
+                                                  insetPadding: EdgeInsets.zero,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                              0.0, 0.0)
+                                                          .resolve(
+                                                              Directionality.of(
+                                                                  context)),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      FocusScope.of(
+                                                              dialogContext)
+                                                          .unfocus();
+                                                      FocusManager
+                                                          .instance.primaryFocus
+                                                          ?.unfocus();
+                                                    },
+                                                    child:
+                                                        MessageComponentWidget(
+                                                      textMessage:
+                                                          'กรุณาอัพรูปเล่มรถ',
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
+
+                                            return;
+                                          }
+                                          FFAppState()
+                                              .updateSaveLeadAgentDataStruct(
+                                            (e) => e
+                                              ..carGear = _model
+                                                              .dropDownGearValue !=
+                                                          null &&
+                                                      _model.dropDownGearValue !=
+                                                          ''
+                                                  ? _model.dropDownGearValue
+                                                  : ''
+                                              ..brandName =
+                                                  _model.dropDownBrand11Value !=
+                                                              null &&
+                                                          _model.dropDownBrand11Value !=
+                                                              ''
+                                                      ? _model
+                                                          .dropDownBrand11Value
+                                                      : ''
+                                              ..carYear = _model
+                                                              .dropDownYearValue !=
+                                                          null &&
+                                                      _model.dropDownYearValue !=
+                                                          ''
+                                                  ? _model.dropDownYearValue
+                                                  : ''
+                                              ..carModel = _model
+                                                              .dropDownModelValue !=
+                                                          null &&
+                                                      _model.dropDownModelValue !=
+                                                          ''
+                                                  ? _model.dropDownModelValue
+                                                  : ''
+                                              ..carCc = _model.dropDownCCValue !=
+                                                          null &&
+                                                      _model.dropDownCCValue !=
+                                                          ''
+                                                  ? _model.dropDownCCValue
+                                                  : ''
+                                              ..productDetail = _model
+                                                              .dropDownCCValue !=
+                                                          null &&
+                                                      _model.dropDownCCValue !=
+                                                          ''
+                                                  ? _model.dropDownCCValue
+                                                  : ''
+                                              ..estimatePrice =
+                                                  _model.carRateData != null
+                                                      ? _model.carRateData?.rate
+                                                      : '0'
+                                              ..carRegistration = _model
+                                                  .carregisTextController.text
+                                              ..contactTime =
+                                                  _model.datePicked?.toString()
+                                              ..loanAmount = functions
+                                                  .removeCommaFromNumText(_model
+                                                      .loanAmountTextController
+                                                      .text)
+                                              ..carProvince =
+                                                  _model.dropDownProvinceValue
+                                              ..commission = ((double.parse((functions
+                                                          .removeCommaFromNumText(
+                                                              _model
+                                                                  .loanAmountTextController
+                                                                  .text)!))) *
+                                                      (double.parse((FFAppState()
+                                                                  .agentProfileDataType
+                                                                  .paymentMethod ==
+                                                              'one_time'
+                                                          ? FFAppState()
+                                                              .agentProfileDataType
+                                                              .defaultPercent
+                                                          : FFAppState()
+                                                              .agentProfileDataType
+                                                              .actualPercent))) /
+                                                      100)
+                                                  .toString()
+                                              ..comEstimateAmt =
+                                                  '${((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()}'
+                                              ..comEstimateVat = FFAppState()
+                                                  .agentProfileDataType
+                                                  .agentWht
+                                              ..comEstimateNetAmt =
+                                                  '${(((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100) - ((double.parse(((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100))).toString()}'
+                                              ..defaultComPercent = FFAppState()
+                                                  .agentProfileDataType
+                                                  .defaultPercent
+                                              ..actualComPercent = FFAppState()
+                                                  .agentProfileDataType
+                                                  .actualPercent
+                                              ..comEstimateVatAmt =
+                                                  '${((double.parse(((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100)).toString()}'
+                                              ..agentCode =
+                                                  FFAppState().agentCode,
+                                          );
+                                          safeSetState(() {});
+
+                                          context.pushNamed(
+                                            LeadAgentReviewDetailPageWidget
+                                                .routeName,
+                                            queryParameters: {
+                                              'imageCarBack': serializeParam(
+                                                _model.bluebookFile,
+                                                ParamType.FFUploadedFile,
+                                              ),
+                                            }.withoutNulls,
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .rightToLeft,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                  text: 'ถัดไป',
+                                  options: FFButtonOptions(
+                                    height: 60.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                        ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    disabledColor: Color(0x7FDB771A),
+                                  ),
                                 ),
                               ),
                             ),

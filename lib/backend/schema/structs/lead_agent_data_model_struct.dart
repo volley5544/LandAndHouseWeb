@@ -64,6 +64,15 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
     String? promptpayNumber,
     String? product,
     String? createdAt,
+    String? agentGroupId,
+    String? comEstimateAmt,
+    String? comEstimateVat,
+    String? comEstimateNetAmt,
+    String? defaultComPercent,
+    String? actualComPercent,
+    String? agentWht,
+    String? comEstimateVatAmt,
+    String? requestNo,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -121,6 +130,15 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         _promptpayNumber = promptpayNumber,
         _product = product,
         _createdAt = createdAt,
+        _agentGroupId = agentGroupId,
+        _comEstimateAmt = comEstimateAmt,
+        _comEstimateVat = comEstimateVat,
+        _comEstimateNetAmt = comEstimateNetAmt,
+        _defaultComPercent = defaultComPercent,
+        _actualComPercent = actualComPercent,
+        _agentWht = agentWht,
+        _comEstimateVatAmt = comEstimateVatAmt,
+        _requestNo = requestNo,
         super(firestoreUtilData);
 
   // "id" field.
@@ -517,6 +535,69 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasCreatedAt() => _createdAt != null;
 
+  // "agent_group_id" field.
+  String? _agentGroupId;
+  String get agentGroupId => _agentGroupId ?? '';
+  set agentGroupId(String? val) => _agentGroupId = val;
+
+  bool hasAgentGroupId() => _agentGroupId != null;
+
+  // "com_estimate_amt" field.
+  String? _comEstimateAmt;
+  String get comEstimateAmt => _comEstimateAmt ?? '';
+  set comEstimateAmt(String? val) => _comEstimateAmt = val;
+
+  bool hasComEstimateAmt() => _comEstimateAmt != null;
+
+  // "com_estimate_vat" field.
+  String? _comEstimateVat;
+  String get comEstimateVat => _comEstimateVat ?? '';
+  set comEstimateVat(String? val) => _comEstimateVat = val;
+
+  bool hasComEstimateVat() => _comEstimateVat != null;
+
+  // "com_estimate_net_amt" field.
+  String? _comEstimateNetAmt;
+  String get comEstimateNetAmt => _comEstimateNetAmt ?? '';
+  set comEstimateNetAmt(String? val) => _comEstimateNetAmt = val;
+
+  bool hasComEstimateNetAmt() => _comEstimateNetAmt != null;
+
+  // "default_com_percent" field.
+  String? _defaultComPercent;
+  String get defaultComPercent => _defaultComPercent ?? '';
+  set defaultComPercent(String? val) => _defaultComPercent = val;
+
+  bool hasDefaultComPercent() => _defaultComPercent != null;
+
+  // "actual_com_percent" field.
+  String? _actualComPercent;
+  String get actualComPercent => _actualComPercent ?? '';
+  set actualComPercent(String? val) => _actualComPercent = val;
+
+  bool hasActualComPercent() => _actualComPercent != null;
+
+  // "agent_wht" field.
+  String? _agentWht;
+  String get agentWht => _agentWht ?? '';
+  set agentWht(String? val) => _agentWht = val;
+
+  bool hasAgentWht() => _agentWht != null;
+
+  // "com_estimate_vat_amt" field.
+  String? _comEstimateVatAmt;
+  String get comEstimateVatAmt => _comEstimateVatAmt ?? '';
+  set comEstimateVatAmt(String? val) => _comEstimateVatAmt = val;
+
+  bool hasComEstimateVatAmt() => _comEstimateVatAmt != null;
+
+  // "request_no" field.
+  String? _requestNo;
+  String get requestNo => _requestNo ?? '';
+  set requestNo(String? val) => _requestNo = val;
+
+  bool hasRequestNo() => _requestNo != null;
+
   static LeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       LeadAgentDataModelStruct(
         id: castToType<int>(data['id']),
@@ -575,6 +656,15 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         promptpayNumber: data['promptpay_number'] as String?,
         product: data['product'] as String?,
         createdAt: data['created_at'] as String?,
+        agentGroupId: data['agent_group_id'] as String?,
+        comEstimateAmt: data['com_estimate_amt'] as String?,
+        comEstimateVat: data['com_estimate_vat'] as String?,
+        comEstimateNetAmt: data['com_estimate_net_amt'] as String?,
+        defaultComPercent: data['default_com_percent'] as String?,
+        actualComPercent: data['actual_com_percent'] as String?,
+        agentWht: data['agent_wht'] as String?,
+        comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
+        requestNo: data['request_no'] as String?,
       );
 
   static LeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -638,6 +728,15 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         'promptpay_number': _promptpayNumber,
         'product': _product,
         'created_at': _createdAt,
+        'agent_group_id': _agentGroupId,
+        'com_estimate_amt': _comEstimateAmt,
+        'com_estimate_vat': _comEstimateVat,
+        'com_estimate_net_amt': _comEstimateNetAmt,
+        'default_com_percent': _defaultComPercent,
+        'actual_com_percent': _actualComPercent,
+        'agent_wht': _agentWht,
+        'com_estimate_vat_amt': _comEstimateVatAmt,
+        'request_no': _requestNo,
       }.withoutNulls;
 
   @override
@@ -864,6 +963,42 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'created_at': serializeParam(
           _createdAt,
+          ParamType.String,
+        ),
+        'agent_group_id': serializeParam(
+          _agentGroupId,
+          ParamType.String,
+        ),
+        'com_estimate_amt': serializeParam(
+          _comEstimateAmt,
+          ParamType.String,
+        ),
+        'com_estimate_vat': serializeParam(
+          _comEstimateVat,
+          ParamType.String,
+        ),
+        'com_estimate_net_amt': serializeParam(
+          _comEstimateNetAmt,
+          ParamType.String,
+        ),
+        'default_com_percent': serializeParam(
+          _defaultComPercent,
+          ParamType.String,
+        ),
+        'actual_com_percent': serializeParam(
+          _actualComPercent,
+          ParamType.String,
+        ),
+        'agent_wht': serializeParam(
+          _agentWht,
+          ParamType.String,
+        ),
+        'com_estimate_vat_amt': serializeParam(
+          _comEstimateVatAmt,
+          ParamType.String,
+        ),
+        'request_no': serializeParam(
+          _requestNo,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -1151,6 +1286,51 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentGroupId: deserializeParam(
+          data['agent_group_id'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateAmt: deserializeParam(
+          data['com_estimate_amt'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVat: deserializeParam(
+          data['com_estimate_vat'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateNetAmt: deserializeParam(
+          data['com_estimate_net_amt'],
+          ParamType.String,
+          false,
+        ),
+        defaultComPercent: deserializeParam(
+          data['default_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        actualComPercent: deserializeParam(
+          data['actual_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        agentWht: deserializeParam(
+          data['agent_wht'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVatAmt: deserializeParam(
+          data['com_estimate_vat_amt'],
+          ParamType.String,
+          false,
+        ),
+        requestNo: deserializeParam(
+          data['request_no'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1214,7 +1394,16 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         accountNumber == other.accountNumber &&
         promptpayNumber == other.promptpayNumber &&
         product == other.product &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        agentGroupId == other.agentGroupId &&
+        comEstimateAmt == other.comEstimateAmt &&
+        comEstimateVat == other.comEstimateVat &&
+        comEstimateNetAmt == other.comEstimateNetAmt &&
+        defaultComPercent == other.defaultComPercent &&
+        actualComPercent == other.actualComPercent &&
+        agentWht == other.agentWht &&
+        comEstimateVatAmt == other.comEstimateVatAmt &&
+        requestNo == other.requestNo;
   }
 
   @override
@@ -1274,7 +1463,16 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         accountNumber,
         promptpayNumber,
         product,
-        createdAt
+        createdAt,
+        agentGroupId,
+        comEstimateAmt,
+        comEstimateVat,
+        comEstimateNetAmt,
+        defaultComPercent,
+        actualComPercent,
+        agentWht,
+        comEstimateVatAmt,
+        requestNo
       ]);
 }
 
@@ -1335,6 +1533,15 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
   String? promptpayNumber,
   String? product,
   String? createdAt,
+  String? agentGroupId,
+  String? comEstimateAmt,
+  String? comEstimateVat,
+  String? comEstimateNetAmt,
+  String? defaultComPercent,
+  String? actualComPercent,
+  String? agentWht,
+  String? comEstimateVatAmt,
+  String? requestNo,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1397,6 +1604,15 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
       promptpayNumber: promptpayNumber,
       product: product,
       createdAt: createdAt,
+      agentGroupId: agentGroupId,
+      comEstimateAmt: comEstimateAmt,
+      comEstimateVat: comEstimateVat,
+      comEstimateNetAmt: comEstimateNetAmt,
+      defaultComPercent: defaultComPercent,
+      actualComPercent: actualComPercent,
+      agentWht: agentWht,
+      comEstimateVatAmt: comEstimateVatAmt,
+      requestNo: requestNo,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

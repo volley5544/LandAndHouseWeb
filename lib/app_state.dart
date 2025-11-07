@@ -560,7 +560,7 @@ class FFAppState extends ChangeNotifier {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 11;
+  int _webUatVersion = 48;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -692,7 +692,7 @@ class FFAppState extends ChangeNotifier {
     _readConsent = value;
   }
 
-  String _platform = '';
+  String _platform = 'web';
   String get platform => _platform;
   set platform(String value) {
     _platform = value;
@@ -702,6 +702,48 @@ class FFAppState extends ChangeNotifier {
   bool get useNewCameraAction => _useNewCameraAction;
   set useNewCameraAction(bool value) {
     _useNewCameraAction = value;
+  }
+
+  List<String> _insuranceInfoPage2MotorNumberList = [];
+  List<String> get insuranceInfoPage2MotorNumberList =>
+      _insuranceInfoPage2MotorNumberList;
+  set insuranceInfoPage2MotorNumberList(List<String> value) {
+    _insuranceInfoPage2MotorNumberList = value;
+  }
+
+  void addToInsuranceInfoPage2MotorNumberList(String value) {
+    insuranceInfoPage2MotorNumberList.add(value);
+  }
+
+  void removeFromInsuranceInfoPage2MotorNumberList(String value) {
+    insuranceInfoPage2MotorNumberList.remove(value);
+  }
+
+  void removeAtIndexFromInsuranceInfoPage2MotorNumberList(int index) {
+    insuranceInfoPage2MotorNumberList.removeAt(index);
+  }
+
+  void updateInsuranceInfoPage2MotorNumberListAtIndex(
+    int index,
+    String Function(String) updateFn,
+  ) {
+    insuranceInfoPage2MotorNumberList[index] =
+        updateFn(_insuranceInfoPage2MotorNumberList[index]);
+  }
+
+  void insertAtIndexInInsuranceInfoPage2MotorNumberList(
+      int index, String value) {
+    insuranceInfoPage2MotorNumberList.insert(index, value);
+  }
+
+  ApiUrlStruct _apiUrlDocData = ApiUrlStruct();
+  ApiUrlStruct get apiUrlDocData => _apiUrlDocData;
+  set apiUrlDocData(ApiUrlStruct value) {
+    _apiUrlDocData = value;
+  }
+
+  void updateApiUrlDocDataStruct(Function(ApiUrlStruct) updateFn) {
+    updateFn(_apiUrlDocData);
   }
 }
 

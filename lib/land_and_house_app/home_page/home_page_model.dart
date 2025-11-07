@@ -44,11 +44,11 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
       tarangWaTextFieldTextControllerValidator;
   bool isDataUploading_uploadDataSqd = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqd =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataSqd2 = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqd2 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - requestCameraPermission] action in Text widget.
   String? test;

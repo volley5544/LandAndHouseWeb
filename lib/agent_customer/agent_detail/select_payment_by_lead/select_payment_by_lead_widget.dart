@@ -17,6 +17,9 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
     required this.bankAccount,
     String? paymentMethodDefault,
     this.id,
+    required this.loanAmount,
+    required this.defaultComPercent,
+    required this.agentWht,
   }) : this.paymentMethodDefault =
             paymentMethodDefault ?? 'paymentMethodDefault';
 
@@ -24,6 +27,9 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
   final String? bankAccount;
   final String paymentMethodDefault;
   final int? id;
+  final String? loanAmount;
+  final String? defaultComPercent;
+  final String? agentWht;
 
   @override
   State<SelectPaymentByLeadWidget> createState() =>
@@ -178,7 +184,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'รับครั้งเดียว (หัก ${widget.reductPercent}%)',
+                                    'รับครั้งเดียว',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -299,6 +305,9 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             paymentMethod: _model.paymentMethodState,
                             deductionPercent: widget.reductPercent,
                             id: widget.id,
+                            loanAmount: widget.loanAmount,
+                            defaultComPercent: widget.defaultComPercent,
+                            agentWht: widget.agentWht,
                           );
 
                           _shouldSetState = true;

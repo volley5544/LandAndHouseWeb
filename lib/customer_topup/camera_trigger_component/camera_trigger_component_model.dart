@@ -9,7 +9,7 @@ class CameraTriggerComponentModel
 
   bool isDataUploading_idCardImageUploadActionAuto = false;
   FFUploadedFile uploadedLocalFile_idCardImageUploadActionAuto =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in CameraTriggerComponent widget.
   String? idCardImageUrlOutput;

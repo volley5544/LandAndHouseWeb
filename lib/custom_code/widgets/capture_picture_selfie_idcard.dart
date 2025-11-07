@@ -75,7 +75,8 @@ class _CapturePictureSelfieIdcardState
                 ? CameraLensDirection.front
                 : CameraLensDirection.back)
             : CameraLensDirection.back));
-    _cameraController = CameraController(camera, ResolutionPreset.medium);
+    _cameraController =
+        CameraController(camera, ResolutionPreset.medium, enableAudio: false);
     await _cameraController.initialize();
     setState(() => _isLoading = false);
   }
@@ -334,154 +335,154 @@ class _CapturePictureSelfieIdcardState
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: widget.imagesType == 'idCard',
-                        child: Container(
-                            width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.75,
-                            decoration: BoxDecoration(),
-                            child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Container(
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
-                                                0.98,
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.35,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.white,
-                                                width: 4.0,
-                                              ),
-                                            ),
-                                            child: Container(
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                child: Container(
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    child: Container(
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        child: Container(
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            child: Container(
-                                                              width: double
-                                                                  .infinity,
-                                                              height: double
-                                                                  .infinity,
-                                                              child: Stack(
-                                                                children: [
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            0.4,
-                                                                            -0.9),
-                                                                    child:
-                                                                        Container(
-                                                                      width: MediaQuery.sizeOf(context)
-                                                                              .width *
-                                                                          0.37,
-                                                                      height:
-                                                                          30.0,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                          width:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            0.3,
-                                                                            -1.3),
-                                                                    child: Text(
-                                                                      'เลขที่บัตรประชาชน',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Noto San Thai',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondary,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            0.38,
-                                                                            1.0),
-                                                                    child:
-                                                                        Container(
-                                                                      width: MediaQuery.sizeOf(context)
-                                                                              .width *
-                                                                          0.18,
-                                                                      height: MediaQuery.sizeOf(context)
-                                                                              .height *
-                                                                          0.08,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        border:
-                                                                            Border.all(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).secondary,
-                                                                          width:
-                                                                              2.0,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            0.4,
-                                                                            1.3),
-                                                                    child: Text(
-                                                                      'วันที่หมดอายุบัตร',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Noto San Thai',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondary,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                          ),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            )))))),
-                                      ),
-                                    ],
-                                  ),
-                                ))),
-                      ),
+                      // Visibility(
+                      //   visible: widget.imagesType == 'idCard',
+                      //   child: Container(
+                      //       width: double.infinity,
+                      //       height: MediaQuery.of(context).size.height * 0.75,
+                      //       decoration: BoxDecoration(),
+                      //       child: Container(
+                      //           width: double.infinity,
+                      //           height: double.infinity,
+                      //           child: Container(
+                      //             width: double.infinity,
+                      //             height: double.infinity,
+                      //             child: Stack(
+                      //               children: [
+                      //                 Align(
+                      //                   alignment:
+                      //                       AlignmentDirectional(0.0, 0.0),
+                      //                   child: Container(
+                      //                       width: MediaQuery.sizeOf(context)
+                      //                               .width *
+                      //                           0.98,
+                      //                       height: MediaQuery.sizeOf(context)
+                      //                               .height *
+                      //                           0.35,
+                      //                       decoration: BoxDecoration(
+                      //                         border: Border.all(
+                      //                           color: Colors.white,
+                      //                           width: 4.0,
+                      //                         ),
+                      //                       ),
+                      //                       child: Container(
+                      //                           width: double.infinity,
+                      //                           height: double.infinity,
+                      //                           child: Container(
+                      //                               width: double.infinity,
+                      //                               height: double.infinity,
+                      //                               child: Container(
+                      //                                   width: double.infinity,
+                      //                                   height: double.infinity,
+                      //                                   child: Container(
+                      //                                       width:
+                      //                                           double.infinity,
+                      //                                       height:
+                      //                                           double.infinity,
+                      //                                       child: Container(
+                      //                                         width: double
+                      //                                             .infinity,
+                      //                                         height: double
+                      //                                             .infinity,
+                      //                                         child: Stack(
+                      //                                           children: [
+                      //                                             Align(
+                      //                                               alignment:
+                      //                                                   AlignmentDirectional(
+                      //                                                       0.4,
+                      //                                                       -0.9),
+                      //                                               child:
+                      //                                                   Container(
+                      //                                                 width: MediaQuery.sizeOf(context)
+                      //                                                         .width *
+                      //                                                     0.37,
+                      //                                                 height:
+                      //                                                     30.0,
+                      //                                                 decoration:
+                      //                                                     BoxDecoration(
+                      //                                                   border:
+                      //                                                       Border.all(
+                      //                                                     color:
+                      //                                                         FlutterFlowTheme.of(context).secondary,
+                      //                                                     width:
+                      //                                                         2.0,
+                      //                                                   ),
+                      //                                                 ),
+                      //                                               ),
+                      //                                             ),
+                      //                                             Align(
+                      //                                               alignment:
+                      //                                                   AlignmentDirectional(
+                      //                                                       0.3,
+                      //                                                       -1.3),
+                      //                                               child: Text(
+                      //                                                 'เลขที่บัตรประชาชน',
+                      //                                                 style: FlutterFlowTheme.of(
+                      //                                                         context)
+                      //                                                     .bodyMedium
+                      //                                                     .override(
+                      //                                                       fontFamily:
+                      //                                                           'Noto San Thai',
+                      //                                                       color:
+                      //                                                           FlutterFlowTheme.of(context).secondary,
+                      //                                                       letterSpacing:
+                      //                                                           0.0,
+                      //                                                     ),
+                      //                                               ),
+                      //                                             ),
+                      //                                             Align(
+                      //                                               alignment:
+                      //                                                   AlignmentDirectional(
+                      //                                                       0.38,
+                      //                                                       1.0),
+                      //                                               child:
+                      //                                                   Container(
+                      //                                                 width: MediaQuery.sizeOf(context)
+                      //                                                         .width *
+                      //                                                     0.18,
+                      //                                                 height: MediaQuery.sizeOf(context)
+                      //                                                         .height *
+                      //                                                     0.08,
+                      //                                                 decoration:
+                      //                                                     BoxDecoration(
+                      //                                                   border:
+                      //                                                       Border.all(
+                      //                                                     color:
+                      //                                                         FlutterFlowTheme.of(context).secondary,
+                      //                                                     width:
+                      //                                                         2.0,
+                      //                                                   ),
+                      //                                                 ),
+                      //                                               ),
+                      //                                             ),
+                      //                                             Align(
+                      //                                               alignment:
+                      //                                                   AlignmentDirectional(
+                      //                                                       0.4,
+                      //                                                       1.3),
+                      //                                               child: Text(
+                      //                                                 'วันที่หมดอายุบัตร',
+                      //                                                 style: FlutterFlowTheme.of(
+                      //                                                         context)
+                      //                                                     .bodyMedium
+                      //                                                     .override(
+                      //                                                       fontFamily:
+                      //                                                           'Noto San Thai',
+                      //                                                       color:
+                      //                                                           FlutterFlowTheme.of(context).secondary,
+                      //                                                       letterSpacing:
+                      //                                                           0.0,
+                      //                                                     ),
+                      //                                               ),
+                      //                                             ),
+                      //                                           ],
+                      //                                         ),
+                      //                                       )))))),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ))),
+                      // ),
 
                       Visibility(
                         visible: widget.imagesType == 'test5544',

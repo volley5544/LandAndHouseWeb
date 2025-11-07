@@ -678,59 +678,27 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                           'ยังไม่ได้ทำรายการเติมเงิน'
                                                       ? true
                                                       : false) {
-                                                    if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') ||
-                                                        ('${loanListItem.contractDetails.loanTypeCode}' ==
-                                                            'H') ||
-                                                        (loanListItem
-                                                                .topupDetail
-                                                                .canTopup ==
-                                                            'G') ||
-                                                        (loanListItem
-                                                                .topupDetail
-                                                                .canTopup ==
-                                                            'A') ||
-                                                        (loanListItem
-                                                                .topupDetail
-                                                                .canTopup ==
-                                                            'L')) {
-                                                      FFAppState()
-                                                          .updateSaveTopupDataStruct(
-                                                        (e) => e
-                                                          ..products =
-                                                              ProductsStruct(),
-                                                      );
-                                                      safeSetState(() {});
+                                                    FFAppState()
+                                                        .updateSaveTopupDataStruct(
+                                                      (e) => e
+                                                        ..products =
+                                                            ProductsStruct(),
+                                                    );
+                                                    safeSetState(() {});
 
-                                                      context.pushNamed(
-                                                        TopupDetailDataPageWidget
-                                                            .routeName,
-                                                        extra: <String,
-                                                            dynamic>{
-                                                          kTransitionInfoKey:
-                                                              TransitionInfo(
-                                                            hasTransition: true,
-                                                            transitionType:
-                                                                PageTransitionType
-                                                                    .rightToLeft,
-                                                          ),
-                                                        },
-                                                      );
-                                                    } else {
-                                                      context.pushNamed(
-                                                        SelectTopupProductPageWidget
-                                                            .routeName,
-                                                        extra: <String,
-                                                            dynamic>{
-                                                          kTransitionInfoKey:
-                                                              TransitionInfo(
-                                                            hasTransition: true,
-                                                            transitionType:
-                                                                PageTransitionType
-                                                                    .rightToLeft,
-                                                          ),
-                                                        },
-                                                      );
-                                                    }
+                                                    context.pushNamed(
+                                                      TopupDetailDataPageWidget
+                                                          .routeName,
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .rightToLeft,
+                                                        ),
+                                                      },
+                                                    );
                                                   } else {
                                                     context.pushNamed(
                                                       TopupStatusPageWidget

@@ -8,7 +8,11 @@ class ImageSourceComponentModel
 
   bool isDataUploading_uploadDataBluebook = false;
   FFUploadedFile uploadedLocalFile_uploadDataBluebook =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  bool isDataUploading_uploadDataBluebookCamera = false;
+  FFUploadedFile uploadedLocalFile_uploadDataBluebookCamera =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   @override
   void initState(BuildContext context) {}

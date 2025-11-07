@@ -3108,6 +3108,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       ?.width,
                                                                   blurHash: m
                                                                       .blurHash,
+                                                                  originalFilename:
+                                                                      m.originalFilename,
                                                                 ))
                                                             .toList();
                                                   } finally {
@@ -3558,6 +3560,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       ?.width,
                                                                   blurHash: m
                                                                       .blurHash,
+                                                                  originalFilename:
+                                                                      m.originalFilename,
                                                                 ))
                                                             .toList();
                                                   } finally {

@@ -47,6 +47,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
     String? carCc,
     String? productDetail,
     String? carRegistration,
+    String? carProvince,
+    String? commission,
+    String? comEstimateAmt,
+    String? comEstimateVat,
+    String? comEstimateNetAmt,
+    String? defaultComPercent,
+    String? actualComPercent,
+    String? comEstimateVatAmt,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _estimatePrice = estimatePrice,
         _landDistrict = landDistrict,
@@ -87,6 +95,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         _carCc = carCc,
         _productDetail = productDetail,
         _carRegistration = carRegistration,
+        _carProvince = carProvince,
+        _commission = commission,
+        _comEstimateAmt = comEstimateAmt,
+        _comEstimateVat = comEstimateVat,
+        _comEstimateNetAmt = comEstimateNetAmt,
+        _defaultComPercent = defaultComPercent,
+        _actualComPercent = actualComPercent,
+        _comEstimateVatAmt = comEstimateVatAmt,
         super(firestoreUtilData);
 
   // "estimate_price" field.
@@ -362,6 +378,62 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasCarRegistration() => _carRegistration != null;
 
+  // "car_province" field.
+  String? _carProvince;
+  String get carProvince => _carProvince ?? '';
+  set carProvince(String? val) => _carProvince = val;
+
+  bool hasCarProvince() => _carProvince != null;
+
+  // "commission" field.
+  String? _commission;
+  String get commission => _commission ?? '';
+  set commission(String? val) => _commission = val;
+
+  bool hasCommission() => _commission != null;
+
+  // "com_estimate_amt" field.
+  String? _comEstimateAmt;
+  String get comEstimateAmt => _comEstimateAmt ?? '';
+  set comEstimateAmt(String? val) => _comEstimateAmt = val;
+
+  bool hasComEstimateAmt() => _comEstimateAmt != null;
+
+  // "com_estimate_vat" field.
+  String? _comEstimateVat;
+  String get comEstimateVat => _comEstimateVat ?? '';
+  set comEstimateVat(String? val) => _comEstimateVat = val;
+
+  bool hasComEstimateVat() => _comEstimateVat != null;
+
+  // "com_estimate_net_amt" field.
+  String? _comEstimateNetAmt;
+  String get comEstimateNetAmt => _comEstimateNetAmt ?? '';
+  set comEstimateNetAmt(String? val) => _comEstimateNetAmt = val;
+
+  bool hasComEstimateNetAmt() => _comEstimateNetAmt != null;
+
+  // "default_com_percent" field.
+  String? _defaultComPercent;
+  String get defaultComPercent => _defaultComPercent ?? '';
+  set defaultComPercent(String? val) => _defaultComPercent = val;
+
+  bool hasDefaultComPercent() => _defaultComPercent != null;
+
+  // "actual_com_percent" field.
+  String? _actualComPercent;
+  String get actualComPercent => _actualComPercent ?? '';
+  set actualComPercent(String? val) => _actualComPercent = val;
+
+  bool hasActualComPercent() => _actualComPercent != null;
+
+  // "com_estimate_vat_amt" field.
+  String? _comEstimateVatAmt;
+  String get comEstimateVatAmt => _comEstimateVatAmt ?? '';
+  set comEstimateVatAmt(String? val) => _comEstimateVatAmt = val;
+
+  bool hasComEstimateVatAmt() => _comEstimateVatAmt != null;
+
   static SaveLeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveLeadAgentDataModelStruct(
         estimatePrice: data['estimate_price'] as String?,
@@ -403,6 +475,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         carCc: data['car_cc'] as String?,
         productDetail: data['product_detail'] as String?,
         carRegistration: data['car_registration'] as String?,
+        carProvince: data['car_province'] as String?,
+        commission: data['commission'] as String?,
+        comEstimateAmt: data['com_estimate_amt'] as String?,
+        comEstimateVat: data['com_estimate_vat'] as String?,
+        comEstimateNetAmt: data['com_estimate_net_amt'] as String?,
+        defaultComPercent: data['default_com_percent'] as String?,
+        actualComPercent: data['actual_com_percent'] as String?,
+        comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
       );
 
   static SaveLeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -449,6 +529,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         'car_cc': _carCc,
         'product_detail': _productDetail,
         'car_registration': _carRegistration,
+        'car_province': _carProvince,
+        'commission': _commission,
+        'com_estimate_amt': _comEstimateAmt,
+        'com_estimate_vat': _comEstimateVat,
+        'com_estimate_net_amt': _comEstimateNetAmt,
+        'default_com_percent': _defaultComPercent,
+        'actual_com_percent': _actualComPercent,
+        'com_estimate_vat_amt': _comEstimateVatAmt,
       }.withoutNulls;
 
   @override
@@ -607,6 +695,38 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'car_registration': serializeParam(
           _carRegistration,
+          ParamType.String,
+        ),
+        'car_province': serializeParam(
+          _carProvince,
+          ParamType.String,
+        ),
+        'commission': serializeParam(
+          _commission,
+          ParamType.String,
+        ),
+        'com_estimate_amt': serializeParam(
+          _comEstimateAmt,
+          ParamType.String,
+        ),
+        'com_estimate_vat': serializeParam(
+          _comEstimateVat,
+          ParamType.String,
+        ),
+        'com_estimate_net_amt': serializeParam(
+          _comEstimateNetAmt,
+          ParamType.String,
+        ),
+        'default_com_percent': serializeParam(
+          _defaultComPercent,
+          ParamType.String,
+        ),
+        'actual_com_percent': serializeParam(
+          _actualComPercent,
+          ParamType.String,
+        ),
+        'com_estimate_vat_amt': serializeParam(
+          _comEstimateVatAmt,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -809,6 +929,46 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        carProvince: deserializeParam(
+          data['car_province'],
+          ParamType.String,
+          false,
+        ),
+        commission: deserializeParam(
+          data['commission'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateAmt: deserializeParam(
+          data['com_estimate_amt'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVat: deserializeParam(
+          data['com_estimate_vat'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateNetAmt: deserializeParam(
+          data['com_estimate_net_amt'],
+          ParamType.String,
+          false,
+        ),
+        defaultComPercent: deserializeParam(
+          data['default_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        actualComPercent: deserializeParam(
+          data['actual_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVatAmt: deserializeParam(
+          data['com_estimate_vat_amt'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -855,7 +1015,15 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         carModel == other.carModel &&
         carCc == other.carCc &&
         productDetail == other.productDetail &&
-        carRegistration == other.carRegistration;
+        carRegistration == other.carRegistration &&
+        carProvince == other.carProvince &&
+        commission == other.commission &&
+        comEstimateAmt == other.comEstimateAmt &&
+        comEstimateVat == other.comEstimateVat &&
+        comEstimateNetAmt == other.comEstimateNetAmt &&
+        defaultComPercent == other.defaultComPercent &&
+        actualComPercent == other.actualComPercent &&
+        comEstimateVatAmt == other.comEstimateVatAmt;
   }
 
   @override
@@ -898,7 +1066,15 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         carModel,
         carCc,
         productDetail,
-        carRegistration
+        carRegistration,
+        carProvince,
+        commission,
+        comEstimateAmt,
+        comEstimateVat,
+        comEstimateNetAmt,
+        defaultComPercent,
+        actualComPercent,
+        comEstimateVatAmt
       ]);
 }
 
@@ -942,6 +1118,14 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
   String? carCc,
   String? productDetail,
   String? carRegistration,
+  String? carProvince,
+  String? commission,
+  String? comEstimateAmt,
+  String? comEstimateVat,
+  String? comEstimateNetAmt,
+  String? defaultComPercent,
+  String? actualComPercent,
+  String? comEstimateVatAmt,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -987,6 +1171,14 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
       carCc: carCc,
       productDetail: productDetail,
       carRegistration: carRegistration,
+      carProvince: carProvince,
+      commission: commission,
+      comEstimateAmt: comEstimateAmt,
+      comEstimateVat: comEstimateVat,
+      comEstimateNetAmt: comEstimateNetAmt,
+      defaultComPercent: defaultComPercent,
+      actualComPercent: actualComPercent,
+      comEstimateVatAmt: comEstimateVatAmt,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

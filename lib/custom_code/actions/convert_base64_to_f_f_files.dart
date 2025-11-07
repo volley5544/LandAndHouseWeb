@@ -28,7 +28,8 @@ Future<FFUploadedFile?> convertBase64ToFFFiles(
   //
   // print('MIME type: $mimeType');
   // print('File extension: $fileExtension');
-  FFUploadedFile ffFile = FFUploadedFile(bytes: imageBytes);
+  FFUploadedFile ffFile = FFUploadedFile(
+      bytes: imageBytes, name: '${DateTime.now().millisecondsSinceEpoch}.jpg');
 
   return ffFile;
 }

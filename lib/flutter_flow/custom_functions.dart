@@ -19,8 +19,37 @@ int? findIndexInList(
 ) {
   // Find the index of an item
   int index = dataList!.indexOf(searchInput!);
-  print('');
+
   return index;
+}
+
+List<String>? createUniqueValueListLabel(List<String>? inputList) {
+  List<String> outputList = [];
+  for (int i = 0; i < inputList!.length; i++) {
+    if (inputList![i] == 'loan') {
+      outputList.add('สินเชื่อ');
+    } else if (inputList![i] == 'insurance') {
+      outputList.add('ประกัน');
+    } else if (inputList![i] == 'one_time') {
+      outputList.add('รับครั้งเดียว');
+    } else if (inputList![i] == 'installment') {
+      outputList.add('รับเต็มจำนวน (แบ่งจ่ายตามงวดสัญญา)');
+    } else if (inputList![i] == 'bank_account') {
+      outputList.add('บัญชีธนาคาร');
+    } else if (inputList![i] == 'promptpay') {
+      outputList.add('พร้อมเพย์');
+    } else {
+      outputList.add(inputList![i]);
+    }
+  }
+
+  return outputList;
+}
+
+List<LeadAgentDataModelStruct>? returnLeadAgentItemEmptyList() {
+  List<LeadAgentDataModelStruct> outputList = [];
+
+  return outputList;
 }
 
 List<InstallmentsStruct> reversedListInstallment(
@@ -952,7 +981,10 @@ List<LeadAgentDataModelStruct>? combineLeadAgentDataModelList(
   List<LeadAgentDataModelStruct>? list2,
   List<LeadAgentDataModelStruct>? list3,
 ) {
+  print('before combine');
+
   List<LeadAgentDataModelStruct> outputList = list1! + list2! + list3!;
+  print('after combine');
   print('list1 : ${list1!.length}');
   print('list2 : ${list2!.length}');
   print('list3 : ${list3!.length}');
@@ -988,6 +1020,9 @@ List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
   List<LeadAgentMainCatagoryStruct>? mainLeadData,
   LeadAgentDataModelStruct? selectedLead,
   String? paymentMethodNew,
+  String? comEstimateAmt,
+  String? comEstimateVat,
+  String? comEstimateNet,
 ) {
   List<LeadAgentMainCatagoryStruct> dataOutput = mainLeadData!;
 
@@ -1038,7 +1073,7 @@ List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
       .items;
 
   print('donelead');
-
+// update payment method
   dataOutput[dataOutput
                   .map((data) => data.category)
                   .toList()
@@ -1084,6 +1119,147 @@ List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
           .toList()
           .indexOf(selectedLead!.id)]
       .paymentMethod = '${paymentMethodNew!}';
+
+  //update com_estimate_amt
+  dataOutput[dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead!.leadStatus) !=
+              -1
+          ? dataOutput
+              .map((data) => data.category)
+              .toList()
+              .toList()
+              .indexOf(selectedLead!.leadStatus)
+          : dataOutput![dataOutput
+                          .map((data) => data.category)
+                          .toList()
+                          .toList()
+                          .indexOf('ปิดการขาย')]
+                      .subCategory
+                      .map((sub) => sub.subject)
+                      .toList()
+                      .toList()
+                      .indexOf(selectedLead!.leadStatus) !=
+                  -1
+              ? dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('ปิดการขาย')
+              : dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('อยู่ระหว่างดำเนินการ')]
+      .subCategory[selectedLead!.leadStatus == 'ลูกค้าใหม่'
+          ? 0
+          : subCategoryNew
+              .map((items) => items.subject)
+              .toList()
+              .toList()
+              .indexOf(selectedLead.leadStatus)]
+      .items[leadListNew
+          .map((lead) => lead.id)
+          .toList()
+          .toList()
+          .indexOf(selectedLead!.id)]
+      .comEstimateAmt = '${comEstimateAmt!}';
+
+//update com_estimate_vat_amt
+  dataOutput[dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead!.leadStatus) !=
+              -1
+          ? dataOutput
+              .map((data) => data.category)
+              .toList()
+              .toList()
+              .indexOf(selectedLead!.leadStatus)
+          : dataOutput![dataOutput
+                          .map((data) => data.category)
+                          .toList()
+                          .toList()
+                          .indexOf('ปิดการขาย')]
+                      .subCategory
+                      .map((sub) => sub.subject)
+                      .toList()
+                      .toList()
+                      .indexOf(selectedLead!.leadStatus) !=
+                  -1
+              ? dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('ปิดการขาย')
+              : dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('อยู่ระหว่างดำเนินการ')]
+      .subCategory[selectedLead!.leadStatus == 'ลูกค้าใหม่'
+          ? 0
+          : subCategoryNew
+              .map((items) => items.subject)
+              .toList()
+              .toList()
+              .indexOf(selectedLead.leadStatus)]
+      .items[leadListNew
+          .map((lead) => lead.id)
+          .toList()
+          .toList()
+          .indexOf(selectedLead!.id)]
+      .comEstimateNetAmt = '${comEstimateVat!}';
+
+  //update com_estimate_net_amt
+  dataOutput[dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf(selectedLead!.leadStatus) !=
+              -1
+          ? dataOutput
+              .map((data) => data.category)
+              .toList()
+              .toList()
+              .indexOf(selectedLead!.leadStatus)
+          : dataOutput![dataOutput
+                          .map((data) => data.category)
+                          .toList()
+                          .toList()
+                          .indexOf('ปิดการขาย')]
+                      .subCategory
+                      .map((sub) => sub.subject)
+                      .toList()
+                      .toList()
+                      .indexOf(selectedLead!.leadStatus) !=
+                  -1
+              ? dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('ปิดการขาย')
+              : dataOutput
+                  .map((data) => data.category)
+                  .toList()
+                  .toList()
+                  .indexOf('อยู่ระหว่างดำเนินการ')]
+      .subCategory[selectedLead!.leadStatus == 'ลูกค้าใหม่'
+          ? 0
+          : subCategoryNew
+              .map((items) => items.subject)
+              .toList()
+              .toList()
+              .indexOf(selectedLead.leadStatus)]
+      .items[leadListNew
+          .map((lead) => lead.id)
+          .toList()
+          .toList()
+          .indexOf(selectedLead!.id)]
+      .comEstimateNetAmt = '${comEstimateNet!}';
 
   print('doneupdate');
 
@@ -1184,4 +1360,52 @@ List<ProductsStruct>? generateTopupProductList(
   List<ProductsStruct> productOutput = topupMoney + productData!;
 
   return productOutput;
+}
+
+List<AgentCommisionHistoryDataModelStruct>? addDataToCommistion(
+    List<AgentCommisionHistoryDataModelStruct>? listData) {
+  // Auto-generate next installment number
+
+  double sumPayAmt = 0;
+  double sumTax = 0;
+  double sumReceiveAmt = 0;
+  double sumUnpaidAmt = 0;
+  String lastNonEmptyRemaining = "0.00";
+  // Loop through list and add up numeric fields
+  for (final item in listData!) {
+    sumPayAmt += double.tryParse(item.comPayAmt ?? '0') ?? 0;
+    sumTax += double.tryParse(item.comTax ?? '0') ?? 0;
+    sumReceiveAmt += double.tryParse(item.comReceiveAmt ?? '0') ?? 0;
+    sumUnpaidAmt += double.tryParse(item.comUnpaidAmt ?? '0') ?? 0;
+    if ((item.comRemainingAmt ?? '').isNotEmpty &
+        (item.comPayStatus == 'จ่ายแล้ว')) {
+      lastNonEmptyRemaining = item.comRemainingAmt!;
+    }
+  }
+  String formatDouble(double value) => value.toStringAsFixed(2);
+  // Create a new record
+  final combinedRecord = AgentCommisionHistoryDataModelStruct(
+    leadId: "",
+    contNo: "",
+    comPayStatus: "รวม",
+    comInstallmentNo: "",
+    comPayAmt: formatDouble(sumPayAmt),
+    comTax: formatDouble(sumTax),
+    comReceiveAmt: formatDouble(sumReceiveAmt),
+    comUnpaidAmt: formatDouble(sumUnpaidAmt),
+    comRemainingAmt: lastNonEmptyRemaining,
+    comDueDate: "",
+    comPaymentDate: "",
+  );
+
+  // Add new combined record to the list
+  final updatedList = List<AgentCommisionHistoryDataModelStruct>.from(listData)
+    ..add(combinedRecord);
+
+  return updatedList;
+}
+
+List<PaymentHistoryMonthDataModelStruct>? returnEmptyPaymentHistoryList() {
+  List<PaymentHistoryMonthDataModelStruct> outputList = [];
+  return outputList;
 }

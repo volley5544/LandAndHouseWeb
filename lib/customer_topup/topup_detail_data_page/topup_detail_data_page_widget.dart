@@ -2514,7 +2514,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        '5.2.ค่าติดตามทางถาม',
+                                                        '5.2.ค่าติดตามทวงถาม',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)

@@ -102,8 +102,12 @@ class LeadAgentDetailCarPageModel
 
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCarPage widget.
   FFUploadedFile? generateBluebookFile;
-  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in LeadAgentDetailCarPage widget.
-  ApiCallResponse? apiResultGear;
+  // Stores action output result for [Backend Call - API (get Province)] action in LeadAgentDetailCarPage widget.
+  ApiCallResponse? provinceApiOutput;
+  // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailCarPage widget.
+  ApiCallResponse? getVehicleMaster;
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
   // Model for ReviewDetailCustomerComponent component.
@@ -111,6 +115,8 @@ class LeadAgentDetailCarPageModel
   // State field(s) for DropDownVehicle widget.
   String? dropDownVehicleValue;
   FormFieldController<String>? dropDownVehicleValueController;
+  // Stores action output result for [Backend Call - API (AgentRateSearch)] action in DropDownVehicle widget.
+  ApiCallResponse? apiResultGear;
   // State field(s) for DropDownGear widget.
   String? dropDownGearValue;
   FormFieldController<String>? dropDownGearValueController;
@@ -132,17 +138,30 @@ class LeadAgentDetailCarPageModel
   // State field(s) for DropDownCC widget.
   String? dropDownCCValue;
   FormFieldController<String>? dropDownCCValueController;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
+  // State field(s) for rateFromApi widget.
+  FocusNode? rateFromApiFocusNode;
+  TextEditingController? rateFromApiTextController;
+  String? Function(BuildContext, String?)? rateFromApiTextControllerValidator;
   // Stores action output result for [Backend Call - API (AgentCheckRate)] action in Button widget.
   ApiCallResponse? apiResultCheckRate;
+  // State field(s) for carregis widget.
+  FocusNode? carregisFocusNode;
+  TextEditingController? carregisTextController;
+  String? Function(BuildContext, String?)? carregisTextControllerValidator;
+  // State field(s) for DropDownProvince widget.
+  String? dropDownProvinceValue;
+  FormFieldController<String>? dropDownProvinceValueController;
+  // State field(s) for loanAmount widget.
+  FocusNode? loanAmountFocusNode;
+  TextEditingController? loanAmountTextController;
+  String? Function(BuildContext, String?)? loanAmountTextControllerValidator;
+  DateTime? datePicked;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   FFUploadedFile? bluebookFileOutput;
 
   @override
   void initState(BuildContext context) {
+    columnController = ScrollController();
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
     reviewDetailCustomerComponentModel =
@@ -151,9 +170,16 @@ class LeadAgentDetailCarPageModel
 
   @override
   void dispose() {
+    columnController?.dispose();
     progressBarComponentModel.dispose();
     reviewDetailCustomerComponentModel.dispose();
-    textFieldFocusNode?.dispose();
-    textController?.dispose();
+    rateFromApiFocusNode?.dispose();
+    rateFromApiTextController?.dispose();
+
+    carregisFocusNode?.dispose();
+    carregisTextController?.dispose();
+
+    loanAmountFocusNode?.dispose();
+    loanAmountTextController?.dispose();
   }
 }

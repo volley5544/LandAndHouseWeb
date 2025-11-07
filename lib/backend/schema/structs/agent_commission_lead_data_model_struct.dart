@@ -51,6 +51,9 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
     String? comNextPayAmt,
     String? comReceivedAmt,
     String? comStatus,
+    String? requestNo,
+    String? brandName,
+    String? carModel,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentId = agentId,
@@ -95,6 +98,9 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         _comNextPayAmt = comNextPayAmt,
         _comReceivedAmt = comReceivedAmt,
         _comStatus = comStatus,
+        _requestNo = requestNo,
+        _brandName = brandName,
+        _carModel = carModel,
         super(firestoreUtilData);
 
   // "id" field.
@@ -400,6 +406,27 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
 
   bool hasComStatus() => _comStatus != null;
 
+  // "request_no" field.
+  String? _requestNo;
+  String get requestNo => _requestNo ?? '';
+  set requestNo(String? val) => _requestNo = val;
+
+  bool hasRequestNo() => _requestNo != null;
+
+  // "brand_name" field.
+  String? _brandName;
+  String get brandName => _brandName ?? '';
+  set brandName(String? val) => _brandName = val;
+
+  bool hasBrandName() => _brandName != null;
+
+  // "car_model" field.
+  String? _carModel;
+  String get carModel => _carModel ?? '';
+  set carModel(String? val) => _carModel = val;
+
+  bool hasCarModel() => _carModel != null;
+
   static AgentCommissionLeadDataModelStruct fromMap(
           Map<String, dynamic> data) =>
       AgentCommissionLeadDataModelStruct(
@@ -446,6 +473,9 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         comNextPayAmt: data['com_next_pay_amt'] as String?,
         comReceivedAmt: data['com_received_amt'] as String?,
         comStatus: data['com_status'] as String?,
+        requestNo: data['request_no'] as String?,
+        brandName: data['brand_name'] as String?,
+        carModel: data['car_model'] as String?,
       );
 
   static AgentCommissionLeadDataModelStruct? maybeFromMap(dynamic data) => data
@@ -497,6 +527,9 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         'com_next_pay_amt': _comNextPayAmt,
         'com_received_amt': _comReceivedAmt,
         'com_status': _comStatus,
+        'request_no': _requestNo,
+        'brand_name': _brandName,
+        'car_model': _carModel,
       }.withoutNulls;
 
   @override
@@ -671,6 +704,18 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         ),
         'com_status': serializeParam(
           _comStatus,
+          ParamType.String,
+        ),
+        'request_no': serializeParam(
+          _requestNo,
+          ParamType.String,
+        ),
+        'brand_name': serializeParam(
+          _brandName,
+          ParamType.String,
+        ),
+        'car_model': serializeParam(
+          _carModel,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -893,6 +938,21 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        requestNo: deserializeParam(
+          data['request_no'],
+          ParamType.String,
+          false,
+        ),
+        brandName: deserializeParam(
+          data['brand_name'],
+          ParamType.String,
+          false,
+        ),
+        carModel: deserializeParam(
+          data['car_model'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -943,7 +1003,10 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         comWaitingApproveAmt == other.comWaitingApproveAmt &&
         comNextPayAmt == other.comNextPayAmt &&
         comReceivedAmt == other.comReceivedAmt &&
-        comStatus == other.comStatus;
+        comStatus == other.comStatus &&
+        requestNo == other.requestNo &&
+        brandName == other.brandName &&
+        carModel == other.carModel;
   }
 
   @override
@@ -990,7 +1053,10 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         comWaitingApproveAmt,
         comNextPayAmt,
         comReceivedAmt,
-        comStatus
+        comStatus,
+        requestNo,
+        brandName,
+        carModel
       ]);
 }
 
@@ -1038,6 +1104,9 @@ AgentCommissionLeadDataModelStruct createAgentCommissionLeadDataModelStruct({
   String? comNextPayAmt,
   String? comReceivedAmt,
   String? comStatus,
+  String? requestNo,
+  String? brandName,
+  String? carModel,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1087,6 +1156,9 @@ AgentCommissionLeadDataModelStruct createAgentCommissionLeadDataModelStruct({
       comNextPayAmt: comNextPayAmt,
       comReceivedAmt: comReceivedAmt,
       comStatus: comStatus,
+      requestNo: requestNo,
+      brandName: brandName,
+      carModel: carModel,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

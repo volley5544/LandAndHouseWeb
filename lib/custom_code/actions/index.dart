@@ -28,3 +28,5 @@ export 'url_launcher_action.dart' show urlLauncherAction;
 export 'share_link.dart' show shareLink;
 export 'copy_link_to_clipboard.dart' show copyLinkToClipboard;
 export 'listen_webview_event_camera.dart' show listenWebviewEventCamera;
+export 'return_text_to_appreturn_text_to_app.dart'
+    show returnTextToAppreturnTextToApp;

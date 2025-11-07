@@ -43,6 +43,7 @@ dependencies:
   collection: 1.19.1
   cross_file: ^0.3.4+2
   csslib: 1.0.2
+  data_table_2: 2.5.10
   device_info_plus: 11.5.0
   device_info_plus_platform_interface: 7.0.3
   dropdown_button2: 2.3.9

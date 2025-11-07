@@ -19,6 +19,7 @@ class APIMasterGroup {
       '${url}';
   static Map<String, String> headers = {};
   static GetMasterAddressCall getMasterAddressCall = GetMasterAddressCall();
+  static GetProvinceCall getProvinceCall = GetProvinceCall();
 }
 
 class GetMasterAddressCall {
@@ -132,6 +133,64 @@ class GetMasterAddressCall {
       ) as List?)
           ?.withoutNulls
           .map((x) => AddressDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetProvinceCall {
+  Future<ApiCallResponse> call({
+    String? url = '',
+  }) async {
+    final baseUrl = APIMasterGroup.getBaseUrl(
+      url: url,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'get Province',
+      apiUrl: '${baseUrl}/api/insurance/master/get_province',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      bodyType: BodyType.NONE,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List? data(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?;
+  List<String>? provid(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data[:].prov_id''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? provth(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data[:].prov_th''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+  List<String>? proven(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data[:].prov_en''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
           .withoutNulls
           .toList();
 }
@@ -2588,11 +2647,15 @@ class AgentAPIGroup {
   static GetLeadAgentByTypeCall getLeadAgentByTypeCall =
       GetLeadAgentByTypeCall();
   static GetCommissionLeadCall getCommissionLeadCall = GetCommissionLeadCall();
+  static AgentsConfirmMGMCall agentsConfirmMGMCall = AgentsConfirmMGMCall();
+  static CommissionMonthlyApiCall commissionMonthlyApiCall =
+      CommissionMonthlyApiCall();
   static AgentLeadSaveByLeadCall agentLeadSaveByLeadCall =
       AgentLeadSaveByLeadCall();
   static AgentLeadSaveCall agentLeadSaveCall = AgentLeadSaveCall();
   static MgmLeadsSaveCall mgmLeadsSaveCall = MgmLeadsSaveCall();
   static RateGetVehicleCall rateGetVehicleCall = RateGetVehicleCall();
+  static CommissionHistoryCall commissionHistoryCall = CommissionHistoryCall();
   static AgentRateSearchCall agentRateSearchCall = AgentRateSearchCall();
   static AgentCheckRateCall agentCheckRateCall = AgentCheckRateCall();
 }
@@ -2745,12 +2808,132 @@ class GetCommissionLeadCall {
       ));
 }
 
+class AgentsConfirmMGMCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? isConfirmed = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "is_confirmed": "${escapeStringForJson(isConfirmed)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Agents Confirm MGM',
+      apiUrl: '${baseUrl}/api/mgm/agents/confirm',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  AgentCommissionDataModelStruct? dataJson(dynamic response) =>
+      AgentCommissionDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
+  int? statusCode(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? agentcode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_code''',
+      ));
+  String? agentstatus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_status''',
+      ));
+  String? agentlastnameth(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_lastname_th''',
+      ));
+  String? agentnameth(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_name_th''',
+      ));
+  String? agentactivateflag(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_activate_flag''',
+      ));
+}
+
+class CommissionMonthlyApiCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'CommissionMonthlyApi',
+      apiUrl: '${baseUrl}/api/mgm/commission/leads-monthly',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  MyWalletDataModelStruct? dataJson(dynamic response) =>
+      MyWalletDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
+  int? statusCode(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
 class AgentLeadSaveByLeadCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
     String? paymentMethod = '',
     String? deductionPercent = '',
     int? id,
+    String? loanAmount = '',
+    String? defaultComPercent = '',
+    String? agentWht = '',
     String? url = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
@@ -2762,7 +2945,11 @@ class AgentLeadSaveByLeadCall {
   "agent_code": "${escapeStringForJson(agentCode)}",
   "payment_method": "${escapeStringForJson(paymentMethod)}",
   "deduction_percent": "${escapeStringForJson(deductionPercent)}",
-  "id": "${id}"
+  "id": "${id}",
+"loan_amount":"${escapeStringForJson(loanAmount)}",
+"default_com_percent":"${escapeStringForJson(defaultComPercent)}",
+"agent_wht":"${escapeStringForJson(agentWht)}"
+
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'AgentLeadSaveByLead',
@@ -2893,6 +3080,12 @@ class MgmLeadsSaveCall {
     FFUploadedFile? imageCarBook,
     FFUploadedFile? imageChanodFront,
     FFUploadedFile? imageChanodBack,
+    String? comEstimateAmt = '',
+    String? comEstimateVat = '',
+    String? comEstimateNetAmt = '',
+    String? defaultComPercent = '',
+    String? actualComPercent = '',
+    String? comEstimateVatAmt = '',
     String? url = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
@@ -2945,11 +3138,17 @@ class MgmLeadsSaveCall {
         'deduction_percent': deductionPercent,
         'payment_number': paymentNumber,
         'payment_channel': paymentChannel,
-        'account_ number': accountNumber,
+        'account_number': accountNumber,
         'pronptpay_number': promptpayNumber,
         'image_car_back': imageCarBook,
         'image_chanod_front': imageChanodFront,
         'image_chanod_back': imageChanodBack,
+        'com_estimate_amt': comEstimateAmt,
+        'com_estimate_vat': comEstimateVat,
+        'com_estimate_net_amt': comEstimateNetAmt,
+        'default_com_percent': defaultComPercent,
+        'actual_com_percent': actualComPercent,
+        'com_estimate_vat_amt': comEstimateVatAmt,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -2964,12 +3163,17 @@ class MgmLeadsSaveCall {
 
 class RateGetVehicleCall {
   Future<ApiCallResponse> call({
+    String? categoryCode = '',
     String? url = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
     );
 
+    final ffApiRequestBody = '''
+{
+  "category_code": "${escapeStringForJson(categoryCode)}"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'rateGetVehicle',
       apiUrl: '${baseUrl}/api/mgm/rate/get_vehicle',
@@ -2979,6 +3183,7 @@ class RateGetVehicleCall {
         'Content-Type': 'application/json',
       },
       params: {},
+      body: ffApiRequestBody,
       bodyType: BodyType.JSON,
       returnBody: true,
       encodeBodyUtf8: false,
@@ -3005,6 +3210,85 @@ class RateGetVehicleCall {
       ) as List?)
           ?.withoutNulls
           .map((x) => MasterAgentVehicleDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class CommissionHistoryCall {
+  Future<ApiCallResponse> call({
+    String? leadId = '',
+    String? contNo = '',
+    String? url = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "lead_id": "${escapeStringForJson(leadId)}",
+"cont_no":"${escapeStringForJson(contNo)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'commission history',
+      apiUrl: '${baseUrl}/api/mgm/commission/leads-detail',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? code(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  List<MasterAgentVehicleDataModelStruct>? data(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => MasterAgentVehicleDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  String? totalpaidinstallments(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.summary.total_paid_installments''',
+      ));
+  String? totalreceiveamt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.summary.total_receive_amt''',
+      ));
+  String? totalremainingamt(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.summary.total_remaining_amt''',
+      ));
+  List<AgentCommisionHistoryDataModelStruct>? details(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.details''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => AgentCommisionHistoryDataModelStruct.maybeFromMap(x))
           .withoutNulls
           .toList();
 }

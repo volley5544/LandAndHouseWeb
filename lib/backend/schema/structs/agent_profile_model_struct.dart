@@ -106,6 +106,14 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
     String? promptpayNumber,
     String? agentLastnameTh,
     String? agentLastnameEn,
+    String? comEstimateAmt,
+    String? comEstimateVat,
+    String? comEstimateNetAmt,
+    String? defaultComPercent,
+    String? actualComPercent,
+    String? comEstimateVatAmt,
+    String? actualPercent,
+    String? defaultPercent,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -205,6 +213,14 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         _promptpayNumber = promptpayNumber,
         _agentLastnameTh = agentLastnameTh,
         _agentLastnameEn = agentLastnameEn,
+        _comEstimateAmt = comEstimateAmt,
+        _comEstimateVat = comEstimateVat,
+        _comEstimateNetAmt = comEstimateNetAmt,
+        _defaultComPercent = defaultComPercent,
+        _actualComPercent = actualComPercent,
+        _comEstimateVatAmt = comEstimateVatAmt,
+        _actualPercent = actualPercent,
+        _defaultPercent = defaultPercent,
         super(firestoreUtilData);
 
   // "id" field.
@@ -895,6 +911,62 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
 
   bool hasAgentLastnameEn() => _agentLastnameEn != null;
 
+  // "com_estimate_amt" field.
+  String? _comEstimateAmt;
+  String get comEstimateAmt => _comEstimateAmt ?? '';
+  set comEstimateAmt(String? val) => _comEstimateAmt = val;
+
+  bool hasComEstimateAmt() => _comEstimateAmt != null;
+
+  // "com_estimate_vat" field.
+  String? _comEstimateVat;
+  String get comEstimateVat => _comEstimateVat ?? '';
+  set comEstimateVat(String? val) => _comEstimateVat = val;
+
+  bool hasComEstimateVat() => _comEstimateVat != null;
+
+  // "com_estimate_net_amt" field.
+  String? _comEstimateNetAmt;
+  String get comEstimateNetAmt => _comEstimateNetAmt ?? '';
+  set comEstimateNetAmt(String? val) => _comEstimateNetAmt = val;
+
+  bool hasComEstimateNetAmt() => _comEstimateNetAmt != null;
+
+  // "default_com_percent" field.
+  String? _defaultComPercent;
+  String get defaultComPercent => _defaultComPercent ?? '';
+  set defaultComPercent(String? val) => _defaultComPercent = val;
+
+  bool hasDefaultComPercent() => _defaultComPercent != null;
+
+  // "actual_com_percent" field.
+  String? _actualComPercent;
+  String get actualComPercent => _actualComPercent ?? '';
+  set actualComPercent(String? val) => _actualComPercent = val;
+
+  bool hasActualComPercent() => _actualComPercent != null;
+
+  // "com_estimate_vat_amt" field.
+  String? _comEstimateVatAmt;
+  String get comEstimateVatAmt => _comEstimateVatAmt ?? '';
+  set comEstimateVatAmt(String? val) => _comEstimateVatAmt = val;
+
+  bool hasComEstimateVatAmt() => _comEstimateVatAmt != null;
+
+  // "actual_percent" field.
+  String? _actualPercent;
+  String get actualPercent => _actualPercent ?? '';
+  set actualPercent(String? val) => _actualPercent = val;
+
+  bool hasActualPercent() => _actualPercent != null;
+
+  // "default_percent" field.
+  String? _defaultPercent;
+  String get defaultPercent => _defaultPercent ?? '';
+  set defaultPercent(String? val) => _defaultPercent = val;
+
+  bool hasDefaultPercent() => _defaultPercent != null;
+
   static AgentProfileModelStruct fromMap(Map<String, dynamic> data) =>
       AgentProfileModelStruct(
         id: castToType<int>(data['id']),
@@ -995,6 +1067,14 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         promptpayNumber: data['promptpay_number'] as String?,
         agentLastnameTh: data['agent_lastname_th'] as String?,
         agentLastnameEn: data['agent_lastname_en'] as String?,
+        comEstimateAmt: data['com_estimate_amt'] as String?,
+        comEstimateVat: data['com_estimate_vat'] as String?,
+        comEstimateNetAmt: data['com_estimate_net_amt'] as String?,
+        defaultComPercent: data['default_com_percent'] as String?,
+        actualComPercent: data['actual_com_percent'] as String?,
+        comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
+        actualPercent: data['actual_percent'] as String?,
+        defaultPercent: data['default_percent'] as String?,
       );
 
   static AgentProfileModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -1100,6 +1180,14 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         'promptpay_number': _promptpayNumber,
         'agent_lastname_th': _agentLastnameTh,
         'agent_lastname_en': _agentLastnameEn,
+        'com_estimate_amt': _comEstimateAmt,
+        'com_estimate_vat': _comEstimateVat,
+        'com_estimate_net_amt': _comEstimateNetAmt,
+        'default_com_percent': _defaultComPercent,
+        'actual_com_percent': _actualComPercent,
+        'com_estimate_vat_amt': _comEstimateVatAmt,
+        'actual_percent': _actualPercent,
+        'default_percent': _defaultPercent,
       }.withoutNulls;
 
   @override
@@ -1494,6 +1582,38 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         ),
         'agent_lastname_en': serializeParam(
           _agentLastnameEn,
+          ParamType.String,
+        ),
+        'com_estimate_amt': serializeParam(
+          _comEstimateAmt,
+          ParamType.String,
+        ),
+        'com_estimate_vat': serializeParam(
+          _comEstimateVat,
+          ParamType.String,
+        ),
+        'com_estimate_net_amt': serializeParam(
+          _comEstimateNetAmt,
+          ParamType.String,
+        ),
+        'default_com_percent': serializeParam(
+          _defaultComPercent,
+          ParamType.String,
+        ),
+        'actual_com_percent': serializeParam(
+          _actualComPercent,
+          ParamType.String,
+        ),
+        'com_estimate_vat_amt': serializeParam(
+          _comEstimateVatAmt,
+          ParamType.String,
+        ),
+        'actual_percent': serializeParam(
+          _actualPercent,
+          ParamType.String,
+        ),
+        'default_percent': serializeParam(
+          _defaultPercent,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -1991,6 +2111,46 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        comEstimateAmt: deserializeParam(
+          data['com_estimate_amt'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVat: deserializeParam(
+          data['com_estimate_vat'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateNetAmt: deserializeParam(
+          data['com_estimate_net_amt'],
+          ParamType.String,
+          false,
+        ),
+        defaultComPercent: deserializeParam(
+          data['default_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        actualComPercent: deserializeParam(
+          data['actual_com_percent'],
+          ParamType.String,
+          false,
+        ),
+        comEstimateVatAmt: deserializeParam(
+          data['com_estimate_vat_amt'],
+          ParamType.String,
+          false,
+        ),
+        actualPercent: deserializeParam(
+          data['actual_percent'],
+          ParamType.String,
+          false,
+        ),
+        defaultPercent: deserializeParam(
+          data['default_percent'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -2096,7 +2256,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         accountNumber == other.accountNumber &&
         promptpayNumber == other.promptpayNumber &&
         agentLastnameTh == other.agentLastnameTh &&
-        agentLastnameEn == other.agentLastnameEn;
+        agentLastnameEn == other.agentLastnameEn &&
+        comEstimateAmt == other.comEstimateAmt &&
+        comEstimateVat == other.comEstimateVat &&
+        comEstimateNetAmt == other.comEstimateNetAmt &&
+        defaultComPercent == other.defaultComPercent &&
+        actualComPercent == other.actualComPercent &&
+        comEstimateVatAmt == other.comEstimateVatAmt &&
+        actualPercent == other.actualPercent &&
+        defaultPercent == other.defaultPercent;
   }
 
   @override
@@ -2198,7 +2366,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         accountNumber,
         promptpayNumber,
         agentLastnameTh,
-        agentLastnameEn
+        agentLastnameEn,
+        comEstimateAmt,
+        comEstimateVat,
+        comEstimateNetAmt,
+        defaultComPercent,
+        actualComPercent,
+        comEstimateVatAmt,
+        actualPercent,
+        defaultPercent
       ]);
 }
 
@@ -2301,6 +2477,14 @@ AgentProfileModelStruct createAgentProfileModelStruct({
   String? promptpayNumber,
   String? agentLastnameTh,
   String? agentLastnameEn,
+  String? comEstimateAmt,
+  String? comEstimateVat,
+  String? comEstimateNetAmt,
+  String? defaultComPercent,
+  String? actualComPercent,
+  String? comEstimateVatAmt,
+  String? actualPercent,
+  String? defaultPercent,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -2405,6 +2589,14 @@ AgentProfileModelStruct createAgentProfileModelStruct({
       promptpayNumber: promptpayNumber,
       agentLastnameTh: agentLastnameTh,
       agentLastnameEn: agentLastnameEn,
+      comEstimateAmt: comEstimateAmt,
+      comEstimateVat: comEstimateVat,
+      comEstimateNetAmt: comEstimateNetAmt,
+      defaultComPercent: defaultComPercent,
+      actualComPercent: actualComPercent,
+      comEstimateVatAmt: comEstimateVatAmt,
+      actualPercent: actualPercent,
+      defaultPercent: defaultPercent,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

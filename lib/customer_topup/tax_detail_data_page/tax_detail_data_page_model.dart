@@ -53,49 +53,75 @@ class TaxDetailDataPageModel extends FlutterFlowModel<TaxDetailDataPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? fullVehicleImageUrlCallback;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
   FFUploadedFile? generateFullVehicleFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? circleImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateCircleFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? leftImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateLeftFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? rightImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateRightFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? frontImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateFrontFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? backImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateBackFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TaxDetailDataPage widget.
+  String? mileImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TaxDetailDataPage widget.
+  FFUploadedFile? generateMileFile;
   // Model for LoanDetailCardTopupComponent component.
   late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   bool isDataUploading_fullVehicleImageUploadAction = false;
   FFUploadedFile uploadedLocalFile_fullVehicleImageUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? fullVehicleImageUrlOutput;
   bool isDataUploading_imageRightUploadAction = false;
   FFUploadedFile uploadedLocalFile_imageRightUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? imageRightUrlOutput;
   bool isDataUploading_imageLeftUploadAction = false;
   FFUploadedFile uploadedLocalFile_imageLeftUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? leftImageUrlOutput;
   bool isDataUploading_imageFrontUploadAction = false;
   FFUploadedFile uploadedLocalFile_imageFrontUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? imageFrontUrlOutput;
   bool isDataUploading_imageBackUploadAction = false;
   FFUploadedFile uploadedLocalFile_imageBackUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? imageBackUrlOutput;
   bool isDataUploading_imageMileUploadAction = false;
   FFUploadedFile uploadedLocalFile_imageMileUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? imageMileUrlOutput;
   bool isDataUploading_circleImageUploadAction = false;
   FFUploadedFile uploadedLocalFile_circleImageUploadAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? circleImageUrlOutput;

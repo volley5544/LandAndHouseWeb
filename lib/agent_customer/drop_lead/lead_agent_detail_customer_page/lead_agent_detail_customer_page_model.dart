@@ -1,7 +1,6 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
@@ -34,42 +33,56 @@ class LeadAgentDetailCustomerPageModel
     updateFn(productSelected ??= MasterAgentVehicleDataModelStruct());
   }
 
+  String idCardBase64 = 'base64';
+
+  FFUploadedFile? idCardFile;
+
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailCustomerPage widget.
-  ApiCallResponse? apiResult3so;
+  // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
+  ApplicationRecord? appConfig;
+  // Stores action output result for [Backend Call - API (visionThaiId)] action in LeadAgentDetailCustomerPage widget.
+  ApiCallResponse? visionOutputThaiIdmobile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in LeadAgentDetailCustomerPage widget.
+  String? idCardImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCustomerPage widget.
+  FFUploadedFile? generateIdCardFile;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
+  // State field(s) for firstName widget.
+  FocusNode? firstNameFocusNode;
+  TextEditingController? firstNameTextController;
+  String? Function(BuildContext, String?)? firstNameTextControllerValidator;
+  // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Icon widget.
+  FFUploadedFile? cameraTriggerComponentReturn;
+  // Stores action output result for [Backend Call - API (visionThaiId)] action in Icon widget.
+  ApiCallResponse? visionOutputThaiId;
+  // State field(s) for lastName widget.
+  FocusNode? lastNameFocusNode;
+  TextEditingController? lastNameTextController;
+  String? Function(BuildContext, String?)? lastNameTextControllerValidator;
+  // State field(s) for idcard widget.
+  FocusNode? idcardFocusNode;
+  TextEditingController? idcardTextController;
+  late MaskTextInputFormatter idcardMask;
+  String? Function(BuildContext, String?)? idcardTextControllerValidator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  late MaskTextInputFormatter textFieldMask3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
   TextEditingController? textController4;
-  late MaskTextInputFormatter textFieldMask4;
+  late MaskTextInputFormatter textFieldMask1;
   String? Function(BuildContext, String?)? textController4Validator;
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode5;
+  FocusNode? textFieldFocusNode2;
   TextEditingController? textController5;
   String? Function(BuildContext, String?)? textController5Validator;
+  DateTime? datePicked;
   // State field(s) for DropDownLoanType widget.
   String? dropDownLoanTypeValue;
   FormFieldController<String>? dropDownLoanTypeValueController;
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode6;
+  FocusNode? textFieldFocusNode3;
   TextEditingController? textController6;
   String? Function(BuildContext, String?)? textController6Validator;
-  DateTime? datePicked;
   // State field(s) for Checkbox widget.
   bool? checkboxValue1;
   // State field(s) for Checkbox widget.
@@ -86,22 +99,22 @@ class LeadAgentDetailCustomerPageModel
   @override
   void dispose() {
     progressBarComponentModel.dispose();
+    firstNameFocusNode?.dispose();
+    firstNameTextController?.dispose();
+
+    lastNameFocusNode?.dispose();
+    lastNameTextController?.dispose();
+
+    idcardFocusNode?.dispose();
+    idcardTextController?.dispose();
+
     textFieldFocusNode1?.dispose();
-    textController1?.dispose();
-
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
-
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
     textController4?.dispose();
 
-    textFieldFocusNode5?.dispose();
+    textFieldFocusNode2?.dispose();
     textController5?.dispose();
 
-    textFieldFocusNode6?.dispose();
+    textFieldFocusNode3?.dispose();
     textController6?.dispose();
   }
 }

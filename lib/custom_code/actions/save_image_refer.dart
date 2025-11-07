@@ -37,35 +37,194 @@ Future<void> saveImageRefer(
     ScreenshotController screenshotController = ScreenshotController();
     await screenshotController
         .captureFromWidget(
-            Container(
-              margin: EdgeInsetsDirectional.only(top: 50),
-              color: Colors.white,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+              child: Container(
+                width: double.infinity,
+                height: 550.0,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 4.0,
+                      color: Color(0x33000000),
+                      offset: Offset(
+                        0.0,
+                        2.0,
+                      ),
+                    )
+                  ],
+                  gradient: LinearGradient(
+                    colors: [
+                      FlutterFlowTheme.of(context).secondary,
+                      Color(0xFFF8C394)
+                    ],
+                    stops: [0.25, 1.0],
+                    begin: AlignmentDirectional(0.0, -1.0),
+                    end: AlignmentDirectional(0, 1.0),
+                  ),
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 12.0, 12.0, 0.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/logo_tran.png',
+                              height: 80.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Container(
-                      width: MediaQuery.of(context).size.width *
-                          0.7, //isQrCodeSelected :MediaQuery.of(context).size.width * 0.9,
-                      height: 230,
+                      width: 250.0,
+                      height: 250.0,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).primary,
+                        ),
                       ),
-                      child: BarcodeWidget(
-                        data: genQRCodePayment(urlLinkAgent!)!,
-                        barcode: Barcode.qrCode(),
-                        width: 300,
-                        height: 90,
-                        backgroundColor: Colors.white,
-                        color: Colors.black,
-                        drawText: false,
+                      child: Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: BarcodeWidget(
+                          data: '${urlLinkAgent!}',
+                          barcode: Barcode.qrCode(),
+                          width: 200.0,
+                          height: 200.0,
+                          color: Colors.black,
+                          backgroundColor: Colors.transparent,
+                          errorBuilder: (_context, _error) => SizedBox(
+                            width: 200.0,
+                            height: 200.0,
+                          ),
+                          drawText: false,
+                        ),
                       ),
                     ),
-                  ],
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0.0, 0.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 28.0,
+                                    height: 28.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.person_sharp,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${FFAppState().agentProfileDataType.agentNameTh}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 16.0)),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 28.0,
+                                    height: 28.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.dehaze_rounded,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    'รหัสอ้างอิง : ${FFAppState().agentProfileDataType.agentCode}',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 16.0)),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    width: 28.0,
+                                    height: 28.0,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.phone_in_talk_outlined,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 24.0,
+                                    ),
+                                  ),
+                                  Text(
+                                    '1652',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 16.0)),
+                              ),
+                            ].divide(SizedBox(height: 12.0)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ].divide(SizedBox(height: 30.0)),
                 ),
               ),
             ),
@@ -73,35 +232,194 @@ Future<void> saveImageRefer(
         .then((capImage) async {
       await screenshotController
           .captureFromWidget(
-              Container(
-                margin: EdgeInsetsDirectional.only(top: 50),
-                color: Colors.white,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 550.0,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4.0,
+                        color: Color(0x33000000),
+                        offset: Offset(
+                          0.0,
+                          2.0,
+                        ),
+                      )
+                    ],
+                    gradient: LinearGradient(
+                      colors: [
+                        FlutterFlowTheme.of(context).secondary,
+                        Color(0xFFF8C394)
+                      ],
+                      stops: [0.25, 1.0],
+                      begin: AlignmentDirectional(0.0, -1.0),
+                      end: AlignmentDirectional(0, 1.0),
+                    ),
+                    borderRadius: BorderRadius.circular(24.0),
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 12.0, 12.0, 0.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                'assets/images/logo_tran.png',
+                                height: 80.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       Container(
-                        width: MediaQuery.of(context).size.width *
-                            0.7, //isQrCodeSelected :MediaQuery.of(context).size.width * 0.9,
-                        height: 230,
+                        width: 250.0,
+                        height: 250.0,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.0),
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).primary,
+                          ),
                         ),
-                        child: BarcodeWidget(
-                          data: genQRCodePayment(urlLinkAgent!)!,
-                          barcode: Barcode.qrCode(),
-                          width: 300,
-                          height: 90,
-                          backgroundColor: Colors.white,
-                          color: Colors.black,
-                          drawText: false,
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: BarcodeWidget(
+                            data: '${urlLinkAgent!}',
+                            barcode: Barcode.qrCode(),
+                            width: 200.0,
+                            height: 200.0,
+                            color: Colors.black,
+                            backgroundColor: Colors.transparent,
+                            errorBuilder: (_context, _error) => SizedBox(
+                              width: 200.0,
+                              height: 200.0,
+                            ),
+                            drawText: false,
+                          ),
                         ),
                       ),
-                    ],
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional(0.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: 28.0,
+                                      height: 28.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      child: Icon(
+                                        Icons.person_sharp,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${FFAppState().agentProfileDataType.agentNameTh}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ].divide(SizedBox(width: 16.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: 28.0,
+                                      height: 28.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        Icons.dehaze_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      'รหัสอ้างอิง : ${FFAppState().agentProfileDataType.agentCode}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ].divide(SizedBox(width: 16.0)),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: 28.0,
+                                      height: 28.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        Icons.phone_in_talk_outlined,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      '1652',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ].divide(SizedBox(width: 16.0)),
+                                ),
+                              ].divide(SizedBox(height: 12.0)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ].divide(SizedBox(height: 30.0)),
                   ),
                 ),
               ),

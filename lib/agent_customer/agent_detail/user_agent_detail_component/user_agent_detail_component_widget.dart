@@ -13,6 +13,7 @@ class UserAgentDetailComponentWidget extends StatefulWidget {
     required this.idCard,
     required this.phoneNumber,
     required this.backAccount,
+    required this.bankName,
   });
 
   final String? name;
@@ -20,6 +21,7 @@ class UserAgentDetailComponentWidget extends StatefulWidget {
   final String? idCard;
   final String? phoneNumber;
   final String? backAccount;
+  final String? bankName;
 
   @override
   State<UserAgentDetailComponentWidget> createState() =>
@@ -356,6 +358,65 @@ class _UserAgentDetailComponentWidgetState
                         valueOrDefault<String>(
                           widget.backAccount,
                           'bankAccount',
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Noto San Thai',
+                              color: Color(0xFF003063),
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
+                    ),
+                  ),
+                ].divide(SizedBox(width: 12.0)),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'ธนาคาร',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Noto San Thai',
+                          color: Color(0xB2646464),
+                          fontSize: 14.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  Text(
+                    ':',
+                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                          fontFamily: 'Noto San Thai',
+                          color: Color(0xB2646464),
+                          fontSize: () {
+                            if (MediaQuery.sizeOf(context).width <
+                                kBreakpointSmall) {
+                              return 16.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointMedium) {
+                              return 22.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointLarge) {
+                              return 22.0;
+                            } else {
+                              return 22.0;
+                            }
+                          }(),
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Text(
+                        valueOrDefault<String>(
+                          widget.bankName,
+                          'bankName',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',

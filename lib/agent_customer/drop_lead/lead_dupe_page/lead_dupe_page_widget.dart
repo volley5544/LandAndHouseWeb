@@ -128,6 +128,10 @@ class _LeadDupePageWidgetState extends State<LeadDupePageWidget> {
                                 FFAppState().agentProfileDataType.agentCode,
                                 ParamType.String,
                               ),
+                              'platform': serializeParam(
+                                FFAppState().platform,
+                                ParamType.String,
+                              ),
                             }.withoutNulls,
                           );
                         } else {

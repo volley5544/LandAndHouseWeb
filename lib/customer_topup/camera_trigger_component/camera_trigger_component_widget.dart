@@ -53,6 +53,7 @@ class _CameraTriggerComponentWidgetState
                     height: m.dimensions?.height,
                     width: m.dimensions?.width,
                     blurHash: m.blurHash,
+                    originalFilename: m.originalFilename,
                   ))
               .toList();
         } finally {

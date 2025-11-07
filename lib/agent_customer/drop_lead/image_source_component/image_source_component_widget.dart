@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'image_source_component_model.dart';
 export 'image_source_component_model.dart';
 
@@ -49,6 +50,8 @@ class _ImageSourceComponentWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: 200.0,
       decoration: BoxDecoration(
@@ -96,6 +99,7 @@ class _ImageSourceComponentWidgetState
                                       height: m.dimensions?.height,
                                       width: m.dimensions?.width,
                                       blurHash: m.blurHash,
+                                      originalFilename: m.originalFilename,
                                     ))
                                 .toList();
                           } finally {
@@ -202,11 +206,59 @@ class _ImageSourceComponentWidgetState
                   Expanded(
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await actions.openCameraWebview(
-                          widget.cameraType,
-                          widget.actionName,
-                        );
-                        Navigator.pop(context);
+                        if (FFAppState().platform == 'mobile') {
+                          await actions.openCameraWebview(
+                            widget.cameraType,
+                            widget.actionName,
+                          );
+                          Navigator.pop(context);
+                        } else {
+                          final selectedMedia = await selectMedia(
+                            maxWidth: 1920.00,
+                            maxHeight: 1920.00,
+                            imageQuality: 50,
+                            multiImage: false,
+                          );
+                          if (selectedMedia != null &&
+                              selectedMedia.every((m) =>
+                                  validateFileFormat(m.storagePath, context))) {
+                            safeSetState(() => _model
+                                    .isDataUploading_uploadDataBluebookCamera =
+                                true);
+                            var selectedUploadedFiles = <FFUploadedFile>[];
+
+                            try {
+                              selectedUploadedFiles = selectedMedia
+                                  .map((m) => FFUploadedFile(
+                                        name: m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                        blurHash: m.blurHash,
+                                        originalFilename: m.originalFilename,
+                                      ))
+                                  .toList();
+                            } finally {
+                              _model.isDataUploading_uploadDataBluebookCamera =
+                                  false;
+                            }
+                            if (selectedUploadedFiles.length ==
+                                selectedMedia.length) {
+                              safeSetState(() {
+                                _model.uploadedLocalFile_uploadDataBluebookCamera =
+                                    selectedUploadedFiles.first;
+                              });
+                            } else {
+                              safeSetState(() {});
+                              return;
+                            }
+                          }
+
+                          Navigator.pop(
+                              context,
+                              _model
+                                  .uploadedLocalFile_uploadDataBluebookCamera);
+                        }
                       },
                       text: 'กล้องถ่ายรูป',
                       icon: Icon(

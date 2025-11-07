@@ -39,12 +39,17 @@ class CheckRateLHFormComponentModel
       tarangWaTextFieldTextControllerValidator;
   bool isDataUploading_uploadDataSqdComponent = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqdComponent =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataSqd2Component = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqd2Component =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController6;
+  String? Function(BuildContext, String?)? textController6Validator;
+  DateTime? datePicked;
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Button widget.
   ApiCallResponse? aPIcheckRateOutput;
 
@@ -67,5 +72,8 @@ class CheckRateLHFormComponentModel
 
     tarangWaTextFieldFocusNode?.dispose();
     tarangWaTextFieldTextController?.dispose();
+
+    textFieldFocusNode?.dispose();
+    textController6?.dispose();
   }
 }

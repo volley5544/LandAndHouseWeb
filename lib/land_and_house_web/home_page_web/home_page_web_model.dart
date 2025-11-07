@@ -57,11 +57,11 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
       tarangWaTextFieldTextControllerValidator;
   bool isDataUploading_uploadDataSqdWebMobile = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqdWebMobile =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataSqd2Web = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqd2Web =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.
   ApiCallResponse? aPIcheckRateOutputMobile;
@@ -106,11 +106,11 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
       tarangWaTextFieldPCTextControllerValidator;
   bool isDataUploading_uploadDataSqdWebPC = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqdWebPC =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataSqd2WebPC = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqd2WebPC =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.
   ApiCallResponse? aPIcheckRateOutputPC;

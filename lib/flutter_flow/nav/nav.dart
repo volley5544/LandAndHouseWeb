@@ -79,14 +79,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
           ? SerchChanodPageWidget()
-          : HomePageWidget(),
+          : AddCustomerLeadWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
               ? SerchChanodPageWidget()
-              : HomePageWidget(),
+              : AddCustomerLeadWidget(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -516,7 +516,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentDetailCustomerPageWidget.routeName,
           path: LeadAgentDetailCustomerPageWidget.routePath,
-          builder: (context, params) => LeadAgentDetailCustomerPageWidget(),
+          builder: (context, params) => LeadAgentDetailCustomerPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: ShareAgentReferPageWidget.routeName,
@@ -560,7 +565,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentDetailCarPageWidget.routeName,
           path: LeadAgentDetailCarPageWidget.routePath,
-          builder: (context, params) => LeadAgentDetailCarPageWidget(),
+          builder: (context, params) => LeadAgentDetailCarPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: CheckRateLHPageWidget.routeName,
@@ -623,6 +633,56 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: LeadAgentConsentPageWidget.routeName,
           path: LeadAgentConsentPageWidget.routePath,
           builder: (context, params) => LeadAgentConsentPageWidget(),
+        ),
+        FFRoute(
+          name: VerifyAgentWidget.routeName,
+          path: VerifyAgentWidget.routePath,
+          builder: (context, params) => VerifyAgentWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TestPageCopy2Widget.routeName,
+          path: TestPageCopy2Widget.routePath,
+          builder: (context, params) => TestPageCopy2Widget(),
+        ),
+        FFRoute(
+          name: AgentConfirmSuccesPageWidget.routeName,
+          path: AgentConfirmSuccesPageWidget.routePath,
+          builder: (context, params) => AgentConfirmSuccesPageWidget(
+            confirm: params.getParam(
+              'confirm',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: MyWalletPageWidget.routeName,
+          path: MyWalletPageWidget.routePath,
+          builder: (context, params) => MyWalletPageWidget(),
+        ),
+        FFRoute(
+          name: CommissionHistoryPageWidget.routeName,
+          path: CommissionHistoryPageWidget.routePath,
+          builder: (context, params) => CommissionHistoryPageWidget(
+            leadId: params.getParam(
+              'leadId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: NameCardPageWidget.routeName,
+          path: NameCardPageWidget.routePath,
+          builder: (context, params) => NameCardPageWidget(),
+        ),
+        FFRoute(
+          name: TestPage3Widget.routeName,
+          path: TestPage3Widget.routePath,
+          builder: (context, params) => TestPage3Widget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -795,7 +855,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/homePage';
+            return '/AddCustomerLead';
           }
           return null;
         },

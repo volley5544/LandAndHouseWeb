@@ -16,6 +16,7 @@ class SelectPaymentTransferComponentWidget extends StatefulWidget {
     this.returnPayment,
     String? paymentMethodDefault,
     String? paymentChannelDefault,
+    required this.bankName,
   })  : this.paymentMethodDefault =
             paymentMethodDefault ?? 'paymentMethodDefault',
         this.paymentChannelDefault =
@@ -28,6 +29,7 @@ class SelectPaymentTransferComponentWidget extends StatefulWidget {
       returnPayment;
   final String paymentMethodDefault;
   final String paymentChannelDefault;
+  final String? bankName;
 
   @override
   State<SelectPaymentTransferComponentWidget> createState() =>
@@ -186,7 +188,7 @@ class _SelectPaymentTransferComponentWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'รับครั้งเดียว (หัก ${widget.reductPercent}%)',
+                                    'รับครั้งเดียว',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -392,25 +394,42 @@ class _SelectPaymentTransferComponentWidgetState
                                   },
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'บัญชีธนาคาร  เลขบัญชี ${widget.bankAccount}',
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'บัญชีธนาคาร  เลขบัญชี ${widget.bankAccount}',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'ธนาคาร ${widget.bankName}',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),
@@ -478,11 +497,7 @@ class _SelectPaymentTransferComponentWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       8.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'พร้อมเพย์ ${valueOrDefault<String>(
-                                      functions
-                                          .formatPhoneNumber(widget.promptPay),
-                                      'phoneNumber',
-                                    )}',
+                                    'พร้อมเพย์ ${functions.addDashPhoneNumber(widget.promptPay)}',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -512,7 +527,7 @@ class _SelectPaymentTransferComponentWidgetState
               width: double.infinity,
               decoration: BoxDecoration(),
               child: Text(
-                'ขอให้สอบถามข้อมูลหรือขอคำปรึกษากสาขาเจ้าของบัญชี หรือ แอดLine @Srisawad หรือ โทร 1652',
+                'ขอให้สอบถามข้อมูลหรือขอคำปรึกษาจากสาขาเจ้าของบัญชี หรือ แอดLine @Srisawad หรือ โทร 1652',
                 textAlign: TextAlign.start,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Noto San Thai',

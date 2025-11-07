@@ -4,12 +4,14 @@ import '/agent_customer/drop_lead/review_detail_customer_component/review_detail
 import '/agent_customer/drop_lead/review_detail_l_h_component/review_detail_l_h_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/error_message_component_widget.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/loading/loading_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'lead_agent_review_detail_page_model.dart';
 export 'lead_agent_review_detail_page_model.dart';
@@ -35,15 +37,33 @@ class LeadAgentReviewDetailPageWidget extends StatefulWidget {
 }
 
 class _LeadAgentReviewDetailPageWidgetState
-    extends State<LeadAgentReviewDetailPageWidget> {
+    extends State<LeadAgentReviewDetailPageWidget>
+    with TickerProviderStateMixin {
   late LeadAgentReviewDetailPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => LeadAgentReviewDetailPageModel());
+
+    animationsMap.addAll({
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -156,7 +176,9 @@ class _LeadAgentReviewDetailPageWidgetState
                                 carregister:
                                     '${(FFAppState().saveLeadAgentData.loanTypeCode == 'LH') || (FFAppState().saveLeadAgentData.loanTypeCode == 'LA') ? (FFAppState().isSearchByChanodNo ? FFAppState().saveLeadAgentData.carRegistration : FFAppState().saveLeadAgentData.landNo) : (FFAppState().saveLeadAgentData.carRegistration != '' ? FFAppState().saveLeadAgentData.carRegistration : 'ไม่ระบุทะเบียนรถ')}',
                                 time:
-                                    '${FFAppState().saveLeadAgentData.contactTime}',
+                                    '${FFAppState().saveLeadAgentData.contactTime != '' ? FFAppState().saveLeadAgentData.contactTime : 'ไม่ระบุเวลา'}',
+                                commission:
+                                    '${FFAppState().saveLeadAgentData.comEstimateAmt}',
                               ),
                             ),
                           ),
@@ -183,6 +205,8 @@ class _LeadAgentReviewDetailPageWidgetState
                                       '${FFAppState().saveLeadAgentData.productDetail != '' ? FFAppState().saveLeadAgentData.productDetail : 'ไม่ระบุรายละเอียดสินค้า'}',
                                   rateAmount:
                                       '${FFAppState().saveLeadAgentData.estimatePrice}',
+                                  carProvince:
+                                      '${FFAppState().saveLeadAgentData.carRegistration != '' ? FFAppState().saveLeadAgentData.carRegistration : 'ไม่ระบุทะเบียนรถ'}',
                                 ),
                               ),
                             ),
@@ -221,6 +245,115 @@ class _LeadAgentReviewDetailPageWidgetState
                                 ),
                               ),
                             ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 12.0, 12.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(
+                                      2.0,
+                                      4.0,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 22.0,
+                                            child: VerticalDivider(
+                                              thickness: 4.0,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                            ),
+                                          ),
+                                          Text(
+                                            'ยินยอมให้เก็บข้อมูลส่วนตัว',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ].divide(SizedBox(width: 12.0)),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12.0, 0.0, 12.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Icon(
+                                                  Icons.check_circle,
+                                                  color: Color(0xFF24DB1A),
+                                                  size: 24.0,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    'ยินยอมให้เก็บข้อมูลส่วนตัวแล้ว',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color:
+                                                              Color(0xFF24DB1A),
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ).animateOnPageLoad(animationsMap[
+                                          'columnOnPageLoadAnimation']!),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ].addToEnd(SizedBox(height: 30.0)),
                       ),
                     ),
@@ -427,6 +560,24 @@ class _LeadAgentReviewDetailPageWidgetState
                                     imageCarBook: widget.imageCarBack,
                                     imageChanodFront: widget.chanodFrontFile,
                                     imageChanodBack: widget.chanodBackFile,
+                                    comEstimateAmt: FFAppState()
+                                        .saveLeadAgentData
+                                        .comEstimateAmt,
+                                    comEstimateVat: FFAppState()
+                                        .saveLeadAgentData
+                                        .comEstimateVat,
+                                    comEstimateNetAmt: FFAppState()
+                                        .saveLeadAgentData
+                                        .comEstimateNetAmt,
+                                    defaultComPercent: FFAppState()
+                                        .saveLeadAgentData
+                                        .defaultComPercent,
+                                    actualComPercent: FFAppState()
+                                        .saveLeadAgentData
+                                        .actualComPercent,
+                                    comEstimateVatAmt: FFAppState()
+                                        .saveLeadAgentData
+                                        .comEstimateVatAmt,
                                   );
 
                                   _shouldSetState = true;
@@ -476,7 +627,7 @@ class _LeadAgentReviewDetailPageWidgetState
                                         '201') {
                                       Navigator.pop(context);
 
-                                      context.pushNamed(
+                                      context.goNamed(
                                         LeadDupePageWidget.routeName,
                                         extra: <String, dynamic>{
                                           kTransitionInfoKey: TransitionInfo(

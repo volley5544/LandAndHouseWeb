@@ -20,6 +20,12 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? ocrUrlProd,
     String? contractUrl,
     String? contractUrlDev,
+    String? agentWebConfirmUrl,
+    String? agentWebConfirmUrlUat,
+    String? agentWebUrl,
+    String? agentWebUrlUat,
+    String? agentWebLeadUrl,
+    String? agentWebLeadUrlUat,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -33,6 +39,12 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _ocrUrlProd = ocrUrlProd,
         _contractUrl = contractUrl,
         _contractUrlDev = contractUrlDev,
+        _agentWebConfirmUrl = agentWebConfirmUrl,
+        _agentWebConfirmUrlUat = agentWebConfirmUrlUat,
+        _agentWebUrl = agentWebUrl,
+        _agentWebUrlUat = agentWebUrlUat,
+        _agentWebLeadUrl = agentWebLeadUrl,
+        _agentWebLeadUrlUat = agentWebLeadUrlUat,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -119,6 +131,48 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasContractUrlDev() => _contractUrlDev != null;
 
+  // "agent_web_confirm_url" field.
+  String? _agentWebConfirmUrl;
+  String get agentWebConfirmUrl => _agentWebConfirmUrl ?? '';
+  set agentWebConfirmUrl(String? val) => _agentWebConfirmUrl = val;
+
+  bool hasAgentWebConfirmUrl() => _agentWebConfirmUrl != null;
+
+  // "agent_web_confirm_url_uat" field.
+  String? _agentWebConfirmUrlUat;
+  String get agentWebConfirmUrlUat => _agentWebConfirmUrlUat ?? '';
+  set agentWebConfirmUrlUat(String? val) => _agentWebConfirmUrlUat = val;
+
+  bool hasAgentWebConfirmUrlUat() => _agentWebConfirmUrlUat != null;
+
+  // "agent_web_url" field.
+  String? _agentWebUrl;
+  String get agentWebUrl => _agentWebUrl ?? '';
+  set agentWebUrl(String? val) => _agentWebUrl = val;
+
+  bool hasAgentWebUrl() => _agentWebUrl != null;
+
+  // "agent_web_url_uat" field.
+  String? _agentWebUrlUat;
+  String get agentWebUrlUat => _agentWebUrlUat ?? '';
+  set agentWebUrlUat(String? val) => _agentWebUrlUat = val;
+
+  bool hasAgentWebUrlUat() => _agentWebUrlUat != null;
+
+  // "agent_web_lead_url" field.
+  String? _agentWebLeadUrl;
+  String get agentWebLeadUrl => _agentWebLeadUrl ?? '';
+  set agentWebLeadUrl(String? val) => _agentWebLeadUrl = val;
+
+  bool hasAgentWebLeadUrl() => _agentWebLeadUrl != null;
+
+  // "agent_web_lead_url_uat" field.
+  String? _agentWebLeadUrlUat;
+  String get agentWebLeadUrlUat => _agentWebLeadUrlUat ?? '';
+  set agentWebLeadUrlUat(String? val) => _agentWebLeadUrlUat = val;
+
+  bool hasAgentWebLeadUrlUat() => _agentWebLeadUrlUat != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -132,6 +186,12 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ocrUrlProd: data['ocr_url_prod'] as String?,
         contractUrl: data['contract_url'] as String?,
         contractUrlDev: data['contract_url_dev'] as String?,
+        agentWebConfirmUrl: data['agent_web_confirm_url'] as String?,
+        agentWebConfirmUrlUat: data['agent_web_confirm_url_uat'] as String?,
+        agentWebUrl: data['agent_web_url'] as String?,
+        agentWebUrlUat: data['agent_web_url_uat'] as String?,
+        agentWebLeadUrl: data['agent_web_lead_url'] as String?,
+        agentWebLeadUrlUat: data['agent_web_lead_url_uat'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -150,6 +210,12 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'ocr_url_prod': _ocrUrlProd,
         'contract_url': _contractUrl,
         'contract_url_dev': _contractUrlDev,
+        'agent_web_confirm_url': _agentWebConfirmUrl,
+        'agent_web_confirm_url_uat': _agentWebConfirmUrlUat,
+        'agent_web_url': _agentWebUrl,
+        'agent_web_url_uat': _agentWebUrlUat,
+        'agent_web_lead_url': _agentWebLeadUrl,
+        'agent_web_lead_url_uat': _agentWebLeadUrlUat,
       }.withoutNulls;
 
   @override
@@ -200,6 +266,30 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'contract_url_dev': serializeParam(
           _contractUrlDev,
+          ParamType.String,
+        ),
+        'agent_web_confirm_url': serializeParam(
+          _agentWebConfirmUrl,
+          ParamType.String,
+        ),
+        'agent_web_confirm_url_uat': serializeParam(
+          _agentWebConfirmUrlUat,
+          ParamType.String,
+        ),
+        'agent_web_url': serializeParam(
+          _agentWebUrl,
+          ParamType.String,
+        ),
+        'agent_web_url_uat': serializeParam(
+          _agentWebUrlUat,
+          ParamType.String,
+        ),
+        'agent_web_lead_url': serializeParam(
+          _agentWebLeadUrl,
+          ParamType.String,
+        ),
+        'agent_web_lead_url_uat': serializeParam(
+          _agentWebLeadUrlUat,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -266,6 +356,36 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentWebConfirmUrl: deserializeParam(
+          data['agent_web_confirm_url'],
+          ParamType.String,
+          false,
+        ),
+        agentWebConfirmUrlUat: deserializeParam(
+          data['agent_web_confirm_url_uat'],
+          ParamType.String,
+          false,
+        ),
+        agentWebUrl: deserializeParam(
+          data['agent_web_url'],
+          ParamType.String,
+          false,
+        ),
+        agentWebUrlUat: deserializeParam(
+          data['agent_web_url_uat'],
+          ParamType.String,
+          false,
+        ),
+        agentWebLeadUrl: deserializeParam(
+          data['agent_web_lead_url'],
+          ParamType.String,
+          false,
+        ),
+        agentWebLeadUrlUat: deserializeParam(
+          data['agent_web_lead_url_uat'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -285,7 +405,13 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ocrUrlDev == other.ocrUrlDev &&
         ocrUrlProd == other.ocrUrlProd &&
         contractUrl == other.contractUrl &&
-        contractUrlDev == other.contractUrlDev;
+        contractUrlDev == other.contractUrlDev &&
+        agentWebConfirmUrl == other.agentWebConfirmUrl &&
+        agentWebConfirmUrlUat == other.agentWebConfirmUrlUat &&
+        agentWebUrl == other.agentWebUrl &&
+        agentWebUrlUat == other.agentWebUrlUat &&
+        agentWebLeadUrl == other.agentWebLeadUrl &&
+        agentWebLeadUrlUat == other.agentWebLeadUrlUat;
   }
 
   @override
@@ -301,7 +427,13 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ocrUrlDev,
         ocrUrlProd,
         contractUrl,
-        contractUrlDev
+        contractUrlDev,
+        agentWebConfirmUrl,
+        agentWebConfirmUrlUat,
+        agentWebUrl,
+        agentWebUrlUat,
+        agentWebLeadUrl,
+        agentWebLeadUrlUat
       ]);
 }
 
@@ -318,6 +450,12 @@ ApiUrlStruct createApiUrlStruct({
   String? ocrUrlProd,
   String? contractUrl,
   String? contractUrlDev,
+  String? agentWebConfirmUrl,
+  String? agentWebConfirmUrlUat,
+  String? agentWebUrl,
+  String? agentWebUrlUat,
+  String? agentWebLeadUrl,
+  String? agentWebLeadUrlUat,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -336,6 +474,12 @@ ApiUrlStruct createApiUrlStruct({
       ocrUrlProd: ocrUrlProd,
       contractUrl: contractUrl,
       contractUrlDev: contractUrlDev,
+      agentWebConfirmUrl: agentWebConfirmUrl,
+      agentWebConfirmUrlUat: agentWebConfirmUrlUat,
+      agentWebUrl: agentWebUrl,
+      agentWebUrlUat: agentWebUrlUat,
+      agentWebLeadUrl: agentWebLeadUrl,
+      agentWebLeadUrlUat: agentWebLeadUrlUat,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

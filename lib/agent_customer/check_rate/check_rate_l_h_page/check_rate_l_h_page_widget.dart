@@ -179,11 +179,11 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
           ),
           body: SafeArea(
             top: true,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: wrapWithModel(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  wrapWithModel(
                     model: _model.checkRateLHFormComponentModel,
                     updateCallback: () => safeSetState(() {}),
                     updateOnChange: true,
@@ -195,8 +195,8 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
                       },
                     ),
                   ),
-                ),
-              ].addToStart(SizedBox(height: 4.0)),
+                ].addToStart(SizedBox(height: 4.0)),
+              ),
             ),
           ),
         ),

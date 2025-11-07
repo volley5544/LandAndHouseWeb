@@ -56,6 +56,11 @@ class ApplicationRecord extends FirestoreRecord {
   bool get useNewCameraAction => _useNewCameraAction ?? false;
   bool hasUseNewCameraAction() => _useNewCameraAction != null;
 
+  // "isUseOtp" field.
+  bool? _isUseOtp;
+  bool get isUseOtp => _isUseOtp ?? false;
+  bool hasIsUseOtp() => _isUseOtp != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -70,6 +75,7 @@ class ApplicationRecord extends FirestoreRecord {
         ? snapshotData['comcode_config']
         : ComcodeConfigModelStruct.maybeFromMap(snapshotData['comcode_config']);
     _useNewCameraAction = snapshotData['use_new_camera_action'] as bool?;
+    _isUseOtp = snapshotData['isUseOtp'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -113,6 +119,7 @@ Map<String, dynamic> createApplicationRecordData({
   String? topupNoData2Text,
   ComcodeConfigModelStruct? comcodeConfig,
   bool? useNewCameraAction,
+  bool? isUseOtp,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -122,6 +129,7 @@ Map<String, dynamic> createApplicationRecordData({
       'topup_no_data2_text': topupNoData2Text,
       'comcode_config': ComcodeConfigModelStruct().toMap(),
       'use_new_camera_action': useNewCameraAction,
+      'isUseOtp': isUseOtp,
     }.withoutNulls,
   );
 
@@ -149,7 +157,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.topupNoDataText == e2?.topupNoDataText &&
         e1?.topupNoData2Text == e2?.topupNoData2Text &&
         e1?.comcodeConfig == e2?.comcodeConfig &&
-        e1?.useNewCameraAction == e2?.useNewCameraAction;
+        e1?.useNewCameraAction == e2?.useNewCameraAction &&
+        e1?.isUseOtp == e2?.isUseOtp;
   }
 
   @override
@@ -161,7 +170,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.topupNoDataText,
         e?.topupNoData2Text,
         e?.comcodeConfig,
-        e?.useNewCameraAction
+        e?.useNewCameraAction,
+        e?.isUseOtp
       ]);
 
   @override

@@ -47,8 +47,20 @@ class TopupConclusionPageModel
 
   String expireDatePageState = 'null';
 
+  String? idCardBase64;
+
+  String? selfieBase64;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TopupConclusionPage widget.
+  String? idCardImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
+  FFUploadedFile? generateIdCardFile;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TopupConclusionPage widget.
+  String? selfieImageUrlCallback;
+  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
+  FFUploadedFile? generateSelfieFile;
   // Stores action output result for [Backend Call - API (Send an pdf to user)] action in TopupConclusionPage widget.
   ApiCallResponse? getPdfLoanDocApiOutput;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
@@ -61,7 +73,7 @@ class TopupConclusionPageModel
   late LoanDetailCardTopupComponentModel loanDetailCardTopupComponentModel;
   bool isDataUploading_uploadIdCardAction = false;
   FFUploadedFile uploadedLocalFile_uploadIdCardAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (visionThaiId)] action in Button widget.
   ApiCallResponse? visionOutputThaiId;
@@ -73,7 +85,7 @@ class TopupConclusionPageModel
   String? idCardImageUrlOutput;
   bool isDataUploading_uploadSelfieAction = false;
   FFUploadedFile uploadedLocalFile_uploadSelfieAction =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in Button widget.
   String? selfieImageUrlOutput;

@@ -1,7 +1,8 @@
 import '/agent_customer/agent_detail/agent_save_success/agent_save_success_widget.dart';
-import '/agent_customer/agent_detail/select_payment_transfer_component/select_payment_transfer_component_widget.dart';
 import '/agent_customer/agent_detail/user_agent_detail_component/user_agent_detail_component_widget.dart';
+import '/agent_customer/select_payment_transfer_component/select_payment_transfer_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/components/banner_agent_component_widget.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -173,6 +174,15 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: wrapWithModel(
+                                    model: _model.bannerAgentComponentModel,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: BannerAgentComponentWidget(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 8.0, 0.0, 0.0),
+                                  child: wrapWithModel(
                                     model: _model.userAgentDetailComponentModel,
                                     updateCallback: () => safeSetState(() {}),
                                     child: UserAgentDetailComponentWidget(
@@ -186,6 +196,8 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                           '${FFAppState().agentProfileDataType.agentMobilePhone}',
                                       backAccount:
                                           '${FFAppState().agentProfileDataType.accountNumber}',
+                                      bankName:
+                                          '${FFAppState().agentProfileDataType.agentBankName}',
                                     ),
                                   ),
                                 ),
@@ -207,6 +219,8 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                 '${FFAppState().agentProfileDataType.paymentMethod}',
                             paymentChannelDefault:
                                 '${FFAppState().agentProfileDataType.paymentChannel}',
+                            bankName:
+                                '${FFAppState().agentProfileDataType.transactionChannelName}',
                             returnPayment:
                                 (paymentMethod, paymentChannel) async {
                               _model.paymentMethod = paymentMethod;

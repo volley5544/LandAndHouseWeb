@@ -65,7 +65,7 @@ export '/customer_topup/select_topup_product_page_old/select_topup_product_page_
     show SelectTopupProductPageOldWidget;
 export '/agent_customer/drop_lead/lead_agent_detail_customer_page/lead_agent_detail_customer_page_widget.dart'
     show LeadAgentDetailCustomerPageWidget;
-export '/agent_customer/agent_detail/share_agent_refer_page/share_agent_refer_page_widget.dart'
+export '/agent_customer/agent_detail/agent_profile/share_agent_refer_page/share_agent_refer_page_widget.dart'
     show ShareAgentReferPageWidget;
 export '/agent_customer/agent_detail/my_lead_dashboard_page/my_lead_dashboard_page_widget.dart'
     show MyLeadDashboardPageWidget;
@@ -95,3 +95,15 @@ export '/agent_customer/drop_lead/lead_dupe_page/lead_dupe_page_widget.dart'
     show LeadDupePageWidget;
 export '/agent_customer/drop_lead/lead_agent_consent_page/lead_agent_consent_page_widget.dart'
     show LeadAgentConsentPageWidget;
+export '/agent_customer/drop_lead/verify_agent/verify_agent_widget.dart'
+    show VerifyAgentWidget;
+export '/test_page_copy2/test_page_copy2_widget.dart' show TestPageCopy2Widget;
+export '/agent_customer/drop_lead/agent_confirm_succes_page/agent_confirm_succes_page_widget.dart'
+    show AgentConfirmSuccesPageWidget;
+export '/agent_customer/agent_detail/my_wallet_page/my_wallet_page_widget.dart'
+    show MyWalletPageWidget;
+export '/agent_customer/agent_detail/commission_history_page/commission_history_page_widget.dart'
+    show CommissionHistoryPageWidget;
+export '/agent_customer/agent_detail/agent_profile/name_card_page/name_card_page_widget.dart'
+    show NameCardPageWidget;
+export '/test_page3/test_page3_widget.dart' show TestPage3Widget;

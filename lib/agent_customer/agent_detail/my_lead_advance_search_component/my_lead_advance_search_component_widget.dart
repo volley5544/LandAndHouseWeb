@@ -246,12 +246,22 @@ class _MyLeadAdvanceSearchComponentWidgetState
                             child: FlutterFlowDropDown<String>(
                               controller:
                                   _model.productDropDownValueController ??=
-                                      FormFieldController<String>(null),
-                              options: functions.createUniqueValueList(widget
-                                  .showingLeadData
-                                  ?.map((e) => e.product)
-                                  .toList()
-                                  .toList())!,
+                                      FormFieldController<String>(
+                                _model.productDropDownValue ??= '',
+                              ),
+                              options: List<String>.from(functions
+                                  .createUniqueValueList(widget.showingLeadData
+                                      ?.map((e) => e.product)
+                                      .toList()
+                                      .toList())!),
+                              optionLabels:
+                                  functions.createUniqueValueListLabel(functions
+                                      .createUniqueValueList(widget
+                                          .showingLeadData
+                                          ?.map((e) => e.product)
+                                          .toList()
+                                          .toList())
+                                      ?.toList())!,
                               onChanged: (val) => safeSetState(
                                   () => _model.productDropDownValue = val),
                               width: 200.0,
@@ -430,12 +440,22 @@ class _MyLeadAdvanceSearchComponentWidgetState
                             child: FlutterFlowDropDown<String>(
                               controller: _model
                                       .paymentMethodDropDownValueController ??=
-                                  FormFieldController<String>(null),
-                              options: functions.createUniqueValueList(widget
-                                  .showingLeadData
-                                  ?.map((e) => e.paymentMethod)
-                                  .toList()
-                                  .toList())!,
+                                  FormFieldController<String>(
+                                _model.paymentMethodDropDownValue ??= '',
+                              ),
+                              options: List<String>.from(functions
+                                  .createUniqueValueList(widget.showingLeadData
+                                      ?.map((e) => e.paymentMethod)
+                                      .toList()
+                                      .toList())!),
+                              optionLabels:
+                                  functions.createUniqueValueListLabel(functions
+                                      .createUniqueValueList(widget
+                                          .showingLeadData
+                                          ?.map((e) => e.paymentMethod)
+                                          .toList()
+                                          .toList())
+                                      ?.toList())!,
                               onChanged: (val) => safeSetState(() =>
                                   _model.paymentMethodDropDownValue = val),
                               width: 200.0,
@@ -522,12 +542,22 @@ class _MyLeadAdvanceSearchComponentWidgetState
                             child: FlutterFlowDropDown<String>(
                               controller: _model
                                       .paymentChannelDropDownValueController ??=
-                                  FormFieldController<String>(null),
-                              options: functions.createUniqueValueList(widget
-                                  .showingLeadData
-                                  ?.map((e) => e.paymentChannel)
-                                  .toList()
-                                  .toList())!,
+                                  FormFieldController<String>(
+                                _model.paymentChannelDropDownValue ??= '',
+                              ),
+                              options: List<String>.from(functions
+                                  .createUniqueValueList(widget.showingLeadData
+                                      ?.map((e) => e.paymentChannel)
+                                      .toList()
+                                      .toList())!),
+                              optionLabels:
+                                  functions.createUniqueValueListLabel(functions
+                                      .createUniqueValueList(widget
+                                          .showingLeadData
+                                          ?.map((e) => e.paymentChannel)
+                                          .toList()
+                                          .toList())
+                                      ?.toList())!,
                               onChanged: (val) => safeSetState(() =>
                                   _model.paymentChannelDropDownValue = val),
                               width: 200.0,
