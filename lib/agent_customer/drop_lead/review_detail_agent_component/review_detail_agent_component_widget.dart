@@ -120,398 +120,482 @@ class _ReviewDetailAgentComponentWidgetState
                 ),
               ].divide(SizedBox(width: 8.0)),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'ชื่อ',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Color(0xB2646464),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                      ].divide(SizedBox(width: 5.0)),
-                    ),
-                    Text(
-                      ':',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Noto San Thai',
-                            color: Color(0xB2646464),
-                            fontSize: () {
-                              if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointSmall) {
-                                return 16.0;
-                              } else if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointMedium) {
-                                return 22.0;
-                              } else if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointLarge) {
-                                return 22.0;
-                              } else {
-                                return 22.0;
-                              }
-                            }(),
-                            letterSpacing: 0.0,
-                          ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: Text(
-                          valueOrDefault<String>(
-                            widget.name,
-                            'name',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Color(0xFF003063),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                        ),
-                      ),
-                    ),
-                  ].divide(SizedBox(width: 12.0)),
-                ),
-              ),
-            ),
             Container(
-              decoration: BoxDecoration(),
-              child: Row(
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4.0,
+                    color: Color(0x33000000),
+                    offset: Offset(
+                      0.0,
+                      2.0,
+                    ),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Column(
                 mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'นามสกุล',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xB2646464),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ].divide(SizedBox(width: 5.0)),
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Text(
-                        valueOrDefault<String>(
-                          widget.lastname,
-                          'lastname',
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ),
-                  ),
-                ].divide(SizedBox(width: 12.0)),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'ชื่อ',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
+                          ),
                           Text(
-                            'เลขบัตรประชาชน',
+                            ':',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
                                   fontFamily: 'Noto San Thai',
                                   color: Color(0xB2646464),
-                                  fontSize: 14.0,
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
                                 ),
                           ),
-                        ].divide(SizedBox(width: 5.0)),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Text(
-                        valueOrDefault<String>(
-                          functions.showThaiIdNumberForm('${widget.idcard}'),
-                          'idcard',
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  widget.name,
+                                  'name',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
                       ),
                     ),
                   ),
-                ].divide(SizedBox(width: 12.0)),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'เบอร์โทรศัพท์',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xB2646464),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ].divide(SizedBox(width: 5.0)),
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Text(
-                        valueOrDefault<String>(
-                          functions.addDashPhoneNumber(valueOrDefault<String>(
-                            widget.phonenumber,
-                            'phoneNumber',
-                          )),
-                          'phoneNumber',
-                        ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'นามสกุล',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
+                          ),
+                          Text(
+                            ':',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xB2646464),
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  widget.lastname,
+                                  'lastname',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
                       ),
                     ),
                   ),
-                ].divide(SizedBox(width: 12.0)),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'เลขที่บัญชี',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xB2646464),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ].divide(SizedBox(width: 5.0)),
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Text(
-                        '${widget.backAcc}',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    'เลขบัตรประชาชน',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          color: Color(0xB2646464),
+                                          fontSize: 14.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ].divide(SizedBox(width: 5.0)),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            ':',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xB2646464),
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  functions.showThaiIdNumberForm(
+                                      '${widget.idcard}'),
+                                  'idcard',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
                       ),
                     ),
                   ),
-                ].divide(SizedBox(width: 12.0)),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'ธนาคาร',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xB2646464),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    ].divide(SizedBox(width: 5.0)),
-                  ),
-                  Text(
-                    ':',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: Color(0xB2646464),
-                          fontSize: () {
-                            if (MediaQuery.sizeOf(context).width <
-                                kBreakpointSmall) {
-                              return 16.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointMedium) {
-                              return 22.0;
-                            } else if (MediaQuery.sizeOf(context).width <
-                                kBreakpointLarge) {
-                              return 22.0;
-                            } else {
-                              return 22.0;
-                            }
-                          }(),
-                          letterSpacing: 0.0,
-                        ),
-                  ),
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                     child: Container(
                       decoration: BoxDecoration(),
-                      child: Text(
-                        '${widget.bank}',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Noto San Thai',
-                              color: Color(0xFF003063),
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'เบอร์โทรศัพท์',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
+                          ),
+                          Text(
+                            ':',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xB2646464),
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                valueOrDefault<String>(
+                                  functions.addDashPhoneNumber(
+                                      valueOrDefault<String>(
+                                    widget.phonenumber,
+                                    'phoneNumber',
+                                  )),
+                                  'phoneNumber',
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
                             ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
                       ),
                     ),
                   ),
-                ].divide(SizedBox(width: 12.0)),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'เลขที่บัญชี',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
+                          ),
+                          Text(
+                            ':',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xB2646464),
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                '${widget.backAcc}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                    child: Container(
+                      decoration: BoxDecoration(),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'ธนาคาร',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
+                          ),
+                          Text(
+                            ':',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xB2646464),
+                                  fontSize: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return 16.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return 22.0;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return 22.0;
+                                    } else {
+                                      return 22.0;
+                                    }
+                                  }(),
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(),
+                              child: Text(
+                                '${widget.bank}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xFF003063),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
+                      ),
+                    ),
+                  ),
+                ]
+                    .divide(SizedBox(height: 8.0))
+                    .addToEnd(SizedBox(height: 12.0)),
               ),
             ),
             if (false)
@@ -717,7 +801,10 @@ class _ReviewDetailAgentComponentWidgetState
                   ],
                 ),
               ),
-          ].divide(SizedBox(height: 8.0)).addToStart(SizedBox(height: 8.0)),
+          ]
+              .divide(SizedBox(height: 8.0))
+              .addToStart(SizedBox(height: 8.0))
+              .addToEnd(SizedBox(height: 12.0)),
         ),
       ),
     );

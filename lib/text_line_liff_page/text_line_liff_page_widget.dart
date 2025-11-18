@@ -36,38 +36,41 @@ class _TextLineLiffPageWidgetState extends State<TextLineLiffPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Page Title',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Noto San Thai',
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                ),
+    return Title(
+        title: 'TextLineLiffPage',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              title: Text(
+                'Page Title',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Noto San Thai',
+                      color: Colors.white,
+                      fontSize: 22.0,
+                      letterSpacing: 0.0,
+                    ),
+              ),
+              actions: [],
+              centerTitle: false,
+              elevation: 2.0,
+            ),
+            body: SafeArea(
+              top: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [],
+              ),
+            ),
           ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [],
-          ),
-        ),
-      ),
-    );
+        ));
   }
 }

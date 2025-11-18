@@ -20,6 +20,7 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
     required this.loanAmount,
     required this.defaultComPercent,
     required this.agentWht,
+    required this.actualComPercent,
   }) : this.paymentMethodDefault =
             paymentMethodDefault ?? 'paymentMethodDefault';
 
@@ -30,6 +31,7 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
   final String? loanAmount;
   final String? defaultComPercent;
   final String? agentWht;
+  final String? actualComPercent;
 
   @override
   State<SelectPaymentByLeadWidget> createState() =>
@@ -178,23 +180,59 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                   },
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                              Flexible(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'รับครั้งเดียว',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                      8.0, 0.0, 8.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'รับทันที',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'ค่าตอบแทน 1% ของยอดจัดสินเชื่อ ไม่เกิน 50,000 บาท',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -254,23 +292,49 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                   },
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                              Flexible(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'รับเต็มจำนวน(แบ่งจ่ายตามงวดสัญญา)',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.w600,
+                                      8.0, 0.0, 8.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'รับแบบแบ่งจ่าย',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(),
+                                        child: Text(
+                                          'ค่าตอบแทน 3% ของยอดจัดสินเชื่อ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                         ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -311,6 +375,12 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             url: FFDevEnvironmentValues().isProduction
                                 ? FFAppState().apiUrlDocData.agentWebApiUrl
                                 : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+                            actualComPercent: widget.actualComPercent,
+                            tokenHeader: FFDevEnvironmentValues().isProduction
+                                ? FFAppState().apiUrlDocData.agentWebApiToken
+                                : FFAppState()
+                                    .apiUrlDocData
+                                    .agentWebApiTokenUat,
                           );
 
                           _shouldSetState = true;

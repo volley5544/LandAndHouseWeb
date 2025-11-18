@@ -61,6 +61,30 @@ class ApplicationRecord extends FirestoreRecord {
   bool get isUseOtp => _isUseOtp ?? false;
   bool hasIsUseOtp() => _isUseOtp != null;
 
+  // "max_commission_amount_onetime" field.
+  double? _maxCommissionAmountOnetime;
+  double get maxCommissionAmountOnetime => _maxCommissionAmountOnetime ?? 0.0;
+  bool hasMaxCommissionAmountOnetime() => _maxCommissionAmountOnetime != null;
+
+  // "max_commission_amount_installment" field.
+  double? _maxCommissionAmountInstallment;
+  double get maxCommissionAmountInstallment =>
+      _maxCommissionAmountInstallment ?? 0.0;
+  bool hasMaxCommissionAmountInstallment() =>
+      _maxCommissionAmountInstallment != null;
+
+  // "max_commission_text_onetime" field.
+  String? _maxCommissionTextOnetime;
+  String get maxCommissionTextOnetime => _maxCommissionTextOnetime ?? '';
+  bool hasMaxCommissionTextOnetime() => _maxCommissionTextOnetime != null;
+
+  // "max_commission_text_installment" field.
+  String? _maxCommissionTextInstallment;
+  String get maxCommissionTextInstallment =>
+      _maxCommissionTextInstallment ?? '';
+  bool hasMaxCommissionTextInstallment() =>
+      _maxCommissionTextInstallment != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -76,6 +100,14 @@ class ApplicationRecord extends FirestoreRecord {
         : ComcodeConfigModelStruct.maybeFromMap(snapshotData['comcode_config']);
     _useNewCameraAction = snapshotData['use_new_camera_action'] as bool?;
     _isUseOtp = snapshotData['isUseOtp'] as bool?;
+    _maxCommissionAmountOnetime =
+        castToType<double>(snapshotData['max_commission_amount_onetime']);
+    _maxCommissionAmountInstallment =
+        castToType<double>(snapshotData['max_commission_amount_installment']);
+    _maxCommissionTextOnetime =
+        snapshotData['max_commission_text_onetime'] as String?;
+    _maxCommissionTextInstallment =
+        snapshotData['max_commission_text_installment'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -120,6 +152,10 @@ Map<String, dynamic> createApplicationRecordData({
   ComcodeConfigModelStruct? comcodeConfig,
   bool? useNewCameraAction,
   bool? isUseOtp,
+  double? maxCommissionAmountOnetime,
+  double? maxCommissionAmountInstallment,
+  String? maxCommissionTextOnetime,
+  String? maxCommissionTextInstallment,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -130,6 +166,10 @@ Map<String, dynamic> createApplicationRecordData({
       'comcode_config': ComcodeConfigModelStruct().toMap(),
       'use_new_camera_action': useNewCameraAction,
       'isUseOtp': isUseOtp,
+      'max_commission_amount_onetime': maxCommissionAmountOnetime,
+      'max_commission_amount_installment': maxCommissionAmountInstallment,
+      'max_commission_text_onetime': maxCommissionTextOnetime,
+      'max_commission_text_installment': maxCommissionTextInstallment,
     }.withoutNulls,
   );
 
@@ -158,7 +198,12 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.topupNoData2Text == e2?.topupNoData2Text &&
         e1?.comcodeConfig == e2?.comcodeConfig &&
         e1?.useNewCameraAction == e2?.useNewCameraAction &&
-        e1?.isUseOtp == e2?.isUseOtp;
+        e1?.isUseOtp == e2?.isUseOtp &&
+        e1?.maxCommissionAmountOnetime == e2?.maxCommissionAmountOnetime &&
+        e1?.maxCommissionAmountInstallment ==
+            e2?.maxCommissionAmountInstallment &&
+        e1?.maxCommissionTextOnetime == e2?.maxCommissionTextOnetime &&
+        e1?.maxCommissionTextInstallment == e2?.maxCommissionTextInstallment;
   }
 
   @override
@@ -171,7 +216,11 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.topupNoData2Text,
         e?.comcodeConfig,
         e?.useNewCameraAction,
-        e?.isUseOtp
+        e?.isUseOtp,
+        e?.maxCommissionAmountOnetime,
+        e?.maxCommissionAmountInstallment,
+        e?.maxCommissionTextOnetime,
+        e?.maxCommissionTextInstallment
       ]);
 
   @override

@@ -55,6 +55,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
     String? defaultComPercent,
     String? actualComPercent,
     String? comEstimateVatAmt,
+    String? smsCode,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _estimatePrice = estimatePrice,
         _landDistrict = landDistrict,
@@ -103,6 +104,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         _defaultComPercent = defaultComPercent,
         _actualComPercent = actualComPercent,
         _comEstimateVatAmt = comEstimateVatAmt,
+        _smsCode = smsCode,
         super(firestoreUtilData);
 
   // "estimate_price" field.
@@ -434,6 +436,13 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasComEstimateVatAmt() => _comEstimateVatAmt != null;
 
+  // "sms_code" field.
+  String? _smsCode;
+  String get smsCode => _smsCode ?? '';
+  set smsCode(String? val) => _smsCode = val;
+
+  bool hasSmsCode() => _smsCode != null;
+
   static SaveLeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveLeadAgentDataModelStruct(
         estimatePrice: data['estimate_price'] as String?,
@@ -483,6 +492,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         defaultComPercent: data['default_com_percent'] as String?,
         actualComPercent: data['actual_com_percent'] as String?,
         comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
+        smsCode: data['sms_code'] as String?,
       );
 
   static SaveLeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -537,6 +547,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         'default_com_percent': _defaultComPercent,
         'actual_com_percent': _actualComPercent,
         'com_estimate_vat_amt': _comEstimateVatAmt,
+        'sms_code': _smsCode,
       }.withoutNulls;
 
   @override
@@ -727,6 +738,10 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'com_estimate_vat_amt': serializeParam(
           _comEstimateVatAmt,
+          ParamType.String,
+        ),
+        'sms_code': serializeParam(
+          _smsCode,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -969,6 +984,11 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        smsCode: deserializeParam(
+          data['sms_code'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1023,7 +1043,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateNetAmt == other.comEstimateNetAmt &&
         defaultComPercent == other.defaultComPercent &&
         actualComPercent == other.actualComPercent &&
-        comEstimateVatAmt == other.comEstimateVatAmt;
+        comEstimateVatAmt == other.comEstimateVatAmt &&
+        smsCode == other.smsCode;
   }
 
   @override
@@ -1074,7 +1095,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateNetAmt,
         defaultComPercent,
         actualComPercent,
-        comEstimateVatAmt
+        comEstimateVatAmt,
+        smsCode
       ]);
 }
 
@@ -1126,6 +1148,7 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
   String? defaultComPercent,
   String? actualComPercent,
   String? comEstimateVatAmt,
+  String? smsCode,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1179,6 +1202,7 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
       defaultComPercent: defaultComPercent,
       actualComPercent: actualComPercent,
       comEstimateVatAmt: comEstimateVatAmt,
+      smsCode: smsCode,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

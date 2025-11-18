@@ -81,667 +81,168 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
     context.watch<FFAppState>();
 
     return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
-            automaticallyImplyLeading: false,
-            leading: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                context.safePop();
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: FlutterFlowTheme.of(context).primary,
-                size: 24.0,
+      builder: (context) => Title(
+          title: 'CustomerDataPage',
+          color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Scaffold(
+              key: scaffoldKey,
+              backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+              appBar: AppBar(
+                backgroundColor: FlutterFlowTheme.of(context).secondary,
+                automaticallyImplyLeading: false,
+                leading: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.safePop();
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: FlutterFlowTheme.of(context).primary,
+                    size: 24.0,
+                  ),
+                ),
+                actions: [],
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                    'ตรวจสอบข้อมูลส่วนตัว',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Noto San Thai',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  centerTitle: true,
+                  expandedTitleScale: 1.0,
+                ),
+                elevation: 2.0,
               ),
-            ),
-            actions: [],
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'ตรวจสอบข้อมูลส่วนตัว',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              centerTitle: true,
-              expandedTitleScale: 1.0,
-            ),
-            elevation: 2.0,
-          ),
-          body: SafeArea(
-            top: true,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'กรุณาตรวจสอบความถูกต้องของข้อมูลอีกครั้งเพื่อยืนยันการขอเพิ่มวงเงิน',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            fontSize: 15.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 16.0, 0.0, 0.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    height: 20.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 100.0,
-                                          child: VerticalDivider(
-                                            width: 3.0,
-                                            thickness: 3.0,
-                                            color: Color(0x7FDB771A),
-                                          ),
-                                        ),
-                                        Text(
-                                          'ข้อมูลเลขที่บัญชี',
+              body: SafeArea(
+                top: true,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          'กรุณาตรวจสอบความถูกต้องของข้อมูลอีกครั้งเพื่อยืนยันการขอเพิ่มวงเงิน',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Noto San Thai',
+                                                fontSize: 15.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
-                                      ].divide(SizedBox(width: 12.0)),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 0.0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
                                       ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  'เลขที่บัญชี',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 13.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 80.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                                border: Border.all(
-                                                  color: Color(0x4D646464),
-                                                  width: 1.0,
-                                                ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 16.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 100.0,
+                                              child: VerticalDivider(
+                                                width: 3.0,
+                                                thickness: 3.0,
+                                                color: Color(0x7FDB771A),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 16.0, 0.0),
+                                            ),
+                                            Text(
+                                              'ข้อมูลเลขที่บัญชี',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
-                                                    if (_model.bankIconFFFileOutput !=
-                                                            null &&
-                                                        (_model
-                                                                .bankIconFFFileOutput
-                                                                ?.bytes
-                                                                ?.isNotEmpty ??
-                                                            false))
-                                                      Container(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Image.memory(
-                                                          _model.bankIconFFFileOutput
-                                                                  ?.bytes ??
-                                                              Uint8List
-                                                                  .fromList([]),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            width:
-                                                                double.infinity,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      functions
-                                                                          .returnBankName(
-                                                                              '${FFAppState().getLoanListSelected.contractBankBrandname}'),
-                                                                      'contract_bank_brandname',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Noto San Thai',
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            width:
-                                                                double.infinity,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Expanded(
-                                                                  child: Text(
-                                                                    '${FFAppState().getLoanListSelected.contractBankAccount}',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Noto San Thai',
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ].divide(SizedBox(
-                                                            height: 8.0)),
-                                                      ),
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(width: 16.0)),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    height: 20.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 100.0,
-                                          child: VerticalDivider(
-                                            width: 3.0,
-                                            thickness: 3.0,
-                                            color: Color(0x7FDB771A),
-                                          ),
-                                        ),
-                                        Text(
-                                          'ข้อมูลโทรศัพท์',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ].divide(SizedBox(width: 12.0)),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 0.0),
-                                    child: Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  'เบอร์โทรศัพท์',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 13.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  '${valueOrDefault<String>(
-                                                    functions.formatPhoneNumber(
-                                                        '${FFAppState().customerDetailData.phoneNumber}'),
-                                                    'phone_number',
-                                                  )}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(height: 8.0)),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    height: 20.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 100.0,
-                                          child: VerticalDivider(
-                                            width: 3.0,
-                                            thickness: 3.0,
-                                            color: Color(0x7FDB771A),
-                                          ),
-                                        ),
-                                        Text(
-                                          'ข้อมูลที่อยู่',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ].divide(SizedBox(width: 12.0)),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 0.0, 0.0),
-                                      child: FutureBuilder<ApiCallResponse>(
-                                        future: SrisawadApiGroup
-                                            .getUserAddressInformationCall
-                                            .call(
-                                          hashThaiId:
-                                              FFAppState().hashThaiIdAppState,
-                                          bearerAuth: FFAppState().accessToken,
-                                          apiUrl: FFDevEnvironmentValues()
-                                                  .isProduction
-                                              ? FFAppState().topupUrlProd
-                                              : FFAppState().topupUrlDev,
-                                        ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 24.0, 0.0, 0.0),
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          final listViewGetUserAddressInformationResponse =
-                                              snapshot.data!;
-
-                                          return ListView(
-                                            padding: EdgeInsets.zero,
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryBackground,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Container(
-                                                      width: double.infinity,
-                                                      height: 80.0,
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(12.0),
-                                                        border: Border.all(
-                                                          color:
-                                                              Color(0x4D646464),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
+                                                    Text(
+                                                      'เลขที่บัญชี',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
                                                                     0.0,
-                                                                    16.0,
-                                                                    0.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Container(
-                                                              width: 50.0,
-                                                              height: 50.0,
-                                                              decoration:
-                                                                  BoxDecoration(),
-                                                              child: Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                  child:
-                                                                      SvgPicture
-                                                                          .asset(
-                                                                    'assets/images/current-address-icon.svg',
-                                                                    width: 40.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
                                                               ),
-                                                            ),
-                                                            Expanded(
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Container(
-                                                                    width: double
-                                                                        .infinity,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryBackground,
-                                                                    ),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Expanded(
-                                                                          child:
-                                                                              Text(
-                                                                            'ที่อยู่ปัจจุบัน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Container(
-                                                                    width: double
-                                                                        .infinity,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryBackground,
-                                                                    ),
-                                                                    child: Row(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Expanded(
-                                                                          child:
-                                                                              Text(
-                                                                            '${'${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
-                                                                                  listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
-                                                                                  listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
-                                                                                  listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
-                                                                                  listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
-                                                                                  listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                )?.addressPostalCode}',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.normal,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ].divide(SizedBox(
-                                                              width: 16.0)),
-                                                        ),
-                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -749,625 +250,1150 @@ class _CustomerDataPageWidgetState extends State<CustomerDataPageWidget> {
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        0.0, 12.0, 0.0, 0.0),
+                                                        0.0, 8.0, 0.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
+                                                  height: 80.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12.0),
+                                                    border: Border.all(
+                                                      color: Color(0x4D646464),
+                                                      width: 1.0,
+                                                    ),
                                                   ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: double.infinity,
-                                                        height: 80.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                          border: Border.all(
-                                                            color: Color(
-                                                                0x4D646464),
-                                                            width: 1.0,
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                16.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        if (_model.bankIconFFFileOutput !=
+                                                                null &&
+                                                            (_model
+                                                                    .bankIconFFFileOutput
+                                                                    ?.bytes
+                                                                    ?.isNotEmpty ??
+                                                                false))
+                                                          Container(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child: Image.memory(
+                                                              _model.bankIconFFFileOutput
+                                                                      ?.bytes ??
+                                                                  Uint8List
+                                                                      .fromList(
+                                                                          []),
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      16.0,
-                                                                      0.0,
-                                                                      16.0,
-                                                                      0.0),
-                                                          child: Row(
+                                                        Expanded(
+                                                          child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             children: [
                                                               Container(
-                                                                width: 50.0,
-                                                                height: 50.0,
+                                                                width: double
+                                                                    .infinity,
                                                                 decoration:
-                                                                    BoxDecoration(),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            0.0),
-                                                                    child: SvgPicture
-                                                                        .asset(
-                                                                      'assets/images/registered-address.svg',
-                                                                      width:
-                                                                          40.0,
-                                                                      height:
-                                                                          40.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
                                                                 ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Column(
+                                                                child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
                                                                   children: [
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
+                                                                    Expanded(
                                                                       child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              'ที่อยู่ตามทะเบียนบ้าน',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
+                                                                          Text(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          functions
+                                                                              .returnBankName('${FFAppState().getLoanListSelected.contractBankBrandname}'),
+                                                                          'contract_bank_brandname',
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
                                                                             ),
-                                                                          ),
-                                                                        ],
                                                                       ),
                                                                     ),
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Expanded(
                                                                       child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              '${'${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressPostalCode}',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
+                                                                          Text(
+                                                                        '${FFAppState().getLoanListSelected.contractBankAccount}',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
                                                                             ),
-                                                                          ),
-                                                                        ],
                                                                       ),
                                                                     ),
                                                                   ],
                                                                 ),
                                                               ),
                                                             ].divide(SizedBox(
-                                                                width: 16.0)),
+                                                                height: 8.0)),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 12.0, 0.0, 0.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: double.infinity,
-                                                        height: 80.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                          border: Border.all(
-                                                            color: Color(
-                                                                0x4D646464),
-                                                            width: 1.0,
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      16.0,
-                                                                      0.0,
-                                                                      16.0,
-                                                                      0.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Container(
-                                                                width: 50.0,
-                                                                height: 50.0,
-                                                                decoration:
-                                                                    BoxDecoration(),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            0.0),
-                                                                    child: SvgPicture
-                                                                        .asset(
-                                                                      'assets/images/card-id-address.svg',
-                                                                      width:
-                                                                          40.0,
-                                                                      height:
-                                                                          40.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              'ที่อยู่ตามบัตรประชาชน',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              '${'${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressPostalCode}',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                width: 16.0)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 12.0, 0.0, 0.0),
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Container(
-                                                        width: double.infinity,
-                                                        height: 80.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryBackground,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                          border: Border.all(
-                                                            color: Color(
-                                                                0x4D646464),
-                                                            width: 1.0,
-                                                          ),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      16.0,
-                                                                      0.0,
-                                                                      16.0,
-                                                                      0.0),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Container(
-                                                                width: 50.0,
-                                                                height: 50.0,
-                                                                decoration:
-                                                                    BoxDecoration(),
-                                                                child: Align(
-                                                                  alignment:
-                                                                      AlignmentDirectional(
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            0.0),
-                                                                    child: SvgPicture
-                                                                        .asset(
-                                                                      'assets/images/office-address.svg',
-                                                                      width:
-                                                                          40.0,
-                                                                      height:
-                                                                          40.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  children: [
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              'ที่ทำงาน/ที่อยู่อื่นๆ',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.w600,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
-                                                                      child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Text(
-                                                                              '${'${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
-                                                                                    listViewGetUserAddressInformationResponse.jsonBody,
-                                                                                  )?.addressPostalCode}',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                width: 16.0)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                      ].divide(SizedBox(
+                                                          width: 16.0)),
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ],
-                                          );
-                                        },
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 24.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 100.0,
+                                              child: VerticalDivider(
+                                                width: 3.0,
+                                                thickness: 3.0,
+                                                color: Color(0x7FDB771A),
+                                              ),
+                                            ),
+                                            Text(
+                                              'ข้อมูลโทรศัพท์',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      'เบอร์โทรศัพท์',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                                fontSize: 13.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text(
+                                                      '${valueOrDefault<String>(
+                                                        functions.formatPhoneNumber(
+                                                            '${FFAppState().customerDetailData.phoneNumber}'),
+                                                        'phone_number',
+                                                      )}',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ].divide(SizedBox(height: 8.0)),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 24.0, 0.0, 0.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 20.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              height: 100.0,
+                                              child: VerticalDivider(
+                                                width: 3.0,
+                                                thickness: 3.0,
+                                                color: Color(0x7FDB771A),
+                                              ),
+                                            ),
+                                            Text(
+                                              'ข้อมูลที่อยู่',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 0.0, 0.0),
+                                          child: FutureBuilder<ApiCallResponse>(
+                                            future: SrisawadApiGroup
+                                                .getUserAddressInformationCall
+                                                .call(
+                                              hashThaiId: FFAppState()
+                                                  .hashThaiIdAppState,
+                                              bearerAuth:
+                                                  FFAppState().accessToken,
+                                              apiUrl: FFDevEnvironmentValues()
+                                                      .isProduction
+                                                  ? FFAppState().topupUrlProd
+                                                  : FFAppState().topupUrlDev,
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 24.0,
+                                                                0.0, 0.0),
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              final listViewGetUserAddressInformationResponse =
+                                                  snapshot.data!;
+
+                                              return ListView(
+                                                padding: EdgeInsets.zero,
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                children: [
+                                                  Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 80.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12.0),
+                                                            border: Border.all(
+                                                              color: Color(
+                                                                  0x4D646464),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Container(
+                                                                  width: 50.0,
+                                                                  height: 50.0,
+                                                                  decoration:
+                                                                      BoxDecoration(),
+                                                                  child: Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              0.0),
+                                                                      child: SvgPicture
+                                                                          .asset(
+                                                                        'assets/images/current-address-icon.svg',
+                                                                        width:
+                                                                            40.0,
+                                                                        height:
+                                                                            40.0,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Text(
+                                                                                'ที่อยู่ปัจจุบัน',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Text(
+                                                                                '${'${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
+                                                                                      listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                    )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
+                                                                                      listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                    )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
+                                                                                      listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                    )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
+                                                                                      listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                    )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.currentAddress(
+                                                                                      listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                    )?.addressPostalCode}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ].divide(SizedBox(
+                                                                  width: 16.0)),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 12.0,
+                                                                0.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 80.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12.0),
+                                                              border:
+                                                                  Border.all(
+                                                                color: Color(
+                                                                    0x4D646464),
+                                                                width: 1.0,
+                                                              ),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Container(
+                                                                    width: 50.0,
+                                                                    height:
+                                                                        50.0,
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child:
+                                                                        Align(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(0.0),
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          'assets/images/registered-address.svg',
+                                                                          width:
+                                                                              40.0,
+                                                                          height:
+                                                                              40.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  'ที่อยู่ตามทะเบียนบ้าน',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  '${'${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.registrationAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressPostalCode}',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.normal,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        16.0)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 12.0,
+                                                                0.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 80.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12.0),
+                                                              border:
+                                                                  Border.all(
+                                                                color: Color(
+                                                                    0x4D646464),
+                                                                width: 1.0,
+                                                              ),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Container(
+                                                                    width: 50.0,
+                                                                    height:
+                                                                        50.0,
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child:
+                                                                        Align(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(0.0),
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          'assets/images/card-id-address.svg',
+                                                                          width:
+                                                                              40.0,
+                                                                          height:
+                                                                              40.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  'ที่อยู่ตามบัตรประชาชน',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  '${'${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.idCardAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressPostalCode}',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.normal,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        16.0)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 12.0,
+                                                                0.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 80.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12.0),
+                                                              border:
+                                                                  Border.all(
+                                                                color: Color(
+                                                                    0x4D646464),
+                                                                width: 1.0,
+                                                              ),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Container(
+                                                                    width: 50.0,
+                                                                    height:
+                                                                        50.0,
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child:
+                                                                        Align(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(0.0),
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          'assets/images/office-address.svg',
+                                                                          width:
+                                                                              40.0,
+                                                                          height:
+                                                                              40.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  'ที่ทำงาน/ที่อยู่อื่นๆ',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Text(
+                                                                                  '${'${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDetails}'.trim()} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressSubDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressDistrict} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressProvince} ${SrisawadApiGroup.getUserAddressInformationCall.otherAddress(
+                                                                                        listViewGetUserAddressInformationResponse.jsonBody,
+                                                                                      )?.addressPostalCode}',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.normal,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        16.0)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ]
+                                  .addToStart(SizedBox(height: 12.0))
+                                  .addToEnd(SizedBox(height: 50.0)),
                             ),
-                          ]
-                              .addToStart(SizedBox(height: 12.0))
-                              .addToEnd(SizedBox(height: 50.0)),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 90.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Divider(
-                        thickness: 2.0,
-                        color: FlutterFlowTheme.of(context).alternate,
+                    Container(
+                      width: double.infinity,
+                      height: 90.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            24.0, 0.0, 24.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    barrierColor: Color(0xB2000000),
-                                    isDismissible: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Divider(
+                            thickness: 2.0,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                24.0, 0.0, 24.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Color(0xB2000000),
+                                        isDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child:
+                                                  ContactBranchComponentWidget(),
+                                            ),
+                                          );
                                         },
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: ContactBranchComponentWidget(),
-                                        ),
-                                      );
+                                      ).then((value) => safeSetState(() {}));
                                     },
-                                  ).then((value) => safeSetState(() {}));
-                                },
-                                text: 'ไม่ถูกต้อง',
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFFFCEFE4),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    barrierColor: Color(0x99000000),
-                                    isDismissible: false,
-                                    context: context,
-                                    builder: (context) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          FocusScope.of(context).unfocus();
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child:
-                                              ConfirmInfomationComponentWidget(
-                                            bankIcon:
-                                                _model.bankIconFFFileOutput!,
+                                    text: 'ไม่ถูกต้อง',
+                                    options: FFButtonOptions(
+                                      height: 60.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0xFFFCEFE4),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            letterSpacing: 0.0,
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => safeSetState(() {}));
-                                },
-                                text: 'ยืนยัน',
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(12.0),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Expanded(
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        barrierColor: Color(0x99000000),
+                                        isDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child:
+                                                  ConfirmInfomationComponentWidget(
+                                                bankIcon: _model
+                                                    .bankIconFFFileOutput!,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+                                    },
+                                    text: 'ยืนยัน',
+                                    options: FFButtonOptions(
+                                      height: 60.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
+                                ),
+                              ].divide(SizedBox(width: 12.0)),
                             ),
-                          ].divide(SizedBox(width: 12.0)),
-                        ),
+                          ),
+                        ].divide(SizedBox(height: 8.0)),
                       ),
-                    ].divide(SizedBox(height: 8.0)),
-                  ),
+                    ),
+                  ].addToEnd(SizedBox(height: 30.0)),
                 ),
-              ].addToEnd(SizedBox(height: 30.0)),
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

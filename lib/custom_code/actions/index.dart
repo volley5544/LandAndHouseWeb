@@ -30,3 +30,4 @@ export 'copy_link_to_clipboard.dart' show copyLinkToClipboard;
 export 'listen_webview_event_camera.dart' show listenWebviewEventCamera;
 export 'return_text_to_appreturn_text_to_app.dart'
     show returnTextToAppreturnTextToApp;
+export 'gen_pdf_agent_file_byte.dart' show genPdfAgentFileByte;

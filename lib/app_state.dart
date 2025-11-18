@@ -560,7 +560,7 @@ class FFAppState extends ChangeNotifier {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 50;
+  int _webUatVersion = 89;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -744,6 +744,30 @@ class FFAppState extends ChangeNotifier {
 
   void updateApiUrlDocDataStruct(Function(ApiUrlStruct) updateFn) {
     updateFn(_apiUrlDocData);
+  }
+
+  double _maxCommissionAmountOnetime = 0.0;
+  double get maxCommissionAmountOnetime => _maxCommissionAmountOnetime;
+  set maxCommissionAmountOnetime(double value) {
+    _maxCommissionAmountOnetime = value;
+  }
+
+  double _maxCommissionAmountInstallment = 0.0;
+  double get maxCommissionAmountInstallment => _maxCommissionAmountInstallment;
+  set maxCommissionAmountInstallment(double value) {
+    _maxCommissionAmountInstallment = value;
+  }
+
+  String _maxCommissionTextOnetime = '';
+  String get maxCommissionTextOnetime => _maxCommissionTextOnetime;
+  set maxCommissionTextOnetime(String value) {
+    _maxCommissionTextOnetime = value;
+  }
+
+  String _maxCommissionTextInstallment = '';
+  String get maxCommissionTextInstallment => _maxCommissionTextInstallment;
+  set maxCommissionTextInstallment(String value) {
+    _maxCommissionTextInstallment = value;
   }
 }
 

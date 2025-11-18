@@ -28,6 +28,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? agentWebLeadUrlUat,
     String? agentWebApiUrl,
     String? agentWebApiUrlUat,
+    String? agentWebCustomerConsent,
+    String? agentWebCustomerConsentUat,
+    String? agentWebApiToken,
+    String? agentWebApiTokenUat,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -49,6 +53,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _agentWebLeadUrlUat = agentWebLeadUrlUat,
         _agentWebApiUrl = agentWebApiUrl,
         _agentWebApiUrlUat = agentWebApiUrlUat,
+        _agentWebCustomerConsent = agentWebCustomerConsent,
+        _agentWebCustomerConsentUat = agentWebCustomerConsentUat,
+        _agentWebApiToken = agentWebApiToken,
+        _agentWebApiTokenUat = agentWebApiTokenUat,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -191,6 +199,35 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasAgentWebApiUrlUat() => _agentWebApiUrlUat != null;
 
+  // "agent_web_customer_consent" field.
+  String? _agentWebCustomerConsent;
+  String get agentWebCustomerConsent => _agentWebCustomerConsent ?? '';
+  set agentWebCustomerConsent(String? val) => _agentWebCustomerConsent = val;
+
+  bool hasAgentWebCustomerConsent() => _agentWebCustomerConsent != null;
+
+  // "agent_web_customer_consent_uat" field.
+  String? _agentWebCustomerConsentUat;
+  String get agentWebCustomerConsentUat => _agentWebCustomerConsentUat ?? '';
+  set agentWebCustomerConsentUat(String? val) =>
+      _agentWebCustomerConsentUat = val;
+
+  bool hasAgentWebCustomerConsentUat() => _agentWebCustomerConsentUat != null;
+
+  // "agent_web_api_token" field.
+  String? _agentWebApiToken;
+  String get agentWebApiToken => _agentWebApiToken ?? '';
+  set agentWebApiToken(String? val) => _agentWebApiToken = val;
+
+  bool hasAgentWebApiToken() => _agentWebApiToken != null;
+
+  // "agent_web_api_token_uat" field.
+  String? _agentWebApiTokenUat;
+  String get agentWebApiTokenUat => _agentWebApiTokenUat ?? '';
+  set agentWebApiTokenUat(String? val) => _agentWebApiTokenUat = val;
+
+  bool hasAgentWebApiTokenUat() => _agentWebApiTokenUat != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -212,6 +249,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebLeadUrlUat: data['agent_web_lead_url_uat'] as String?,
         agentWebApiUrl: data['agent_web_api_url'] as String?,
         agentWebApiUrlUat: data['agent_web_api_url_uat'] as String?,
+        agentWebCustomerConsent: data['agent_web_customer_consent'] as String?,
+        agentWebCustomerConsentUat:
+            data['agent_web_customer_consent_uat'] as String?,
+        agentWebApiToken: data['agent_web_api_token'] as String?,
+        agentWebApiTokenUat: data['agent_web_api_token_uat'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -238,6 +280,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'agent_web_lead_url_uat': _agentWebLeadUrlUat,
         'agent_web_api_url': _agentWebApiUrl,
         'agent_web_api_url_uat': _agentWebApiUrlUat,
+        'agent_web_customer_consent': _agentWebCustomerConsent,
+        'agent_web_customer_consent_uat': _agentWebCustomerConsentUat,
+        'agent_web_api_token': _agentWebApiToken,
+        'agent_web_api_token_uat': _agentWebApiTokenUat,
       }.withoutNulls;
 
   @override
@@ -320,6 +366,22 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'agent_web_api_url_uat': serializeParam(
           _agentWebApiUrlUat,
+          ParamType.String,
+        ),
+        'agent_web_customer_consent': serializeParam(
+          _agentWebCustomerConsent,
+          ParamType.String,
+        ),
+        'agent_web_customer_consent_uat': serializeParam(
+          _agentWebCustomerConsentUat,
+          ParamType.String,
+        ),
+        'agent_web_api_token': serializeParam(
+          _agentWebApiToken,
+          ParamType.String,
+        ),
+        'agent_web_api_token_uat': serializeParam(
+          _agentWebApiTokenUat,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -426,6 +488,26 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentWebCustomerConsent: deserializeParam(
+          data['agent_web_customer_consent'],
+          ParamType.String,
+          false,
+        ),
+        agentWebCustomerConsentUat: deserializeParam(
+          data['agent_web_customer_consent_uat'],
+          ParamType.String,
+          false,
+        ),
+        agentWebApiToken: deserializeParam(
+          data['agent_web_api_token'],
+          ParamType.String,
+          false,
+        ),
+        agentWebApiTokenUat: deserializeParam(
+          data['agent_web_api_token_uat'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -453,7 +535,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebLeadUrl == other.agentWebLeadUrl &&
         agentWebLeadUrlUat == other.agentWebLeadUrlUat &&
         agentWebApiUrl == other.agentWebApiUrl &&
-        agentWebApiUrlUat == other.agentWebApiUrlUat;
+        agentWebApiUrlUat == other.agentWebApiUrlUat &&
+        agentWebCustomerConsent == other.agentWebCustomerConsent &&
+        agentWebCustomerConsentUat == other.agentWebCustomerConsentUat &&
+        agentWebApiToken == other.agentWebApiToken &&
+        agentWebApiTokenUat == other.agentWebApiTokenUat;
   }
 
   @override
@@ -477,7 +563,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebLeadUrl,
         agentWebLeadUrlUat,
         agentWebApiUrl,
-        agentWebApiUrlUat
+        agentWebApiUrlUat,
+        agentWebCustomerConsent,
+        agentWebCustomerConsentUat,
+        agentWebApiToken,
+        agentWebApiTokenUat
       ]);
 }
 
@@ -502,6 +592,10 @@ ApiUrlStruct createApiUrlStruct({
   String? agentWebLeadUrlUat,
   String? agentWebApiUrl,
   String? agentWebApiUrlUat,
+  String? agentWebCustomerConsent,
+  String? agentWebCustomerConsentUat,
+  String? agentWebApiToken,
+  String? agentWebApiTokenUat,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -528,6 +622,10 @@ ApiUrlStruct createApiUrlStruct({
       agentWebLeadUrlUat: agentWebLeadUrlUat,
       agentWebApiUrl: agentWebApiUrl,
       agentWebApiUrlUat: agentWebApiUrlUat,
+      agentWebCustomerConsent: agentWebCustomerConsent,
+      agentWebCustomerConsentUat: agentWebCustomerConsentUat,
+      agentWebApiToken: agentWebApiToken,
+      agentWebApiTokenUat: agentWebApiTokenUat,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

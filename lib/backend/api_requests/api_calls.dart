@@ -1280,6 +1280,7 @@ class SendAnOtpToUserCall {
   Future<ApiCallResponse> call({
     String? bearerAuth = '',
     String? xSrisawad = '',
+    String? phoneNumber = '',
     String? apiUrl = '',
   }) async {
     final baseUrl = SrisawadApiGroup.getBaseUrl(
@@ -1288,7 +1289,7 @@ class SendAnOtpToUserCall {
 
     final ffApiRequestBody = '''
 {
-  "phone_number": ""
+  "phone_number": "${escapeStringForJson(phoneNumber)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Send an otp to user',
@@ -1296,8 +1297,7 @@ class SendAnOtpToUserCall {
       callType: ApiCallType.POST,
       headers: {
         'x-srisawad': 'x1',
-        'Authorization': 'Bearer ${bearerAuth}',
-        'x-srisawad': '${xSrisawad}',
+        'Content-Type': 'application/json',
       },
       params: {},
       body: ffApiRequestBody,
@@ -1310,6 +1310,15 @@ class SendAnOtpToUserCall {
       alwaysAllowBody: false,
     );
   }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? ref(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.ref''',
+      ));
 }
 
 class GetPaymentDetailByIdCall {
@@ -2638,12 +2647,17 @@ class PaymentHistoryCall {
 class AgentAPIGroup {
   static String getBaseUrl({
     String? url = '',
+    String? tokenHeader = '',
   }) =>
       '${url}';
   static Map<String, String> headers = {
-    'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+    'X-API-KEY': '[tokenHeader]',
   };
   static AgentProfileAPICall agentProfileAPICall = AgentProfileAPICall();
+  static SendConsentSmsApiCall sendConsentSmsApiCall = SendConsentSmsApiCall();
+  static CheckConsentStatusApiCall checkConsentStatusApiCall =
+      CheckConsentStatusApiCall();
+  static SearchEmployeeApiCall searchEmployeeApiCall = SearchEmployeeApiCall();
   static GetLeadAgentByTypeCall getLeadAgentByTypeCall =
       GetLeadAgentByTypeCall();
   static GetCommissionLeadCall getCommissionLeadCall = GetCommissionLeadCall();
@@ -2655,6 +2669,7 @@ class AgentAPIGroup {
   static AgentLeadSaveCall agentLeadSaveCall = AgentLeadSaveCall();
   static MgmLeadsSaveCall mgmLeadsSaveCall = MgmLeadsSaveCall();
   static RateGetVehicleCall rateGetVehicleCall = RateGetVehicleCall();
+  static ConsentsConfirmCall consentsConfirmCall = ConsentsConfirmCall();
   static CommissionHistoryCall commissionHistoryCall = CommissionHistoryCall();
   static AgentRateSearchCall agentRateSearchCall = AgentRateSearchCall();
   static AgentCheckRateCall agentCheckRateCall = AgentCheckRateCall();
@@ -2664,9 +2679,11 @@ class AgentProfileAPICall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -2678,7 +2695,7 @@ class AgentProfileAPICall {
       apiUrl: '${baseUrl}/api/mgm/agents/profile',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2699,6 +2716,237 @@ class AgentProfileAPICall {
       ));
 }
 
+class SendConsentSmsApiCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? firstName = '',
+    String? lastName = '',
+    String? phoneNumber = '',
+    String? registerId = '',
+    String? pathConsent = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "first_name": "${escapeStringForJson(firstName)}",
+  "last_name": "${escapeStringForJson(lastName)}",
+  "phone_number": "${escapeStringForJson(phoneNumber)}",
+  "register_id": "${escapeStringForJson(registerId)}",
+  "path_consent": "${escapeStringForJson(pathConsent)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'SendConsentSmsApi',
+      apiUrl: '${baseUrl}/api/mgm/consents/sms/send',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data''',
+      );
+  String? statusLayer1(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? messageLayer1(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? token(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.token''',
+      ));
+  String? expiresAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.expires_at''',
+      ));
+  String? mobile(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.mobile''',
+      ));
+  String? msgid(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.msgid''',
+      ));
+  String? smsStatus(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.sms_status''',
+      ));
+}
+
+class CheckConsentStatusApiCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? phoneNumber = '',
+    String? token = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "phone_number": "${escapeStringForJson(phoneNumber)}",
+  "token": "${escapeStringForJson(token)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'CheckConsentStatusApi',
+      apiUrl: '${baseUrl}/api/mgm/consents/sms/checked',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data''',
+      );
+  String? statusLayer1(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? messageLayer1(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  int? isUsed(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.results.data.is_used''',
+      ));
+  String? isConsent(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.is_consent''',
+      ));
+  String? agentCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_code''',
+      ));
+  String? firstname(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.first_name''',
+      ));
+  String? lastname(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.last_name''',
+      ));
+  String? phoneNumber(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.phone_number''',
+      ));
+  String? token(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.token''',
+      ));
+  String? isExpiredAt(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.is_expired_at''',
+      ));
+  int? consentLinkId(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.results.data.consent_link_id''',
+      ));
+}
+
+class SearchEmployeeApiCall {
+  Future<ApiCallResponse> call({
+    String? keywords = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "keywords": "${escapeStringForJson(keywords)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'SearchEmployeeApi',
+      apiUrl: '${baseUrl}/api/mgm/master/get_employee',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  AgentProfileModelStruct? data(dynamic response) =>
+      AgentProfileModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
+  int? statusLayer1(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? messageLayer1(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? fullname(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.FullName''',
+      ));
+  String? employeeCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.EmployeeCode''',
+      ));
+  String? position(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.Position''',
+      ));
+  String? branchCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.BranchCode''',
+      ));
+}
+
 class GetLeadAgentByTypeCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
@@ -2708,9 +2956,11 @@ class GetLeadAgentByTypeCall {
     String? paymentMethod = '',
     String? paymentChannel = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -2727,7 +2977,7 @@ class GetLeadAgentByTypeCall {
       apiUrl: '${baseUrl}/api/mgm/leads/list',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2765,9 +3015,11 @@ class GetCommissionLeadCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -2779,7 +3031,7 @@ class GetCommissionLeadCall {
       apiUrl: '${baseUrl}/api/mgm/commission/get_summary',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2812,23 +3064,29 @@ class AgentsConfirmMGMCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
     String? isConfirmed = '',
+    String? referrerCode = '',
+    String? referrerName = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
 {
   "agent_code": "${escapeStringForJson(agentCode)}",
-  "is_confirmed": "${escapeStringForJson(isConfirmed)}"
+  "is_confirmed": "${escapeStringForJson(isConfirmed)}",
+  "referrer_code": "${escapeStringForJson(referrerCode)}",
+  "referrer_name": "${escapeStringForJson(referrerName)}"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'Agents Confirm MGM',
       apiUrl: '${baseUrl}/api/mgm/agents/confirm',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2882,9 +3140,11 @@ class CommissionMonthlyApiCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -2896,7 +3156,7 @@ class CommissionMonthlyApiCall {
       apiUrl: '${baseUrl}/api/mgm/commission/leads-monthly',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2934,14 +3194,18 @@ class AgentLeadSaveByLeadCall {
     String? loanAmount = '',
     String? defaultComPercent = '',
     String? agentWht = '',
+    String? actualComPercent = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
 {
+"actual_com_percent":"${escapeStringForJson(actualComPercent)}",
   "agent_code": "${escapeStringForJson(agentCode)}",
   "payment_method": "${escapeStringForJson(paymentMethod)}",
   "deduction_percent": "${escapeStringForJson(deductionPercent)}",
@@ -2956,7 +3220,7 @@ class AgentLeadSaveByLeadCall {
       apiUrl: '${baseUrl}/api/mgm/leads/save',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2988,9 +3252,11 @@ class AgentLeadSaveCall {
     String? paymentChannel = '',
     String? paymentNumber = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -3006,7 +3272,7 @@ class AgentLeadSaveCall {
       apiUrl: '${baseUrl}/api/mgm/agents/save',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -3086,10 +3352,13 @@ class MgmLeadsSaveCall {
     String? defaultComPercent = '',
     String? actualComPercent = '',
     String? comEstimateVatAmt = '',
+    String? smsCode = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     return ApiManager.instance.makeApiCall(
@@ -3097,7 +3366,7 @@ class MgmLeadsSaveCall {
       apiUrl: '${baseUrl}/api/mgm/leads/save',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {
         'id': id,
@@ -3149,6 +3418,7 @@ class MgmLeadsSaveCall {
         'default_com_percent': defaultComPercent,
         'actual_com_percent': actualComPercent,
         'com_estimate_vat_amt': comEstimateVatAmt,
+        'sms_code': smsCode,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -3165,9 +3435,11 @@ class RateGetVehicleCall {
   Future<ApiCallResponse> call({
     String? categoryCode = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -3179,7 +3451,70 @@ class RateGetVehicleCall {
       apiUrl: '${baseUrl}/api/mgm/rate/get_vehicle',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  List<MasterAgentVehicleDataModelStruct>? data(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => MasterAgentVehicleDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
+class ConsentsConfirmCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? consentLinkId = '',
+    String? isConsent = '',
+    String? phoneNumber = '',
+    String? token = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "consent_link_id": "${escapeStringForJson(consentLinkId)}",
+  "is_consent": "${escapeStringForJson(isConsent)}",
+  "phone_number": "${escapeStringForJson(phoneNumber)}",
+  "token": "${escapeStringForJson(token)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'consents confirm',
+      apiUrl: '${baseUrl}/api/mgm/consents/confirm',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -3219,9 +3554,11 @@ class CommissionHistoryCall {
     String? leadId = '',
     String? contNo = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -3234,7 +3571,7 @@ class CommissionHistoryCall {
       apiUrl: '${baseUrl}/api/mgm/commission/leads-detail',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
         'Content-Type': 'application/json',
       },
       params: {},
@@ -3301,9 +3638,11 @@ class AgentRateSearchCall {
     String? carYear = '',
     String? carModel = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -3319,7 +3658,7 @@ class AgentRateSearchCall {
       apiUrl: '${baseUrl}/api/mgm/rate/search',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -3391,9 +3730,11 @@ class AgentCheckRateCall {
     String? interest = '',
     String? thaiId = '',
     String? url = '',
+    String? tokenHeader = '',
   }) async {
     final baseUrl = AgentAPIGroup.getBaseUrl(
       url: url,
+      tokenHeader: tokenHeader,
     );
 
     final ffApiRequestBody = '''
@@ -3415,7 +3756,7 @@ class AgentCheckRateCall {
       apiUrl: '${baseUrl}/api/mgm/rate/check_rate',
       callType: ApiCallType.POST,
       headers: {
-        'X-API-KEY': 'A2HFLbyKW8Cunu9S0ytgp2viQLRg54d+GSLqOgBDbTM=%',
+        'X-API-KEY': '${tokenHeader}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -4924,6 +5265,48 @@ class ApproveInstallmentAPISaveCall {
         response,
         r'''$.message''',
       );
+}
+
+class SendOtpSMSApiCall {
+  static Future<ApiCallResponse> call({
+    String? phoneNumber = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "phone_number": "${escapeStringForJson(phoneNumber)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'SendOtpSMSApi',
+      apiUrl: 'https://mobile-api.swpfin.com/otp',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-srisawad': 'x1',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? createDate(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.create_date''',
+      ));
+  static String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  static String? ref(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.ref''',
+      ));
 }
 
 class ApiPagingParams {

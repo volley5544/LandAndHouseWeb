@@ -19,12 +19,16 @@ class ConfirmAgentRegisterWidget extends StatefulWidget {
     this.titleMessage,
     this.typeButton,
     this.textMessage2,
+    this.referrerCode,
+    this.referrerName,
   });
 
   final String? textMessage;
   final String? titleMessage;
   final String? typeButton;
   final String? textMessage2;
+  final String? referrerCode;
+  final String? referrerName;
 
   @override
   State<ConfirmAgentRegisterWidget> createState() =>
@@ -208,48 +212,6 @@ class _ConfirmAgentRegisterWidgetState
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
-                            child: AutoSizeText(
-                              valueOrDefault<String>(
-                                widget.textMessage2,
-                                '-',
-                              ),
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    font: GoogleFonts.plusJakartaSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .labelMedium
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFF606A85),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ].divide(SizedBox(height: 12.0)),
             ),
           ),
@@ -314,6 +276,11 @@ class _ConfirmAgentRegisterWidgetState
                           url: FFDevEnvironmentValues().isProduction
                               ? FFAppState().apiUrlDocData.agentWebApiUrl
                               : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+                          referrerCode: widget.referrerCode,
+                          referrerName: widget.referrerName,
+                          tokenHeader: FFDevEnvironmentValues().isProduction
+                              ? FFAppState().apiUrlDocData.agentWebApiToken
+                              : FFAppState().apiUrlDocData.agentWebApiTokenUat,
                         );
 
                         _shouldSetState = true;

@@ -632,7 +632,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: LeadAgentConsentPageWidget.routeName,
           path: LeadAgentConsentPageWidget.routePath,
-          builder: (context, params) => LeadAgentConsentPageWidget(),
+          builder: (context, params) => LeadAgentConsentPageWidget(
+            ref: params.getParam(
+              'ref',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+            agent: params.getParam(
+              'agent',
+              ParamType.String,
+            ),
+            linkId: params.getParam(
+              'linkId',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: VerifyAgentWidget.routeName,
@@ -683,6 +708,48 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: TestPage3Widget.routeName,
           path: TestPage3Widget.routePath,
           builder: (context, params) => TestPage3Widget(),
+        ),
+        FFRoute(
+          name: ConsentSuccessPageWidget.routeName,
+          path: ConsentSuccessPageWidget.routePath,
+          builder: (context, params) => ConsentSuccessPageWidget(
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+            consent: params.getParam(
+              'consent',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TimeoutPageWidget.routeName,
+          path: TimeoutPageWidget.routePath,
+          builder: (context, params) => TimeoutPageWidget(
+            text: params.getParam(
+              'text',
+              ParamType.String,
+            ),
+            code: params.getParam(
+              'code',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PdfViewerAgentPageWidget.routeName,
+          path: PdfViewerAgentPageWidget.routePath,
+          builder: (context, params) => PdfViewerAgentPageWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

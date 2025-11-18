@@ -36,38 +36,41 @@ class _TestPageCopy2WidgetState extends State<TestPageCopy2Widget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Page Title',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Noto San Thai',
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                ),
+    return Title(
+        title: 'TestPageCopy2',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              title: Text(
+                'Page Title',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Noto San Thai',
+                      color: Colors.white,
+                      fontSize: 22.0,
+                      letterSpacing: 0.0,
+                    ),
+              ),
+              actions: [],
+              centerTitle: false,
+              elevation: 2.0,
+            ),
+            body: SafeArea(
+              top: true,
+              child: Container(
+                width: 1000.0,
+                decoration: BoxDecoration(),
+              ),
+            ),
           ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Container(
-            width: 1000.0,
-            decoration: BoxDecoration(),
-          ),
-        ),
-      ),
-    );
+        ));
   }
 }

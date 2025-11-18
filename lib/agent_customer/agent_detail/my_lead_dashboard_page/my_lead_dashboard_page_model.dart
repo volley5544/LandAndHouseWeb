@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'my_lead_dashboard_page_widget.dart' show MyLeadDashboardPageWidget;
@@ -80,6 +79,8 @@ class MyLeadDashboardPageModel
 
   // Stores action output result for [Backend Call - API (GetLeadAgentByType)] action in MyLeadDashboardPage widget.
   ApiCallResponse? getLeadAgentApiOutput;
+  // Stores action output result for [Firestore Query - Query a collection] action in MyLeadDashboardPage widget.
+  ApplicationRecord? appConfig;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Text widget.
   dynamic advanceSearchOutput;
   // State field(s) for SearchTextField widget.
@@ -94,6 +95,8 @@ class MyLeadDashboardPageModel
       choiceChipsValueController?.value = val;
   // Stores action output result for [Bottom Sheet - SelectPaymentByLead] action in Button widget.
   String? paymentMethodSelected;
+  // Stores action output result for [Backend Call - API (GetLeadAgentByType)] action in Button widget.
+  ApiCallResponse? getLeadAgentApiPaymentButtonOutput;
 
   @override
   void initState(BuildContext context) {}

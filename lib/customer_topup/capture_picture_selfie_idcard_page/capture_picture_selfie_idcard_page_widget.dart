@@ -46,75 +46,78 @@ class _CapturePictureSelfieIdcardPageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
-          automaticallyImplyLeading: false,
-          leading: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              context.safePop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              color: FlutterFlowTheme.of(context).primary,
-              size: 24.0,
-            ),
-          ),
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(
-              valueOrDefault<String>(
-                widget.title,
-                'title',
+    return Title(
+        title: 'CapturePictureSelfieIdcardPage',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).secondary,
+              automaticallyImplyLeading: false,
+              leading: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.safePop();
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 24.0,
+                ),
               ),
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Noto San Thai',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 18.0,
-                    letterSpacing: 0.0,
-                    fontWeight: FontWeight.w600,
+              actions: [],
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+                  valueOrDefault<String>(
+                    widget.title,
+                    'title',
                   ),
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Noto San Thai',
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        fontSize: 18.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                centerTitle: true,
+                expandedTitleScale: 1.0,
+              ),
+              elevation: 2.0,
             ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
-            ),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: custom_widgets.CapturePictureSelfieIdcard(
+            body: SafeArea(
+              top: true,
+              child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                imagesType: widget.imageType,
-                onFinishCapture: (imgFileBytes) async {},
-                onCaptured: (isCaptured) async {},
-                openLoadingComponent: () async {},
-                closeLoadingComponent: () async {},
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: custom_widgets.CapturePictureSelfieIdcard(
+                    width: double.infinity,
+                    height: double.infinity,
+                    imagesType: widget.imageType,
+                    onFinishCapture: (imgFileBytes) async {},
+                    onCaptured: (isCaptured) async {},
+                    openLoadingComponent: () async {},
+                    closeLoadingComponent: () async {},
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

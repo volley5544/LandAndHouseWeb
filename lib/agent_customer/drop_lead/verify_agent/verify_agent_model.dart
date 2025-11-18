@@ -7,16 +7,30 @@ import 'verify_agent_widget.dart' show VerifyAgentWidget;
 import 'package:flutter/material.dart';
 
 class VerifyAgentModel extends FlutterFlowModel<VerifyAgentWidget> {
+  ///  Local state fields for this page.
+
+  bool isVerifyReferId = false;
+
+  String? referrerCode;
+
+  String? referrerName;
+
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in VerifyAgent widget.
-  ApiCallResponse? agentAPIOutput;
   // Stores action output result for [Backend Call - Read Document] action in VerifyAgent widget.
   ApplicationRecord? queryUrl;
+  // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in VerifyAgent widget.
+  ApiCallResponse? agentAPIOutput;
   // Model for BannerAgentComponent component.
   late BannerAgentComponentModel bannerAgentComponentModel;
   // Model for ReviewDetailAgentComponent component.
   late ReviewDetailAgentComponentModel reviewDetailAgentComponentModel;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
+  // Stores action output result for [Backend Call - API (SearchEmployeeApi)] action in Container widget.
+  ApiCallResponse? searchEmployeeApiOutput;
 
   @override
   void initState(BuildContext context) {
@@ -30,5 +44,7 @@ class VerifyAgentModel extends FlutterFlowModel<VerifyAgentWidget> {
   void dispose() {
     bannerAgentComponentModel.dispose();
     reviewDetailAgentComponentModel.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
   }
 }

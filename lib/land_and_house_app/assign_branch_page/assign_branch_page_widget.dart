@@ -213,1316 +213,173 @@ class _AssignBranchPageWidgetState extends State<AssignBranchPageWidget>
     context.watch<FFAppState>();
 
     return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
-            automaticallyImplyLeading: false,
-            title: Text(
-              'รายการโฉนดที่ดิน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT)'}',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Noto San Thai',
-                    color: Color(0xFF003063),
-                    fontSize: 18.0,
-                    letterSpacing: 0.0,
-                  ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 2.0,
-          ),
-          body: SafeArea(
-            top: true,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment(-1.0, 0),
-                          child: FlutterFlowButtonTabBar(
-                            useToggleButtonStyle: false,
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  fontSize: 15.0,
-                                  letterSpacing: 1.0,
-                                  lineHeight: 1.0,
-                                ),
-                            unselectedLabelStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  fontSize: 15.0,
-                                  letterSpacing: 1.0,
-                                  lineHeight: 1.0,
-                                ),
-                            labelColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            unselectedLabelColor: Color(0xFF003063),
-                            backgroundColor: Color(0x4CFBC3A3),
-                            unselectedBackgroundColor: Colors.white,
-                            borderColor: FlutterFlowTheme.of(context).primary,
-                            unselectedBorderColor: Colors.white,
-                            borderWidth: 2.0,
-                            borderRadius: 0.0,
-                            elevation: 0.0,
-                            tabs: [
-                              Tab(
-                                text: 'รายการโฉนดที่ดิน',
-                              ),
-                              Tab(
-                                text: 'รายการโฉนดที่ดิน\nส่งไปสาขา',
-                              ),
-                            ],
-                            controller: _model.tabBarController,
-                            onTap: (i) async {
-                              [() async {}, () async {}][i]();
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: TabBarView(
-                            controller: _model.tabBarController,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 20.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'กรุณาเลือกโฉนดที่ดินที่ต้องการมอบหมาย',
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: Color(0xFF4C4C4C),
-                                                  fontSize: 18.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
+      builder: (context) => Title(
+          title: 'AssignBranchPage',
+          color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Scaffold(
+              key: scaffoldKey,
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              appBar: AppBar(
+                backgroundColor: FlutterFlowTheme.of(context).secondary,
+                automaticallyImplyLeading: false,
+                title: Text(
+                  'รายการโฉนดที่ดิน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT)'}',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Noto San Thai',
+                        color: Color(0xFF003063),
+                        fontSize: 18.0,
+                        letterSpacing: 0.0,
+                      ),
+                ),
+                actions: [],
+                centerTitle: true,
+                elevation: 2.0,
+              ),
+              body: SafeArea(
+                top: true,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment(-1.0, 0),
+                              child: FlutterFlowButtonTabBar(
+                                useToggleButtonStyle: false,
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .titleMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      fontSize: 15.0,
+                                      letterSpacing: 1.0,
+                                      lineHeight: 1.0,
                                     ),
-                                    if (_model.chanodlist.length > 0)
-                                      Expanded(
-                                        child: Padding(
+                                unselectedLabelStyle:
+                                    FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 15.0,
+                                          letterSpacing: 1.0,
+                                          lineHeight: 1.0,
+                                        ),
+                                labelColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                unselectedLabelColor: Color(0xFF003063),
+                                backgroundColor: Color(0x4CFBC3A3),
+                                unselectedBackgroundColor: Colors.white,
+                                borderColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                unselectedBorderColor: Colors.white,
+                                borderWidth: 2.0,
+                                borderRadius: 0.0,
+                                elevation: 0.0,
+                                tabs: [
+                                  Tab(
+                                    text: 'รายการโฉนดที่ดิน',
+                                  ),
+                                  Tab(
+                                    text: 'รายการโฉนดที่ดิน\nส่งไปสาขา',
+                                  ),
+                                ],
+                                controller: _model.tabBarController,
+                                onTap: (i) async {
+                                  [() async {}, () async {}][i]();
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: TabBarView(
+                                controller: _model.tabBarController,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 0.0, 20.0, 0.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 10.0, 0.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final branchLisChanod =
-                                                  _model.chanodlist.toList();
-
-                                              return ListView.builder(
-                                                padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  30.0,
-                                                ),
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount:
-                                                    branchLisChanod.length,
-                                                itemBuilder: (context,
-                                                    branchLisChanodIndex) {
-                                                  final branchLisChanodItem =
-                                                      branchLisChanod[
-                                                          branchLisChanodIndex];
-                                                  return Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 9.0,
-                                                                0.0, 0.0),
-                                                    child: Material(
-                                                      color: Colors.transparent,
-                                                      elevation: 8.0,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  15.0),
-                                                        ),
-                                                      ),
-                                                      child: Container(
-                                                        width: double.infinity,
-                                                        height: widget.level !=
-                                                                'HO'
-                                                            ? 290.0
-                                                            : 240.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: '${branchLisChanodItem.callStatus}' ==
-                                                                  'ติดต่อได้'
-                                                              ? Color(
-                                                                  0xFFE9FFEA)
-                                                              : FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                          ),
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            5.0,
-                                                                            8.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(8.0),
-                                                                          child:
-                                                                              SvgPicture.asset(
-                                                                            'assets/images/HouseLoanIcon.svg',
-                                                                            width:
-                                                                                60.0,
-                                                                            height:
-                                                                                60.0,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  Expanded(
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .start,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .center,
-                                                                      children: [
-                                                                        Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.start,
-                                                                          children: [
-                                                                            Expanded(
-                                                                              child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                                                                                child: Column(
-                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Expanded(
-                                                                                          child: Container(
-                                                                                            decoration: BoxDecoration(),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  child: Padding(
-                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                                    child: Text(
-                                                                                                      '${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}',
-                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Noto San Thai',
-                                                                                                            fontSize: 17.0,
-                                                                                                            letterSpacing: 0.0,
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
-                                                                                    Expanded(
-                                                                                      child: Container(
-                                                                                        decoration: BoxDecoration(),
-                                                                                        child: Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                          child: Row(
-                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                            children: [
-                                                                                              Expanded(
-                                                                                                child: Text(
-                                                                                                  '${branchLisChanodItem.subdistrict}>${branchLisChanodItem.district}>${branchLisChanodItem.province}',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: Color(0xFF452F1F),
-                                                                                                        fontSize: 16.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.w600,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ),
-                                                                                            ],
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                            Column(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                Builder(
-                                                                                  builder: (context) {
-                                                                                    if (!false) {
-                                                                                      return Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                                        child: FlutterFlowIconButton(
-                                                                                          borderRadius: 30.0,
-                                                                                          buttonSize: 40.0,
-                                                                                          fillColor: Color(0xFF53C300),
-                                                                                          icon: Icon(
-                                                                                            Icons.call,
-                                                                                            color: FlutterFlowTheme.of(context).info,
-                                                                                            size: 24.0,
-                                                                                          ),
-                                                                                          showLoadingIndicator: true,
-                                                                                          onPressed: () async {
-                                                                                            var _shouldSetState = false;
-                                                                                            var confirmDialogResponse = await showDialog<bool>(
-                                                                                                  context: context,
-                                                                                                  builder: (alertDialogContext) {
-                                                                                                    return AlertDialog(
-                                                                                                      content: Text('คุณต้องการจะโทรออกหรือไม่?'),
-                                                                                                      actions: [
-                                                                                                        TextButton(
-                                                                                                          onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                          child: Text('ยกเลิก'),
-                                                                                                        ),
-                                                                                                        TextButton(
-                                                                                                          onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                          child: Text('โทร'),
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    );
-                                                                                                  },
-                                                                                                ) ??
-                                                                                                false;
-                                                                                            if (!confirmDialogResponse) {
-                                                                                              if (_shouldSetState) safeSetState(() {});
-                                                                                              return;
-                                                                                            }
-                                                                                            if (!functions.checkPhoneNumberChar(branchLisChanodItem.phoneNumber)!) {
-                                                                                              await showDialog(
-                                                                                                context: context,
-                                                                                                builder: (alertDialogContext) {
-                                                                                                  return AlertDialog(
-                                                                                                    content: Text('เบอร์โทรไม่ถูกต้อง'),
-                                                                                                    actions: [
-                                                                                                      TextButton(
-                                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                                        child: Text('Ok'),
-                                                                                                      ),
-                                                                                                    ],
-                                                                                                  );
-                                                                                                },
-                                                                                              );
-                                                                                              if (_shouldSetState) safeSetState(() {});
-                                                                                              return;
-                                                                                            }
-                                                                                            _model.open3cx1 = await actions.open3CXAction(
-                                                                                              '${branchLisChanodItem.phoneNumber}',
-                                                                                            );
-                                                                                            _shouldSetState = true;
-                                                                                            if (_shouldSetState) safeSetState(() {});
-                                                                                          },
-                                                                                        ),
-                                                                                      );
-                                                                                    } else {
-                                                                                      return Padding(
-                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                                        child: InkWell(
-                                                                                          splashColor: Colors.transparent,
-                                                                                          focusColor: Colors.transparent,
-                                                                                          hoverColor: Colors.transparent,
-                                                                                          highlightColor: Colors.transparent,
-                                                                                          onTap: () async {
-                                                                                            await Clipboard.setData(ClipboardData(text: branchLisChanodItem.phoneNumber));
-                                                                                            await showDialog(
-                                                                                              context: context,
-                                                                                              builder: (alertDialogContext) {
-                                                                                                return AlertDialog(
-                                                                                                  content: Text('คัดลอกเบอร์โทรของลูกค้า ${'${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}'} สำเร็จ! กรุณานำไปวางในแอพโทรศัพท์เพื่อโทรหาลูกค้า'),
-                                                                                                  actions: [
-                                                                                                    TextButton(
-                                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                                      child: Text('Ok'),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                );
-                                                                                              },
-                                                                                            );
-                                                                                          },
-                                                                                          child: Text(
-                                                                                            'คัดลอกเบอร์โทร',
-                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                  fontFamily: 'Noto San Thai',
-                                                                                                  letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
-                                                                                                  decoration: TextDecoration.underline,
-                                                                                                ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      );
-                                                                                    }
-                                                                                  },
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text(
-                                                                                'โฉนดที่ดิน',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFFBCBCBE),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                              Text(
-                                                                                branchLisChanodItem.chanodNo == '' ? '-' : branchLisChanodItem.chanodNo,
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFF999A9C),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text(
-                                                                                'ระวาง',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFFBCBCBE),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                              Text(
-                                                                                functions.rawangFormattedFunction(branchLisChanodItem.utmmap) == null || functions.rawangFormattedFunction(branchLisChanodItem.utmmap) == '' ? '-' : branchLisChanodItem.utmmap,
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFF999A9C),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text(
-                                                                                'เนื้อที่ (ไร่-งาน-วา)',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFFBCBCBE),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                              Text(
-                                                                                '${branchLisChanodItem.landAreaRai}-${branchLisChanodItem.landAreaNgan}-${branchLisChanodItem.landAreaWa}',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFF999A9C),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Text(
-                                                                                'ไม่จดจำนอง (บาท)',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFFBCBCBE),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                              Text(
-                                                                                '${functions.returnNumberWithComma2Decimal(branchLisChanodItem.ltv1Amount)}',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFF999A9C),
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.w600,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          20.0,
-                                                                          10.0,
-                                                                          11.0,
-                                                                          0.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Expanded(
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Expanded(
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.end,
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.0, 1.0),
-                                                                                child: Text(
-                                                                                  'จดจำนอง (บาท)',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        fontSize: 14.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Expanded(
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.end,
-                                                                            children: [
-                                                                              Align(
-                                                                                alignment: AlignmentDirectional(0.0, 1.0),
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                  child: Text(
-                                                                                    valueOrDefault<String>(
-                                                                                      functions.returnNumberWithComma2Decimal(branchLisChanodItem.ltv2Amount),
-                                                                                      '186372.00',
-                                                                                    ),
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          fontSize: 20.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
-                                                                                        ),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Expanded(
-                                                                          child:
-                                                                              Container(
-                                                                            decoration:
-                                                                                BoxDecoration(),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  child: Align(
-                                                                                    alignment: AlignmentDirectional(-1.0, -1.0),
-                                                                                    child: Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        '${branchLisChanodItem.callStatus}',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Noto San Thai',
-                                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                                              fontSize: 15.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
-                                                                                            ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    children: [
-                                                                      if (widget
-                                                                              .level !=
-                                                                          'HO')
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              6.0),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              FFAppState().isTextFieldVisible = true;
-                                                                              safeSetState(() {});
-                                                                              FFAppState().saveBranchDataTemp = SaveAssignBranchStruct(
-                                                                                empCode: widget.employeeId,
-                                                                                mode: () {
-                                                                                  if (widget.mode == 'สาขา') {
-                                                                                    return 'branch';
-                                                                                  } else if (widget.mode == 'เขต') {
-                                                                                    return 'area';
-                                                                                  } else if (widget.mode == 'ภาค') {
-                                                                                    return 'region';
-                                                                                  } else {
-                                                                                    return widget.mode;
-                                                                                  }
-                                                                                }(),
-                                                                                leadId: branchLisChanodItem.leadId,
-                                                                                assignType: 'assign',
-                                                                                regionCode: widget.branchCodeSearch,
-                                                                                token: widget.token,
-                                                                                level: widget.mode,
-                                                                                level2: widget.level,
-                                                                              );
-                                                                              safeSetState(() {});
-
-                                                                              context.goNamed(
-                                                                                SelectedBranchPageWidget.routeName,
-                                                                                queryParameters: {
-                                                                                  'fromPage': serializeParam(
-                                                                                    'LH',
-                                                                                    ParamType.String,
-                                                                                  ),
-                                                                                }.withoutNulls,
-                                                                              );
-                                                                            },
-                                                                            text:
-                                                                                'ส่งเรื่องไปสาขา',
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: 120.0,
-                                                                              height: 40.0,
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Colors.white,
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(8.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      if (widget
-                                                                              .level !=
-                                                                          'HO')
-                                                                        FFButtonWidget(
-                                                                          onPressed:
-                                                                              () async {
-                                                                            var _shouldSetState =
-                                                                                false;
-                                                                            _model.getCalledStatusCodeAssign =
-                                                                                await GetLeadCalledStatusDropdownAPICall.call(
-                                                                              apiUrl: FFAppState().arunsawadApiUrl,
-                                                                              token: widget.token,
-                                                                              leadChannel: branchLisChanodItem.channel,
-                                                                            );
-
-                                                                            _shouldSetState =
-                                                                                true;
-                                                                            if (!(((_model.getCalledStatusCodeAssign?.statusCode ?? 200) == 200) &&
-                                                                                (GetLeadCalledStatusDropdownAPICall.statusLayer1(
-                                                                                      (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
-                                                                                    ) ==
-                                                                                    200))) {
-                                                                              await showDialog(
-                                                                                context: context,
-                                                                                builder: (alertDialogContext) {
-                                                                                  return AlertDialog(
-                                                                                    content: Text('Connection Status ${(_model.getCalledStatusCodeAssign?.statusCode ?? 200).toString()} Status Layer1 ${GetLeadCalledStatusDropdownAPICall.statusLayer1(
-                                                                                      (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
-                                                                                    )?.toString()}'),
-                                                                                    actions: [
-                                                                                      TextButton(
-                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                        child: Text('Ok'),
-                                                                                      ),
-                                                                                    ],
-                                                                                  );
-                                                                                },
-                                                                              );
-                                                                              if (_shouldSetState)
-                                                                                safeSetState(() {});
-                                                                              return;
-                                                                            }
-                                                                            await showModalBottomSheet(
-                                                                              isScrollControlled: true,
-                                                                              backgroundColor: Colors.transparent,
-                                                                              barrierColor: Color(0xBF000000),
-                                                                              isDismissible: false,
-                                                                              enableDrag: false,
-                                                                              context: context,
-                                                                              builder: (context) {
-                                                                                return GestureDetector(
-                                                                                  onTap: () {
-                                                                                    FocusScope.of(context).unfocus();
-                                                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                                                  },
-                                                                                  child: Padding(
-                                                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                                                    child: Container(
-                                                                                      height: MediaQuery.sizeOf(context).height * 0.7,
-                                                                                      child: SavedLeadCalledStatusWidget(
-                                                                                        leadChannel: branchLisChanodItem.channel,
-                                                                                        leadId: branchLisChanodItem.leadId,
-                                                                                        callStatusId: GetLeadCalledStatusDropdownAPICall.callStatusID(
-                                                                                          (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
-                                                                                        )!,
-                                                                                        callStatussName: GetLeadCalledStatusDropdownAPICall.callStatusName(
-                                                                                          (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
-                                                                                        )!,
-                                                                                        customerName: '${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}',
-                                                                                        token: widget.token!,
-                                                                                        fromPage: 'LH',
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            ).then((value) =>
-                                                                                safeSetState(() => _model.savedCallStatusAssign = value));
-
-                                                                            _shouldSetState =
-                                                                                true;
-                                                                            if (!(('${_model.savedCallStatusAssign}' != '') &&
-                                                                                ('${_model.savedCallStatusAssign}' != 'null'))) {
-                                                                              if (_shouldSetState)
-                                                                                safeSetState(() {});
-                                                                              return;
-                                                                            }
-                                                                            _model.updateChanodlistAtIndex(
-                                                                              branchLisChanodIndex,
-                                                                              (e) => e..callStatus = _model.savedCallStatusAssign,
-                                                                            );
-                                                                            safeSetState(() {});
-                                                                            if (_shouldSetState)
-                                                                              safeSetState(() {});
-                                                                          },
-                                                                          text:
-                                                                              'บันทึกโทร',
-                                                                          options:
-                                                                              FFButtonOptions(
-                                                                            width:
-                                                                                120.0,
-                                                                            height:
-                                                                                40.0,
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                16.0,
-                                                                                0.0,
-                                                                                16.0,
-                                                                                0.0),
-                                                                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).primaryText,
-                                                                            textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: Colors.white,
-                                                                                  fontSize: 14.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                            elevation:
-                                                                                0.0,
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                          ),
-                                                                        ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    if (_model.chanodlist.length == 0)
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'ไม่พบรายการข้อมูล',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 20.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 10.0, 0.0),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(10.0),
-                                                    bottomRight:
-                                                        Radius.circular(10.0),
-                                                    topLeft:
-                                                        Radius.circular(10.0),
-                                                    topRight:
-                                                        Radius.circular(10.0),
-                                                  ),
-                                                  border: Border.all(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 0.0, 8.0, 0.0),
-                                                  child: TextFormField(
-                                                    controller: _model
-                                                        .textField23TextController,
-                                                    focusNode: _model
-                                                        .textField23FocusNode,
-                                                    onChanged: (_) =>
-                                                        EasyDebounce.debounce(
-                                                      '_model.textField23TextController',
-                                                      Duration(
-                                                          milliseconds: 100),
-                                                      () => safeSetState(() {}),
-                                                    ),
-                                                    autofocus: false,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: Colors
-                                                                    .white,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                      hintText:
-                                                          'รหัสสาขา/ชื่อสาขา',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: Color(
-                                                                    0xFFBCBCBE),
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
-                                                      enabledBorder:
-                                                          InputBorder.none,
-                                                      focusedBorder:
-                                                          InputBorder.none,
-                                                      errorBorder:
-                                                          InputBorder.none,
-                                                      focusedErrorBorder:
-                                                          InputBorder.none,
-                                                      hoverColor: Colors.white,
-                                                      prefixIcon: Icon(
-                                                        Icons.search_outlined,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                      ),
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'กรุณาเลือกโฉนดที่ดินที่ต้องการมอบหมาย',
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Noto San Thai',
+                                                          color:
+                                                              Color(0xFF4C4C4C),
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
                                                         ),
-                                                    validator: _model
-                                                        .textField23TextControllerValidator
-                                                        .asValidator(context),
-                                                  ),
-                                                ),
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                          if (false)
-                                            FFButtonWidget(
-                                              onPressed: () async {
-                                                context.pushNamed(
-                                                    ChanodListPageCopyWidget
-                                                        .routeName);
-                                              },
-                                              text: 'ค้นหา',
-                                              options: FFButtonOptions(
-                                                width: 100.0,
-                                                height: 50.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 16.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: Colors.white,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                elevation: 0.0,
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 10.0, 0.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              _model.chanodlistto = functions
-                                                  .reversedList(_model
-                                                      .chanodlistto
-                                                      .toList())
-                                                  .toList()
-                                                  .cast<ChanodData3Struct>();
-                                              safeSetState(() {});
-                                            },
-                                            text: 'เรียงลำดับข้อมูล',
-                                            icon: FaIcon(
-                                              FontAwesomeIcons.sortAmountUp,
-                                              size: 15.0,
-                                            ),
-                                            options: FFButtonOptions(
-                                              width: 170.0,
-                                              height: 40.0,
+                                        ),
+                                        if (_model.chanodlist.length > 0)
+                                          Expanded(
+                                            child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                              iconAlignment: IconAlignment.end,
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color: Color(0xFF003063),
-                                              textStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color: Colors.white,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                              elevation: 0.0,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(20.0),
-                                                bottomRight:
-                                                    Radius.circular(20.0),
-                                                topLeft: Radius.circular(20.0),
-                                                topRight: Radius.circular(20.0),
-                                              ),
-                                            ),
-                                          ),
-                                          FFButtonWidget(
-                                            onPressed: () async {
-                                              safeSetState(() {
-                                                _model.textField23TextController
-                                                    ?.clear();
-                                              });
-                                            },
-                                            text: 'ล้างข้อมูล',
-                                            options: FFButtonOptions(
-                                              width: 170.0,
-                                              height: 40.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                              iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                              textStyle: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: Color(0xFF003063),
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              elevation: 0.0,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(20.0),
-                                                bottomRight:
-                                                    Radius.circular(20.0),
-                                                topLeft: Radius.circular(20.0),
-                                                topRight: Radius.circular(20.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    if (_model.chanodlistto.length > 0)
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 10.0, 0.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final branchListChanodItemTo =
-                                                  _model.chanodlistto.toList();
+                                                      0.0, 10.0, 0.0, 0.0),
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final branchLisChanod = _model
+                                                      .chanodlist
+                                                      .toList();
 
-                                              return ListView.builder(
-                                                padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  30.0,
-                                                ),
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount:
-                                                    branchListChanodItemTo
-                                                        .length,
-                                                itemBuilder: (context,
-                                                    branchListChanodItemToIndex) {
-                                                  final branchListChanodItemToItem =
-                                                      branchListChanodItemTo[
-                                                          branchListChanodItemToIndex];
-                                                  return Visibility(
-                                                    visible: _model
-                                                                .textField23TextController
-                                                                .text !=
-                                                            ''
-                                                        ? (functions
-                                                                .containString(
-                                                                    _model
-                                                                        .textField23TextController
-                                                                        .text,
-                                                                    branchListChanodItemToItem
-                                                                        .branchName)! ||
-                                                            functions.containString(
-                                                                _model
-                                                                    .textField23TextController
-                                                                    .text,
-                                                                branchListChanodItemToItem
-                                                                    .branchCode)! ||
-                                                            (true
-                                                                ? false
-                                                                : functions.containString(
-                                                                    _model
-                                                                        .textField23TextController
-                                                                        .text,
-                                                                    branchListChanodItemToItem
-                                                                        .firstName)!) ||
-                                                            (true
-                                                                ? false
-                                                                : functions.containString(
-                                                                    _model
-                                                                        .textField23TextController
-                                                                        .text,
-                                                                    branchListChanodItemToItem
-                                                                        .lastName)!))
-                                                        : true,
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  9.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 8.0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    15.0),
-                                                          ),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              '${branchListChanodItemToItem.callStatus}' ==
-                                                                      'ใหม่'
-                                                                  ? 330.0
-                                                                  : 290.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: '${branchListChanodItemToItem.callStatus}' ==
-                                                                    'ติดต่อได้'
-                                                                ? Color(
-                                                                    0xFFE9FFEA)
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
+                                                  return ListView.builder(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                      0,
+                                                      0,
+                                                      0,
+                                                      30.0,
+                                                    ),
+                                                    shrinkWrap: true,
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemCount:
+                                                        branchLisChanod.length,
+                                                    itemBuilder: (context,
+                                                        branchLisChanodIndex) {
+                                                      final branchLisChanodItem =
+                                                          branchLisChanod[
+                                                              branchLisChanodIndex];
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    9.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          elevation: 8.0,
+                                                          shape:
+                                                              RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
@@ -1541,180 +398,248 @@ class _AssignBranchPageWidgetState extends State<AssignBranchPageWidget>
                                                                       15.0),
                                                             ),
                                                           ),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        10.0,
-                                                                        0.0,
-                                                                        10.0,
-                                                                        0.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              5.0,
-                                                                              8.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                            child:
-                                                                                SvgPicture.asset(
-                                                                              'assets/images/HouseLoanIcon.svg',
-                                                                              width: 60.0,
-                                                                              height: 60.0,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
+                                                          child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height:
+                                                                widget.level !=
+                                                                        'HO'
+                                                                    ? 290.0
+                                                                    : 240.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: '${branchLisChanodItem.callStatus}' ==
+                                                                      'ติดต่อได้'
+                                                                  ? Color(
+                                                                      0xFFE9FFEA)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                              ),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          10.0,
+                                                                          0.0,
+                                                                          10.0,
+                                                                          0.0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Column(
                                                                         mainAxisSize:
                                                                             MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.start,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.center,
                                                                         children: [
-                                                                          Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Expanded(
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                                                                                  child: Column(
-                                                                                    mainAxisSize: MainAxisSize.max,
-                                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                    children: [
-                                                                                      Expanded(
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Row(
-                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                            children: [
-                                                                                              Expanded(
-                                                                                                child: Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                                  child: Text(
-                                                                                                    '${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}',
-                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                          fontFamily: 'Noto San Thai',
-                                                                                                          fontSize: 17.0,
-                                                                                                          letterSpacing: 0.0,
-                                                                                                          fontWeight: FontWeight.w600,
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                5.0,
+                                                                                8.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                              child: SvgPicture.asset(
+                                                                                'assets/images/HouseLoanIcon.svg',
+                                                                                width: 60.0,
+                                                                                height: 60.0,
+                                                                                fit: BoxFit.cover,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.start,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.center,
+                                                                          children: [
+                                                                            Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                                              children: [
+                                                                                Expanded(
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                                                    child: Column(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              child: Container(
+                                                                                                decoration: BoxDecoration(),
+                                                                                                child: Row(
+                                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                                  children: [
+                                                                                                    Expanded(
+                                                                                                      child: Padding(
+                                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                                        child: Text(
+                                                                                                          '${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}',
+                                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                                fontSize: 17.0,
+                                                                                                                letterSpacing: 0.0,
+                                                                                                                fontWeight: FontWeight.w600,
+                                                                                                              ),
                                                                                                         ),
-                                                                                                  ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
                                                                                                 ),
                                                                                               ),
-                                                                                            ],
-                                                                                          ),
+                                                                                            ),
+                                                                                          ],
                                                                                         ),
-                                                                                      ),
-                                                                                      Expanded(
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  child: Text(
-                                                                                                    '${branchListChanodItemToItem.subdistrict}>${branchListChanodItemToItem.district}>${branchListChanodItemToItem.province}',
-                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                          fontFamily: 'Noto San Thai',
-                                                                                                          color: Color(0xFF452F1F),
-                                                                                                          fontSize: 16.0,
-                                                                                                          letterSpacing: 0.0,
-                                                                                                          fontWeight: FontWeight.w600,
-                                                                                                        ),
+                                                                                        Expanded(
+                                                                                          child: Container(
+                                                                                            decoration: BoxDecoration(),
+                                                                                            child: Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                              child: Row(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                children: [
+                                                                                                  Expanded(
+                                                                                                    child: Text(
+                                                                                                      '${branchLisChanodItem.subdistrict}>${branchLisChanodItem.district}>${branchLisChanodItem.province}',
+                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                            fontFamily: 'Noto San Thai',
+                                                                                                            color: Color(0xFF452F1F),
+                                                                                                            fontSize: 16.0,
+                                                                                                            letterSpacing: 0.0,
+                                                                                                            fontWeight: FontWeight.w600,
+                                                                                                          ),
+                                                                                                    ),
                                                                                                   ),
-                                                                                                ),
-                                                                                              ],
+                                                                                                ],
+                                                                                              ),
                                                                                             ),
                                                                                           ),
                                                                                         ),
-                                                                                      ),
-                                                                                    ],
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
                                                                                 ),
-                                                                              ),
-                                                                              Column(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                children: [
-                                                                                  Builder(
-                                                                                    builder: (context) {
-                                                                                      if (!false) {
-                                                                                        return Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                                          child: FlutterFlowIconButton(
-                                                                                            borderRadius: 30.0,
-                                                                                            buttonSize: 40.0,
-                                                                                            fillColor: Color(0xFF53C300),
-                                                                                            icon: Icon(
-                                                                                              Icons.call,
-                                                                                              color: FlutterFlowTheme.of(context).info,
-                                                                                              size: 24.0,
-                                                                                            ),
-                                                                                            showLoadingIndicator: true,
-                                                                                            onPressed: () async {
-                                                                                              currentUserLocationValue = await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-                                                                                              var _shouldSetState = false;
-                                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                Column(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  children: [
+                                                                                    Builder(
+                                                                                      builder: (context) {
+                                                                                        if (!false) {
+                                                                                          return Padding(
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                            child: FlutterFlowIconButton(
+                                                                                              borderRadius: 30.0,
+                                                                                              buttonSize: 40.0,
+                                                                                              fillColor: Color(0xFF53C300),
+                                                                                              icon: Icon(
+                                                                                                Icons.call,
+                                                                                                color: FlutterFlowTheme.of(context).info,
+                                                                                                size: 24.0,
+                                                                                              ),
+                                                                                              showLoadingIndicator: true,
+                                                                                              onPressed: () async {
+                                                                                                var _shouldSetState = false;
+                                                                                                var confirmDialogResponse = await showDialog<bool>(
+                                                                                                      context: context,
+                                                                                                      builder: (alertDialogContext) {
+                                                                                                        return AlertDialog(
+                                                                                                          content: Text('คุณต้องการจะโทรออกหรือไม่?'),
+                                                                                                          actions: [
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                              child: Text('ยกเลิก'),
+                                                                                                            ),
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                              child: Text('โทร'),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        );
+                                                                                                      },
+                                                                                                    ) ??
+                                                                                                    false;
+                                                                                                if (!confirmDialogResponse) {
+                                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                                  return;
+                                                                                                }
+                                                                                                if (!functions.checkPhoneNumberChar(branchLisChanodItem.phoneNumber)!) {
+                                                                                                  await showDialog(
                                                                                                     context: context,
                                                                                                     builder: (alertDialogContext) {
                                                                                                       return AlertDialog(
-                                                                                                        content: Text('คุณต้องการจะโทรออกหรือไม่?'),
+                                                                                                        content: Text('เบอร์โทรไม่ถูกต้อง'),
                                                                                                         actions: [
                                                                                                           TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                            child: Text('ยกเลิก'),
-                                                                                                          ),
-                                                                                                          TextButton(
-                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                            child: Text('โทร'),
+                                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                                            child: Text('Ok'),
                                                                                                           ),
                                                                                                         ],
                                                                                                       );
                                                                                                     },
-                                                                                                  ) ??
-                                                                                                  false;
-                                                                                              if (!confirmDialogResponse) {
+                                                                                                  );
+                                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                                  return;
+                                                                                                }
+                                                                                                _model.open3cx1 = await actions.open3CXAction(
+                                                                                                  '${branchLisChanodItem.phoneNumber}',
+                                                                                                );
+                                                                                                _shouldSetState = true;
                                                                                                 if (_shouldSetState) safeSetState(() {});
-                                                                                                return;
-                                                                                              }
-                                                                                              if (!functions.checkPhoneNumberChar('${branchListChanodItemToItem.phoneNumber}')!) {
+                                                                                              },
+                                                                                            ),
+                                                                                          );
+                                                                                        } else {
+                                                                                          return Padding(
+                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                            child: InkWell(
+                                                                                              splashColor: Colors.transparent,
+                                                                                              focusColor: Colors.transparent,
+                                                                                              hoverColor: Colors.transparent,
+                                                                                              highlightColor: Colors.transparent,
+                                                                                              onTap: () async {
+                                                                                                await Clipboard.setData(ClipboardData(text: branchLisChanodItem.phoneNumber));
                                                                                                 await showDialog(
                                                                                                   context: context,
                                                                                                   builder: (alertDialogContext) {
                                                                                                     return AlertDialog(
-                                                                                                      content: Text('เบอร์โทรไม่ถูกต้อง'),
+                                                                                                      content: Text('คัดลอกเบอร์โทรของลูกค้า ${'${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}'} สำเร็จ! กรุณานำไปวางในแอพโทรศัพท์เพื่อโทรหาลูกค้า'),
                                                                                                       actions: [
                                                                                                         TextButton(
                                                                                                           onPressed: () => Navigator.pop(alertDialogContext),
@@ -1724,271 +649,205 @@ class _AssignBranchPageWidgetState extends State<AssignBranchPageWidget>
                                                                                                     );
                                                                                                   },
                                                                                                 );
-                                                                                                if (_shouldSetState) safeSetState(() {});
-                                                                                                return;
-                                                                                              }
-                                                                                              _model.open3cx2 = await actions.open3CXAction(
-                                                                                                '${branchListChanodItemToItem.phoneNumber}',
-                                                                                              );
-                                                                                              _shouldSetState = true;
-                                                                                              if (_shouldSetState) safeSetState(() {});
-                                                                                            },
-                                                                                          ),
-                                                                                        );
-                                                                                      } else {
-                                                                                        return Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                                          child: InkWell(
-                                                                                            splashColor: Colors.transparent,
-                                                                                            focusColor: Colors.transparent,
-                                                                                            hoverColor: Colors.transparent,
-                                                                                            highlightColor: Colors.transparent,
-                                                                                            onTap: () async {
-                                                                                              await Clipboard.setData(ClipboardData(text: branchListChanodItemToItem.phoneNumber));
-                                                                                              await showDialog(
-                                                                                                context: context,
-                                                                                                builder: (alertDialogContext) {
-                                                                                                  return AlertDialog(
-                                                                                                    content: Text('คัดลอกเบอร์โทรของลูกค้า ${'${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}'} สำเร็จ! กรุณานำไปวางในแอพโทรศัพท์เพื่อโทรหาลูกค้า'),
-                                                                                                    actions: [
-                                                                                                      TextButton(
-                                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                                        child: Text('Ok'),
-                                                                                                      ),
-                                                                                                    ],
-                                                                                                  );
-                                                                                                },
-                                                                                              );
-                                                                                            },
-                                                                                            child: Text(
-                                                                                              'คัดลอกเบอร์โทร',
-                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                    fontFamily: 'Noto San Thai',
-                                                                                                    letterSpacing: 0.0,
-                                                                                                    fontWeight: FontWeight.w600,
-                                                                                                    decoration: TextDecoration.underline,
-                                                                                                  ),
+                                                                                              },
+                                                                                              child: Text(
+                                                                                                'คัดลอกเบอร์โทร',
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Noto San Thai',
+                                                                                                      letterSpacing: 0.0,
+                                                                                                      fontWeight: FontWeight.w600,
+                                                                                                      decoration: TextDecoration.underline,
+                                                                                                    ),
+                                                                                              ),
                                                                                             ),
-                                                                                          ),
-                                                                                        );
-                                                                                      }
-                                                                                    },
+                                                                                          );
+                                                                                        }
+                                                                                      },
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    'โฉนดที่ดิน',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFFBCBCBE),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    branchLisChanodItem.chanodNo == '' ? '-' : branchLisChanodItem.chanodNo,
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFF999A9C),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
                                                                                   ),
                                                                                 ],
                                                                               ),
-                                                                            ],
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  'โฉนดที่ดิน',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFFBCBCBE),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  branchListChanodItemToItem.chanodNo == '' ? '-' : branchListChanodItemToItem.chanodNo,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
                                                                             ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  'ระวาง',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFFBCBCBE),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  functions.rawangFormattedFunction(branchListChanodItemToItem.utmmap) == null || functions.rawangFormattedFunction(branchListChanodItemToItem.utmmap) == '' ? '-' : branchListChanodItemToItem.utmmap,
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  'เนื้อที่ (ไร่-งาน-วา)',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFFBCBCBE),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  '${branchListChanodItemToItem.landAreaRai}-${branchListChanodItemToItem.landAreaNgan}-${branchListChanodItemToItem.landAreaWa}',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  'ไม่จดจำนอง (บาท)',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFFBCBCBE),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  '${functions.returnNumberWithComma2Decimal(branchListChanodItemToItem.ltv1Amount)}',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  'จดจำนอง (บาท)',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFFBCBCBE),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                                Text(
-                                                                                  '${functions.returnNumberWithComma2Decimal(branchListChanodItemToItem.ltv2Amount)}',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Color(0xFF999A9C),
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        20.0,
-                                                                        10.0,
-                                                                        11.0,
-                                                                        0.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceEvenly,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Expanded(
-                                                                            child:
-                                                                                Container(
-                                                                              decoration: BoxDecoration(),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                                                                               child: Row(
                                                                                 mainAxisSize: MainAxisSize.max,
-                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 children: [
-                                                                                  Expanded(
+                                                                                  Text(
+                                                                                    'ระวาง',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFFBCBCBE),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    functions.rawangFormattedFunction(branchLisChanodItem.utmmap) == null || functions.rawangFormattedFunction(branchLisChanodItem.utmmap) == '' ? '-' : branchLisChanodItem.utmmap,
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFF999A9C),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    'เนื้อที่ (ไร่-งาน-วา)',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFFBCBCBE),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    '${branchLisChanodItem.landAreaRai}-${branchLisChanodItem.landAreaNgan}-${branchLisChanodItem.landAreaWa}',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFF999A9C),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    'ไม่จดจำนอง (บาท)',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFFBCBCBE),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    '${functions.returnNumberWithComma2Decimal(branchLisChanodItem.ltv1Amount)}',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Color(0xFF999A9C),
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          20.0,
+                                                                          10.0,
+                                                                          11.0,
+                                                                          0.0),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                children: [
+                                                                                  Align(
+                                                                                    alignment: AlignmentDirectional(0.0, 1.0),
+                                                                                    child: Text(
+                                                                                      'จดจำนอง (บาท)',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                            Expanded(
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                children: [
+                                                                                  Align(
+                                                                                    alignment: AlignmentDirectional(0.0, 1.0),
                                                                                     child: Padding(
                                                                                       padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                                                                                       child: Text(
-                                                                                        '${branchListChanodItemToItem.branchName} (${branchListChanodItemToItem.branchCode})',
+                                                                                        valueOrDefault<String>(
+                                                                                          functions.returnNumberWithComma2Decimal(branchLisChanodItem.ltv2Amount),
+                                                                                          '186372.00',
+                                                                                        ),
                                                                                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                               fontFamily: 'Noto San Thai',
-                                                                                              color: Color(0xFF003063),
-                                                                                              fontSize: 16.0,
+                                                                                              fontSize: 20.0,
                                                                                               letterSpacing: 0.0,
                                                                                               fontWeight: FontWeight.w600,
                                                                                             ),
@@ -1998,98 +857,191 @@ class _AssignBranchPageWidgetState extends State<AssignBranchPageWidget>
                                                                                 ],
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                          Container(
-                                                                            decoration:
-                                                                                BoxDecoration(),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                    child: Text(
-                                                                                      '${branchListChanodItemToItem.callStatus}',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Noto San Thai',
-                                                                                            color: FlutterFlowTheme.of(context).primary,
-                                                                                            fontSize: 15.0,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                  children: [
+                                                                                    Expanded(
+                                                                                      child: Align(
+                                                                                        alignment: AlignmentDirectional(-1.0, -1.0),
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                          child: Text(
+                                                                                            '${branchLisChanodItem.callStatus}',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  fontSize: 15.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                ),
                                                                                           ),
+                                                                                        ),
+                                                                                      ),
                                                                                     ),
-                                                                                  ),
+                                                                                  ],
                                                                                 ),
-                                                                              ],
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                        ],
+                                                                          ],
+                                                                        ),
                                                                       ),
-                                                                    ),
-                                                                    Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children: [
-                                                                        if (('${branchListChanodItemToItem.callStatus}' ==
-                                                                                'ใหม่') &&
-                                                                            (widget.level !=
-                                                                                'HO'))
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                6.0),
-                                                                            child:
-                                                                                FFButtonWidget(
-                                                                              onPressed: () async {
-                                                                                FFAppState().isTextFieldVisible = false;
-                                                                                safeSetState(() {});
-                                                                                FFAppState().saveBranchDataTemp = SaveAssignBranchStruct(
-                                                                                  empCode: widget.employeeId,
-                                                                                  mode: () {
-                                                                                    if (widget.mode == 'สาขา') {
-                                                                                      return 'branch';
-                                                                                    } else if (widget.mode == 'เขต') {
-                                                                                      return 'area';
-                                                                                    } else if (widget.mode == 'ภาค') {
-                                                                                      return 'region';
-                                                                                    } else {
-                                                                                      return widget.mode;
-                                                                                    }
-                                                                                  }(),
-                                                                                  leadId: branchListChanodItemToItem.leadId,
-                                                                                  assignType: 'transfer',
-                                                                                  regionCode: widget.branchCodeSearch,
-                                                                                  token: widget.token,
-                                                                                  level: widget.mode,
-                                                                                  level2: widget.level,
-                                                                                );
-                                                                                safeSetState(() {});
+                                                                      Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          if (widget.level !=
+                                                                              'HO')
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+                                                                              child: FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  FFAppState().isTextFieldVisible = true;
+                                                                                  safeSetState(() {});
+                                                                                  FFAppState().saveBranchDataTemp = SaveAssignBranchStruct(
+                                                                                    empCode: widget.employeeId,
+                                                                                    mode: () {
+                                                                                      if (widget.mode == 'สาขา') {
+                                                                                        return 'branch';
+                                                                                      } else if (widget.mode == 'เขต') {
+                                                                                        return 'area';
+                                                                                      } else if (widget.mode == 'ภาค') {
+                                                                                        return 'region';
+                                                                                      } else {
+                                                                                        return widget.mode;
+                                                                                      }
+                                                                                    }(),
+                                                                                    leadId: branchLisChanodItem.leadId,
+                                                                                    assignType: 'assign',
+                                                                                    regionCode: widget.branchCodeSearch,
+                                                                                    token: widget.token,
+                                                                                    level: widget.mode,
+                                                                                    level2: widget.level,
+                                                                                  );
+                                                                                  safeSetState(() {});
 
-                                                                                context.goNamed(
-                                                                                  SelectedBranchPageWidget.routeName,
-                                                                                  queryParameters: {
-                                                                                    'fromPage': serializeParam(
-                                                                                      'LH',
-                                                                                      ParamType.String,
-                                                                                    ),
-                                                                                  }.withoutNulls,
+                                                                                  context.goNamed(
+                                                                                    SelectedBranchPageWidget.routeName,
+                                                                                    queryParameters: {
+                                                                                      'fromPage': serializeParam(
+                                                                                        'LH',
+                                                                                        ParamType.String,
+                                                                                      ),
+                                                                                    }.withoutNulls,
+                                                                                  );
+                                                                                },
+                                                                                text: 'ส่งเรื่องไปสาขา',
+                                                                                options: FFButtonOptions(
+                                                                                  width: 120.0,
+                                                                                  height: 40.0,
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 14.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          if (widget.level !=
+                                                                              'HO')
+                                                                            FFButtonWidget(
+                                                                              onPressed: () async {
+                                                                                var _shouldSetState = false;
+                                                                                _model.getCalledStatusCodeAssign = await GetLeadCalledStatusDropdownAPICall.call(
+                                                                                  apiUrl: FFAppState().arunsawadApiUrl,
+                                                                                  token: widget.token,
+                                                                                  leadChannel: branchLisChanodItem.channel,
                                                                                 );
+
+                                                                                _shouldSetState = true;
+                                                                                if (!(((_model.getCalledStatusCodeAssign?.statusCode ?? 200) == 200) &&
+                                                                                    (GetLeadCalledStatusDropdownAPICall.statusLayer1(
+                                                                                          (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
+                                                                                        ) ==
+                                                                                        200))) {
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (alertDialogContext) {
+                                                                                      return AlertDialog(
+                                                                                        content: Text('Connection Status ${(_model.getCalledStatusCodeAssign?.statusCode ?? 200).toString()} Status Layer1 ${GetLeadCalledStatusDropdownAPICall.statusLayer1(
+                                                                                          (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
+                                                                                        )?.toString()}'),
+                                                                                        actions: [
+                                                                                          TextButton(
+                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                            child: Text('Ok'),
+                                                                                          ),
+                                                                                        ],
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                  return;
+                                                                                }
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  barrierColor: Color(0xBF000000),
+                                                                                  isDismissible: false,
+                                                                                  enableDrag: false,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return GestureDetector(
+                                                                                      onTap: () {
+                                                                                        FocusScope.of(context).unfocus();
+                                                                                        FocusManager.instance.primaryFocus?.unfocus();
+                                                                                      },
+                                                                                      child: Padding(
+                                                                                        padding: MediaQuery.viewInsetsOf(context),
+                                                                                        child: Container(
+                                                                                          height: MediaQuery.sizeOf(context).height * 0.7,
+                                                                                          child: SavedLeadCalledStatusWidget(
+                                                                                            leadChannel: branchLisChanodItem.channel,
+                                                                                            leadId: branchLisChanodItem.leadId,
+                                                                                            callStatusId: GetLeadCalledStatusDropdownAPICall.callStatusID(
+                                                                                              (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
+                                                                                            )!,
+                                                                                            callStatussName: GetLeadCalledStatusDropdownAPICall.callStatusName(
+                                                                                              (_model.getCalledStatusCodeAssign?.jsonBody ?? ''),
+                                                                                            )!,
+                                                                                            customerName: '${branchLisChanodItem.firstName} ${functions.checkUserName(branchLisChanodItem.lastName)}',
+                                                                                            token: widget.token!,
+                                                                                            fromPage: 'LH',
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                ).then((value) => safeSetState(() => _model.savedCallStatusAssign = value));
+
+                                                                                _shouldSetState = true;
+                                                                                if (!(('${_model.savedCallStatusAssign}' != '') && ('${_model.savedCallStatusAssign}' != 'null'))) {
+                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                  return;
+                                                                                }
+                                                                                _model.updateChanodlistAtIndex(
+                                                                                  branchLisChanodIndex,
+                                                                                  (e) => e..callStatus = _model.savedCallStatusAssign,
+                                                                                );
+                                                                                safeSetState(() {});
+                                                                                if (_shouldSetState) safeSetState(() {});
                                                                               },
-                                                                              text: 'ย้ายสาขา',
+                                                                              text: 'บันทึกโทร',
                                                                               options: FFButtonOptions(
-                                                                                width: 100.0,
+                                                                                width: 120.0,
                                                                                 height: 40.0,
                                                                                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                                                                                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                color: FlutterFlowTheme.of(context).primaryText,
                                                                                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                                                                       fontFamily: 'Noto San Thai',
                                                                                       color: Colors.white,
@@ -2100,165 +1052,1142 @@ class _AssignBranchPageWidgetState extends State<AssignBranchPageWidget>
                                                                                 borderRadius: BorderRadius.circular(8.0),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                        if (widget.level !=
-                                                                            'HO')
-                                                                          FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              var _shouldSetState = false;
-                                                                              _model.getCalledStatusCode = await GetLeadCalledStatusDropdownAPICall.call(
-                                                                                apiUrl: FFAppState().arunsawadApiUrl,
-                                                                                token: widget.token,
-                                                                                leadChannel: branchListChanodItemToItem.channel,
-                                                                              );
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        if (_model.chanodlist.length == 0)
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'ไม่พบรายการข้อมูล',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 0.0, 20.0, 0.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 10.0, 0.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 10.0, 0.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.only(
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomRight:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        topLeft:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        topRight:
+                                                            Radius.circular(
+                                                                10.0),
+                                                      ),
+                                                      border: Border.all(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8.0,
+                                                                  0.0,
+                                                                  8.0,
+                                                                  0.0),
+                                                      child: TextFormField(
+                                                        controller: _model
+                                                            .textField23TextController,
+                                                        focusNode: _model
+                                                            .textField23FocusNode,
+                                                        onChanged: (_) =>
+                                                            EasyDebounce
+                                                                .debounce(
+                                                          '_model.textField23TextController',
+                                                          Duration(
+                                                              milliseconds:
+                                                                  100),
+                                                          () => safeSetState(
+                                                              () {}),
+                                                        ),
+                                                        autofocus: false,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: Colors
+                                                                        .white,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                          hintText:
+                                                              'รหัสสาขา/ชื่อสาขา',
+                                                          hintStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: Color(
+                                                                        0xFFBCBCBE),
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                  ),
+                                                          enabledBorder:
+                                                              InputBorder.none,
+                                                          focusedBorder:
+                                                              InputBorder.none,
+                                                          errorBorder:
+                                                              InputBorder.none,
+                                                          focusedErrorBorder:
+                                                              InputBorder.none,
+                                                          hoverColor:
+                                                              Colors.white,
+                                                          prefixIcon: Icon(
+                                                            Icons
+                                                                .search_outlined,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                          ),
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        validator: _model
+                                                            .textField23TextControllerValidator
+                                                            .asValidator(
+                                                                context),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              if (false)
+                                                FFButtonWidget(
+                                                  onPressed: () async {
+                                                    context.pushNamed(
+                                                        ChanodListPageCopyWidget
+                                                            .routeName);
+                                                  },
+                                                  text: 'ค้นหา',
+                                                  options: FFButtonOptions(
+                                                    width: 100.0,
+                                                    height: 50.0,
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                16.0, 0.0),
+                                                    iconPadding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 0.0),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    elevation: 0.0,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 10.0, 0.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              FFButtonWidget(
+                                                onPressed: () async {
+                                                  _model.chanodlistto = functions
+                                                      .reversedList(_model
+                                                          .chanodlistto
+                                                          .toList())
+                                                      .toList()
+                                                      .cast<
+                                                          ChanodData3Struct>();
+                                                  safeSetState(() {});
+                                                },
+                                                text: 'เรียงลำดับข้อมูล',
+                                                icon: FaIcon(
+                                                  FontAwesomeIcons.sortAmountUp,
+                                                  size: 15.0,
+                                                ),
+                                                options: FFButtonOptions(
+                                                  width: 170.0,
+                                                  height: 40.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 16.0, 0.0),
+                                                  iconAlignment:
+                                                      IconAlignment.end,
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: Color(0xFF003063),
+                                                  textStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: Colors.white,
+                                                            fontSize: 12.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                  elevation: 0.0,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(20.0),
+                                                    bottomRight:
+                                                        Radius.circular(20.0),
+                                                    topLeft:
+                                                        Radius.circular(20.0),
+                                                    topRight:
+                                                        Radius.circular(20.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              FFButtonWidget(
+                                                onPressed: () async {
+                                                  safeSetState(() {
+                                                    _model
+                                                        .textField23TextController
+                                                        ?.clear();
+                                                  });
+                                                },
+                                                text: 'ล้างข้อมูล',
+                                                options: FFButtonOptions(
+                                                  width: 170.0,
+                                                  height: 40.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          16.0, 0.0, 16.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            Color(0xFF003063),
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                  elevation: 0.0,
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                    bottomLeft:
+                                                        Radius.circular(20.0),
+                                                    bottomRight:
+                                                        Radius.circular(20.0),
+                                                    topLeft:
+                                                        Radius.circular(20.0),
+                                                    topRight:
+                                                        Radius.circular(20.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (_model.chanodlistto.length > 0)
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 0.0),
+                                              child: Builder(
+                                                builder: (context) {
+                                                  final branchListChanodItemTo =
+                                                      _model.chanodlistto
+                                                          .toList();
 
-                                                                              _shouldSetState = true;
-                                                                              if (!(((_model.getCalledStatusCode?.statusCode ?? 200) == 200) &&
-                                                                                  (GetLeadCalledStatusDropdownAPICall.statusLayer1(
-                                                                                        (_model.getCalledStatusCode?.jsonBody ?? ''),
-                                                                                      ) ==
-                                                                                      200))) {
-                                                                                await showDialog(
-                                                                                  context: context,
-                                                                                  builder: (alertDialogContext) {
-                                                                                    return AlertDialog(
-                                                                                      content: Text('Connection Status ${(_model.getCalledStatusCode?.statusCode ?? 200).toString()} Status Layer1 ${GetLeadCalledStatusDropdownAPICall.statusLayer1(
-                                                                                        (_model.getCalledStatusCode?.jsonBody ?? ''),
-                                                                                      )?.toString()}'),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                          onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                          child: Text('Ok'),
-                                                                                        ),
-                                                                                      ],
-                                                                                    );
-                                                                                  },
-                                                                                );
-                                                                                if (_shouldSetState) safeSetState(() {});
-                                                                                return;
-                                                                              }
-                                                                              await showModalBottomSheet(
-                                                                                isScrollControlled: true,
-                                                                                backgroundColor: Colors.transparent,
-                                                                                barrierColor: Color(0xBF000000),
-                                                                                isDismissible: false,
-                                                                                enableDrag: false,
-                                                                                context: context,
-                                                                                builder: (context) {
-                                                                                  return GestureDetector(
-                                                                                    onTap: () {
-                                                                                      FocusScope.of(context).unfocus();
-                                                                                      FocusManager.instance.primaryFocus?.unfocus();
-                                                                                    },
+                                                  return ListView.builder(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                      0,
+                                                      0,
+                                                      0,
+                                                      30.0,
+                                                    ),
+                                                    shrinkWrap: true,
+                                                    scrollDirection:
+                                                        Axis.vertical,
+                                                    itemCount:
+                                                        branchListChanodItemTo
+                                                            .length,
+                                                    itemBuilder: (context,
+                                                        branchListChanodItemToIndex) {
+                                                      final branchListChanodItemToItem =
+                                                          branchListChanodItemTo[
+                                                              branchListChanodItemToIndex];
+                                                      return Visibility(
+                                                        visible: _model
+                                                                    .textField23TextController
+                                                                    .text !=
+                                                                ''
+                                                            ? (functions
+                                                                    .containString(
+                                                                        _model
+                                                                            .textField23TextController
+                                                                            .text,
+                                                                        branchListChanodItemToItem
+                                                                            .branchName)! ||
+                                                                functions
+                                                                    .containString(
+                                                                        _model
+                                                                            .textField23TextController
+                                                                            .text,
+                                                                        branchListChanodItemToItem
+                                                                            .branchCode)! ||
+                                                                (true
+                                                                    ? false
+                                                                    : functions.containString(
+                                                                        _model
+                                                                            .textField23TextController
+                                                                            .text,
+                                                                        branchListChanodItemToItem
+                                                                            .firstName)!) ||
+                                                                (true
+                                                                    ? false
+                                                                    : functions.containString(
+                                                                        _model
+                                                                            .textField23TextController
+                                                                            .text,
+                                                                        branchListChanodItemToItem
+                                                                            .lastName)!))
+                                                            : true,
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      9.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Material(
+                                                            color: Colors
+                                                                .transparent,
+                                                            elevation: 8.0,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                              ),
+                                                            ),
+                                                            child: Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height:
+                                                                  '${branchListChanodItemToItem.callStatus}' ==
+                                                                          'ใหม่'
+                                                                      ? 330.0
+                                                                      : 290.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: '${branchListChanodItemToItem.callStatus}' ==
+                                                                        'ติดต่อได้'
+                                                                    ? Color(
+                                                                        0xFFE9FFEA)
+                                                                    : FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .only(
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                ),
+                                                              ),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            10.0,
+                                                                            0.0,
+                                                                            10.0,
+                                                                            0.0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 8.0, 0.0),
+                                                                              child: ClipRRect(
+                                                                                borderRadius: BorderRadius.circular(8.0),
+                                                                                child: SvgPicture.asset(
+                                                                                  'assets/images/HouseLoanIcon.svg',
+                                                                                  width: 60.0,
+                                                                                  height: 60.0,
+                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Expanded(
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.start,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.center,
+                                                                            children: [
+                                                                              Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                children: [
+                                                                                  Expanded(
                                                                                     child: Padding(
-                                                                                      padding: MediaQuery.viewInsetsOf(context),
-                                                                                      child: Container(
-                                                                                        height: MediaQuery.sizeOf(context).height * 0.7,
-                                                                                        child: SavedLeadCalledStatusWidget(
-                                                                                          leadChannel: branchListChanodItemToItem.channel,
-                                                                                          leadId: branchListChanodItemToItem.leadId,
-                                                                                          callStatusId: GetLeadCalledStatusDropdownAPICall.callStatusID(
-                                                                                            (_model.getCalledStatusCode?.jsonBody ?? ''),
-                                                                                          )!,
-                                                                                          callStatussName: GetLeadCalledStatusDropdownAPICall.callStatusName(
-                                                                                            (_model.getCalledStatusCode?.jsonBody ?? ''),
-                                                                                          )!,
-                                                                                          customerName: '${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}',
-                                                                                          token: widget.token!,
-                                                                                          fromPage: 'LH',
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                                                      child: Column(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Container(
+                                                                                              decoration: BoxDecoration(),
+                                                                                              child: Row(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                                children: [
+                                                                                                  Expanded(
+                                                                                                    child: Padding(
+                                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                                      child: Text(
+                                                                                                        '${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}',
+                                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                              fontFamily: 'Noto San Thai',
+                                                                                                              fontSize: 17.0,
+                                                                                                              letterSpacing: 0.0,
+                                                                                                              fontWeight: FontWeight.w600,
+                                                                                                            ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Expanded(
+                                                                                            child: Container(
+                                                                                              decoration: BoxDecoration(),
+                                                                                              child: Padding(
+                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                                child: Row(
+                                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                                  children: [
+                                                                                                    Expanded(
+                                                                                                      child: Text(
+                                                                                                        '${branchListChanodItemToItem.subdistrict}>${branchListChanodItemToItem.district}>${branchListChanodItemToItem.province}',
+                                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                              fontFamily: 'Noto San Thai',
+                                                                                                              color: Color(0xFF452F1F),
+                                                                                                              fontSize: 16.0,
+                                                                                                              letterSpacing: 0.0,
+                                                                                                              fontWeight: FontWeight.w600,
+                                                                                                            ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  Column(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    children: [
+                                                                                      Builder(
+                                                                                        builder: (context) {
+                                                                                          if (!false) {
+                                                                                            return Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                              child: FlutterFlowIconButton(
+                                                                                                borderRadius: 30.0,
+                                                                                                buttonSize: 40.0,
+                                                                                                fillColor: Color(0xFF53C300),
+                                                                                                icon: Icon(
+                                                                                                  Icons.call,
+                                                                                                  color: FlutterFlowTheme.of(context).info,
+                                                                                                  size: 24.0,
+                                                                                                ),
+                                                                                                showLoadingIndicator: true,
+                                                                                                onPressed: () async {
+                                                                                                  currentUserLocationValue = await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+                                                                                                  var _shouldSetState = false;
+                                                                                                  var confirmDialogResponse = await showDialog<bool>(
+                                                                                                        context: context,
+                                                                                                        builder: (alertDialogContext) {
+                                                                                                          return AlertDialog(
+                                                                                                            content: Text('คุณต้องการจะโทรออกหรือไม่?'),
+                                                                                                            actions: [
+                                                                                                              TextButton(
+                                                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                                child: Text('ยกเลิก'),
+                                                                                                              ),
+                                                                                                              TextButton(
+                                                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                                child: Text('โทร'),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          );
+                                                                                                        },
+                                                                                                      ) ??
+                                                                                                      false;
+                                                                                                  if (!confirmDialogResponse) {
+                                                                                                    if (_shouldSetState) safeSetState(() {});
+                                                                                                    return;
+                                                                                                  }
+                                                                                                  if (!functions.checkPhoneNumberChar('${branchListChanodItemToItem.phoneNumber}')!) {
+                                                                                                    await showDialog(
+                                                                                                      context: context,
+                                                                                                      builder: (alertDialogContext) {
+                                                                                                        return AlertDialog(
+                                                                                                          content: Text('เบอร์โทรไม่ถูกต้อง'),
+                                                                                                          actions: [
+                                                                                                            TextButton(
+                                                                                                              onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                                              child: Text('Ok'),
+                                                                                                            ),
+                                                                                                          ],
+                                                                                                        );
+                                                                                                      },
+                                                                                                    );
+                                                                                                    if (_shouldSetState) safeSetState(() {});
+                                                                                                    return;
+                                                                                                  }
+                                                                                                  _model.open3cx2 = await actions.open3CXAction(
+                                                                                                    '${branchListChanodItemToItem.phoneNumber}',
+                                                                                                  );
+                                                                                                  _shouldSetState = true;
+                                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                                },
+                                                                                              ),
+                                                                                            );
+                                                                                          } else {
+                                                                                            return Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                              child: InkWell(
+                                                                                                splashColor: Colors.transparent,
+                                                                                                focusColor: Colors.transparent,
+                                                                                                hoverColor: Colors.transparent,
+                                                                                                highlightColor: Colors.transparent,
+                                                                                                onTap: () async {
+                                                                                                  await Clipboard.setData(ClipboardData(text: branchListChanodItemToItem.phoneNumber));
+                                                                                                  await showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (alertDialogContext) {
+                                                                                                      return AlertDialog(
+                                                                                                        content: Text('คัดลอกเบอร์โทรของลูกค้า ${'${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}'} สำเร็จ! กรุณานำไปวางในแอพโทรศัพท์เพื่อโทรหาลูกค้า'),
+                                                                                                        actions: [
+                                                                                                          TextButton(
+                                                                                                            onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                                            child: Text('Ok'),
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      );
+                                                                                                    },
+                                                                                                  );
+                                                                                                },
+                                                                                                child: Text(
+                                                                                                  'คัดลอกเบอร์โทร',
+                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                        fontFamily: 'Noto San Thai',
+                                                                                                        letterSpacing: 0.0,
+                                                                                                        fontWeight: FontWeight.w600,
+                                                                                                        decoration: TextDecoration.underline,
+                                                                                                      ),
+                                                                                                ),
+                                                                                              ),
+                                                                                            );
+                                                                                          }
+                                                                                        },
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'โฉนดที่ดิน',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFFBCBCBE),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      branchListChanodItemToItem.chanodNo == '' ? '-' : branchListChanodItemToItem.chanodNo,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'ระวาง',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFFBCBCBE),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      functions.rawangFormattedFunction(branchListChanodItemToItem.utmmap) == null || functions.rawangFormattedFunction(branchListChanodItemToItem.utmmap) == '' ? '-' : branchListChanodItemToItem.utmmap,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'เนื้อที่ (ไร่-งาน-วา)',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFFBCBCBE),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${branchListChanodItemToItem.landAreaRai}-${branchListChanodItemToItem.landAreaNgan}-${branchListChanodItemToItem.landAreaWa}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'ไม่จดจำนอง (บาท)',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFFBCBCBE),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${functions.returnNumberWithComma2Decimal(branchListChanodItemToItem.ltv1Amount)}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'จดจำนอง (บาท)',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFFBCBCBE),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${functions.returnNumberWithComma2Decimal(branchListChanodItemToItem.ltv2Amount)}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF999A9C),
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            20.0,
+                                                                            10.0,
+                                                                            11.0,
+                                                                            0.0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child:
+                                                                              Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceEvenly,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                          child: Text(
+                                                                                            '${branchListChanodItemToItem.branchName} (${branchListChanodItemToItem.branchCode})',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: Color(0xFF003063),
+                                                                                                  fontSize: 16.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Container(
+                                                                                decoration: BoxDecoration(),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                  children: [
+                                                                                    Expanded(
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                        child: Text(
+                                                                                          '${branchListChanodItemToItem.callStatus}',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                                fontSize: 15.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
                                                                                         ),
                                                                                       ),
                                                                                     ),
-                                                                                  );
-                                                                                },
-                                                                              ).then((value) => safeSetState(() => _model.savedCallStatus = value));
-
-                                                                              _shouldSetState = true;
-                                                                              if (!(('${_model.savedCallStatus}' != '') && ('${_model.savedCallStatus}' != 'null'))) {
-                                                                                if (_shouldSetState) safeSetState(() {});
-                                                                                return;
-                                                                              }
-                                                                              _model.updateChanodlisttoAtIndex(
-                                                                                branchListChanodItemToIndex,
-                                                                                (e) => e..callStatus = _model.savedCallStatus,
-                                                                              );
-                                                                              safeSetState(() {});
-                                                                              if (_shouldSetState)
-                                                                                safeSetState(() {});
-                                                                            },
-                                                                            text:
-                                                                                'บันทึกโทร',
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: 100.0,
-                                                                              height: 40.0,
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              color: FlutterFlowTheme.of(context).primaryText,
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Colors.white,
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(8.0),
-                                                                            ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ],
                                                                           ),
+                                                                        ),
+                                                                        Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          children: [
+                                                                            if (('${branchListChanodItemToItem.callStatus}' == 'ใหม่') &&
+                                                                                (widget.level != 'HO'))
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+                                                                                child: FFButtonWidget(
+                                                                                  onPressed: () async {
+                                                                                    FFAppState().isTextFieldVisible = false;
+                                                                                    safeSetState(() {});
+                                                                                    FFAppState().saveBranchDataTemp = SaveAssignBranchStruct(
+                                                                                      empCode: widget.employeeId,
+                                                                                      mode: () {
+                                                                                        if (widget.mode == 'สาขา') {
+                                                                                          return 'branch';
+                                                                                        } else if (widget.mode == 'เขต') {
+                                                                                          return 'area';
+                                                                                        } else if (widget.mode == 'ภาค') {
+                                                                                          return 'region';
+                                                                                        } else {
+                                                                                          return widget.mode;
+                                                                                        }
+                                                                                      }(),
+                                                                                      leadId: branchListChanodItemToItem.leadId,
+                                                                                      assignType: 'transfer',
+                                                                                      regionCode: widget.branchCodeSearch,
+                                                                                      token: widget.token,
+                                                                                      level: widget.mode,
+                                                                                      level2: widget.level,
+                                                                                    );
+                                                                                    safeSetState(() {});
+
+                                                                                    context.goNamed(
+                                                                                      SelectedBranchPageWidget.routeName,
+                                                                                      queryParameters: {
+                                                                                        'fromPage': serializeParam(
+                                                                                          'LH',
+                                                                                          ParamType.String,
+                                                                                        ),
+                                                                                      }.withoutNulls,
+                                                                                    );
+                                                                                  },
+                                                                                  text: 'ย้ายสาขา',
+                                                                                  options: FFButtonOptions(
+                                                                                    width: 100.0,
+                                                                                    height: 40.0,
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                    iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                    color: FlutterFlowTheme.of(context).primary,
+                                                                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Colors.white,
+                                                                                          fontSize: 14.0,
+                                                                                          letterSpacing: 0.0,
+                                                                                        ),
+                                                                                    elevation: 0.0,
+                                                                                    borderRadius: BorderRadius.circular(8.0),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            if (widget.level !=
+                                                                                'HO')
+                                                                              FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  var _shouldSetState = false;
+                                                                                  _model.getCalledStatusCode = await GetLeadCalledStatusDropdownAPICall.call(
+                                                                                    apiUrl: FFAppState().arunsawadApiUrl,
+                                                                                    token: widget.token,
+                                                                                    leadChannel: branchListChanodItemToItem.channel,
+                                                                                  );
+
+                                                                                  _shouldSetState = true;
+                                                                                  if (!(((_model.getCalledStatusCode?.statusCode ?? 200) == 200) &&
+                                                                                      (GetLeadCalledStatusDropdownAPICall.statusLayer1(
+                                                                                            (_model.getCalledStatusCode?.jsonBody ?? ''),
+                                                                                          ) ==
+                                                                                          200))) {
+                                                                                    await showDialog(
+                                                                                      context: context,
+                                                                                      builder: (alertDialogContext) {
+                                                                                        return AlertDialog(
+                                                                                          content: Text('Connection Status ${(_model.getCalledStatusCode?.statusCode ?? 200).toString()} Status Layer1 ${GetLeadCalledStatusDropdownAPICall.statusLayer1(
+                                                                                            (_model.getCalledStatusCode?.jsonBody ?? ''),
+                                                                                          )?.toString()}'),
+                                                                                          actions: [
+                                                                                            TextButton(
+                                                                                              onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                              child: Text('Ok'),
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      },
+                                                                                    );
+                                                                                    if (_shouldSetState) safeSetState(() {});
+                                                                                    return;
+                                                                                  }
+                                                                                  await showModalBottomSheet(
+                                                                                    isScrollControlled: true,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    barrierColor: Color(0xBF000000),
+                                                                                    isDismissible: false,
+                                                                                    enableDrag: false,
+                                                                                    context: context,
+                                                                                    builder: (context) {
+                                                                                      return GestureDetector(
+                                                                                        onTap: () {
+                                                                                          FocusScope.of(context).unfocus();
+                                                                                          FocusManager.instance.primaryFocus?.unfocus();
+                                                                                        },
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.viewInsetsOf(context),
+                                                                                          child: Container(
+                                                                                            height: MediaQuery.sizeOf(context).height * 0.7,
+                                                                                            child: SavedLeadCalledStatusWidget(
+                                                                                              leadChannel: branchListChanodItemToItem.channel,
+                                                                                              leadId: branchListChanodItemToItem.leadId,
+                                                                                              callStatusId: GetLeadCalledStatusDropdownAPICall.callStatusID(
+                                                                                                (_model.getCalledStatusCode?.jsonBody ?? ''),
+                                                                                              )!,
+                                                                                              callStatussName: GetLeadCalledStatusDropdownAPICall.callStatusName(
+                                                                                                (_model.getCalledStatusCode?.jsonBody ?? ''),
+                                                                                              )!,
+                                                                                              customerName: '${branchListChanodItemToItem.firstName} ${functions.checkUserName(branchListChanodItemToItem.lastName)}',
+                                                                                              token: widget.token!,
+                                                                                              fromPage: 'LH',
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  ).then((value) => safeSetState(() => _model.savedCallStatus = value));
+
+                                                                                  _shouldSetState = true;
+                                                                                  if (!(('${_model.savedCallStatus}' != '') && ('${_model.savedCallStatus}' != 'null'))) {
+                                                                                    if (_shouldSetState) safeSetState(() {});
+                                                                                    return;
+                                                                                  }
+                                                                                  _model.updateChanodlisttoAtIndex(
+                                                                                    branchListChanodItemToIndex,
+                                                                                    (e) => e..callStatus = _model.savedCallStatus,
+                                                                                  );
+                                                                                  safeSetState(() {});
+                                                                                  if (_shouldSetState) safeSetState(() {});
+                                                                                },
+                                                                                text: 'บันทึกโทร',
+                                                                                options: FFButtonOptions(
+                                                                                  width: 100.0,
+                                                                                  height: 40.0,
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Colors.white,
+                                                                                        fontSize: 14.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
                                                                       ],
                                                                     ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                            ],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ),
+                                                      );
+                                                    },
                                                   );
                                                 },
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    if (_model.chanodlistto.length == 0)
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'ไม่พบรายการข้อมูล',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                  ],
-                                ),
+                                          ),
+                                        if (_model.chanodlistto.length == 0)
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'ไม่พบรายการข้อมูล',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

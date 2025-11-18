@@ -71,7 +71,7 @@ class _ShareSelectComponentWidgetState
                     child: FFButtonWidget(
                       onPressed: () async {
                         await actions.returnTextToAppreturnTextToApp(
-                          '${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
+                          'เพื่อนคุณแนะนำ สินเชื่อเงินด่วน วงเงินสูง ได้เงินไว | ประกันรถยนต์ ผ่อนเงินสดได้ที่ศรีสวัสดิ์ เงินสดทันใจ สนใจคลิก ${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
                           'shareLink',
                         );
                         Navigator.pop(context);

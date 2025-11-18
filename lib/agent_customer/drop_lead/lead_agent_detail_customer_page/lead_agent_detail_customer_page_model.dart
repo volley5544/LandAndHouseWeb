@@ -1,11 +1,14 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/instant_timer.dart';
 import '/index.dart';
 import 'lead_agent_detail_customer_page_widget.dart'
     show LeadAgentDetailCustomerPageWidget;
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -36,6 +39,10 @@ class LeadAgentDetailCustomerPageModel
   String idCardBase64 = 'base64';
 
   FFUploadedFile? idCardFile;
+
+  String? customerConsentFlag;
+
+  String smsCode = '0';
 
   ///  State fields for stateful widgets in this page.
 
@@ -71,6 +78,22 @@ class LeadAgentDetailCustomerPageModel
   TextEditingController? textController4;
   late MaskTextInputFormatter textFieldMask1;
   String? Function(BuildContext, String?)? textController4Validator;
+  // State field(s) for Timer widget.
+  final timerInitialTimeMs = 300000;
+  int timerMilliseconds = 300000;
+  String timerValue = StopWatchTimer.getDisplayTime(
+    300000,
+    hours: false,
+    milliSecond: false,
+  );
+  FlutterFlowTimerController timerController =
+      FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
+
+  // Stores action output result for [Backend Call - API (SendConsentSmsApi)] action in Button widget.
+  ApiCallResponse? sendConsentSmsApiOutput;
+  InstantTimer? checkConsentStatusTimer;
+  // Stores action output result for [Backend Call - API (CheckConsentStatusApi)] action in Button widget.
+  ApiCallResponse? checkConsentStatusApiOutput;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController5;
@@ -111,6 +134,8 @@ class LeadAgentDetailCustomerPageModel
     textFieldFocusNode1?.dispose();
     textController4?.dispose();
 
+    timerController.dispose();
+    checkConsentStatusTimer?.cancel();
     textFieldFocusNode2?.dispose();
     textController5?.dispose();
 

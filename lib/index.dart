@@ -107,3 +107,9 @@ export '/agent_customer/agent_detail/commission_history_page/commission_history_
 export '/agent_customer/agent_detail/agent_profile/name_card_page/name_card_page_widget.dart'
     show NameCardPageWidget;
 export '/test_page3/test_page3_widget.dart' show TestPage3Widget;
+export '/agent_customer/agent_detail/consent_success_page/consent_success_page_widget.dart'
+    show ConsentSuccessPageWidget;
+export '/agent_customer/agent_detail/timeout_page/timeout_page_widget.dart'
+    show TimeoutPageWidget;
+export '/agent_customer/drop_lead/pdf_viewer_agent_page/pdf_viewer_agent_page_widget.dart'
+    show PdfViewerAgentPageWidget;

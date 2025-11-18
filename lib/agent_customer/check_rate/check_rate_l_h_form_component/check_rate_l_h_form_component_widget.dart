@@ -4940,10 +4940,12 @@ class _CheckRateLHFormComponentWidgetState
                                                                           0.0),
                                                                   child: Text(
                                                                     '${valueOrDefault<String>(
-                                                                      functions.returnNumberWithComma2Decimal(((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) *
-                                                                              (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? FFAppState().agentProfileDataType.defaultPercent : FFAppState().agentProfileDataType.actualPercent))) /
-                                                                              100)
-                                                                          .toString()),
+                                                                      functions.returnNumberWithComma2Decimal(FFAppState().agentProfileDataType.paymentMethod ==
+                                                                              'installment'
+                                                                          ? (FFAppState().maxCommissionAmountInstallment < 0.0
+                                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())
+                                                                              : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
+                                                                          : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))),
                                                                       '0',
                                                                     )} บาท',
                                                                     textAlign:
@@ -4968,6 +4970,59 @@ class _CheckRateLHFormComponentWidgetState
                                                                 ),
                                                               ],
                                                             ),
+                                                            if (FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .paymentMethod ==
+                                                                    'installment'
+                                                                ? ((double
+                                                                    maxCommission) {
+                                                                    return maxCommission >=
+                                                                        0.0;
+                                                                  }(FFAppState()
+                                                                    .maxCommissionAmountInstallment))
+                                                                : ((double
+                                                                    maxCommission) {
+                                                                    return maxCommission >=
+                                                                        0.0;
+                                                                  }(FFAppState()
+                                                                    .maxCommissionAmountOnetime)))
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            24.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Text(
+                                                                      FFAppState().agentProfileDataType.paymentMethod ==
+                                                                              'installment'
+                                                                          ? '${FFAppState().maxCommissionTextInstallment}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountInstallment.toString()}')} บาท'
+                                                                          : '${FFAppState().maxCommissionTextOnetime}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountOnetime.toString()}')} บาท',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).error,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                           ],
                                                         ),
                                                       ),
@@ -5812,39 +5867,34 @@ class _CheckRateLHFormComponentWidgetState
                                               ? _model.datePicked?.toString()
                                               : ''
                                           ..comEstimateAmt =
-                                              '${((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()}'
+                                              '${FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))}'
                                           ..comEstimateVat = FFAppState()
                                               .agentProfileDataType
                                               .agentWht
-                                          ..comEstimateNetAmt = (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) *
-                                                      (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment'
-                                                          ? (FFAppState().agentProfileDataType.defaultPercent != ''
-                                                              ? FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .defaultPercent
-                                                              : '0')
-                                                          : (FFAppState().agentProfileDataType.actualPercent != ''
-                                                              ? FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .actualPercent
-                                                              : '0')))) /
-                                                      100) -
-                                                  (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment'
-                                                          ? (FFAppState().agentProfileDataType.defaultPercent != ''
-                                                              ? FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .defaultPercent
-                                                              : '0')
-                                                          : (FFAppState().agentProfileDataType.actualPercent != ''
-                                                              ? FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .actualPercent
-                                                              : '0'))) *
+                                          ..comEstimateNetAmt = ((double.parse((FFAppState()
+                                                              .agentProfileDataType
+                                                              .paymentMethod ==
+                                                          'installment'
+                                                      ? (FFAppState().maxCommissionAmountInstallment < 0.0
+                                                          ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                              .toString())
+                                                          : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment
+                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                  .toString())
+                                                              : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
+                                                      : (FFAppState().maxCommissionAmountOnetime < 0.0
+                                                          ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                              .toString())
+                                                          : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime
+                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                  .toString())
+                                                              : '${FFAppState().maxCommissionAmountOnetime.toString()}'))))) -
+                                                  (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) *
                                                       double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) /
                                                       100))
                                               .toString()
                                           ..comEstimateVatAmt =
-                                              '${(double.parse(((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.defaultPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100).toString()}'
+                                              '${(double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100).toString()}'
                                           ..agentGroupId = FFAppState()
                                               .agentProfileDataType
                                               .agentGroupId

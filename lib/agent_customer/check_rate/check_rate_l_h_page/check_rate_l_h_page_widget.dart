@@ -87,120 +87,124 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
     context.watch<FFAppState>();
 
     return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).secondary,
-            automaticallyImplyLeading: false,
-            leading: Visibility(
-              visible: false,
-              child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  await actions.navigateBackWebviewAction();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primary,
-                  size: 30.0,
+      builder: (context) => Title(
+          title: 'โครงการเพื่อนแนะนำเพื่อน',
+          color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Scaffold(
+              key: scaffoldKey,
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              appBar: AppBar(
+                backgroundColor: FlutterFlowTheme.of(context).secondary,
+                automaticallyImplyLeading: false,
+                leading: Visibility(
+                  visible: false,
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await actions.navigateBackWebviewAction();
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 30.0,
+                    ),
+                  ),
+                ),
+                title: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    unawaited(
+                      () async {}(),
+                    );
+                    await requestPermission(photoLibraryPermission);
+                    _model.test = await actions.requestCameraPermission();
+                    await showDialog(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          content: Text(_model.test!),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext),
+                              child: Text('Ok'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    context.pushNamed(
+                      CapturePictureSelfieIdcardPageWidget.routeName,
+                      queryParameters: {
+                        'imageType': serializeParam(
+                          'idCard',
+                          ParamType.String,
+                        ),
+                        'title': serializeParam(
+                          'ถ่ายรูปบัตรประชาชน',
+                          ParamType.String,
+                        ),
+                      }.withoutNulls,
+                      extra: <String, dynamic>{
+                        kTransitionInfoKey: TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.rightToLeft,
+                        ),
+                      },
+                    );
+
+                    safeSetState(() {});
+                  },
+                  child: Text(
+                    'กรอกข้อมูลลูกค้า ${FFDevEnvironmentValues().isProduction ? '' : ' (UAT)'}',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Noto San Thai',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                        ),
+                  ),
+                ),
+                actions: [],
+                centerTitle: true,
+                elevation: 2.0,
+              ),
+              body: SafeArea(
+                top: true,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      wrapWithModel(
+                        model: _model.checkRateLHFormComponentModel,
+                        updateCallback: () => safeSetState(() {}),
+                        updateOnChange: true,
+                        child: CheckRateLHFormComponentWidget(
+                          isOnlyCheckRate: true,
+                          updateFormState: (isFormState) async {
+                            _model.isFormState = isFormState;
+                            safeSetState(() {});
+                          },
+                        ),
+                      ),
+                    ].addToStart(SizedBox(height: 4.0)),
+                  ),
                 ),
               ),
             ),
-            title: InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                unawaited(
-                  () async {}(),
-                );
-                await requestPermission(photoLibraryPermission);
-                _model.test = await actions.requestCameraPermission();
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      content: Text(_model.test!),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-
-                context.pushNamed(
-                  CapturePictureSelfieIdcardPageWidget.routeName,
-                  queryParameters: {
-                    'imageType': serializeParam(
-                      'idCard',
-                      ParamType.String,
-                    ),
-                    'title': serializeParam(
-                      'ถ่ายรูปบัตรประชาชน',
-                      ParamType.String,
-                    ),
-                  }.withoutNulls,
-                  extra: <String, dynamic>{
-                    kTransitionInfoKey: TransitionInfo(
-                      hasTransition: true,
-                      transitionType: PageTransitionType.rightToLeft,
-                    ),
-                  },
-                );
-
-                safeSetState(() {});
-              },
-              child: Text(
-                'กรอกข้อมูลลูกค้า ${FFDevEnvironmentValues().isProduction ? '' : ' (UAT)'}',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-            ),
-            actions: [],
-            centerTitle: true,
-            elevation: 2.0,
-          ),
-          body: SafeArea(
-            top: true,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  wrapWithModel(
-                    model: _model.checkRateLHFormComponentModel,
-                    updateCallback: () => safeSetState(() {}),
-                    updateOnChange: true,
-                    child: CheckRateLHFormComponentWidget(
-                      isOnlyCheckRate: true,
-                      updateFormState: (isFormState) async {
-                        _model.isFormState = isFormState;
-                        safeSetState(() {});
-                      },
-                    ),
-                  ),
-                ].addToStart(SizedBox(height: 4.0)),
-              ),
-            ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

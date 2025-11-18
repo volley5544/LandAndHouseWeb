@@ -36,120 +36,128 @@ class _TestPageCopyWidgetState extends State<TestPageCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryText,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Page Title',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Noto San Thai',
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                ),
-          ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryText,
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.98,
-                    height: MediaQuery.sizeOf(context).height * 0.3,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).secondary,
-                        width: 4.0,
-                      ),
+    return Title(
+        title: 'TestPageCopy',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryText,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              automaticallyImplyLeading: false,
+              title: Text(
+                'Page Title',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Noto San Thai',
+                      color: Colors.white,
+                      fontSize: 22.0,
+                      letterSpacing: 0.0,
                     ),
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0.4, -0.9),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.37,
-                              height: 30.0,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  width: 2.0,
+              ),
+              actions: [],
+              centerTitle: false,
+              elevation: 2.0,
+            ),
+            body: SafeArea(
+              top: true,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryText,
+                ),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 0.0),
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 0.98,
+                        height: MediaQuery.sizeOf(context).height * 0.3,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: FlutterFlowTheme.of(context).secondary,
+                            width: 4.0,
+                          ),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(0.4, -0.9),
+                                child: Container(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.37,
+                                  height: 30.0,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      width: 2.0,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.3, -1.3),
-                            child: Text(
-                              'เลขที่บัตรประชาชน',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.38, 1.0),
-                            child: Container(
-                              width: MediaQuery.sizeOf(context).width * 0.18,
-                              height: MediaQuery.sizeOf(context).height * 0.08,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).secondary,
-                                  width: 2.0,
+                              Align(
+                                alignment: AlignmentDirectional(0.3, -1.3),
+                                child: Text(
+                                  'เลขที่บัตรประชาชน',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        letterSpacing: 0.0,
+                                      ),
                                 ),
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0.4, 1.3),
-                            child: Text(
-                              'วันที่หมดอายุบัตร',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color:
-                                        FlutterFlowTheme.of(context).secondary,
-                                    letterSpacing: 0.0,
+                              Align(
+                                alignment: AlignmentDirectional(0.38, 1.0),
+                                child: Container(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.18,
+                                  height:
+                                      MediaQuery.sizeOf(context).height * 0.08,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondary,
+                                      width: 2.0,
+                                    ),
                                   ),
-                            ),
+                                ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(0.4, 1.3),
+                                child: Text(
+                                  'วันที่หมดอายุบัตร',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -114,6 +114,9 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
             url: FFDevEnvironmentValues().isProduction
                 ? FFAppState().apiUrlDocData.agentWebApiUrl
                 : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+            tokenHeader: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiToken
+                : FFAppState().apiUrlDocData.agentWebApiTokenUat,
           );
 
           if ((_model.agentAPIOutput?.statusCode ?? 200) != 200) {
@@ -201,324 +204,295 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
     context.watch<FFAppState>();
 
     return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: PopScope(
-          canPop: false,
-          child: Scaffold(
-            key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
-              automaticallyImplyLeading: false,
-              leading: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  await actions.navigateBackWebviewAction();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: FlutterFlowTheme.of(context).primary,
-                  size: 24.0,
-                ),
-              ),
-              actions: [],
-              flexibleSpace: FlexibleSpaceBar(
-                title: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    await actions.openCameraWebview(
-                      'idCardPlusSelfie',
-                      'home',
-                    );
-                  },
-                  child: Text(
-                    'ตัวแทน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                ),
-                centerTitle: true,
-                expandedTitleScale: 1.0,
-              ),
-              elevation: 2.0,
-            ),
-            body: SafeArea(
-              top: true,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.fromLTRB(
-                        0,
-                        12.0,
-                        0,
-                        0,
-                      ),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 12.0, 0.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(
-                                ShareAgentReferPageWidget.routeName,
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType:
-                                        PageTransitionType.rightToLeft,
-                                  ),
-                                },
-                              );
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              height: 70.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x33000000),
-                                    offset: Offset(
-                                      2.0,
-                                      4.0,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 12.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(0.0),
-                                                child: SvgPicture.asset(
-                                                  'assets/images/Channel_add.svg',
-                                                  width: 35.0,
-                                                  height: 35.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 8,
-                                            child: Text(
-                                              'แนะนำลูกค้า',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    fontSize: 18.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 16.0)),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.navigate_next_rounded,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 30.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 12.0, 0.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed(
-                                LeadDetailMenuPageWidget.routeName,
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType:
-                                        PageTransitionType.rightToLeft,
-                                  ),
-                                },
-                              );
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              height: 70.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x33000000),
-                                    offset: Offset(
-                                      2.0,
-                                      4.0,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8.0),
-                                border: Border.all(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 12.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            flex: 1,
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.award,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                size: 35.0,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 8,
-                                            child: Text(
-                                              'ผลงาน',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    fontSize: 18.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 16.0)),
-                                      ),
-                                    ),
-                                    Icon(
-                                      Icons.navigate_next_rounded,
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      size: 30.0,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (_model.idCardFilehome != null &&
-                            (_model.idCardFilehome?.bytes?.isNotEmpty ?? false))
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(),
-                            child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.memory(
-                                  _model.idCardFilehome?.bytes ??
-                                      Uint8List.fromList([]),
-                                  width: 200.0,
-                                  height: 200.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(),
-                          child: Text(
-                            FFAppState().debugText2,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  letterSpacing: 0.0,
-                                ),
-                          ),
-                        ),
-                      ].divide(SizedBox(height: 16.0)),
+      builder: (context) => Title(
+          title: 'โครงการเพื่อนแนะนำเพื่อน',
+          color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: PopScope(
+              canPop: false,
+              child: Scaffold(
+                key: scaffoldKey,
+                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                appBar: AppBar(
+                  backgroundColor: FlutterFlowTheme.of(context).secondary,
+                  automaticallyImplyLeading: false,
+                  leading: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      await actions.navigateBackWebviewAction();
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 24.0,
                     ),
                   ),
-                ],
+                  actions: [],
+                  flexibleSpace: FlexibleSpaceBar(
+                    title: Text(
+                      'ตัวแทน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
+                      style:
+                          FlutterFlowTheme.of(context).headlineMedium.override(
+                                fontFamily: 'Noto San Thai',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 18.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                    ),
+                    centerTitle: true,
+                    expandedTitleScale: 1.0,
+                  ),
+                  elevation: 2.0,
+                ),
+                body: SafeArea(
+                  top: true,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          padding: EdgeInsets.fromLTRB(
+                            0,
+                            12.0,
+                            0,
+                            0,
+                          ),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 12.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed(
+                                    ShareAgentReferPageWidget.routeName,
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.rightToLeft,
+                                      ),
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 70.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4.0,
+                                        color: Color(0x33000000),
+                                        offset: Offset(
+                                          2.0,
+                                          4.0,
+                                        ),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 0.0, 12.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0.0),
+                                                    child: SvgPicture.asset(
+                                                      'assets/images/Channel_add.svg',
+                                                      width: 35.0,
+                                                      height: 35.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  'แนะนำลูกค้า',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
+                                            ].divide(SizedBox(width: 16.0)),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.navigate_next_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 30.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 12.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed(
+                                    LeadDetailMenuPageWidget.routeName,
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType:
+                                            PageTransitionType.rightToLeft,
+                                      ),
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 70.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4.0,
+                                        color: Color(0x33000000),
+                                        offset: Offset(
+                                          2.0,
+                                          4.0,
+                                        ),
+                                      )
+                                    ],
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12.0, 0.0, 12.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: FaIcon(
+                                                    FontAwesomeIcons.award,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    size: 35.0,
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 8,
+                                                child: Text(
+                                                  'ผลงาน',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                ),
+                                              ),
+                                            ].divide(SizedBox(width: 16.0)),
+                                          ),
+                                        ),
+                                        Icon(
+                                          Icons.navigate_next_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 30.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ].divide(SizedBox(height: 16.0)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

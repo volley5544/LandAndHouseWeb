@@ -187,11 +187,11 @@ class _MarkdownViewerWidgetState extends State<MarkdownViewerWidget> {
                 fontWeight: FontWeight.bold,
                 color: Colors.blueAccent,
               ),
-              strong: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              // strong: const TextStyle(
+              //   fontSize: 18,
+              //   fontWeight: FontWeight.bold,
+              //   color: Colors.black,
+              // ),
               em: const TextStyle(
                 color: Colors.green,
                 fontStyle: FontStyle.italic,
@@ -202,18 +202,18 @@ class _MarkdownViewerWidgetState extends State<MarkdownViewerWidget> {
               ),
             ),
           ),
-          if (_isAtBottom)
-            Positioned(
-              bottom: 8,
-              right: 8,
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
+          // if (_isAtBottom)
+          //   Positioned(
+          //     bottom: 8,
+          //     right: 8,
+          //     child: Container(
+          //       padding: const EdgeInsets.all(6),
+          //       decoration: BoxDecoration(
+          //         //color: Colors.green.withOpacity(0.8),
+          //         borderRadius: BorderRadius.circular(8),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );

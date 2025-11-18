@@ -55,379 +55,414 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.asset(
-                                'assets/images/header-background2.png',
-                              ).image,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 4.0,
-                                color: Color(0x33000000),
-                                offset: Offset(
-                                  0.0,
-                                  2.0,
+    return Title(
+        title: 'โครงการเพื่อนแนะนำเพื่อน',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            body: SafeArea(
+              top: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: Image.asset(
+                                    'assets/images/header-background2.png',
+                                  ).image,
                                 ),
-                              )
-                            ],
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30.0),
-                              bottomRight: Radius.circular(30.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(0.0),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 8.0, 24.0, 12.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Container(
-                                        width: 32.0,
-                                        height: 32.0,
-                                        child: Stack(
-                                          children: [
-                                            Icon(
-                                              Icons.people_alt_outlined,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 30.0,
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  1.0, 1.0),
-                                              child: Container(
-                                                width: 16.0,
-                                                height: 16.0,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFFFAE4D1),
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Icon(
-                                                  Icons.chat_rounded,
+                                boxShadow: [
+                                  BoxShadow(
+                                    blurRadius: 4.0,
+                                    color: Color(0x33000000),
+                                    offset: Offset(
+                                      0.0,
+                                      2.0,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(30.0),
+                                  bottomRight: Radius.circular(30.0),
+                                  topLeft: Radius.circular(0.0),
+                                  topRight: Radius.circular(0.0),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 8.0, 24.0, 12.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 32.0,
+                                            height: 32.0,
+                                            child: Stack(
+                                              children: [
+                                                Icon(
+                                                  Icons.people_alt_outlined,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryText,
-                                                  size: 16.0,
+                                                  size: 30.0,
                                                 ),
-                                              ),
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          1.0, 1.0),
+                                                  child: Container(
+                                                    width: 16.0,
+                                                    height: 16.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xFFFAE4D1),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.chat_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 16.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8.0, 0.0, 0.0, 0.0),
+                                            child: Text(
+                                              'ข้อมูลของฉัน',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    fontSize: 20.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          'ข้อมูลของฉัน',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                fontSize: 20.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
-                                  child: wrapWithModel(
-                                    model: _model.bannerAgentComponentModel,
-                                    updateCallback: () => safeSetState(() {}),
-                                    child: BannerAgentComponentWidget(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
-                                  child: wrapWithModel(
-                                    model: _model.userAgentDetailComponentModel,
-                                    updateCallback: () => safeSetState(() {}),
-                                    child: UserAgentDetailComponentWidget(
-                                      name:
-                                          '${FFAppState().agentProfileDataType.agentNameTh}',
-                                      lastName:
-                                          '${FFAppState().agentProfileDataType.agentLastnameTh}',
-                                      idCard:
-                                          '${FFAppState().agentProfileDataType.agentTaxId}',
-                                      phoneNumber:
-                                          '${FFAppState().agentProfileDataType.agentMobilePhone}',
-                                      backAccount:
-                                          '${FFAppState().agentProfileDataType.accountNumber}',
-                                      bankName:
-                                          '${FFAppState().agentProfileDataType.agentBankName}',
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 8.0, 0.0, 0.0),
+                                      child: wrapWithModel(
+                                        model: _model.bannerAgentComponentModel,
+                                        updateCallback: () =>
+                                            safeSetState(() {}),
+                                        child: BannerAgentComponentWidget(),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 8.0, 0.0, 0.0),
+                                      child: wrapWithModel(
+                                        model: _model
+                                            .userAgentDetailComponentModel,
+                                        updateCallback: () =>
+                                            safeSetState(() {}),
+                                        child: UserAgentDetailComponentWidget(
+                                          name:
+                                              '${FFAppState().agentProfileDataType.agentNameTh}',
+                                          lastName:
+                                              '${FFAppState().agentProfileDataType.agentLastnameTh}',
+                                          idCard:
+                                              '${FFAppState().agentProfileDataType.agentTaxId}',
+                                          phoneNumber:
+                                              '${FFAppState().agentProfileDataType.agentMobilePhone}',
+                                          backAccount:
+                                              '${FFAppState().agentProfileDataType.agentBankNo}',
+                                          bankName:
+                                              '${FFAppState().agentProfileDataType.agentBankName}',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                            wrapWithModel(
+                              model: _model.selectPaymentTransferComponentModel,
+                              updateCallback: () => safeSetState(() {}),
+                              child: SelectPaymentTransferComponentWidget(
+                                reductPercent:
+                                    '${FFAppState().agentProfileDataType.deductionPercent}',
+                                bankAccount:
+                                    '${FFAppState().agentProfileDataType.agentBankNo}',
+                                promptPay:
+                                    '${FFAppState().agentProfileDataType.promptpayNumber}',
+                                paymentMethodDefault:
+                                    '${FFAppState().agentProfileDataType.paymentMethod}',
+                                paymentChannelDefault:
+                                    '${FFAppState().agentProfileDataType.paymentChannel}',
+                                bankName:
+                                    '${FFAppState().agentProfileDataType.agentBankName}',
+                                returnPayment:
+                                    (paymentMethod, paymentChannel) async {
+                                  _model.paymentMethod = paymentMethod;
+                                  _model.paymentChannel = paymentChannel;
+                                  safeSetState(() {});
+                                },
+                              ),
+                            ),
+                          ].addToEnd(SizedBox(height: 30.0)),
                         ),
-                        wrapWithModel(
-                          model: _model.selectPaymentTransferComponentModel,
-                          updateCallback: () => safeSetState(() {}),
-                          child: SelectPaymentTransferComponentWidget(
-                            reductPercent:
-                                '${FFAppState().agentProfileDataType.deductionPercent}',
-                            bankAccount:
-                                '${FFAppState().agentProfileDataType.accountNumber}',
-                            promptPay:
-                                '${FFAppState().agentProfileDataType.promptpayNumber}',
-                            paymentMethodDefault:
-                                '${FFAppState().agentProfileDataType.paymentMethod}',
-                            paymentChannelDefault:
-                                '${FFAppState().agentProfileDataType.paymentChannel}',
-                            bankName:
-                                '${FFAppState().agentProfileDataType.transactionChannelName}',
-                            returnPayment:
-                                (paymentMethod, paymentChannel) async {
-                              _model.paymentMethod = paymentMethod;
-                              _model.paymentChannel = paymentChannel;
-                              safeSetState(() {});
-                            },
-                          ),
-                        ),
-                      ].addToEnd(SizedBox(height: 30.0)),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 90.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Divider(
-                      thickness: 2.0,
-                      color: FlutterFlowTheme.of(context).alternate,
+                  Container(
+                    width: double.infinity,
+                    height: 90.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Builder(
-                              builder: (context) => FFButtonWidget(
-                                onPressed: () async {
-                                  var _shouldSetState = false;
-                                  _model.apiResultyyt = await AgentAPIGroup
-                                      .agentLeadSaveCall
-                                      .call(
-                                    agentCode: FFAppState()
-                                        .agentProfileDataType
-                                        .agentCode,
-                                    paymentMethod: _model.paymentMethod,
-                                    deductionPercent: FFAppState()
-                                        .agentProfileDataType
-                                        .deductionPercent,
-                                    paymentNumber:
-                                        _model.paymentChannel == 'bank_account'
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Divider(
+                          thickness: 2.0,
+                          color: FlutterFlowTheme.of(context).alternate,
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              24.0, 0.0, 24.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Builder(
+                                  builder: (context) => FFButtonWidget(
+                                    onPressed: () async {
+                                      var _shouldSetState = false;
+                                      _model.apiResultyyt = await AgentAPIGroup
+                                          .agentLeadSaveCall
+                                          .call(
+                                        agentCode: FFAppState()
+                                            .agentProfileDataType
+                                            .agentCode,
+                                        paymentMethod: _model.paymentMethod,
+                                        deductionPercent: FFAppState()
+                                            .agentProfileDataType
+                                            .deductionPercent,
+                                        paymentNumber: _model.paymentChannel ==
+                                                'bank_account'
                                             ? FFAppState()
                                                 .agentProfileDataType
                                                 .accountNumber
                                             : FFAppState()
                                                 .agentProfileDataType
                                                 .promptpayNumber,
-                                    paymentChannel: _model.paymentChannel,
-                                    url: FFDevEnvironmentValues().isProduction
-                                        ? FFAppState()
-                                            .apiUrlDocData
-                                            .agentWebApiUrl
-                                        : FFAppState()
-                                            .apiUrlDocData
-                                            .agentWebApiUrlUat,
-                                  );
+                                        paymentChannel: _model.paymentChannel,
+                                        url: FFDevEnvironmentValues()
+                                                .isProduction
+                                            ? FFAppState()
+                                                .apiUrlDocData
+                                                .agentWebApiUrl
+                                            : FFAppState()
+                                                .apiUrlDocData
+                                                .agentWebApiUrlUat,
+                                        tokenHeader: FFDevEnvironmentValues()
+                                                .isProduction
+                                            ? FFAppState()
+                                                .apiUrlDocData
+                                                .agentWebApiToken
+                                            : FFAppState()
+                                                .apiUrlDocData
+                                                .agentWebApiTokenUat,
+                                      );
 
-                                  _shouldSetState = true;
-                                  if ((_model.apiResultyyt?.statusCode ??
-                                          200) !=
-                                      200) {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(dialogContext)
-                                                  .unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: ErrorMessageComponentWidget(
-                                              textMessage:
-                                                  'พบข้อผิดพลาด(${(_model.apiResultyyt?.statusCode ?? 200).toString()})',
-                                            ),
-                                          ),
+                                      _shouldSetState = true;
+                                      if ((_model.apiResultyyt?.statusCode ??
+                                              200) !=
+                                          200) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child:
+                                                    ErrorMessageComponentWidget(
+                                                  textMessage:
+                                                      'พบข้อผิดพลาด(${(_model.apiResultyyt?.statusCode ?? 200).toString()})',
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         );
-                                      },
-                                    );
 
-                                    if (_shouldSetState) safeSetState(() {});
-                                    return;
-                                  }
-                                  if (AgentAPIGroup.agentLeadSaveCall.code(
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
+                                      }
+                                      if (AgentAPIGroup.agentLeadSaveCall.code(
+                                            (_model.apiResultyyt?.jsonBody ??
+                                                ''),
+                                          ) !=
+                                          '200') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (dialogContext) {
+                                            return Dialog(
+                                              elevation: 0,
+                                              insetPadding: EdgeInsets.zero,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              alignment:
+                                                  AlignmentDirectional(0.0, 0.0)
+                                                      .resolve(
+                                                          Directionality.of(
+                                                              context)),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(dialogContext)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child:
+                                                    ErrorMessageComponentWidget(
+                                                  textMessage:
+                                                      '${AgentAPIGroup.agentLeadSaveCall.message(
+                                                    (_model.apiResultyyt
+                                                            ?.jsonBody ??
+                                                        ''),
+                                                  )}',
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
+                                      }
+                                      FFAppState().agentProfileDataType =
+                                          AgentAPIGroup.agentLeadSaveCall.data(
                                         (_model.apiResultyyt?.jsonBody ?? ''),
-                                      ) !=
-                                      '200') {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(dialogContext)
-                                                  .unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: ErrorMessageComponentWidget(
-                                              textMessage:
-                                                  '${AgentAPIGroup.agentLeadSaveCall.message(
-                                                (_model.apiResultyyt
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              )}',
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-
-                                    if (_shouldSetState) safeSetState(() {});
-                                    return;
-                                  }
-                                  FFAppState().agentProfileDataType =
-                                      AgentAPIGroup.agentLeadSaveCall.data(
-                                    (_model.apiResultyyt?.jsonBody ?? ''),
-                                  )!;
-                                  safeSetState(() {});
-                                  await showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return Dialog(
-                                        elevation: 0,
-                                        insetPadding: EdgeInsets.zero,
-                                        backgroundColor: Colors.transparent,
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0)
+                                      )!;
+                                      safeSetState(() {});
+                                      await showDialog(
+                                        context: context,
+                                        builder: (dialogContext) {
+                                          return Dialog(
+                                            elevation: 0,
+                                            insetPadding: EdgeInsets.zero,
+                                            backgroundColor: Colors.transparent,
+                                            alignment: AlignmentDirectional(
+                                                    0.0, 0.0)
                                                 .resolve(
                                                     Directionality.of(context)),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(dialogContext)
-                                                .unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.sizeOf(context)
-                                                    .height *
-                                                0.5,
-                                            width: MediaQuery.sizeOf(context)
-                                                    .width *
-                                                0.9,
-                                            child: AgentSaveSuccessWidget(),
-                                          ),
-                                        ),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                FocusScope.of(dialogContext)
+                                                    .unfocus();
+                                                FocusManager
+                                                    .instance.primaryFocus
+                                                    ?.unfocus();
+                                              },
+                                              child: Container(
+                                                height:
+                                                    MediaQuery.sizeOf(context)
+                                                            .height *
+                                                        0.5,
+                                                width:
+                                                    MediaQuery.sizeOf(context)
+                                                            .width *
+                                                        0.9,
+                                                child: AgentSaveSuccessWidget(),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
-                                    },
-                                  );
 
-                                  if (_shouldSetState) safeSetState(() {});
-                                },
-                                text: 'ยืนยันข้อมูล',
-                                options: FFButtonOptions(
-                                  height: 60.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        color: Colors.white,
-                                        letterSpacing: 0.0,
-                                      ),
-                                  elevation: 0.0,
-                                  borderRadius: BorderRadius.circular(12.0),
+                                      if (_shouldSetState) safeSetState(() {});
+                                    },
+                                    text: 'ยืนยันข้อมูล',
+                                    options: FFButtonOptions(
+                                      height: 60.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ].divide(SizedBox(width: 12.0)),
                           ),
-                        ].divide(SizedBox(width: 12.0)),
-                      ),
+                        ),
+                      ].divide(SizedBox(height: 8.0)),
                     ),
-                  ].divide(SizedBox(height: 8.0)),
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

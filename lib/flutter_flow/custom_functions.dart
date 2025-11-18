@@ -31,9 +31,9 @@ List<String>? createUniqueValueListLabel(List<String>? inputList) {
     } else if (inputList![i] == 'insurance') {
       outputList.add('ประกัน');
     } else if (inputList![i] == 'one_time') {
-      outputList.add('รับครั้งเดียว');
+      outputList.add('รับทันที');
     } else if (inputList![i] == 'installment') {
-      outputList.add('รับเต็มจำนวน (แบ่งจ่ายตามงวดสัญญา)');
+      outputList.add('รับแบบแบ่งจ่าย');
     } else if (inputList![i] == 'bank_account') {
       outputList.add('บัญชีธนาคาร');
     } else if (inputList![i] == 'promptpay') {
@@ -303,6 +303,19 @@ String? checkUserName(String? name) {
   } else {
     return name.substring(0, 2) +
         'x' * math.min(name.length - 2, 5); // ใช้ 'x' แต่ไม่เกิน 5 ตัว
+  }
+}
+
+String? censorName(
+  String? name,
+  int? showLength,
+) {
+  if (name == null || name.length <= showLength!) {
+    return name; // ถ้าชื่อเป็น null หรือมีความยาวน้อยกว่าหรือเท่ากับ 2 ตัวอักษร ให้คืนค่าชื่อเดิม
+  } else {
+    return name.substring(0, showLength!) +
+        'x' *
+            math.min(name.length - showLength!, 5); // ใช้ 'x' แต่ไม่เกิน 5 ตัว
   }
 }
 
@@ -1024,6 +1037,8 @@ List<LeadAgentMainCatagoryStruct>? updateLeadMainData(
   String? comEstimateVat,
   String? comEstimateNet,
 ) {
+  print('woqiejoiqwjkopasd');
+
   List<LeadAgentMainCatagoryStruct> dataOutput = mainLeadData!;
 
   List<LeadAgentSubCategoryStruct> subCategoryNew = dataOutput[dataOutput

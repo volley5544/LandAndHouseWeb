@@ -53,219 +53,225 @@ class _ChanodListPageCopyWidgetState extends State<ChanodListPageCopyWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
-          automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: FlutterFlowTheme.of(context).primary,
-              size: 30.0,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
-          title: Text(
-            'ค้นหาสาขา',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Noto San Thai',
-                  color: Color(0xFF003063),
-                  fontSize: 18.0,
-                  letterSpacing: 0.0,
+    return Title(
+        title: 'ChanodListPageCopy',
+        color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).secondary,
+              automaticallyImplyLeading: false,
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 30.0,
                 ),
-          ),
-          actions: [],
-          centerTitle: true,
-          elevation: 2.0,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10.0),
-                            bottomRight: Radius.circular(10.0),
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0),
-                          ),
-                          border: Border.all(
-                            color: FlutterFlowTheme.of(context).primary,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController,
-                            focusNode: _model.textFieldFocusNode,
-                            onChanged: (_) => EasyDebounce.debounce(
-                              '_model.textController',
-                              Duration(milliseconds: 100),
-                              () => safeSetState(() {}),
-                            ),
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    letterSpacing: 0.0,
-                                  ),
-                              hintText: 'กรุณากรอกคำค้นหา',
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Colors.black,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              focusedErrorBorder: InputBorder.none,
-                              prefixIcon: Icon(
-                                Icons.search_outlined,
-                                color: FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Noto San Thai',
-                                  letterSpacing: 0.0,
-                                ),
-                            validator: _model.textControllerValidator
-                                .asValidator(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        if (_model.textController.text.length > 2) {
-                          FFAppState().addressDataListOutput = FFAppState()
-                              .addressDataOriginal
-                              .where((e) => functions.containString(
-                                  _model.textController.text, e.keyword)!)
-                              .toList()
-                              .cast<AddressDataModelStruct>();
-                          safeSetState(() {});
-                        }
-                      },
-                      text: 'ค้นหา',
-                      options: FFButtonOptions(
-                        width: 100.0,
-                        height: 50.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primary,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  fontFamily: 'Noto San Thai',
-                                  color: Colors.white,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 0.0,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ].divide(SizedBox(width: 8.0)),
-                ),
+                onPressed: () async {
+                  context.pop();
+                },
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 0.0),
-                child: Builder(
-                  builder: (context) {
-                    final branchListItem = _model.branchData.toList();
-
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: branchListItem.length,
-                      itemBuilder: (context, branchListItemIndex) {
-                        final branchListItemItem =
-                            branchListItem[branchListItemIndex];
-                        return Material(
-                          color: Colors.transparent,
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
-                              topLeft: Radius.circular(10.0),
-                              topRight: Radius.circular(10.0),
-                            ),
-                          ),
+              title: Text(
+                'ค้นหาสาขา',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Noto San Thai',
+                      color: Color(0xFF003063),
+                      fontSize: 18.0,
+                      letterSpacing: 0.0,
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 2.0,
+            ),
+            body: SafeArea(
+              top: true,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
                           child: Container(
-                            width: 100.0,
-                            height: 45.0,
                             decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
                               borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
                                 topRight: Radius.circular(10.0),
                               ),
+                              border: Border.all(
+                                color: FlutterFlowTheme.of(context).primary,
+                              ),
                             ),
-                            child: Align(
-                              alignment: AlignmentDirectional(-1.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  '${branchListItemItem.branchName} (${branchListItemItem.branchCode})',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 0.0, 8.0, 0.0),
+                              child: TextFormField(
+                                controller: _model.textController,
+                                focusNode: _model.textFieldFocusNode,
+                                onChanged: (_) => EasyDebounce.debounce(
+                                  '_model.textController',
+                                  Duration(milliseconds: 100),
+                                  () => safeSetState(() {}),
+                                ),
+                                autofocus: false,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        letterSpacing: 0.0,
+                                      ),
+                                  hintText: 'กรุณากรอกคำค้นหา',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .labelMedium
                                       .override(
                                         fontFamily: 'Noto San Thai',
                                         color: Colors.black,
-                                        fontSize: 14.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.w600,
                                       ),
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  focusedErrorBorder: InputBorder.none,
+                                  prefixIcon: Icon(
+                                    Icons.search_outlined,
+                                    color: FlutterFlowTheme.of(context).primary,
+                                  ),
                                 ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      letterSpacing: 0.0,
+                                    ),
+                                validator: _model.textControllerValidator
+                                    .asValidator(context),
                               ),
                             ),
                           ),
+                        ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            if (_model.textController.text.length > 2) {
+                              FFAppState().addressDataListOutput = FFAppState()
+                                  .addressDataOriginal
+                                  .where((e) => functions.containString(
+                                      _model.textController.text, e.keyword)!)
+                                  .toList()
+                                  .cast<AddressDataModelStruct>();
+                              safeSetState(() {});
+                            }
+                          },
+                          text: 'ค้นหา',
+                          options: FFButtonOptions(
+                            width: 100.0,
+                            height: 50.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                      ].divide(SizedBox(width: 8.0)),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 0.0),
+                    child: Builder(
+                      builder: (context) {
+                        final branchListItem = _model.branchData.toList();
+
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: branchListItem.length,
+                          itemBuilder: (context, branchListItemIndex) {
+                            final branchListItemItem =
+                                branchListItem[branchListItemIndex];
+                            return Material(
+                              color: Colors.transparent,
+                              elevation: 10.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
+                                  topLeft: Radius.circular(10.0),
+                                  topRight: Radius.circular(10.0),
+                                ),
+                              ),
+                              child: Container(
+                                width: 100.0,
+                                height: 45.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
+                                    topLeft: Radius.circular(10.0),
+                                    topRight: Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      '${branchListItemItem.branchName} (${branchListItemItem.branchCode})',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: Colors.black,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
