@@ -1164,6 +1164,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                   _model.imageRight = functions
                                                       .stringToImgPath(_model
                                                           .imageRightUrlOutput)!;
+                                                  _model.rightFile = _model
+                                                      .uploadedLocalFile_imageRightUploadAction;
                                                   safeSetState(() {});
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
@@ -1466,6 +1468,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                   _model.imageLeft = functions
                                                       .stringToImgPath(_model
                                                           .leftImageUrlOutput)!;
+                                                  _model.leftFile = _model
+                                                      .uploadedLocalFile_imageLeftUploadAction;
                                                   safeSetState(() {});
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
@@ -1768,6 +1772,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                   _model.imageFront = functions
                                                       .stringToImgPath(_model
                                                           .imageFrontUrlOutput)!;
+                                                  _model.frontFile = _model
+                                                      .uploadedLocalFile_imageFrontUploadAction;
                                                   safeSetState(() {});
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
@@ -2070,6 +2076,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                   _model.imageBack = functions
                                                       .stringToImgPath(_model
                                                           .imageBackUrlOutput)!;
+                                                  _model.backFile = _model
+                                                      .uploadedLocalFile_imageBackUploadAction;
                                                   safeSetState(() {});
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
@@ -2372,6 +2380,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                   _model.imageMile = functions
                                                       .stringToImgPath(_model
                                                           .imageMileUrlOutput)!;
+                                                  _model.mileFile = _model
+                                                      .uploadedLocalFile_imageMileUploadAction;
                                                   safeSetState(() {});
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
