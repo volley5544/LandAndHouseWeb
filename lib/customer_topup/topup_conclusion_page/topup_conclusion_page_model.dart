@@ -53,14 +53,6 @@ class TopupConclusionPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TopupConclusionPage widget.
-  String? idCardImageUrlCallback;
-  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
-  FFUploadedFile? generateIdCardFile;
-  // Stores action output result for [Custom Action - uploadFileFirebaseStorage] action in TopupConclusionPage widget.
-  String? selfieImageUrlCallback;
-  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.
-  FFUploadedFile? generateSelfieFile;
   // Stores action output result for [Backend Call - API (Send an pdf to user)] action in TopupConclusionPage widget.
   ApiCallResponse? getPdfLoanDocApiOutput;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in TopupConclusionPage widget.

@@ -54,66 +54,6 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
-      await Future.wait([
-        Future(() async {
-          while (true) {
-            safeSetState(() {});
-            await Future.delayed(
-              Duration(
-                milliseconds: 1000,
-              ),
-            );
-          }
-        }),
-        Future(() async {
-          await actions.listenWebviewEventCamera(
-            context,
-            (cameraBase64, actionNameOutput) async {
-              if (actionNameOutput == 'idCardCamera') {
-                _model.idCardBase64 = cameraBase64;
-                safeSetState(() {});
-                _model.generateIdCardFile =
-                    await actions.convertBase64ToFFFiles(
-                  _model.idCardBase64,
-                  '11',
-                );
-                _model.idCardImageUrlCallback =
-                    await actions.uploadFileFirebaseStorage(
-                  'Topup${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
-                  _model.generateIdCardFile,
-                  FFAppState().getLoanListSelected.contractNo,
-                  FFAppState().hashThaiIdAppState,
-                );
-                _model.idCardFile = _model.generateIdCardFile;
-                safeSetState(() {});
-                _model.idCardImageUrl =
-                    functions.stringToImgPath(_model.idCardImageUrlCallback)!;
-                safeSetState(() {});
-              } else if (actionNameOutput == 'selfieCamera') {
-                _model.selfieBase64 = cameraBase64;
-                safeSetState(() {});
-                _model.generateSelfieFile =
-                    await actions.convertBase64ToFFFiles(
-                  _model.selfieBase64,
-                  '12',
-                );
-                _model.selfieImageUrlCallback =
-                    await actions.uploadFileFirebaseStorage(
-                  'Topup${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
-                  _model.generateSelfieFile,
-                  FFAppState().getLoanListSelected.contractNo,
-                  FFAppState().hashThaiIdAppState,
-                );
-                _model.selfiePlusIdCardFile = _model.generateSelfieFile;
-                safeSetState(() {});
-                _model.selfiePlusIdCardImageUrl =
-                    functions.stringToImgPath(_model.selfieImageUrlCallback)!;
-                safeSetState(() {});
-              }
-            },
-          );
-        }),
-      ]);
       showDialog(
         context: context,
         builder: (dialogContext) {
