@@ -247,69 +247,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       }
 
       Navigator.pop(context);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text('${_model.comCodeConfigDoc?.toString()}'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions.removeDoubleCoot(
-                functions.getDataFromMapJson(
-                    _model.comCodeConfigDoc, 'contract_default_date'))!),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(FFAppState().getLoanListSelected.contractDate),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text((DateTime.parse((functions.removeDoubleCoot(
-                        functions.getDataFromMapJson(_model.comCodeConfigDoc,
-                            'contract_default_date'))!))
-                    .isBefore(DateTime.parse(
-                        FFAppState().getLoanListSelected.contractDate)))
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
