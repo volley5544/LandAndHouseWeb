@@ -88,7 +88,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       _model.getLoanListOutput = await SrisawadApiGroup.getListOfLoanCall.call(
         hashThaiId: FFAppState().hashThaiIdAppState,
         authorization: FFAppState().accessToken,
-        apiUrl: !FFDevEnvironmentValues().isProduction
+        apiUrl: FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
             : FFAppState().topupUrlDev,
       );
@@ -165,7 +165,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         dbName: FFAppState().getLoanListSelected.dbName,
         bearerAuth: FFAppState().accessToken,
         xSrisawad: 'x1',
-        apiUrl: !FFDevEnvironmentValues().isProduction
+        apiUrl: FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
             : FFAppState().topupUrlDev,
       );
