@@ -85,20 +85,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       FFAppState().topupUrlDev = '${_model.configOutput?.apiUrl.apiUrlDev}';
       FFAppState().topupUrlProd = '${_model.configOutput?.apiUrl.apiUrlProd}';
       safeSetState(() {});
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text('1'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       _model.getLoanListOutput = await SrisawadApiGroup.getListOfLoanCall.call(
         hashThaiId: FFAppState().hashThaiIdAppState,
         authorization: FFAppState().accessToken,
@@ -108,20 +94,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       );
 
       if ((_model.getLoanListOutput?.statusCode ?? 200) == 200) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('2'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
       } else {
         await showDialog(
           barrierDismissible: false,
@@ -161,20 +133,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                 r'''$.results[0]''',
               ).toString()}'}' !=
               '')) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('3'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
         FFAppState().getLoanListAPIResultAppState = (getJsonField(
           (_model.getLoanListOutput?.jsonBody ?? ''),
           r'''$.results''',
@@ -188,20 +146,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
             .toList()
             .cast<GetLoanListAPIDataTypeStruct>();
         safeSetState(() {});
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('4'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
         FFAppState().getLoanListSelected = FFAppState()
             .getLoanListAPIResultAppState
             .elementAtOrNull(functions.findIndexInList(
@@ -215,20 +159,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                     .cast<String>(),
                 widget.contNo)!)!;
         safeSetState(() {});
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('6'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
       }
       _model.detailLoanOutput = await SrisawadApiGroup.getDetailOfLoanCall.call(
         contractNo: FFAppState().getLoanListSelected.contractNo,
@@ -240,22 +170,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
             : FFAppState().topupUrlDev,
       );
 
-      if ((_model.detailLoanOutput?.statusCode ?? 200) == 200) {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('8'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
+      if ((_model.detailLoanOutput?.statusCode ?? 200) != 200) {
         await showDialog(
           barrierDismissible: false,
           context: context,
@@ -283,25 +198,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         Navigator.pop(context);
         return;
       }
-
       if (SrisawadApiGroup.getDetailOfLoanCall.code(
             (_model.detailLoanOutput?.jsonBody ?? ''),
           ) ==
           '200') {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('88'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
         _model.carDetailLoanPageState =
             SrisawadApiGroup.getDetailOfLoanCall.cardetails(
           (_model.detailLoanOutput?.jsonBody ?? ''),
@@ -347,164 +247,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       }
 
       Navigator.pop(context);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .checkContractException(
-                    functions
-                        .getDataListFromMapJson(
-                            _model.comCodeConfigDoc, 'exception_contract')
-                        ?.toList(),
-                    functions
-                        .getDataListFromMapJson(_model.comCodeConfigDoc,
-                            'exception_contract_comcode')
-                        ?.toList(),
-                    FFAppState().getLoanListSelected.contractNo,
-                    FFAppState().getLoanListSelected.barcodeDetails.comcode)!
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(
-                (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
-                        !(functions
-                            .getDataListBoolFromMapJson(_model.comCodeConfigDoc,
-                                'this_comcode_is_contract')!
-                            .elementAtOrNull(functions.findIndexInList(
-                                functions
-                                    .getDataListFromMapJson(
-                                        _model.comCodeConfigDoc, 'comcode')
-                                    ?.toList(),
-                                FFAppState()
-                                    .getLoanListSelected
-                                    .barcodeDetails
-                                    .comcode)!))! &&
-                        functions
-                            .getDataListFromMapJson(
-                                functions.getJsonDataFromMapJson(
-                                    _model.comCodeConfigDoc, 'loan_type_code'),
-                                FFAppState()
-                                    .getLoanListSelected
-                                    .barcodeDetails
-                                    .comcode)!
-                            .contains(FFAppState()
-                                .getLoanListSelected
-                                .contractDetails
-                                .loanTypeCode) &&
-                        !functions
-                            .getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!
-                            .contains(FFAppState().getLoanListSelected.barcodeDetails.comcode))
-                    .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!
-                .contains(
-                    FFAppState().getLoanListSelected.barcodeDetails.comcode)
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .getDataListFromMapJson(
-                    functions.getJsonDataFromMapJson(
-                        _model.comCodeConfigDoc, 'loan_type_code'),
-                    FFAppState().getLoanListSelected.barcodeDetails.comcode)!
-                .contains(FFAppState()
-                    .getLoanListSelected
-                    .contractDetails
-                    .loanTypeCode)
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions
-                .getDataListFromMapJson(
-                    _model.comCodeConfigDoc, 'check_contract_date')!
-                .contains(
-                    FFAppState().getLoanListSelected.barcodeDetails.comcode)
-                .toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions.getDataFromMapJson(
-                _model.comCodeConfigDoc, 'contract_default_date')!),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(FFAppState().getLoanListSelected.contractDate),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -695,42 +437,44 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                               .toString(),
                           contractLink:
                               '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.barcodeDetails.comcode}',
-                          isShowDownload: true
-                              ? true
-                              : (functions.checkContractException(functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'exception_contract')?.toList(), functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'exception_contract_comcode')?.toList(), FFAppState().getLoanListSelected.contractNo, FFAppState().getLoanListSelected.barcodeDetails.comcode)! ||
-                                  (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
-                                      !(functions
-                                          .getDataListBoolFromMapJson(
-                                              _model.comCodeConfigDoc,
-                                              'this_comcode_is_contract')!
-                                          .elementAtOrNull(functions.findIndexInList(
-                                              functions
-                                                  .getDataListFromMapJson(
-                                                      _model.comCodeConfigDoc,
-                                                      'comcode')
-                                                  ?.toList(),
-                                              FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .comcode)!))! &&
-                                      functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState()
-                                          .getLoanListSelected
-                                          .contractDetails
-                                          .loanTypeCode) &&
-                                      !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(
+                          isShowDownload: functions.checkContractException(
+                                  functions
+                                      .getDataListFromMapJson(
+                                          _model.comCodeConfigDoc,
+                                          'exception_contract')
+                                      ?.toList(),
+                                  functions
+                                      .getDataListFromMapJson(
+                                          _model.comCodeConfigDoc,
+                                          'exception_contract_comcode')
+                                      ?.toList(),
+                                  FFAppState().getLoanListSelected.contractNo,
+                                  FFAppState()
+                                      .getLoanListSelected
+                                      .barcodeDetails
+                                      .comcode)! ||
+                              (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
+                                  !(functions
+                                      .getDataListBoolFromMapJson(
+                                          _model.comCodeConfigDoc,
+                                          'this_comcode_is_contract')!
+                                      .elementAtOrNull(functions.findIndexInList(
+                                          functions
+                                              .getDataListFromMapJson(
+                                                  _model.comCodeConfigDoc,
+                                                  'comcode')
+                                              ?.toList(),
                                           FFAppState()
                                               .getLoanListSelected
                                               .barcodeDetails
-                                              .comcode)) ||
-                                  (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
-                                      functions
-                                          .getDataListFromMapJson(
-                                              functions.getJsonDataFromMapJson(
-                                                  _model.comCodeConfigDoc, 'loan_type_code'),
-                                              FFAppState().getLoanListSelected.barcodeDetails.comcode)!
-                                          .contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) &&
-                                      functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
-                                      (DateTime.parse((functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date')!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate))))),
+                                              .comcode)!))! &&
+                                  functions
+                                      .getDataListFromMapJson(
+                                          functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'),
+                                          FFAppState().getLoanListSelected.barcodeDetails.comcode)!
+                                      .contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) &&
+                                  !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode)) ||
+                              (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && (DateTime.parse((functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date')!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate)))),
                           installmentAmountColor:
                               '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
                                       '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
