@@ -1424,3 +1424,8 @@ List<PaymentHistoryMonthDataModelStruct>? returnEmptyPaymentHistoryList() {
   List<PaymentHistoryMonthDataModelStruct> outputList = [];
   return outputList;
 }
+
+String? removeDoubleCoot(String? inputText) {
+  String output = inputText!.replaceAll('"', '');
+  return output;
+}

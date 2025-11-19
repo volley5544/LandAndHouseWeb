@@ -94,7 +94,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
       safeSetState(() {});
       _model.getLoanListOutput = await SrisawadApiGroup.getListOfLoanCall.call(
         hashThaiId: FFAppState().hashThaiIdAppState,
-        authorization: FFAppState().accessToken,
+        authorization: widget.token,
         apiUrl: FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
             : FFAppState().topupUrlDev,
