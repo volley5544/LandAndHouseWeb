@@ -903,7 +903,7 @@ String? getDataFromMapJson(
   String? fieldName,
 ) {
   Map<String, dynamic> mapDataInput = jsonDataInput!;
-  dynamic jsonOutput = jsonEncode(mapDataInput[fieldName!]);
+  dynamic jsonOutput = mapDataInput[fieldName!];
   return jsonOutput;
 }
 

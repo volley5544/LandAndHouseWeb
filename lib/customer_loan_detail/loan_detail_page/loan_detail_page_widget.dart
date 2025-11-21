@@ -90,7 +90,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         authorization: widget.token,
         apiUrl: FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
-            : FFAppState().topupUrlDev,
+            : FFAppState().topupUrlProd,
       );
 
       if ((_model.getLoanListOutput?.statusCode ?? 200) == 200) {
@@ -247,6 +247,21 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       }
 
       Navigator.pop(context);
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content: Text(functions.getDataFromMapJson(
+                _model.comCodeConfigDoc, 'contract_default_date')!),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -2093,13 +2108,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                                     .getLoanListSelected
                                                     .dbName
                                                     .substring(0, 2),
-                                                apiUrl:
-                                                    !FFDevEnvironmentValues()
-                                                            .isProduction
-                                                        ? FFAppState()
-                                                            .topupUrlProd
-                                                        : FFAppState()
-                                                            .topupUrlDev,
+                                                apiUrl: FFDevEnvironmentValues()
+                                                        .isProduction
+                                                    ? FFAppState().topupUrlProd
+                                                    : FFAppState().topupUrlDev,
                                               ),
                                               builder: (context, snapshot) {
                                                 // Customize what your widget looks like when it's loading.

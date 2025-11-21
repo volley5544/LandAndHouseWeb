@@ -259,6 +259,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
+                    _model.checkConsentStatusTimer?.cancel();
                     context.safePop();
                   },
                   child: Icon(

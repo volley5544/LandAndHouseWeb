@@ -1081,11 +1081,15 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                           .getTopupDataAPIResultAppstate
                                                                           .interestPaidFlag ==
                                                                       'Y') ||
-                                                                  (FFAppState()
-                                                                          .saveTopupData
-                                                                          .products
-                                                                          .productPrice !=
-                                                                      null),
+                                                                  ((FFAppState()
+                                                                              .saveTopupData
+                                                                              .products !=
+                                                                          ProductsStruct()) &&
+                                                                      (FFAppState()
+                                                                              .saveTopupData
+                                                                              .products
+                                                                              .productPrice !=
+                                                                          null)),
                                                               obscureText:
                                                                   false,
                                                               decoration:
