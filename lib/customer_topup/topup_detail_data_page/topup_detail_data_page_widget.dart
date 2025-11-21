@@ -1265,271 +1265,166 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                   ),
                                                 ],
                                               ),
-                                              Expanded(
-                                                child: Container(
-                                                  height: 60.0,
-                                                  decoration: BoxDecoration(),
-                                                  child: Stack(
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                1.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      24.0,
-                                                                      0.0),
-                                                          child: Container(
-                                                            width: 3.0,
-                                                            height: 15.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .alternate,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Container(
+                                                    height: 60.0,
+                                                    decoration: BoxDecoration(),
+                                                    child: Stack(
+                                                      children: [
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  1.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        24.0,
+                                                                        0.0),
+                                                            child: Container(
+                                                              width: 3.0,
+                                                              height: 15.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            16.0),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Builder(
-                                                        builder: (context) =>
-                                                            Container(
-                                                          width:
-                                                              double.infinity,
-                                                          child: Slider(
-                                                            activeColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                            inactiveColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                            min: valueOrDefault<
-                                                                double>(
-                                                              FFAppState()
-                                                                  .getTopupDataAPIResultAppstate
-                                                                  .minTopupAmount
+                                                        Builder(
+                                                          builder: (context) =>
+                                                              Container(
+                                                            width:
+                                                                double.infinity,
+                                                            child: Slider(
+                                                              activeColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                              inactiveColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                              min:
+                                                                  valueOrDefault<
+                                                                      double>(
+                                                                FFAppState()
+                                                                    .getTopupDataAPIResultAppstate
+                                                                    .minTopupAmount
+                                                                    .toDouble(),
+                                                                0.0,
+                                                              ),
+                                                              max:
+                                                                  valueOrDefault<
+                                                                      double>(
+                                                                FFAppState()
+                                                                    .getTopupDataAPIResultAppstate
+                                                                    .maxTopupAmount
+                                                                    .toDouble(),
+                                                                0.0,
+                                                              ),
+                                                              value: _model
+                                                                  .sliderValue ??= (FFAppState()
+                                                                              .saveTopupData
+                                                                              .products !=
+                                                                          ProductsStruct()
+                                                                      ? FFAppState()
+                                                                          .getTopupCalculateAppState
+                                                                          .amount
+                                                                      : valueOrDefault<
+                                                                          int>(
+                                                                          FFAppState()
+                                                                              .getTopupDataAPIResultAppstate
+                                                                              .defaultTopupAmount,
+                                                                          0,
+                                                                        ))
                                                                   .toDouble(),
-                                                              0.0,
-                                                            ),
-                                                            max: valueOrDefault<
-                                                                double>(
-                                                              FFAppState()
-                                                                  .getTopupDataAPIResultAppstate
-                                                                  .maxTopupAmount
-                                                                  .toDouble(),
-                                                              0.0,
-                                                            ),
-                                                            value: _model
-                                                                .sliderValue ??= (FFAppState()
-                                                                            .saveTopupData
-                                                                            .products !=
-                                                                        ProductsStruct()
-                                                                    ? FFAppState()
-                                                                        .getTopupCalculateAppState
-                                                                        .amount
-                                                                    : valueOrDefault<
-                                                                        int>(
-                                                                        FFAppState()
-                                                                            .getTopupDataAPIResultAppstate
-                                                                            .defaultTopupAmount,
-                                                                        0,
-                                                                      ))
-                                                                .toDouble(),
-                                                            label: _model
-                                                                .sliderValue
-                                                                ?.toStringAsFixed(
-                                                                    0),
-                                                            divisions: (int max,
-                                                                    int min) {
-                                                              return ((double.parse(
-                                                                              '${max}') -
+                                                              label: _model
+                                                                  .sliderValue
+                                                                  ?.toStringAsFixed(
+                                                                      0),
+                                                              divisions: (int
+                                                                          max,
+                                                                      int min) {
+                                                                return ((double.parse('${max}') -
+                                                                            double.parse('${min}')) /
+                                                                        100.0)
+                                                                    .round();
+                                                              }(
+                                                                  FFAppState()
+                                                                      .getTopupDataAPIResultAppstate
+                                                                      .maxTopupAmount,
+                                                                  FFAppState()
+                                                                      .getTopupDataAPIResultAppstate
+                                                                      .minTopupAmount),
+                                                              onChanged: ((FFAppState()
+                                                                              .getTopupDataAPIResultAppstate
+                                                                              .interestPaidFlag ==
+                                                                          'Y') ||
+                                                                      (FFAppState()
+                                                                              .saveTopupData
+                                                                              .products !=
+                                                                          ProductsStruct()))
+                                                                  ? null
+                                                                  : (newValue) {
+                                                                      newValue =
                                                                           double.parse(
-                                                                              '${min}')) /
-                                                                      100.0)
-                                                                  .round();
-                                                            }(
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .maxTopupAmount,
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .minTopupAmount),
-                                                            onChanged: ((FFAppState()
-                                                                            .getTopupDataAPIResultAppstate
-                                                                            .interestPaidFlag ==
-                                                                        'Y') ||
-                                                                    (FFAppState()
-                                                                            .saveTopupData
-                                                                            .products !=
-                                                                        ProductsStruct()))
-                                                                ? null
-                                                                : (newValue) {
-                                                                    newValue = double.parse(
-                                                                        newValue
-                                                                            .toStringAsFixed(0));
-                                                                    safeSetState(() =>
-                                                                        _model.sliderValue =
-                                                                            newValue);
-                                                                  },
-                                                            onChangeEnd:
-                                                                (newValue) async {
-                                                              newValue = double
-                                                                  .parse(newValue
-                                                                      .toStringAsFixed(
-                                                                          0));
-                                                              safeSetState(() =>
-                                                                  _model.sliderValue =
-                                                                      newValue);
-                                                              var _shouldSetState =
-                                                                  false;
-                                                              safeSetState(() {
-                                                                _model.textController
-                                                                        ?.text =
-                                                                    functions.returnNumberWithCommaFullNumber(
-                                                                        '${functions.roundDownInput(_model.sliderValue?.toString())?.toString()}',
-                                                                        '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
-                                                                _model
-                                                                    .textFieldMask
-                                                                    .updateMask(
-                                                                  newValue:
-                                                                      TextEditingValue(
-                                                                    text: _model
-                                                                        .textController!
-                                                                        .text,
-                                                                  ),
-                                                                );
-                                                              });
-                                                              safeSetState(() {
-                                                                _model.sliderValue = functions
-                                                                    .roundDownInput(functions.removeCommaFromNumText(_model
-                                                                        .sliderValue
-                                                                        ?.toString()))!
-                                                                    .toDouble();
-                                                              });
-                                                              unawaited(
-                                                                () async {}(),
-                                                              );
-                                                              showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (dialogContext) {
-                                                                  return Dialog(
-                                                                    elevation:
-                                                                        0,
-                                                                    insetPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                    child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(dialogContext)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          LoadingWidget(),
+                                                                              newValue.toStringAsFixed(0));
+                                                                      safeSetState(() =>
+                                                                          _model.sliderValue =
+                                                                              newValue);
+                                                                    },
+                                                              onChangeEnd:
+                                                                  (newValue) async {
+                                                                newValue = double
+                                                                    .parse(newValue
+                                                                        .toStringAsFixed(
+                                                                            0));
+                                                                safeSetState(() =>
+                                                                    _model.sliderValue =
+                                                                        newValue);
+                                                                var _shouldSetState =
+                                                                    false;
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.textController
+                                                                          ?.text =
+                                                                      functions.returnNumberWithCommaFullNumber(
+                                                                          '${functions.roundDownInput(_model.sliderValue?.toString())?.toString()}',
+                                                                          '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!;
+                                                                  _model
+                                                                      .textFieldMask
+                                                                      .updateMask(
+                                                                    newValue:
+                                                                        TextEditingValue(
+                                                                      text: _model
+                                                                          .textController!
+                                                                          .text,
                                                                     ),
                                                                   );
-                                                                },
-                                                              );
-
-                                                              _model.topupCalculateAPIOutputSlider =
-                                                                  await SrisawadApiGroup
-                                                                      .postToCalculatorToGetNewTopupCall
-                                                                      .call(
-                                                                bearerAuth:
-                                                                    FFAppState()
-                                                                        .accessToken,
-                                                                transno: '',
-                                                                dbName:
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .dbName,
-                                                                  'db_name',
-                                                                ),
-                                                                contractNo:
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .contractNo,
-                                                                  'contract_no',
-                                                                ),
-                                                                loanAmount: double.parse(functions
-                                                                    .roundDownInput(functions.removeCommaFromNumText(_model
-                                                                        .sliderValue
-                                                                        ?.toString()))!
-                                                                    .toString()),
-                                                                interestRate:
-                                                                    double.parse(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .interestRate
-                                                                      .toString(),
-                                                                  'interest_rate',
-                                                                )),
-                                                                topupFeeAmount:
-                                                                    double.parse(
-                                                                        valueOrDefault<
-                                                                            String>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .feeAmount
-                                                                      .toString(),
-                                                                  'fee_amount',
-                                                                )),
-                                                                feeAmount: double.parse(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                  FFAppState()
-                                                                      .getTopupDataAPIResultAppstate
-                                                                      .feeAmount
-                                                                      .toString(),
-                                                                  'fee_amount',
-                                                                )),
-                                                                apiUrl: FFDevEnvironmentValues().isProduction
-                                                                    ? FFAppState()
-                                                                        .topupUrlProd
-                                                                    : FFAppState()
-                                                                        .topupUrlDev,
-                                                              );
-
-                                                              _shouldSetState =
-                                                                  true;
-                                                              if ((_model.topupCalculateAPIOutputSlider
-                                                                          ?.statusCode ??
-                                                                      200) !=
-                                                                  200) {
-                                                                await showDialog(
-                                                                  barrierDismissible:
-                                                                      false,
+                                                                });
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model.sliderValue = functions
+                                                                      .roundDownInput(functions.removeCommaFromNumText(_model
+                                                                          .sliderValue
+                                                                          ?.toString()))!
+                                                                      .toDouble();
+                                                                });
+                                                                unawaited(
+                                                                  () async {}(),
+                                                                );
+                                                                showDialog(
                                                                   context:
                                                                       context,
                                                                   builder:
@@ -1560,88 +1455,187 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                               ?.unfocus();
                                                                         },
                                                                         child:
-                                                                            ErrorMessageComponentWidget(
-                                                                          textMessage:
-                                                                              'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutputSlider?.statusCode ?? 200).toString()})',
-                                                                        ),
+                                                                            LoadingWidget(),
                                                                       ),
                                                                     );
                                                                   },
                                                                 );
 
+                                                                _model.topupCalculateAPIOutputSlider =
+                                                                    await SrisawadApiGroup
+                                                                        .postToCalculatorToGetNewTopupCall
+                                                                        .call(
+                                                                  bearerAuth:
+                                                                      FFAppState()
+                                                                          .accessToken,
+                                                                  transno: '',
+                                                                  dbName:
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .dbName,
+                                                                    'db_name',
+                                                                  ),
+                                                                  contractNo:
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .contractNo,
+                                                                    'contract_no',
+                                                                  ),
+                                                                  loanAmount: double.parse(functions
+                                                                      .roundDownInput(functions.removeCommaFromNumText(_model
+                                                                          .sliderValue
+                                                                          ?.toString()))!
+                                                                      .toString()),
+                                                                  interestRate:
+                                                                      double.parse(
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .interestRate
+                                                                        .toString(),
+                                                                    'interest_rate',
+                                                                  )),
+                                                                  topupFeeAmount:
+                                                                      double.parse(
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .feeAmount
+                                                                        .toString(),
+                                                                    'fee_amount',
+                                                                  )),
+                                                                  feeAmount: double.parse(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .feeAmount
+                                                                        .toString(),
+                                                                    'fee_amount',
+                                                                  )),
+                                                                  apiUrl: FFDevEnvironmentValues().isProduction
+                                                                      ? FFAppState()
+                                                                          .topupUrlProd
+                                                                      : FFAppState()
+                                                                          .topupUrlDev,
+                                                                );
+
+                                                                _shouldSetState =
+                                                                    true;
+                                                                if ((_model.topupCalculateAPIOutputSlider
+                                                                            ?.statusCode ??
+                                                                        200) !=
+                                                                    200) {
+                                                                  await showDialog(
+                                                                    barrierDismissible:
+                                                                        false,
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (dialogContext) {
+                                                                      return Dialog(
+                                                                        elevation:
+                                                                            0,
+                                                                        insetPadding:
+                                                                            EdgeInsets.zero,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        alignment:
+                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              ErrorMessageComponentWidget(
+                                                                            textMessage:
+                                                                                'พบข้อผิดพลาด status (${(_model.topupCalculateAPIOutputSlider?.statusCode ?? 200).toString()})',
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  if (_shouldSetState)
+                                                                    safeSetState(
+                                                                        () {});
+                                                                  return;
+                                                                }
+                                                                FFAppState()
+                                                                        .getTopupCalculateAppState =
+                                                                    TopupCalculateDataTypeStruct.maybeFromMap((_model
+                                                                            .topupCalculateAPIOutputSlider
+                                                                            ?.jsonBody ??
+                                                                        ''))!;
+                                                                safeSetState(
+                                                                    () {});
+                                                                FFAppState()
+                                                                    .updateGetTopupDataAPIResultAppstateStruct(
+                                                                  (e) => e
+                                                                    ..feeAmount =
+                                                                        FFAppState()
+                                                                            .getTopupCalculateAppState
+                                                                            .feeAmount,
+                                                                );
+                                                                safeSetState(
+                                                                    () {});
                                                                 Navigator.pop(
                                                                     context);
                                                                 if (_shouldSetState)
                                                                   safeSetState(
                                                                       () {});
-                                                                return;
-                                                              }
-                                                              FFAppState()
-                                                                      .getTopupCalculateAppState =
-                                                                  TopupCalculateDataTypeStruct
-                                                                      .maybeFromMap((_model
-                                                                              .topupCalculateAPIOutputSlider
-                                                                              ?.jsonBody ??
-                                                                          ''))!;
-                                                              safeSetState(
-                                                                  () {});
-                                                              FFAppState()
-                                                                  .updateGetTopupDataAPIResultAppstateStruct(
-                                                                (e) => e
-                                                                  ..feeAmount =
-                                                                      FFAppState()
-                                                                          .getTopupCalculateAppState
-                                                                          .feeAmount,
-                                                              );
-                                                              safeSetState(
-                                                                  () {});
-                                                              Navigator.pop(
-                                                                  context);
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      24.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Container(
-                                                            width: 3.0,
-                                                            height: 15.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FFAppState()
-                                                                          .getTopupDataAPIResultAppstate
-                                                                          .interestPaidFlag ==
-                                                                      'Y'
-                                                                  ? FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText
-                                                                  : FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16.0),
+                                                              },
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        24.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Container(
+                                                              width: 3.0,
+                                                              height: 15.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FFAppState().getTopupDataAPIResultAppstate.interestPaidFlag ==
+                                                                        'Y'
+                                                                    ? FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText
+                                                                    : FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            16.0),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
