@@ -1441,9 +1441,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                     builder:
                                                                         (alertDialogContext) {
                                                                       return AlertDialog(
-                                                                        content: Text(functions.returnNumberWithCommaFullNumber(
-                                                                            '${functions.roundDownInput(_model.sliderValue?.toString())?.toString()}',
-                                                                            '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!),
+                                                                        content: Text(functions
+                                                                            .roundDownInput(functions.removeCommaFromNumText(_model.sliderValue?.toString()))!
+                                                                            .toString()),
                                                                         actions: [
                                                                           TextButton(
                                                                             onPressed: () =>
