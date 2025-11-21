@@ -885,347 +885,373 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                                         .fromSTEB(
                                                                             12.0,
                                                                             0.0,
-                                                                            0.0,
+                                                                            8.0,
                                                                             0.0),
                                                                     child:
                                                                         Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
                                                                               .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .start,
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
-                                                                              .center,
+                                                                              .start,
                                                                       children: [
                                                                         Row(
                                                                           mainAxisSize:
                                                                               MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
                                                                           crossAxisAlignment:
                                                                               CrossAxisAlignment.start,
                                                                           children: [
                                                                             Expanded(
-                                                                              child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                                                                                child: Column(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(),
+                                                                                child: Row(
                                                                                   mainAxisSize: MainAxisSize.max,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                                                   children: [
-                                                                                    Row(
-                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                      children: [
-                                                                                        Expanded(
-                                                                                          child: Container(
-                                                                                            decoration: BoxDecoration(),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  child: Padding(
-                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                                                                                    child: Text(
-                                                                                                      valueOrDefault<String>(
-                                                                                                        '${loanListItem.contractDetails.loanTypeName}',
-                                                                                                        'loan_type_name',
-                                                                                                      ),
-                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Noto San Thai',
-                                                                                                            fontSize: 16.0,
-                                                                                                            letterSpacing: 0.0,
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ],
-                                                                                    ),
                                                                                     Expanded(
-                                                                                      child: Container(
-                                                                                        decoration: BoxDecoration(),
-                                                                                        child: Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                          child: Row(
-                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                            children: [
-                                                                                              Expanded(
-                                                                                                child: Text(
-                                                                                                  'เลขที่สัญญา',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.normal,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ),
-                                                                                              Text(
-                                                                                                '${loanListItem.contractNo}',
-                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                      fontFamily: 'Noto San Thai',
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                      fontSize: 14.0,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                    ),
-                                                                                              ),
-                                                                                            ],
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                        child: Text(
+                                                                                          valueOrDefault<String>(
+                                                                                            '${loanListItem.contractDetails.loanTypeName}',
+                                                                                            'loan_type_name',
                                                                                           ),
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                fontSize: 16.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
                                                                                         ),
                                                                                       ),
                                                                                     ),
-                                                                                    Expanded(
-                                                                                      child: Container(
-                                                                                        decoration: BoxDecoration(),
-                                                                                        child: Padding(
-                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                          child: Row(
-                                                                                            mainAxisSize: MainAxisSize.max,
-                                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                            children: [
-                                                                                              Expanded(
-                                                                                                child: Text(
-                                                                                                  'ข้อมูลหลักประกัน',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.normal,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ),
-                                                                                              Text(
-                                                                                                '${loanListItem.contractDetails.collateralInformation}',
-                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                      fontFamily: 'Noto San Thai',
-                                                                                                      color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                      fontSize: 14.0,
-                                                                                                      letterSpacing: 0.0,
-                                                                                                    ),
-                                                                                              ),
-                                                                                            ],
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                    if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') && ('${loanListItem.contractDetails.loanTypeCode}' == 'H') && false)
-                                                                                      Expanded(
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  child: Text(
-                                                                                                    'กลุ่มสินค้า',
-                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                          fontFamily: 'Noto San Thai',
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                          fontSize: 14.0,
-                                                                                                          letterSpacing: 0.0,
-                                                                                                          fontWeight: FontWeight.normal,
-                                                                                                        ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                Text(
-                                                                                                  valueOrDefault<String>(
-                                                                                                    FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.contractDetails.vehicleBrand,
-                                                                                                    'vehicle_brand',
-                                                                                                  ),
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    if (!(('${loanListItem.contractDetails.loanTypeCode}' == 'L') || ('${loanListItem.contractDetails.loanTypeCode}' == 'H') || (loanListItem.topupDetail.canTopup == 'G') || (loanListItem.topupDetail.canTopup == 'A')))
-                                                                                      Expanded(
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Expanded(
-                                                                                                  child: Text(
-                                                                                                    'ข้อมูลสถานะ',
-                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                          fontFamily: 'Noto San Thai',
-                                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                                          fontSize: 14.0,
-                                                                                                          letterSpacing: 0.0,
-                                                                                                          fontWeight: FontWeight.normal,
-                                                                                                        ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                                Text(
-                                                                                                  '${loanListItem.requestStatus}',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: valueOrDefault<String>(
-                                                                                                                  FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.requestStatus,
-                                                                                                                  'request_status',
-                                                                                                                ) ==
-                                                                                                                'เอกสารไม่ครบติดต่อ 1652'
-                                                                                                            ? FlutterFlowTheme.of(context).error
-                                                                                                            : Colors.black,
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.bold,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    if ('${loanListItem.topupDetail.topupExtra.toString()}' != '0')
-                                                                                      Expanded(
-                                                                                        child: Container(
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                              children: [
-                                                                                                Text(
-                                                                                                  'วงเงินพิเศษ',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: Color(0xFFFF0000),
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.w600,
-                                                                                                      ),
-                                                                                                ),
-                                                                                                Text(
-                                                                                                  '${valueOrDefault<String>(
-                                                                                                    functions.returnNumberWithComma2Decimal(loanListItem.topupDetail.topupExtra.toString()),
-                                                                                                    '0',
-                                                                                                  )}',
-                                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                        fontFamily: 'Noto San Thai',
-                                                                                                        color: Color(0xFFFF0000),
-                                                                                                        fontSize: 14.0,
-                                                                                                        letterSpacing: 0.0,
-                                                                                                        fontWeight: FontWeight.w600,
-                                                                                                      ),
-                                                                                                ),
-                                                                                              ],
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') || ('${loanListItem.contractDetails.loanTypeCode}' == 'H') || (loanListItem.topupDetail.canTopup == 'G') || (loanListItem.topupDetail.canTopup == 'A') || (loanListItem.topupDetail.canTopup == 'L'))
-                                                                                      Column(
-                                                                                        mainAxisSize: MainAxisSize.max,
-                                                                                        children: [
-                                                                                          Expanded(
-                                                                                            child: Container(
-                                                                                              width: double.infinity,
-                                                                                              decoration: BoxDecoration(),
-                                                                                              child: Padding(
-                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                                child: Row(
-                                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      'ยังไม่สามารถทำรายการผ่านแอปได้',
-                                                                                                      textAlign: TextAlign.start,
-                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Noto San Thai',
-                                                                                                            color: Color(0xFFFF0000),
-                                                                                                            fontSize: 14.0,
-                                                                                                            letterSpacing: 0.0,
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                ),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          Expanded(
-                                                                                            child: Container(
-                                                                                              width: double.infinity,
-                                                                                              decoration: BoxDecoration(),
-                                                                                              child: Padding(
-                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                                child: Row(
-                                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      'กรุณาติดต่อสาขาเจ้าของบัญชีหรือสาขาใกล้บ้าน',
-                                                                                                      textAlign: TextAlign.start,
-                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Noto San Thai',
-                                                                                                            color: Color(0xFFFF0000),
-                                                                                                            fontSize: 14.0,
-                                                                                                            letterSpacing: 0.0,
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                ),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                          Expanded(
-                                                                                            child: Container(
-                                                                                              width: double.infinity,
-                                                                                              decoration: BoxDecoration(),
-                                                                                              child: Padding(
-                                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                                                                child: Row(
-                                                                                                  mainAxisSize: MainAxisSize.max,
-                                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                                  children: [
-                                                                                                    Text(
-                                                                                                      'เพื่อทำสัญญาและรับเงิน',
-                                                                                                      textAlign: TextAlign.start,
-                                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                            fontFamily: 'Noto San Thai',
-                                                                                                            color: Color(0xFFFF0000),
-                                                                                                            fontSize: 14.0,
-                                                                                                            letterSpacing: 0.0,
-                                                                                                            fontWeight: FontWeight.w600,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                  ],
-                                                                                                ),
-                                                                                              ),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ],
-                                                                                      ),
                                                                                   ],
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                           ],
                                                                         ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                  child: Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: Text(
+                                                                                          'เลขที่สัญญา',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.normal,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      Text(
+                                                                                        '${loanListItem.contractNo}',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Noto San Thai',
+                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                              fontSize: 14.0,
+                                                                                              letterSpacing: 0.0,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                  child: Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: Text(
+                                                                                          'ข้อมูลหลักประกัน',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.normal,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      Text(
+                                                                                        '${loanListItem.contractDetails.collateralInformation}',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Noto San Thai',
+                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                              fontSize: 14.0,
+                                                                                              letterSpacing: 0.0,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') &&
+                                                                                ('${loanListItem.contractDetails.loanTypeCode}' == 'H') &&
+                                                                                false)
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Text(
+                                                                                            'กลุ่มสินค้า',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.normal,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          valueOrDefault<String>(
+                                                                                            FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.contractDetails.vehicleBrand,
+                                                                                            'vehicle_brand',
+                                                                                          ),
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            if (!(('${loanListItem.contractDetails.loanTypeCode}' == 'L') ||
+                                                                                ('${loanListItem.contractDetails.loanTypeCode}' == 'H') ||
+                                                                                (loanListItem.topupDetail.canTopup == 'G') ||
+                                                                                (loanListItem.topupDetail.canTopup == 'A')))
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Text(
+                                                                                            'ข้อมูลสถานะ',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.normal,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          '${loanListItem.requestStatus}',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: valueOrDefault<String>(
+                                                                                                          FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.requestStatus,
+                                                                                                          'request_status',
+                                                                                                        ) ==
+                                                                                                        'เอกสารไม่ครบติดต่อ 1652'
+                                                                                                    ? FlutterFlowTheme.of(context).error
+                                                                                                    : Colors.black,
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.bold,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            if ('${loanListItem.topupDetail.topupExtra.toString()}' !=
+                                                                                '0')
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'วงเงินพิเศษ',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          '${valueOrDefault<String>(
+                                                                                            functions.returnNumberWithComma2Decimal(loanListItem.topupDetail.topupExtra.toString()),
+                                                                                            '0',
+                                                                                          )}',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                          ],
+                                                                        ),
+                                                                        if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') ||
+                                                                            ('${loanListItem.contractDetails.loanTypeCode}' ==
+                                                                                'H') ||
+                                                                            (loanListItem.topupDetail.canTopup ==
+                                                                                'G') ||
+                                                                            (loanListItem.topupDetail.canTopup ==
+                                                                                'A') ||
+                                                                            (loanListItem.topupDetail.canTopup ==
+                                                                                'L'))
+                                                                          Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'ยังไม่สามารถทำรายการผ่านแอปได้',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'กรุณาติดต่อสาขาเจ้าของบัญชีหรือสาขาใกล้บ้าน',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'เพื่อทำสัญญาและรับเงิน',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                       ],
                                                                     ),
                                                                   ),

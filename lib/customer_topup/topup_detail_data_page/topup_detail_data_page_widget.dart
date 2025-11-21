@@ -1409,27 +1409,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   ),
                                                                 );
                                                               });
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    content: Text(functions.returnNumberWithCommaFullNumber(
-                                                                        '${functions.roundDownInput(_model.sliderValue?.toString())?.toString()}',
-                                                                        '${FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount.toString()}')!),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            'Ok'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
                                                               safeSetState(() {
                                                                 _model.sliderValue = functions
                                                                     .roundDownInput(functions.removeCommaFromNumText(_model
@@ -1437,29 +1416,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                         ?.toString()))!
                                                                     .toDouble();
                                                               });
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    content: Text(functions
-                                                                        .roundDownInput(functions.removeCommaFromNumText(_model
-                                                                            .sliderValue
-                                                                            ?.toString()))!
-                                                                        .toString()),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            'Ok'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
                                                               unawaited(
                                                                 () async {}(),
                                                               );
