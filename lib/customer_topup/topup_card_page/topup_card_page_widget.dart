@@ -399,8 +399,8 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                     child: Visibility(
                       visible: _model.isLoadFirestoreCompleted,
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: MediaQuery.sizeOf(context).height * 1.0,
+                        width: double.infinity,
+                        height: double.infinity,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -408,177 +408,189 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               8.0, 0.0, 8.0, 0.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 20.0, 0.0, 0.0),
-                                child: Container(
-                                  width: MediaQuery.sizeOf(context).width * 1.0,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFFBEFE3),
-                                    borderRadius: BorderRadius.circular(16.0),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 8.0, 12.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${topupCardPageApplicationRecord.topupTextTitle}',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 5.0, 0.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final listText =
-                                                  topupCardPageApplicationRecord
-                                                      .topupTextList
-                                                      .toList();
-
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: List.generate(
-                                                    listText.length,
-                                                    (listTextIndex) {
-                                                  final listTextItem =
-                                                      listText[listTextIndex];
-                                                  return Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 2.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      '${listTextItem}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            color: Colors.black,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  );
-                                                }),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 5.0, 0.0, 0.0),
-                                          child: Builder(
-                                            builder: (context) {
-                                              final warnningTextList =
-                                                  topupCardPageApplicationRecord
-                                                      .topupWarnningTextList
-                                                      .toList();
-
-                                              return Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: List.generate(
-                                                    warnningTextList.length,
-                                                    (warnningTextListIndex) {
-                                                  final warnningTextListItem =
-                                                      warnningTextList[
-                                                          warnningTextListIndex];
-                                                  return Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 2.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      '${warnningTextListItem}',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            color: functions
-                                                                    .containString(
-                                                                        '***',
-                                                                        warnningTextListItem)!
-                                                                ? Color(
-                                                                    0xFFFF0000)
-                                                                : Color(
-                                                                    0xFF003063),
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                  );
-                                                }),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ]
-                                          .addToStart(SizedBox(height: 8.0))
-                                          .addToEnd(SizedBox(height: 12.0)),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFBEFE3),
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 12.0, 0.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Padding(
+                                    child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 0.0, 0.0, 0.0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {},
-                                        child: Text(
-                                          'กรุณาเลือกสัญญาที่ต้องการเติมวงเงินเวลาทำการ',
-                                          textAlign: TextAlign.start,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
+                                          12.0, 8.0, 12.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${topupCardPageApplicationRecord.topupTextTitle}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final listText =
+                                                    topupCardPageApplicationRecord
+                                                        .topupTextList
+                                                        .toList();
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: List.generate(
+                                                      listText.length,
+                                                      (listTextIndex) {
+                                                    final listTextItem =
+                                                        listText[listTextIndex];
+                                                    return Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        '${listTextItem}',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color:
+                                                                  Colors.black,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final warnningTextList =
+                                                    topupCardPageApplicationRecord
+                                                        .topupWarnningTextList
+                                                        .toList();
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: List.generate(
+                                                      warnningTextList.length,
+                                                      (warnningTextListIndex) {
+                                                    final warnningTextListItem =
+                                                        warnningTextList[
+                                                            warnningTextListIndex];
+                                                    return Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        '${warnningTextListItem}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: functions.containString(
+                                                                          '***',
+                                                                          warnningTextListItem)!
+                                                                      ? Color(
+                                                                          0xFFFF0000)
+                                                                      : Color(
+                                                                          0xFF003063),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ]
+                                            .addToStart(SizedBox(height: 8.0))
+                                            .addToEnd(SizedBox(height: 12.0)),
                                       ),
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Padding(
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 12.0, 0.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {},
+                                          child: Text(
+                                            'กรุณาเลือกสัญญาที่ต้องการเติมวงเงินเวลาทำการ',
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 10.0, 0.0, 0.0),
                                   child: FutureBuilder<ApiCallResponse>(
@@ -1420,22 +1432,22 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                     },
                                   ),
                                 ),
-                              ),
-                              if (false)
-                                Container(
-                                  height: 250.0,
-                                  child: wrapWithModel(
-                                    model: _model.emptyComponentTopupModel,
-                                    updateCallback: () => safeSetState(() {}),
-                                    child: EmptyComponentTopupWidget(
-                                      text1:
-                                          '${_model.configOutput?.topupNoDataText}',
-                                      text2:
-                                          '${_model.configOutput?.topupNoData2Text}',
+                                if (false)
+                                  Container(
+                                    height: 250.0,
+                                    child: wrapWithModel(
+                                      model: _model.emptyComponentTopupModel,
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: EmptyComponentTopupWidget(
+                                        text1:
+                                            '${_model.configOutput?.topupNoDataText}',
+                                        text2:
+                                            '${_model.configOutput?.topupNoData2Text}',
+                                      ),
                                     ),
                                   ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
