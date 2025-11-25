@@ -54,128 +54,330 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
-      showDialog(
-        context: context,
-        builder: (dialogContext) {
-          return Dialog(
-            elevation: 0,
-            insetPadding: EdgeInsets.zero,
-            backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
-                .resolve(Directionality.of(context)),
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(dialogContext).unfocus();
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: Container(
-                height: double.infinity,
-                child: LoadingWidget(),
-              ),
-            ),
-          );
-        },
-      );
-
-      _model.getPdfLoanDocApiOutput =
-          await SrisawadApiGroup.sendAnPdfToUserCall.call(
-        bearerAuth: FFAppState().accessToken,
-        contractNo: FFAppState().getTopupDataAPIResultAppstate.contractNo,
-        dbName: FFAppState().getTopupDataAPIResultAppstate.dbName,
-        amount: FFAppState().getTopupCalculateAppState.amount,
-        from: FFAppState().getLoanListSelected.contractDetails.comcode,
-        vehicleType:
-            FFAppState().getLoanListSelected.contractDetails.loanTypeName,
-        contractBankAccount:
-            FFAppState().getLoanListSelected.contractBankAccount,
-        contractBankBrandname:
-            FFAppState().getLoanListSelected.contractBankBrandname,
-        contractBankBranch: '',
-        contractBankType: FFAppState().getLoanListSelected.contractBankType,
-        hashThaiId: FFAppState().customerDetailData.hashThaiId,
-        interestRate: FFAppState().getTopupDataAPIResultAppstate.interestRate,
-        installmentNumber: FFAppState().topupInstallmentSelected.tenor,
-        amountPerInstallment:
-            FFAppState().topupInstallmentSelected.regularPeriodAmt.toDouble(),
-        startInstallmentDate:
-            FFAppState().getTopupCalculateAppState.firstDueDate,
-        installmentDate: '',
-        apiUrl: FFDevEnvironmentValues().isProduction
-            ? FFAppState().topupUrlProd
-            : FFAppState().topupUrlDev,
-      );
-
-      if ((_model.getPdfLoanDocApiOutput?.statusCode ?? 200) != 200) {
-        Navigator.pop(context);
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage: 'ไม่สามารถสร้างเอกสารสัญญาได้ กรุณาลองใหม่',
-                ),
-              ),
-            );
-          },
-        );
-
-        context.safePop();
-        return;
-      }
-      _model.pdfDocData = SrisawadApiGroup.sendAnPdfToUserCall.pdfLoanDataJson(
-        (_model.getPdfLoanDocApiOutput?.jsonBody ?? ''),
-      );
-      safeSetState(() {});
       await Future.wait([
         Future(() async {
-          _model.requestPdfByteFileOutput =
-              await actions.convertBase64ToFFFiles(
-            _model.pdfDocData?.request,
-            '01',
-          );
-          _model.request = _model.requestPdfByteFileOutput;
-          safeSetState(() {});
+          while (true) {
+            safeSetState(() {});
+            await Future.delayed(
+              Duration(
+                milliseconds: 1000,
+              ),
+            );
+          }
         }),
         Future(() async {
-          _model.receiptPdfByteFileOutput =
-              await actions.convertBase64ToFFFiles(
-            _model.pdfDocData?.receipt,
-            '02',
+          await actions.listenWebviewEventCamera(
+            context,
+            (cameraBase64, actionNameOutput) async {
+              var _shouldSetState = false;
+              if (actionNameOutput == 'idCardCamera') {
+                _model.idCardBase64 = cameraBase64;
+                safeSetState(() {});
+                _model.generateIdCardFile =
+                    await actions.convertBase64ToFFFiles(
+                  _model.idCardBase64,
+                  '11',
+                );
+                _shouldSetState = true;
+                _model.visionOutputThaiIdNewCamera =
+                    await SrisawadApiGroup.visionThaiIdCall.call(
+                  file: _model.generateIdCardFile,
+                  apiUrl: FFDevEnvironmentValues().isProduction
+                      ? FFAppState().topupUrlProd
+                      : FFAppState().topupUrlDev,
+                );
+
+                _shouldSetState = true;
+                if ((_model.visionOutputThaiIdNewCamera?.statusCode ?? 200) ==
+                    200) {
+                  _model.thaiIdPageState = getJsonField(
+                    (_model.visionOutputThaiIdNewCamera?.jsonBody ?? ''),
+                    r'''$.thai_id''',
+                  ).toString();
+                  _model.expireDatePageState = getJsonField(
+                    (_model.visionOutputThaiIdNewCamera?.jsonBody ?? ''),
+                    r'''$.lastest_date''',
+                  ).toString();
+                  safeSetState(() {});
+                  if (!(('1103000101931' == '${_model.thaiIdPageState}') ||
+                      ('1103701967986' == '${_model.thaiIdPageState}') ||
+                      ('1331400042203' == '${_model.thaiIdPageState}') ||
+                      ('3401700351967' == '${_model.thaiIdPageState}') ||
+                      ('${FFAppState().customerDetailData.thaiId}' ==
+                          '${_model.thaiIdPageState}'))) {
+                    _model.uploadingImage = false;
+                    safeSetState(() {});
+                    await showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (dialogContext) {
+                        return Dialog(
+                          elevation: 0,
+                          insetPadding: EdgeInsets.zero,
+                          backgroundColor: Colors.transparent,
+                          alignment: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
+                          child: GestureDetector(
+                            onTap: () {
+                              FocusScope.of(dialogContext).unfocus();
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            child: ErrorMessageComponentWidget(
+                              textMessage:
+                                  'เลขบัตรไม่ตรงกับฐานข้อมูลโปรดลองอีกครั้ง',
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
+                    return;
+                  }
+                  if (!(functions.isCurrentDateBeforeDateInput(
+                          '${_model.expireDatePageState}',
+                          FFAppState()
+                              .getLoanListSelected
+                              .paymentDetails
+                              .currentDateTime)! ||
+                      ('Y' ==
+                          '${getJsonField(
+                            (_model.visionOutputThaiIdNewCamera?.jsonBody ??
+                                ''),
+                            r'''$.exception_date''',
+                          ).toString()}'))) {
+                    await showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (dialogContext) {
+                        return Dialog(
+                          elevation: 0,
+                          insetPadding: EdgeInsets.zero,
+                          backgroundColor: Colors.transparent,
+                          alignment: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
+                          child: GestureDetector(
+                            onTap: () {
+                              FocusScope.of(dialogContext).unfocus();
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            child: ChangeDateExpireComponentWidget(
+                              textMessage: '-',
+                              thaiId: _model.thaiIdPageState,
+                            ),
+                          ),
+                        );
+                      },
+                    ).then((value) => safeSetState(
+                        () => _model.changeDateOutputNewCamera = value));
+
+                    _shouldSetState = true;
+                    if (!_model.changeDateOutputNewCamera!) {
+                      _model.uploadingImage = false;
+                      safeSetState(() {});
+                      return;
+                    }
+                  }
+                } else {
+                  _model.uploadingImage = false;
+                  safeSetState(() {});
+                  await showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (dialogContext) {
+                      return Dialog(
+                        elevation: 0,
+                        insetPadding: EdgeInsets.zero,
+                        backgroundColor: Colors.transparent,
+                        alignment: AlignmentDirectional(0.0, 0.0)
+                            .resolve(Directionality.of(context)),
+                        child: GestureDetector(
+                          onTap: () {
+                            FocusScope.of(dialogContext).unfocus();
+                            FocusManager.instance.primaryFocus?.unfocus();
+                          },
+                          child: ErrorMessageComponentWidget(
+                            textMessage: 'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
+                  return;
+                }
+
+                _model.idCardImageUrlCallback =
+                    await actions.uploadFileFirebaseStorage(
+                  'Topup${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
+                  _model.generateIdCardFile,
+                  FFAppState().getLoanListSelected.contractNo,
+                  FFAppState().hashThaiIdAppState,
+                );
+                _shouldSetState = true;
+                _model.idCardFile = _model.generateIdCardFile;
+                safeSetState(() {});
+                _model.idCardImageUrl =
+                    functions.stringToImgPath(_model.idCardImageUrlCallback)!;
+                safeSetState(() {});
+                _model.uploadingImage = false;
+                safeSetState(() {});
+              } else if (actionNameOutput == 'selfieCamera') {
+                _model.selfieBase64 = cameraBase64;
+                safeSetState(() {});
+                _model.generateSelfieFile =
+                    await actions.convertBase64ToFFFiles(
+                  _model.selfieBase64,
+                  '12',
+                );
+                _shouldSetState = true;
+                _model.selfieImageUrlCallback =
+                    await actions.uploadFileFirebaseStorage(
+                  'Topup${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}',
+                  _model.generateSelfieFile,
+                  FFAppState().getLoanListSelected.contractNo,
+                  FFAppState().hashThaiIdAppState,
+                );
+                _shouldSetState = true;
+                _model.selfiePlusIdCardFile = _model.generateSelfieFile;
+                safeSetState(() {});
+                _model.selfiePlusIdCardImageUrl =
+                    functions.stringToImgPath(_model.selfieImageUrlCallback)!;
+                safeSetState(() {});
+                _model.uploadingImage = false;
+                safeSetState(() {});
+              }
+            },
           );
-          _model.receipt = _model.receiptPdfByteFileOutput;
-          safeSetState(() {});
         }),
         Future(() async {
-          _model.agreementPdfByteFileOutput =
-              await actions.convertBase64ToFFFiles(
-            _model.pdfDocData?.agreement,
-            '03',
+          showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(0.0, 0.0)
+                    .resolve(Directionality.of(context)),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(dialogContext).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    child: LoadingWidget(),
+                  ),
+                ),
+              );
+            },
           );
-          _model.agreement = _model.agreementPdfByteFileOutput;
+
+          _model.getPdfLoanDocApiOutput =
+              await SrisawadApiGroup.sendAnPdfToUserCall.call(
+            bearerAuth: FFAppState().accessToken,
+            contractNo: FFAppState().getTopupDataAPIResultAppstate.contractNo,
+            dbName: FFAppState().getTopupDataAPIResultAppstate.dbName,
+            amount: FFAppState().getTopupCalculateAppState.amount,
+            from: FFAppState().getLoanListSelected.contractDetails.comcode,
+            vehicleType:
+                FFAppState().getLoanListSelected.contractDetails.loanTypeName,
+            contractBankAccount:
+                FFAppState().getLoanListSelected.contractBankAccount,
+            contractBankBrandname:
+                FFAppState().getLoanListSelected.contractBankBrandname,
+            contractBankBranch: '',
+            contractBankType: FFAppState().getLoanListSelected.contractBankType,
+            hashThaiId: FFAppState().customerDetailData.hashThaiId,
+            interestRate:
+                FFAppState().getTopupDataAPIResultAppstate.interestRate,
+            installmentNumber: FFAppState().topupInstallmentSelected.tenor,
+            amountPerInstallment: FFAppState()
+                .topupInstallmentSelected
+                .regularPeriodAmt
+                .toDouble(),
+            startInstallmentDate:
+                FFAppState().getTopupCalculateAppState.firstDueDate,
+            installmentDate: '',
+            apiUrl: FFDevEnvironmentValues().isProduction
+                ? FFAppState().topupUrlProd
+                : FFAppState().topupUrlDev,
+          );
+
+          if ((_model.getPdfLoanDocApiOutput?.statusCode ?? 200) != 200) {
+            Navigator.pop(context);
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage: 'ไม่สามารถสร้างเอกสารสัญญาได้ กรุณาลองใหม่',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            context.safePop();
+            return;
+          }
+          _model.pdfDocData =
+              SrisawadApiGroup.sendAnPdfToUserCall.pdfLoanDataJson(
+            (_model.getPdfLoanDocApiOutput?.jsonBody ?? ''),
+          );
           safeSetState(() {});
+          await Future.wait([
+            Future(() async {
+              _model.requestPdfByteFileOutput =
+                  await actions.convertBase64ToFFFiles(
+                _model.pdfDocData?.request,
+                '01',
+              );
+              _model.request = _model.requestPdfByteFileOutput;
+              safeSetState(() {});
+            }),
+            Future(() async {
+              _model.receiptPdfByteFileOutput =
+                  await actions.convertBase64ToFFFiles(
+                _model.pdfDocData?.receipt,
+                '02',
+              );
+              _model.receipt = _model.receiptPdfByteFileOutput;
+              safeSetState(() {});
+            }),
+            Future(() async {
+              _model.agreementPdfByteFileOutput =
+                  await actions.convertBase64ToFFFiles(
+                _model.pdfDocData?.agreement,
+                '03',
+              );
+              _model.agreement = _model.agreementPdfByteFileOutput;
+              safeSetState(() {});
+            }),
+          ]);
+          _model.idCardFile = null;
+          _model.selfiePlusIdCardFile = null;
+          safeSetState(() {});
+          logFirebaseEvent(
+            'topup_step4_verify_allinfo',
+            parameters: {
+              'hash_id': FFAppState().hashThaiIdAppState,
+            },
+          );
+          Navigator.pop(context);
         }),
       ]);
-      _model.idCardFile = null;
-      _model.selfiePlusIdCardFile = null;
-      safeSetState(() {});
-      logFirebaseEvent(
-        'topup_step4_verify_allinfo',
-        parameters: {
-          'hash_id': FFAppState().hashThaiIdAppState,
-        },
-      );
-      Navigator.pop(context);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
