@@ -3469,8 +3469,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.circleImageBase64C =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_circleImageUploadAction,
+                                                  _model.circleFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
@@ -3478,8 +3477,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.rightImageBase64 =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_imageRightUploadAction,
+                                                  _model.rightFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
@@ -3487,8 +3485,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.leftImageBase64 =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_imageLeftUploadAction,
+                                                  _model.leftFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
@@ -3496,8 +3493,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.frontImageBase64 =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_imageFrontUploadAction,
+                                                  _model.frontFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
@@ -3505,8 +3501,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.backImageBase64 =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_imageBackUploadAction,
+                                                  _model.backFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
@@ -3514,8 +3509,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                                 _model.mileImageBase64 =
                                                     await actions
                                                         .encodeBase64FromFFFile(
-                                                  _model
-                                                      .uploadedLocalFile_imageMileUploadAction,
+                                                  _model.mileFile,
                                                 );
                                                 _shouldSetState = true;
                                               }),
