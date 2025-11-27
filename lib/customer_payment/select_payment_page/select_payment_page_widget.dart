@@ -196,14 +196,15 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
           unawaited(
             () async {}(),
           );
-          if (!((String textField, int osBalance) {
-            return (double.parse(textField) >= osBalance);
+          if (!((String textField, String osBalance) {
+            return (double.parse(textField) >= double.parse(osBalance));
           }(
               functions.removeCommaFromNumText(_model.textController.text)!,
               FFAppState()
                   .getLoanListSelected
                   .contractDetails
-                  .closingBalance))) {
+                  .osBalance
+                  .toString()))) {
             await showDialog(
               barrierDismissible: false,
               context: context,
