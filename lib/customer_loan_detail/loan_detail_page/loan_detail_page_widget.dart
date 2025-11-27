@@ -90,7 +90,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
         authorization: widget.token,
         apiUrl: FFDevEnvironmentValues().isProduction
             ? FFAppState().topupUrlProd
-            : FFAppState().topupUrlProd,
+            : FFAppState().topupUrlDev,
       );
 
       if ((_model.getLoanListOutput?.statusCode ?? 200) == 200) {
@@ -247,21 +247,6 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
       }
 
       Navigator.pop(context);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(functions.getDataFromMapJson(
-                _model.comCodeConfigDoc, 'contract_default_date')!),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -314,7 +299,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'รายละเอียดสินเชื่อ',
+                        'รายละเอียดสินเชื่อ${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                         style: FlutterFlowTheme.of(context)
                             .headlineMedium
                             .override(

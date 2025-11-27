@@ -160,7 +160,7 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
                     );
                   },
                   child: Text(
-                    'กรุณาเลือกสินเชื่อ/ประกันภัย ที่ท่านสนใจ',
+                    'กรุณาเลือกสินเชื่อ/ประกันภัย ที่ท่านสนใจ${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Noto San Thai',
                           color: FlutterFlowTheme.of(context).primaryText,

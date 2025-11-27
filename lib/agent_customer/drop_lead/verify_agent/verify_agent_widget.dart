@@ -139,7 +139,7 @@ class _VerifyAgentWidgetState extends State<VerifyAgentWidget> {
                 actions: [],
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(
-                    'รับสิทธิ์แนะนำลูกค้า',
+                    'รับสิทธิ์แนะนำลูกค้า${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                     style: FlutterFlowTheme.of(context).headlineMedium.override(
                           fontFamily: 'Noto San Thai',
                           color: FlutterFlowTheme.of(context).primaryText,

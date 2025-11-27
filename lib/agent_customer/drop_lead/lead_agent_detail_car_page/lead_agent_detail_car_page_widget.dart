@@ -851,18 +851,28 @@ class _LeadAgentDetailCarPageWidgetState
                                                     _model
                                                         .dropDownGearValueController
                                                         ?.reset();
+                                                    _model.dropDownGearValue =
+                                                        null;
                                                     _model
                                                         .dropDownBrand11ValueController
                                                         ?.reset();
+                                                    _model.dropDownBrand11Value =
+                                                        null;
                                                     _model
                                                         .dropDownYearValueController
                                                         ?.reset();
+                                                    _model.dropDownYearValue =
+                                                        null;
                                                     _model
                                                         .dropDownModelValueController
                                                         ?.reset();
+                                                    _model.dropDownModelValue =
+                                                        null;
                                                     _model
                                                         .dropDownCCValueController
                                                         ?.reset();
+                                                    _model.dropDownCCValue =
+                                                        null;
                                                   });
                                                   if (!(_model
                                                       .gearMasterPageState
@@ -1206,31 +1216,43 @@ class _LeadAgentDetailCarPageWidgetState
                                                       _model
                                                           .dropDownCCValueController
                                                           ?.reset();
+                                                      _model.dropDownCCValue =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model
                                                           .dropDownModelValueController
                                                           ?.reset();
+                                                      _model.dropDownModelValue =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model
                                                           .dropDownYearValueController
                                                           ?.reset();
+                                                      _model.dropDownYearValue =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model
                                                           .dropDownBrand11ValueController
                                                           ?.reset();
+                                                      _model.dropDownBrand11Value =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model
                                                           .dropDownModelValueController
                                                           ?.value = '';
+                                                      _model.dropDownModelValue =
+                                                          '';
                                                     });
                                                     safeSetState(() {
                                                       _model
                                                           .dropDownCCValueController
                                                           ?.value = '';
+                                                      _model.dropDownCCValue =
+                                                          '';
                                                     });
                                                     safeSetState(() {
                                                       _model
@@ -1427,12 +1449,18 @@ class _LeadAgentDetailCarPageWidgetState
                                                     _model
                                                         .dropDownYearValueController
                                                         ?.reset();
+                                                    _model.dropDownYearValue =
+                                                        null;
                                                     _model
                                                         .dropDownModelValueController
                                                         ?.reset();
+                                                    _model.dropDownModelValue =
+                                                        null;
                                                     _model
                                                         .dropDownCCValueController
                                                         ?.reset();
+                                                    _model.dropDownCCValue =
+                                                        null;
                                                   });
                                                   safeSetState(() {
                                                     _model
@@ -1762,9 +1790,13 @@ class _LeadAgentDetailCarPageWidgetState
                                                       _model
                                                           .dropDownModelValueController
                                                           ?.reset();
+                                                      _model.dropDownModelValue =
+                                                          null;
                                                       _model
                                                           .dropDownCCValueController
                                                           ?.reset();
+                                                      _model.dropDownCCValue =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model
@@ -2148,6 +2180,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                       _model
                                                           .dropDownCCValueController
                                                           ?.reset();
+                                                      _model.dropDownCCValue =
+                                                          null;
                                                     });
                                                     safeSetState(() {
                                                       _model

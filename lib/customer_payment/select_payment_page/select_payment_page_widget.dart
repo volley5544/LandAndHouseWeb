@@ -367,7 +367,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                       );
                     },
                     child: Text(
-                      'ชำระเงิน',
+                      'ชำระเงิน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
                                 fontFamily: 'Noto San Thai',

@@ -83,7 +83,7 @@ class _CustomerQrPaymentPageWidgetState
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 title: Text(
-                  'ชำระด้วย QR',
+                  'ชำระด้วย QR${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Noto San Thai',
                         color: FlutterFlowTheme.of(context).primaryText,
