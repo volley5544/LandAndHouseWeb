@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/index.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -475,7 +474,7 @@ class _MyWalletPageWidgetState extends State<MyWalletPageWidget> {
                                           0,
                                           4.0,
                                           0,
-                                          0,
+                                          30.0,
                                         ),
                                         primary: false,
                                         shrinkWrap: true,
@@ -864,8 +863,7 @@ class _MyWalletPageWidgetState extends State<MyWalletPageWidget> {
                                 Expanded(
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      context.goNamed(
-                                          LeadDetailMenuPageWidget.routeName);
+                                      context.safePop();
                                     },
                                     text: 'กลับหน้าหลัก',
                                     options: FFButtonOptions(

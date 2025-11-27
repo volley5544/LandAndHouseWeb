@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
 import 'my_wallet_page_widget.dart' show MyWalletPageWidget;
 import 'package:flutter/material.dart';
 
