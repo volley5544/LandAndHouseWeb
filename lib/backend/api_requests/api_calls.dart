@@ -2660,6 +2660,8 @@ class AgentAPIGroup {
   static SearchEmployeeApiCall searchEmployeeApiCall = SearchEmployeeApiCall();
   static GetLeadAgentByTypeCall getLeadAgentByTypeCall =
       GetLeadAgentByTypeCall();
+  static GetLeadAgentByTypeNewCall getLeadAgentByTypeNewCall =
+      GetLeadAgentByTypeNewCall();
   static GetCommissionLeadCall getCommissionLeadCall = GetCommissionLeadCall();
   static AgentsConfirmMGMCall agentsConfirmMGMCall = AgentsConfirmMGMCall();
   static CommissionMonthlyApiCall commissionMonthlyApiCall =
@@ -3011,6 +3013,79 @@ class GetLeadAgentByTypeCall {
       ));
 }
 
+class GetLeadAgentByTypeNewCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? leadStatus = '',
+    String? product = '',
+    String? loanTypeCode = '',
+    String? paymentMethod = '',
+    String? paymentChannel = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    final ffApiRequestBody = '''
+{
+  "agent_code": "${escapeStringForJson(agentCode)}",
+  "lead_status": "${escapeStringForJson(leadStatus)}",
+  "product": "${escapeStringForJson(product)}",
+  "loan_type_code": "${escapeStringForJson(loanTypeCode)}",
+  "payment_method": "${escapeStringForJson(paymentMethod)}",
+  "payment_channel": "${escapeStringForJson(paymentChannel)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetLeadAgentByTypeNew',
+      apiUrl: '${baseUrl}/api/mgm/leads/v2/list',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<LeadAgentDataModelStruct>? dataJson(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data.items[:]''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => LeadAgentDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  String? statusCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  List<LeadAgentCategoryDataModelStruct>? categoryJson(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.category[:]''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => LeadAgentCategoryDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
 class GetCommissionLeadCall {
   Future<ApiCallResponse> call({
     String? agentCode = '',
@@ -3057,6 +3132,10 @@ class GetCommissionLeadCall {
   String? message(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.message''',
+      ));
+  String? dataDate(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.data_date''',
       ));
 }
 
@@ -3563,7 +3642,6 @@ class CommissionHistoryCall {
 
     final ffApiRequestBody = '''
 {
-  "lead_id": "${escapeStringForJson(leadId)}",
 "cont_no":"${escapeStringForJson(contNo)}"
 }''';
     return ApiManager.instance.makeApiCall(
@@ -3628,6 +3706,10 @@ class CommissionHistoryCall {
           .map((x) => AgentCommisionHistoryDataModelStruct.maybeFromMap(x))
           .withoutNulls
           .toList();
+  String? dataDate(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.data_date''',
+      ));
 }
 
 class AgentRateSearchCall {

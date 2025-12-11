@@ -198,6 +198,22 @@ class _LeadAgentDetailCarPageWidgetState
           Navigator.pop(context);
         }),
       ]);
+      if ((FFAppState().saveLeadAgentData.agentCode == '') &&
+          (FFAppState().platform != 'mobile')) {
+        context.goNamed(
+          TimeoutPageWidget.routeName,
+          queryParameters: {
+            'text': serializeParam(
+              'พบข้อผิดพลาด',
+              ParamType.String,
+            ),
+            'code': serializeParam(
+              '410',
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
+      }
     });
 
     _model.rateFromApiTextController ??= TextEditingController();

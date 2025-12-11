@@ -1,5 +1,5 @@
 import '/agent_customer/agent_detail/my_lead_advance_search_component/my_lead_advance_search_component_widget.dart';
-import '/agent_customer/agent_detail/progress_lead_component/progress_lead_component_widget.dart';
+import '/agent_customer/agent_detail/progress_lead_component_new/progress_lead_component_new_widget.dart';
 import '/agent_customer/agent_detail/select_payment_by_lead/select_payment_by_lead_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -20,29 +20,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'my_lead_dashboard_page_model.dart';
-export 'my_lead_dashboard_page_model.dart';
+import 'my_lead_dashboard_new_page_model.dart';
+export 'my_lead_dashboard_new_page_model.dart';
 
-class MyLeadDashboardPageWidget extends StatefulWidget {
-  const MyLeadDashboardPageWidget({super.key});
+class MyLeadDashboardNewPageWidget extends StatefulWidget {
+  const MyLeadDashboardNewPageWidget({super.key});
 
-  static String routeName = 'MyLeadDashboardPage';
-  static String routePath = '/myLeadDashboardPage';
+  static String routeName = 'MyLeadDashboardNewPage';
+  static String routePath = '/myLeadDashboardNewPage';
 
   @override
-  State<MyLeadDashboardPageWidget> createState() =>
-      _MyLeadDashboardPageWidgetState();
+  State<MyLeadDashboardNewPageWidget> createState() =>
+      _MyLeadDashboardNewPageWidgetState();
 }
 
-class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
-  late MyLeadDashboardPageModel _model;
+class _MyLeadDashboardNewPageWidgetState
+    extends State<MyLeadDashboardNewPageWidget> {
+  late MyLeadDashboardNewPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => MyLeadDashboardPageModel());
+    _model = createModel(context, () => MyLeadDashboardNewPageModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -70,25 +71,13 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
         },
       );
 
-      _model.doneDealLeadData = LeadAgentMainCatagoryStruct(
-        category: 'ปิดการขาย',
-        total: 0,
-        subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-      );
-      _model.newCustomerLeadData = LeadAgentMainCatagoryStruct(
-        category: 'ลูกค้าใหม่',
-        total: 0,
-        subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-      );
-      _model.onProcessLeadData = LeadAgentMainCatagoryStruct(
-        category: 'อยู่ระหว่างติดต่อลูกค้า',
-        total: 0,
-        subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-      );
+      _model.allLeadList = [];
+      _model.showingLeadData = [];
+      _model.categoryData = [];
       safeSetState(() {});
       _model.getLeadAgentApiOutput =
-          await AgentAPIGroup.getLeadAgentByTypeCall.call(
-        agentCode: FFAppState().agentCode,
+          await AgentAPIGroup.getLeadAgentByTypeNewCall.call(
+        agentCode: '${FFAppState().agentProfileDataType.agentCode}',
         url: FFDevEnvironmentValues().isProduction
             ? FFAppState().apiUrlDocData.agentWebApiUrl
             : FFAppState().apiUrlDocData.agentWebApiUrlUat,
@@ -157,81 +146,22 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
 
         return;
       }
-      _model.allLeadData = AgentAPIGroup.getLeadAgentByTypeCall
+      _model.allLeadList = AgentAPIGroup.getLeadAgentByTypeNewCall
           .dataJson(
             (_model.getLeadAgentApiOutput?.jsonBody ?? ''),
           )!
           .toList()
-          .cast<LeadAgentMainCatagoryStruct>();
-      safeSetState(() {});
-      _model.doneDealLeadData = _model.allLeadData.elementAtOrNull(
-          functions.findIndexInList(
-              _model.allLeadData.map((e) => e.category).toList().toList(),
-              'ปิดการขาย')!);
-      _model.newCustomerLeadData = _model.allLeadData.elementAtOrNull(
-          functions.findIndexInList(
-              _model.allLeadData.map((e) => e.category).toList().toList(),
-              'ลูกค้าใหม่')!);
-      _model.onProcessLeadData = _model.allLeadData.elementAtOrNull(
-          functions.findIndexInList(
-              _model.allLeadData.map((e) => e.category).toList().toList(),
-              'อยู่ระหว่างดำเนินการ')!);
-      safeSetState(() {});
-      _model.allLeadList = functions
-          .combineLeadAgentDataModelList(
-              ('${getJsonField(
-                            _model.newCustomerLeadData?.toMap(),
-                            r'''$.sub_category[*].items[*]''',
-                          ).toString()}' !=
-                          'null'
-                      ? (getJsonField(
-                          _model.newCustomerLeadData?.toMap(),
-                          r'''$.sub_category[*].items[*]''',
-                          true,
-                        )
-                              ?.toList()
-                              .map<LeadAgentDataModelStruct?>(
-                                  LeadAgentDataModelStruct.maybeFromMap)
-                              .toList() as Iterable<LeadAgentDataModelStruct?>)
-                          .withoutNulls
-                      : functions.returnLeadAgentItemEmptyList())
-                  ?.toList(),
-              ('${getJsonField(
-                            _model.onProcessLeadData?.toMap(),
-                            r'''$.sub_category[*].items[*]''',
-                          ).toString()}' !=
-                          'null'
-                      ? (getJsonField(
-                          _model.onProcessLeadData?.toMap(),
-                          r'''$.sub_category[*].items[*]''',
-                          true,
-                        )
-                              ?.toList()
-                              .map<LeadAgentDataModelStruct?>(
-                                  LeadAgentDataModelStruct.maybeFromMap)
-                              .toList() as Iterable<LeadAgentDataModelStruct?>)
-                          .withoutNulls
-                      : functions.returnLeadAgentItemEmptyList())
-                  ?.toList(),
-              ('${getJsonField(
-                            _model.doneDealLeadData?.toMap(),
-                            r'''$.sub_category[*].items[*]''',
-                          ).toString()}' !=
-                          'null'
-                      ? (getJsonField(
-                          _model.doneDealLeadData?.toMap(),
-                          r'''$.sub_category[*].items[*]''',
-                          true,
-                        )
-                              ?.toList()
-                              .map<LeadAgentDataModelStruct?>(
-                                  LeadAgentDataModelStruct.maybeFromMap)
-                              .toList() as Iterable<LeadAgentDataModelStruct?>)
-                          .withoutNulls
-                      : functions.returnLeadAgentItemEmptyList())
-                  ?.toList())!
-          .toList()
           .cast<LeadAgentDataModelStruct>();
+      _model.dataDate = '${getJsonField(
+        (_model.getLeadAgentApiOutput?.jsonBody ?? ''),
+        r'''$.results.data.data_date''',
+      ).toString()}';
+      _model.categoryData = AgentAPIGroup.getLeadAgentByTypeNewCall
+          .categoryJson(
+            (_model.getLeadAgentApiOutput?.jsonBody ?? ''),
+          )!
+          .toList()
+          .cast<LeadAgentCategoryDataModelStruct>();
       safeSetState(() {});
       _model.showingLeadData =
           _model.allLeadList.toList().cast<LeadAgentDataModelStruct>();
@@ -393,278 +323,30 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                         width: double.infinity,
                                         height: 170.0,
                                         decoration: BoxDecoration(),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 0.0, 8.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    safeSetState(() {
-                                                      _model
-                                                          .choiceChipsValueController
-                                                          ?.value = [
-                                                        'ลูกค้าใหม่'
-                                                      ];
-                                                    });
-                                                    _model.showingLeadData =
-                                                        '${getJsonField(
-                                                                  _model
-                                                                      .newCustomerLeadData
-                                                                      ?.toMap(),
-                                                                  r'''$.sub_category[*].items[*]''',
-                                                                ).toString()}' !=
-                                                                'null'
-                                                            ? (getJsonField(
-                                                                _model
-                                                                    .newCustomerLeadData!
-                                                                    .toMap(),
-                                                                r'''$.sub_category[*].items[*]''',
-                                                                true,
-                                                              )!
-                                                                        .toList()
-                                                                        .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                            .maybeFromMap)
-                                                                        .toList()
-                                                                    as Iterable<
-                                                                        LeadAgentDataModelStruct?>)
-                                                                .withoutNulls
-                                                            : functions
-                                                                .returnLeadAgentItemEmptyList()!
-                                                                .toList()
-                                                                .cast<
-                                                                    LeadAgentDataModelStruct>();
-                                                    safeSetState(() {});
-                                                    safeSetState(() {
-                                                      _model
-                                                          .searchTextFieldTextController
-                                                          ?.clear();
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    height: double.infinity,
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          blurRadius: 4.0,
-                                                          color:
-                                                              Color(0x33000000),
-                                                          offset: Offset(
-                                                            0.0,
-                                                            2.0,
-                                                          ),
-                                                        )
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  8.0,
-                                                                  8.0,
-                                                                  8.0,
-                                                                  8.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child:
-                                                                    Image.asset(
-                                                                  'assets/images/003.gif',
-                                                                  width: 24.0,
-                                                                  height: 24.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    Container(
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Text(
-                                                                    'ลูกค้าใหม่',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Noto San Thai',
-                                                                          color:
-                                                                              Colors.black,
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                width: 4.0)),
-                                                          ),
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                '${functions.returnNumberWithCommaFullNumber(_model.newCustomerLeadData?.total.toString(), '0')}',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Noto San Thai',
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          18.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            8.0,
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .center,
-                                                                      children:
-                                                                          [
-                                                                        Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          ),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Container(
-                                                                                width: 10.0,
-                                                                                height: 10.0,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Color(0xFF41C0F0),
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  'ใหม่',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Colors.black,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  '(${'${functions.returnNumberWithCommaFullNumber(_model.newCustomerLeadData?.total.toString(), '0')}'})',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ].addToStart(SizedBox(height: 4.0)).addToEnd(
-                                                                              SizedBox(height: 4.0)),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final catagoryListItem =
+                                                _model.categoryData.toList();
+
+                                            return ListView.separated(
+                                              padding: EdgeInsets.fromLTRB(
+                                                8.0,
+                                                0,
+                                                0,
+                                                0,
                                               ),
-                                              Expanded(
-                                                child: InkWell(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  catagoryListItem.length,
+                                              separatorBuilder: (_, __) =>
+                                                  SizedBox(width: 4.0),
+                                              itemBuilder: (context,
+                                                  catagoryListItemIndex) {
+                                                final catagoryListItemItem =
+                                                    catagoryListItem[
+                                                        catagoryListItemIndex];
+                                                return InkWell(
                                                   splashColor:
                                                       Colors.transparent,
                                                   focusColor:
@@ -675,39 +357,21 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                       Colors.transparent,
                                                   onTap: () async {
                                                     safeSetState(() {
-                                                      _model
-                                                          .choiceChipsValueController
-                                                          ?.value = [
-                                                        'อยู่ระหว่างดำเนินการ'
-                                                      ];
+                                                      _model.choiceChipsValueController
+                                                              ?.value =
+                                                          ((String title) {
+                                                        return [title];
+                                                      }('${catagoryListItemItem.titleName}'));
                                                     });
-                                                    _model.showingLeadData =
-                                                        '${getJsonField(
-                                                                  _model
-                                                                      .onProcessLeadData
-                                                                      ?.toMap(),
-                                                                  r'''$.sub_category[*].items[*]''',
-                                                                ).toString()}' !=
-                                                                'null'
-                                                            ? (getJsonField(
-                                                                _model
-                                                                    .onProcessLeadData!
-                                                                    .toMap(),
-                                                                r'''$.sub_category[*].items[*]''',
-                                                                true,
-                                                              )!
-                                                                        .toList()
-                                                                        .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                            .maybeFromMap)
-                                                                        .toList()
-                                                                    as Iterable<
-                                                                        LeadAgentDataModelStruct?>)
-                                                                .withoutNulls
-                                                            : functions
-                                                                .returnLeadAgentItemEmptyList()!
-                                                                .toList()
-                                                                .cast<
-                                                                    LeadAgentDataModelStruct>();
+                                                    _model.showingLeadData = _model
+                                                        .allLeadList
+                                                        .where((e) =>
+                                                            '${e.tabCategoryName}' ==
+                                                            catagoryListItemItem
+                                                                .titleName)
+                                                        .toList()
+                                                        .cast<
+                                                            LeadAgentDataModelStruct>();
                                                     safeSetState(() {});
                                                     safeSetState(() {
                                                       _model
@@ -716,6 +380,44 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                     });
                                                   },
                                                   child: Container(
+                                                    width: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width *
+                                                            0.315);
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width *
+                                                            0.315);
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width *
+                                                            0.25);
+                                                      } else {
+                                                        return (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width *
+                                                            0.25);
+                                                      }
+                                                    }(),
                                                     height: double.infinity,
                                                     decoration: BoxDecoration(
                                                       color: FlutterFlowTheme
@@ -743,7 +445,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                   0.0,
                                                                   8.0,
                                                                   0.0,
-                                                                  8.0),
+                                                                  0.0),
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -780,14 +482,27 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                           BorderRadius.circular(
                                                                               8.0),
                                                                       child: Image
-                                                                          .asset(
-                                                                        'assets/images/001.gif',
+                                                                          .network(
+                                                                        functions
+                                                                            .stringToImgPath('${catagoryListItemItem.icon}')!,
                                                                         width:
                                                                             24.0,
                                                                         height:
                                                                             24.0,
                                                                         fit: BoxFit
                                                                             .cover,
+                                                                        errorBuilder: (context,
+                                                                                error,
+                                                                                stackTrace) =>
+                                                                            Image.asset(
+                                                                          'assets/images/error_image.png',
+                                                                          width:
+                                                                              24.0,
+                                                                          height:
+                                                                              24.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                     Expanded(
@@ -797,7 +512,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                             BoxDecoration(),
                                                                         child:
                                                                             Text(
-                                                                          'อยู่ระหว่างดำเนินการ',
+                                                                          '${catagoryListItemItem.titleName}',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyMedium
                                                                               .override(
@@ -824,7 +539,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                         .center,
                                                                 children: [
                                                                   Text(
-                                                                    '${functions.returnNumberWithCommaFullNumber(_model.onProcessLeadData?.total.toString(), '0')}',
+                                                                    '${functions.returnNumberWithCommaFullNumber('${catagoryListItemItem.total}', '0')}',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -850,57 +565,83 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                               padding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
+                                                                          4.0,
                                                                           0.0,
-                                                                          0.0,
-                                                                          0.0,
+                                                                          4.0,
                                                                           8.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Expanded(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          4.0,
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0),
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.end,
-                                                                        children:
-                                                                            [
-                                                                          Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            ),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              children: [
-                                                                                Container(
+                                                              child: Builder(
+                                                                builder:
+                                                                    (context) {
+                                                                  final subCategoryListItem =
+                                                                      catagoryListItemItem
+                                                                          .subTitle
+                                                                          .toList();
+
+                                                                  return ListView
+                                                                      .builder(
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .fromLTRB(
+                                                                      0,
+                                                                      16.0,
+                                                                      0,
+                                                                      0,
+                                                                    ),
+                                                                    shrinkWrap:
+                                                                        true,
+                                                                    scrollDirection:
+                                                                        Axis.vertical,
+                                                                    itemCount:
+                                                                        subCategoryListItem
+                                                                            .length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            subCategoryListItemIndex) {
+                                                                      final subCategoryListItemItem =
+                                                                          subCategoryListItem[
+                                                                              subCategoryListItemIndex];
+                                                                      return Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            2.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              double.infinity,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryBackground,
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                                                                                child: Container(
                                                                                   width: 10.0,
                                                                                   height: 10.0,
                                                                                   decoration: BoxDecoration(
-                                                                                    color: Color(0xFF40B221),
+                                                                                    color: colorFromCssString(
+                                                                                      '${subCategoryListItemItem.color}',
+                                                                                      defaultColor: Colors.black,
+                                                                                    ),
                                                                                     shape: BoxShape.circle,
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
+                                                                              ),
+                                                                              Flexible(
+                                                                                flex: 5,
+                                                                                child: Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
                                                                                   child: Text(
-                                                                                    'อนุมัติวงเงิน',
+                                                                                    '${subCategoryListItemItem.subTitle}',
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Noto San Thai',
                                                                                           color: Colors.black,
@@ -910,10 +651,13 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                                         ),
                                                                                   ),
                                                                                 ),
-                                                                                Padding(
+                                                                              ),
+                                                                              Expanded(
+                                                                                flex: 3,
+                                                                                child: Padding(
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
                                                                                   child: Text(
-                                                                                    '(${functions.returnNumberWithCommaFullNumber('${(_model.onProcessLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.onProcessLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'อนุมัติวงเงิน')!))?.totalSub.toString()}', '0')})',
+                                                                                    '(${functions.returnNumberWithCommaFullNumber('${subCategoryListItemItem.total}', '0')})',
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Noto San Thai',
                                                                                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -923,138 +667,14 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                                         ),
                                                                                   ),
                                                                                 ),
-                                                                              ],
-                                                                            ),
+                                                                              ),
+                                                                            ],
                                                                           ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                2.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: double.infinity,
-                                                                              decoration: BoxDecoration(
-                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                              ),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
-                                                                                    child: Container(
-                                                                                      width: 10.0,
-                                                                                      height: 10.0,
-                                                                                      decoration: BoxDecoration(
-                                                                                        color: Color(0xFF0059B6),
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Flexible(
-                                                                                    flex: 3,
-                                                                                    child: Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        'อยู่ระหว่างทำสัญญา',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Noto San Thai',
-                                                                                              color: Colors.black,
-                                                                                              fontSize: 8.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.bold,
-                                                                                            ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Expanded(
-                                                                                    child: Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        '(${functions.returnNumberWithCommaFullNumber('${(_model.onProcessLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.onProcessLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'อยู่ระหว่างทำสัญญา')!))?.totalSub.toString()}', '0')})',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Noto San Thai',
-                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 8.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
-                                                                                            ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                2.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Container(
-                                                                              width: double.infinity,
-                                                                              decoration: BoxDecoration(
-                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                              ),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
-                                                                                    child: Container(
-                                                                                      width: 10.0,
-                                                                                      height: 10.0,
-                                                                                      decoration: BoxDecoration(
-                                                                                        color: Color(0xFF8615FF),
-                                                                                        shape: BoxShape.circle,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Flexible(
-                                                                                    flex: 3,
-                                                                                    child: Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        'อยู่ระหว่างติดต่อลูกค้า',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Noto San Thai',
-                                                                                              color: Colors.black,
-                                                                                              fontSize: 8.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.bold,
-                                                                                            ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                  Expanded(
-                                                                                    child: Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                      child: Text(
-                                                                                        '(${functions.returnNumberWithCommaFullNumber('${(_model.onProcessLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.onProcessLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'อยู่ระหว่างติดต่อลูกค้า')!))?.totalSub.toString()}', '0')})',
-                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                              fontFamily: 'Noto San Thai',
-                                                                                              color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                              fontSize: 8.0,
-                                                                                              letterSpacing: 0.0,
-                                                                                              fontWeight: FontWeight.w600,
-                                                                                            ),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                        ].addToStart(SizedBox(height: 4.0)).addToEnd(SizedBox(height: 4.0)),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+                                                                },
                                                               ),
                                                             ),
                                                           ),
@@ -1062,446 +682,10 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    safeSetState(() {
-                                                      _model
-                                                          .choiceChipsValueController
-                                                          ?.value = [
-                                                        'ปิดการขาย'
-                                                      ];
-                                                    });
-                                                    _model.showingLeadData =
-                                                        '${getJsonField(
-                                                                  _model
-                                                                      .doneDealLeadData
-                                                                      ?.toMap(),
-                                                                  r'''$.sub_category[*].items[*]''',
-                                                                ).toString()}' !=
-                                                                'null'
-                                                            ? (getJsonField(
-                                                                _model
-                                                                    .doneDealLeadData!
-                                                                    .toMap(),
-                                                                r'''$.sub_category[*].items[*]''',
-                                                                true,
-                                                              )!
-                                                                        .toList()
-                                                                        .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                            .maybeFromMap)
-                                                                        .toList()
-                                                                    as Iterable<
-                                                                        LeadAgentDataModelStruct?>)
-                                                                .withoutNulls
-                                                            : functions
-                                                                .returnLeadAgentItemEmptyList()!
-                                                                .toList()
-                                                                .cast<
-                                                                    LeadAgentDataModelStruct>();
-                                                    safeSetState(() {});
-                                                    safeSetState(() {
-                                                      _model
-                                                          .searchTextFieldTextController
-                                                          ?.clear();
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: FlutterFlowTheme
-                                                              .of(context)
-                                                          .secondaryBackground,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          blurRadius: 4.0,
-                                                          color:
-                                                              Color(0x33000000),
-                                                          offset: Offset(
-                                                            0.0,
-                                                            2.0,
-                                                          ),
-                                                        )
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  8.0,
-                                                                  0.0,
-                                                                  8.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Expanded(
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                8.0,
-                                                                                0.0,
-                                                                                8.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              mainAxisAlignment: MainAxisAlignment.start,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(8.0),
-                                                                                  child: Image.asset(
-                                                                                    'assets/images/002.gif',
-                                                                                    width: 24.0,
-                                                                                    height: 24.0,
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                                Text(
-                                                                                  'ปิดการขาย',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Colors.black,
-                                                                                        fontSize: 14.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                      ),
-                                                                                ),
-                                                                              ].divide(SizedBox(width: 8.0)),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Expanded(
-                                                                      child:
-                                                                          Container(
-                                                                        width: MediaQuery.sizeOf(context).width *
-                                                                            0.35,
-                                                                        decoration:
-                                                                            BoxDecoration(),
-                                                                        child:
-                                                                            Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              8.0,
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.center,
-                                                                            children: [
-                                                                              Text(
-                                                                                '${functions.returnNumberWithCommaFullNumber(_model.doneDealLeadData?.total.toString(), '0')}',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Colors.black,
-                                                                                      fontSize: 18.0,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.bold,
-                                                                                    ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Expanded(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            4.0,
-                                                                            0.0,
-                                                                            4.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .end,
-                                                                      children:
-                                                                          [
-                                                                        Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          ),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Container(
-                                                                                width: 10.0,
-                                                                                height: 10.0,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Color(0xFF7DD562),
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  'ทำสัญญาแล้ว',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Colors.black,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  '(${functions.returnNumberWithCommaFullNumber('${(_model.doneDealLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.doneDealLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'ทำสัญญาแล้ว')!))?.totalSub.toString()}', '0')})',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          ),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Container(
-                                                                                width: 10.0,
-                                                                                height: 10.0,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Color(0xFFFD8C8C),
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  'หมดอายุ',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Colors.black,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  '(${functions.returnNumberWithCommaFullNumber('${(_model.doneDealLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.doneDealLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'หมดอายุ')!))?.totalSub.toString()}', '0')})',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Container(
-                                                                          width:
-                                                                              double.infinity,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          ),
-                                                                          child:
-                                                                              Row(
-                                                                            mainAxisSize:
-                                                                                MainAxisSize.max,
-                                                                            children: [
-                                                                              Container(
-                                                                                width: 10.0,
-                                                                                height: 10.0,
-                                                                                decoration: BoxDecoration(
-                                                                                  color: FlutterFlowTheme.of(context).primary,
-                                                                                  shape: BoxShape.circle,
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  'ข้อมูลซ้ำ',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: Colors.black,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.bold,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                child: Text(
-                                                                                  '(${functions.returnNumberWithCommaFullNumber('${(_model.doneDealLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.doneDealLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'ข้อมูลซ้ำ')!))?.totalSub.toString()}', '0')})',
-                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                        fontSize: 8.0,
-                                                                                        letterSpacing: 0.0,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                ),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              2.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            ),
-                                                                            child:
-                                                                                Row(
-                                                                              mainAxisSize: MainAxisSize.max,
-                                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                                              children: [
-                                                                                Container(
-                                                                                  width: 10.0,
-                                                                                  height: 10.0,
-                                                                                  decoration: BoxDecoration(
-                                                                                    color: Color(0xFFFFD338),
-                                                                                    shape: BoxShape.circle,
-                                                                                  ),
-                                                                                ),
-                                                                                Flexible(
-                                                                                  flex: 3,
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                    child: Text(
-                                                                                      'ไม่เข้าเงื่อนไข/ไม่สนใจ',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Noto San Thai',
-                                                                                            color: Colors.black,
-                                                                                            fontSize: 8.0,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.bold,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                Expanded(
-                                                                                  child: Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                                                                    child: Text(
-                                                                                      '(${functions.returnNumberWithCommaFullNumber('${(_model.doneDealLeadData?.subCategory.elementAtOrNull(functions.findIndexInList(_model.doneDealLeadData?.subCategory.map((e) => e.subject).toList().toList(), 'ไม่เข้าเงื่อนไข/ไม่สนใจ')!))?.totalSub.toString()}', '0')})',
-                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                            fontFamily: 'Noto San Thai',
-                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
-                                                                                            fontSize: 8.0,
-                                                                                            letterSpacing: 0.0,
-                                                                                            fontWeight: FontWeight.w600,
-                                                                                          ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ].addToStart(SizedBox(height: 4.0)).addToEnd(
-                                                                              SizedBox(height: 4.0)),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ].divide(SizedBox(width: 4.0)),
-                                          ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -1520,7 +704,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                               size: 20.0,
                                             ),
                                             Text(
-                                              'ข้อมูล ณ วันที่ 29/08/2568',
+                                              'ข้อมูล ณ วันที่ ${functions.formatToThaiDate('${_model.dataDate}')}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -2046,12 +1230,14 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                   Expanded(
                                                     child:
                                                         FlutterFlowChoiceChips(
-                                                      options: [
-                                                        ChipData('ลูกค้าใหม่'),
-                                                        ChipData(
-                                                            'อยู่ระหว่างดำเนินการ'),
-                                                        ChipData('ปิดการขาย')
-                                                      ],
+                                                      options: _model
+                                                          .categoryData
+                                                          .map((e) =>
+                                                              e.titleName)
+                                                          .toList()
+                                                          .map((label) =>
+                                                              ChipData(label))
+                                                          .toList(),
                                                       onChanged: (val) async {
                                                         safeSetState(() => _model
                                                                 .choiceChipsValues =
@@ -2060,187 +1246,27 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                 .choiceChipsValues!
                                                                 .length >
                                                             1) {
-                                                          if (_model
-                                                                  .choiceChipsValues
-                                                                  ?.lastOrNull ==
-                                                              'ลูกค้าใหม่') {
-                                                            safeSetState(() {
-                                                              _model
-                                                                  .choiceChipsValueController
-                                                                  ?.value = [
-                                                                'ลูกค้าใหม่'
-                                                              ];
-                                                            });
-                                                          } else if (_model
-                                                                  .choiceChipsValues
-                                                                  ?.lastOrNull ==
-                                                              'อยู่ระหว่างดำเนินการ') {
-                                                            safeSetState(() {
-                                                              _model
-                                                                  .choiceChipsValueController
-                                                                  ?.value = [
-                                                                'อยู่ระหว่างดำเนินการ'
-                                                              ];
-                                                            });
-                                                          } else if (_model
-                                                                  .choiceChipsValues
-                                                                  ?.lastOrNull ==
-                                                              'ปิดการขาย') {
-                                                            safeSetState(() {
-                                                              _model
-                                                                  .choiceChipsValueController
-                                                                  ?.value = [
-                                                                'ปิดการขาย'
-                                                              ];
-                                                            });
-                                                          } else {
-                                                            safeSetState(() {
-                                                              _model
-                                                                  .choiceChipsValueController
-                                                                  ?.reset();
-                                                            });
-                                                          }
+                                                        } else {
+                                                          return;
                                                         }
-                                                        _model.showingLeadData =
-                                                            () {
-                                                          if ((_model.choiceChipsValues !=
-                                                                      null &&
-                                                                  (_model.choiceChipsValues)!
-                                                                      .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
-                                                                  'ลูกค้าใหม่')) {
-                                                            return ('${getJsonField(
-                                                                      _model
-                                                                          .newCustomerLeadData
-                                                                          ?.toMap(),
-                                                                      r'''$.sub_category[*].items[*]''',
-                                                                    ).toString()}' !=
-                                                                    'null'
-                                                                ? (getJsonField(
-                                                                    _model
-                                                                        .newCustomerLeadData!
-                                                                        .toMap(),
-                                                                    r'''$.sub_category[*].items[*]''',
-                                                                    true,
-                                                                  )!
-                                                                            .toList()
-                                                                            .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                                .maybeFromMap)
-                                                                            .toList()
-                                                                        as Iterable<
-                                                                            LeadAgentDataModelStruct?>)
-                                                                    .withoutNulls
-                                                                : functions
-                                                                    .returnLeadAgentItemEmptyList()!);
-                                                          } else if ((_model
-                                                                          .choiceChipsValues !=
-                                                                      null &&
-                                                                  (_model.choiceChipsValues)!
-                                                                      .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
-                                                                  'อยู่ระหว่างดำเนินการ')) {
-                                                            return ('${getJsonField(
-                                                                      _model
-                                                                          .onProcessLeadData
-                                                                          ?.toMap(),
-                                                                      r'''$.sub_category[*].items[*]''',
-                                                                    ).toString()}' !=
-                                                                    'null'
-                                                                ? (getJsonField(
-                                                                    _model
-                                                                        .onProcessLeadData!
-                                                                        .toMap(),
-                                                                    r'''$.sub_category[*].items[*]''',
-                                                                    true,
-                                                                  )!
-                                                                            .toList()
-                                                                            .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                                .maybeFromMap)
-                                                                            .toList()
-                                                                        as Iterable<
-                                                                            LeadAgentDataModelStruct?>)
-                                                                    .withoutNulls
-                                                                : functions
-                                                                    .returnLeadAgentItemEmptyList()!);
-                                                          } else if ((_model
-                                                                          .choiceChipsValues !=
-                                                                      null &&
-                                                                  (_model.choiceChipsValues)!
-                                                                      .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
-                                                                  'ปิดการขาย')) {
-                                                            return ('${getJsonField(
-                                                                      _model
-                                                                          .doneDealLeadData
-                                                                          ?.toMap(),
-                                                                      r'''$.sub_category[*].items[*]''',
-                                                                    ).toString()}' !=
-                                                                    'null'
-                                                                ? (getJsonField(
-                                                                    _model
-                                                                        .doneDealLeadData!
-                                                                        .toMap(),
-                                                                    r'''$.sub_category[*].items[*]''',
-                                                                    true,
-                                                                  )!
-                                                                            .toList()
-                                                                            .map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct
-                                                                                .maybeFromMap)
-                                                                            .toList()
-                                                                        as Iterable<
-                                                                            LeadAgentDataModelStruct?>)
-                                                                    .withoutNulls
-                                                                : functions
-                                                                    .returnLeadAgentItemEmptyList()!);
-                                                          } else {
-                                                            return functions.combineLeadAgentDataModelList(
-                                                                ('${getJsonField(
-                                                                              _model.newCustomerLeadData?.toMap(),
-                                                                              r'''$.sub_category[*].items[*]''',
-                                                                            ).toString()}' !=
-                                                                            'null'
-                                                                        ? (getJsonField(
-                                                                            _model.newCustomerLeadData?.toMap(),
-                                                                            r'''$.sub_category[*].items[*]''',
-                                                                            true,
-                                                                          )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                            .withoutNulls
-                                                                        : functions.returnLeadAgentItemEmptyList())
-                                                                    ?.toList(),
-                                                                ('${getJsonField(
-                                                                              _model.onProcessLeadData?.toMap(),
-                                                                              r'''$.sub_category[*].items[*]''',
-                                                                            ).toString()}' !=
-                                                                            'null'
-                                                                        ? (getJsonField(
-                                                                            _model.onProcessLeadData?.toMap(),
-                                                                            r'''$.sub_category[*].items[*]''',
-                                                                            true,
-                                                                          )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                            .withoutNulls
-                                                                        : functions.returnLeadAgentItemEmptyList())
-                                                                    ?.toList(),
-                                                                ('${getJsonField(
-                                                                              _model.doneDealLeadData?.toMap(),
-                                                                              r'''$.sub_category[*].items[*]''',
-                                                                            ).toString()}' !=
-                                                                            'null'
-                                                                        ? (getJsonField(
-                                                                            _model.doneDealLeadData?.toMap(),
-                                                                            r'''$.sub_category[*].items[*]''',
-                                                                            true,
-                                                                          )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                            .withoutNulls
-                                                                        : functions.returnLeadAgentItemEmptyList())
-                                                                    ?.toList())!;
-                                                          }
-                                                        }()
-                                                                .toList()
-                                                                .cast<
-                                                                    LeadAgentDataModelStruct>();
+
+                                                        safeSetState(() {
+                                                          _model.choiceChipsValueController
+                                                                  ?.value =
+                                                              ((String title) {
+                                                            return [title];
+                                                          }('${_model.choiceChipsValues?.lastOrNull}'));
+                                                        });
+                                                        _model.showingLeadData = _model
+                                                            .allLeadList
+                                                            .where((e) =>
+                                                                '${e.tabCategoryName}' ==
+                                                                _model
+                                                                    .choiceChipsValues
+                                                                    ?.firstOrNull)
+                                                            .toList()
+                                                            .cast<
+                                                                LeadAgentDataModelStruct>();
                                                         safeSetState(() {});
                                                         safeSetState(() {
                                                           _model
@@ -2499,10 +1525,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                         .max,
                                                                 children: [
                                                                   Text(
-                                                                    '${leadListItemsItem.leadStatus}' !=
-                                                                            'ลูกค้าใหม่'
-                                                                        ? '${leadListItemsItem.leadStatus}'
-                                                                        : 'ใหม่',
+                                                                    '${leadListItemsItem.leadStatus}',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .bodyMedium
@@ -2510,35 +1533,11 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                           fontFamily:
                                                                               'Noto San Thai',
                                                                           color:
-                                                                              () {
-                                                                            if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'ลูกค้าใหม่') {
-                                                                              return Color(0xFF3AA9FA);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'อยู่ระหว่างติดต่อลูกค้า') {
-                                                                              return Color(0xFF8615FF);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'ไม่เข้าเงื่อนไข/ไม่สนใจ') {
-                                                                              return Color(0xFFFFD338);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'หมดอายุ') {
-                                                                              return Color(0xFFFD8C8C);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'ข้อมูลซ้ำ') {
-                                                                              return FlutterFlowTheme.of(context).primary;
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'ทำสัญญาแล้ว') {
-                                                                              return Color(0xFF7DD562);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'อนุมัติวงเงิน') {
-                                                                              return Color(0xFF40B221);
-                                                                            } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                                'อยู่ระหว่างทำสัญญา') {
-                                                                              return Color(0xFF0059B6);
-                                                                            } else {
-                                                                              return Colors.black;
-                                                                            }
-                                                                          }(),
+                                                                              colorFromCssString(
+                                                                            _model.categoryData.elementAtOrNull(functions.findIndexInList(_model.categoryData.map((e) => e.titleName).toList(), leadListItemsItem.tabCategoryName)!)!.subTitle.elementAtOrNull(functions.findIndexInList(_model.categoryData.elementAtOrNull(functions.findIndexInList(_model.categoryData.map((e) => e.titleName).toList(), leadListItemsItem.tabCategoryName)!)?.subTitle.map((e) => e.subTitle).toList().toList(), leadListItemsItem.leadStatus)!)!.color,
+                                                                            defaultColor:
+                                                                                Colors.black,
+                                                                          ),
                                                                           letterSpacing:
                                                                               0.0,
                                                                           fontWeight:
@@ -2582,43 +1581,23 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                         context)
                                                                     .alternate,
                                                               ),
-                                                              if (('${leadListItemsItem.leadStatus}' != 'ข้อมูลซ้ำ') &&
-                                                                  ('${leadListItemsItem.leadStatus}' !=
-                                                                      'หมดอายุ') &&
-                                                                  ('${leadListItemsItem.leadStatus}' !=
-                                                                      'ไม่เข้าเงื่อนไข/ไม่สนใจ'))
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0),
-                                                                  child:
-                                                                      ProgressLeadComponentWidget(
-                                                                    key: Key(
-                                                                        'Keyvzl_${leadListItemsIndex}_of_${leadListItems.length}'),
-                                                                    step: () {
-                                                                      if ('${leadListItemsItem.leadStatus}' ==
-                                                                          'ลูกค้าใหม่') {
-                                                                        return '1';
-                                                                      } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                          'อยู่ระหว่างติดต่อลูกค้า') {
-                                                                        return '2';
-                                                                      } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                          'อยู่ระหว่างทำสัญญา') {
-                                                                        return '3';
-                                                                      } else if ('${leadListItemsItem.leadStatus}' ==
-                                                                          'อนุมัติวงเงิน') {
-                                                                        return '4';
-                                                                      } else {
-                                                                        return '5';
-                                                                      }
-                                                                    }(),
-                                                                    step5Status:
-                                                                        '${leadListItemsItem.leadStatus}',
-                                                                  ),
-                                                                ),
+                                                              ProgressLeadComponentNewWidget(
+                                                                key: Key(
+                                                                    'Keyh14_${leadListItemsIndex}_of_${leadListItems.length}'),
+                                                                step: ((functions.findTrueInBoolList(leadListItemsItem
+                                                                            .state
+                                                                            .map((e) =>
+                                                                                e.active)
+                                                                            .toList())!) +
+                                                                        1)
+                                                                    .toString(),
+                                                                progressStatusList:
+                                                                    leadListItemsItem
+                                                                        .state
+                                                                        .map((e) =>
+                                                                            e.name)
+                                                                        .toList(),
+                                                              ),
                                                               Divider(
                                                                 thickness: 2.0,
                                                                 color: FlutterFlowTheme.of(
@@ -2700,7 +1679,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
                                                                             Text(
-                                                                              '${leadListItemsItem.product}' == 'loan' ? 'วงเงินที่ต้องการ' : 'ยี่ห้อ / รุ่น',
+                                                                              '${leadListItemsItem.product}' == 'loan' ? 'วงเงินที่ต้องการ' : 'ค่าเบี้ยสุทธิ',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
                                                                                     color: Color(0xFF646464),
@@ -2710,7 +1689,7 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                                   ),
                                                                             ),
                                                                             Text(
-                                                                              '${leadListItemsItem.product}' == 'loan' ? '${functions.returnNumberWithComma2Decimal('${leadListItemsItem.loanAmount}')} บาท' : '${leadListItemsItem.brandName} / ${leadListItemsItem.carModel}',
+                                                                              '${functions.returnNumberWithComma2Decimal('${leadListItemsItem.loanAmount}')} บาท',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
                                                                                     color: Colors.black,
@@ -2724,69 +1703,69 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            8.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    child:
-                                                                        Container(
-                                                                      width: double
-                                                                          .infinity,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
-                                                                      ),
+                                                                  if (false)
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
                                                                       child:
-                                                                          Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            12.0,
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0),
+                                                                          Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                        ),
                                                                         child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.spaceBetween,
-                                                                          children: [
-                                                                            Text(
-                                                                              'ผลิตภัณฑ์',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF646464),
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
-                                                                            ),
-                                                                            Text(
-                                                                              '${() {
-                                                                                if ('${leadListItemsItem.product}' == 'loan') {
-                                                                                  return 'สินเชื่อ';
-                                                                                } else if ('${leadListItemsItem.product}' == 'insurance') {
-                                                                                  return 'ประกันภัย';
-                                                                                } else {
-                                                                                  return '-';
-                                                                                }
-                                                                              }()}',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Colors.black,
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                  ),
-                                                                            ),
-                                                                          ],
+                                                                            Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Text(
+                                                                                'ผลิตภัณฑ์',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
+                                                                              Text(
+                                                                                '${() {
+                                                                                  if ('${leadListItemsItem.product}' == 'loan') {
+                                                                                    return 'สินเชื่อ';
+                                                                                  } else if ('${leadListItemsItem.product}' == 'insurance') {
+                                                                                    return 'ประกันภัย';
+                                                                                  } else {
+                                                                                    return '-';
+                                                                                  }
+                                                                                }()}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Colors.black,
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                    ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -2842,6 +1821,62 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                       ),
                                                                     ),
                                                                   ),
+                                                                  if ('${leadListItemsItem.product}' !=
+                                                                      'loan')
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Container(
+                                                                        width: double
+                                                                            .infinity,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryBackground,
+                                                                        ),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Text(
+                                                                                'ยี่ห้อ / รุ่น',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
+                                                                              Text(
+                                                                                '${leadListItemsItem.brandName} / ${leadListItemsItem.carModel}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Colors.black,
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
+                                                                                    ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -3185,24 +2220,12 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
 
                                                                                   _shouldSetState = true;
                                                                                   if (_model.paymentMethodSelected != null && _model.paymentMethodSelected != '') {
-                                                                                    _model.doneDealLeadData = LeadAgentMainCatagoryStruct(
-                                                                                      category: 'ปิดการขาย',
-                                                                                      total: 0,
-                                                                                      subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-                                                                                    );
-                                                                                    _model.newCustomerLeadData = LeadAgentMainCatagoryStruct(
-                                                                                      category: 'ลูกค้าใหม่',
-                                                                                      total: 0,
-                                                                                      subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-                                                                                    );
-                                                                                    _model.onProcessLeadData = LeadAgentMainCatagoryStruct(
-                                                                                      category: 'อยู่ระหว่างติดต่อลูกค้า',
-                                                                                      total: 0,
-                                                                                      subCategory: functions.returnLeadAgentSubCatagoryEmptyList(),
-                                                                                    );
+                                                                                    _model.showingLeadData = [];
+                                                                                    _model.allLeadList = [];
+                                                                                    _model.categoryData = [];
                                                                                     safeSetState(() {});
-                                                                                    _model.getLeadAgentApiPaymentButtonOutput = await AgentAPIGroup.getLeadAgentByTypeCall.call(
-                                                                                      agentCode: FFAppState().agentCode,
+                                                                                    _model.getLeadAgentApiPaymentButtonOutput = await AgentAPIGroup.getLeadAgentByTypeNewCall.call(
+                                                                                      agentCode: FFAppState().agentProfileDataType.agentCode,
                                                                                       url: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiUrl : FFAppState().apiUrlDocData.agentWebApiUrlUat,
                                                                                       tokenHeader: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiToken : FFAppState().apiUrlDocData.agentWebApiTokenUat,
                                                                                     );
@@ -3265,60 +2288,22 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                                       if (_shouldSetState) safeSetState(() {});
                                                                                       return;
                                                                                     }
-                                                                                    _model.allLeadData = AgentAPIGroup.getLeadAgentByTypeCall
+                                                                                    _model.allLeadList = AgentAPIGroup.getLeadAgentByTypeNewCall
                                                                                         .dataJson(
                                                                                           (_model.getLeadAgentApiPaymentButtonOutput?.jsonBody ?? ''),
                                                                                         )!
                                                                                         .toList()
-                                                                                        .cast<LeadAgentMainCatagoryStruct>();
-                                                                                    safeSetState(() {});
-                                                                                    _model.doneDealLeadData = _model.allLeadData.elementAtOrNull(functions.findIndexInList(_model.allLeadData.map((e) => e.category).toList(), 'ปิดการขาย')!);
-                                                                                    _model.newCustomerLeadData = _model.allLeadData.elementAtOrNull(functions.findIndexInList(_model.allLeadData.map((e) => e.category).toList(), 'ลูกค้าใหม่')!);
-                                                                                    _model.onProcessLeadData = _model.allLeadData.elementAtOrNull(functions.findIndexInList(_model.allLeadData.map((e) => e.category).toList(), 'อยู่ระหว่างดำเนินการ')!);
-                                                                                    safeSetState(() {});
-                                                                                    _model.allLeadList = functions
-                                                                                        .combineLeadAgentDataModelList(
-                                                                                            ('${getJsonField(
-                                                                                                          _model.newCustomerLeadData?.toMap(),
-                                                                                                          r'''$.sub_category[*].items[*]''',
-                                                                                                        ).toString()}' !=
-                                                                                                        'null'
-                                                                                                    ? (getJsonField(
-                                                                                                        _model.newCustomerLeadData?.toMap(),
-                                                                                                        r'''$.sub_category[*].items[*]''',
-                                                                                                        true,
-                                                                                                      )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                                                        .withoutNulls
-                                                                                                    : functions.returnLeadAgentItemEmptyList())
-                                                                                                ?.toList(),
-                                                                                            ('${getJsonField(
-                                                                                                          _model.onProcessLeadData?.toMap(),
-                                                                                                          r'''$.sub_category[*].items[*]''',
-                                                                                                        ).toString()}' !=
-                                                                                                        'null'
-                                                                                                    ? (getJsonField(
-                                                                                                        _model.onProcessLeadData?.toMap(),
-                                                                                                        r'''$.sub_category[*].items[*]''',
-                                                                                                        true,
-                                                                                                      )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                                                        .withoutNulls
-                                                                                                    : functions.returnLeadAgentItemEmptyList())
-                                                                                                ?.toList(),
-                                                                                            ('${getJsonField(
-                                                                                                          _model.doneDealLeadData?.toMap(),
-                                                                                                          r'''$.sub_category[*].items[*]''',
-                                                                                                        ).toString()}' !=
-                                                                                                        'null'
-                                                                                                    ? (getJsonField(
-                                                                                                        _model.doneDealLeadData?.toMap(),
-                                                                                                        r'''$.sub_category[*].items[*]''',
-                                                                                                        true,
-                                                                                                      )?.toList().map<LeadAgentDataModelStruct?>(LeadAgentDataModelStruct.maybeFromMap).toList() as Iterable<LeadAgentDataModelStruct?>)
-                                                                                                        .withoutNulls
-                                                                                                    : functions.returnLeadAgentItemEmptyList())
-                                                                                                ?.toList())!
-                                                                                        .toList()
                                                                                         .cast<LeadAgentDataModelStruct>();
+                                                                                    _model.dataDate = '${getJsonField(
+                                                                                      (_model.getLeadAgentApiPaymentButtonOutput?.jsonBody ?? ''),
+                                                                                      r'''$.results.data.data_date''',
+                                                                                    ).toString()}';
+                                                                                    _model.categoryData = AgentAPIGroup.getLeadAgentByTypeNewCall
+                                                                                        .categoryJson(
+                                                                                          (_model.getLeadAgentApiPaymentButtonOutput?.jsonBody ?? ''),
+                                                                                        )!
+                                                                                        .toList()
+                                                                                        .cast<LeadAgentCategoryDataModelStruct>();
                                                                                     safeSetState(() {});
                                                                                     _model.showingLeadData = _model.allLeadList.toList().cast<LeadAgentDataModelStruct>();
                                                                                     safeSetState(() {});

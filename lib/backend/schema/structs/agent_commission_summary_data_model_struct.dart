@@ -14,6 +14,7 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
     String? totalComWaitingApproveAmt,
     String? totalComNextPayAmt,
     String? totalComReceivedAmt,
+    String? totalComDueAmt,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _totalContract = totalContract,
         _totalComPayAmt = totalComPayAmt,
@@ -21,6 +22,7 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         _totalComWaitingApproveAmt = totalComWaitingApproveAmt,
         _totalComNextPayAmt = totalComNextPayAmt,
         _totalComReceivedAmt = totalComReceivedAmt,
+        _totalComDueAmt = totalComDueAmt,
         super(firestoreUtilData);
 
   // "total_contract" field.
@@ -66,6 +68,13 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
 
   bool hasTotalComReceivedAmt() => _totalComReceivedAmt != null;
 
+  // "total_com_due_amt" field.
+  String? _totalComDueAmt;
+  String get totalComDueAmt => _totalComDueAmt ?? '';
+  set totalComDueAmt(String? val) => _totalComDueAmt = val;
+
+  bool hasTotalComDueAmt() => _totalComDueAmt != null;
+
   static AgentCommissionSummaryDataModelStruct fromMap(
           Map<String, dynamic> data) =>
       AgentCommissionSummaryDataModelStruct(
@@ -76,6 +85,7 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
             data['total_com_waiting_approve_amt'] as String?,
         totalComNextPayAmt: data['total_com_next_pay_amt'] as String?,
         totalComReceivedAmt: data['total_com_received_amt'] as String?,
+        totalComDueAmt: data['total_com_due_amt'] as String?,
       );
 
   static AgentCommissionSummaryDataModelStruct? maybeFromMap(dynamic data) =>
@@ -91,6 +101,7 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         'total_com_waiting_approve_amt': _totalComWaitingApproveAmt,
         'total_com_next_pay_amt': _totalComNextPayAmt,
         'total_com_received_amt': _totalComReceivedAmt,
+        'total_com_due_amt': _totalComDueAmt,
       }.withoutNulls;
 
   @override
@@ -117,6 +128,10 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         ),
         'total_com_received_amt': serializeParam(
           _totalComReceivedAmt,
+          ParamType.String,
+        ),
+        'total_com_due_amt': serializeParam(
+          _totalComDueAmt,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -154,6 +169,11 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        totalComDueAmt: deserializeParam(
+          data['total_com_due_amt'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -167,7 +187,8 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         totalComWaitingPayAmt == other.totalComWaitingPayAmt &&
         totalComWaitingApproveAmt == other.totalComWaitingApproveAmt &&
         totalComNextPayAmt == other.totalComNextPayAmt &&
-        totalComReceivedAmt == other.totalComReceivedAmt;
+        totalComReceivedAmt == other.totalComReceivedAmt &&
+        totalComDueAmt == other.totalComDueAmt;
   }
 
   @override
@@ -177,7 +198,8 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         totalComWaitingPayAmt,
         totalComWaitingApproveAmt,
         totalComNextPayAmt,
-        totalComReceivedAmt
+        totalComReceivedAmt,
+        totalComDueAmt
       ]);
 }
 
@@ -189,6 +211,7 @@ AgentCommissionSummaryDataModelStruct
   String? totalComWaitingApproveAmt,
   String? totalComNextPayAmt,
   String? totalComReceivedAmt,
+  String? totalComDueAmt,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -201,6 +224,7 @@ AgentCommissionSummaryDataModelStruct
           totalComWaitingApproveAmt: totalComWaitingApproveAmt,
           totalComNextPayAmt: totalComNextPayAmt,
           totalComReceivedAmt: totalComReceivedAmt,
+          totalComDueAmt: totalComDueAmt,
           firestoreUtilData: FirestoreUtilData(
             clearUnsetFields: clearUnsetFields,
             create: create,

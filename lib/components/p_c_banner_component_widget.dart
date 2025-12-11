@@ -65,7 +65,7 @@ class _PCBannerComponentWidgetState extends State<PCBannerComponentWidget> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24.0),
                   child: Image.asset(
-                    'assets/images/Banner-1.jpg',
+                    'assets/images/Banner_Web__281168.png',
                     width: double.infinity,
                     fit: BoxFit.contain,
                   ),

@@ -265,52 +265,1128 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                               ),
                                             ].divide(SizedBox(width: 8.0)),
                                           ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                  MyWalletPageWidget.routeName);
-                                            },
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                FaIcon(
-                                                  FontAwesomeIcons.moneyBillAlt,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  size: 30.0,
-                                                ),
-                                                Text(
-                                                  'รายรับ 3 เดือน',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        fontSize: 11.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                      ),
-                                                ),
-                                              ].divide(SizedBox(width: 4.0)),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(1.0, -1.0),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                    MyWalletPageWidget
+                                                        .routeName);
+                                              },
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  FaIcon(
+                                                    FontAwesomeIcons
+                                                        .moneyBillAlt,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    size: 30.0,
+                                                  ),
+                                                  Text(
+                                                    'รายรับ 3 เดือน',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 11.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                        ),
+                                                  ),
+                                                ].divide(SizedBox(width: 4.0)),
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
+                                    if (false)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 8.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 4.0,
+                                                      color: Color(0x33000000),
+                                                      offset: Offset(
+                                                        0.0,
+                                                        2.0,
+                                                      ),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 2,
+                                                          child: Container(
+                                                            width: 50.0,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          0.0),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          -1.0,
+                                                                          -1.0),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children:
+                                                                          [
+                                                                        Text(
+                                                                          'ค่าตอบแทนทั้งหมด',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: Colors.black,
+                                                                                fontSize: 16.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FontWeight.w100,
+                                                                              ),
+                                                                        ),
+                                                                      ].divide(SizedBox(
+                                                                              width: 16.0)),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Expanded(
+                                                                  child: Align(
+                                                                    alignment:
+                                                                        AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            '${functions.returnNumberWithCommaFullNumber('${_model.commissionData?.summary.totalComPayAmt}', '0')}',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 24.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    1.0, -1.0),
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                context.pushNamed(
+                                                                    MyWalletPageWidget
+                                                                        .routeName);
+                                                              },
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  FaIcon(
+                                                                    FontAwesomeIcons
+                                                                        .moneyBillAlt,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    size: 30.0,
+                                                                  ),
+                                                                  Text(
+                                                                    'รายรับ 3 เดือน',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          fontSize:
+                                                                              11.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          decoration:
+                                                                              TextDecoration.underline,
+                                                                        ),
+                                                                  ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        4.0)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  10.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Text(
+                                                                  'จ่ายแล้ว',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    onTap:
+                                                                        () async {
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .choiceChipsValueController
+                                                                            ?.value = [
+                                                                          'จ่ายแล้ว'
+                                                                        ];
+                                                                      });
+                                                                      _model.showingLeadData = _model
+                                                                          .commissionData!
+                                                                          .details
+                                                                          .where((e) =>
+                                                                              double.parse(e.comReceivedAmt) >
+                                                                              0)
+                                                                          .toList()
+                                                                          .cast<
+                                                                              AgentCommissionLeadDataModelStruct>();
+                                                                      _model.statusRowActive =
+                                                                          false;
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .searchTextFieldTextController
+                                                                            ?.clear();
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.25,
+                                                                      height:
+                                                                          30.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Color(
+                                                                            0xFF4AC225),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceEvenly,
+                                                                        children: [
+                                                                          if (_model.choiceChipsValues?.lastOrNull ==
+                                                                              'จ่ายแล้ว')
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Icon(
+                                                                                  Icons.check,
+                                                                                  color: Color(0xFF4AC225),
+                                                                                  size: 16.0,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          Expanded(
+                                                                            flex:
+                                                                                3,
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Text(
+                                                                                '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComReceivedAmt, '0')}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Text(
+                                                                  'กำลังดำเนินการ',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    onTap:
+                                                                        () async {
+                                                                      _model.statusRowActive =
+                                                                          !_model
+                                                                              .statusRowActive;
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .choiceChipsValueController
+                                                                            ?.reset();
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.25,
+                                                                      height:
+                                                                          30.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Color(
+                                                                            0xFFFFD45B),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceEvenly,
+                                                                        children: [
+                                                                          if (_model
+                                                                              .statusRowActive)
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Icon(
+                                                                                  Icons.check,
+                                                                                  color: Color(0xFFFFD45B),
+                                                                                  size: 16.0,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          Expanded(
+                                                                            flex:
+                                                                                3,
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Text(
+                                                                                '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComReceivedAmt, '0')}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Text(
+                                                                  'ยังไม่ถึงรอบจ่าย',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          5.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      InkWell(
+                                                                    splashColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    focusColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    hoverColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    highlightColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    onTap:
+                                                                        () async {
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .choiceChipsValueController
+                                                                            ?.value = [
+                                                                          'ยังไม่ถึงรอบจ่าย'
+                                                                        ];
+                                                                      });
+                                                                      _model.showingLeadData = _model
+                                                                          .commissionData!
+                                                                          .details
+                                                                          .where((e) =>
+                                                                              double.parse(e.comReceivedAmt) >
+                                                                              0)
+                                                                          .toList()
+                                                                          .cast<
+                                                                              AgentCommissionLeadDataModelStruct>();
+                                                                      _model.statusRowActive =
+                                                                          false;
+                                                                      safeSetState(
+                                                                          () {});
+                                                                      safeSetState(
+                                                                          () {
+                                                                        _model
+                                                                            .searchTextFieldTextController
+                                                                            ?.clear();
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      width: MediaQuery.sizeOf(context)
+                                                                              .width *
+                                                                          0.25,
+                                                                      height:
+                                                                          30.0,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Color(
+                                                                            0xFFEE852B),
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceEvenly,
+                                                                        children: [
+                                                                          if (_model.choiceChipsValues?.lastOrNull ==
+                                                                              'ยังไม่ถึงรอบจ่าย')
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: Icon(
+                                                                                  Icons.check,
+                                                                                  color: Color(0xFFEE852B),
+                                                                                  size: 16.0,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          Expanded(
+                                                                            flex:
+                                                                                3,
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Text(
+                                                                                '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComReceivedAmt, '0')}',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ].divide(SizedBox(height: 8.0)),
+                                          ),
+                                        ),
+                                      ),
+                                    if (false)
+                                      Expanded(
+                                        child: Container(
+                                          decoration: BoxDecoration(),
+                                          child: Visibility(
+                                            visible: _model.statusRowActive,
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                              child: SingleChildScrollView(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        safeSetState(() {
+                                                          _model
+                                                              .choiceChipsValueController
+                                                              ?.value = [
+                                                            'รอจ่ายค่างวด'
+                                                          ];
+                                                        });
+                                                        _model.showingLeadData = _model
+                                                            .commissionData!
+                                                            .details
+                                                            .where((e) =>
+                                                                double.parse(e
+                                                                    .comWaitingPayAmt) >
+                                                                0)
+                                                            .toList()
+                                                            .cast<
+                                                                AgentCommissionLeadDataModelStruct>();
+                                                        safeSetState(() {});
+                                                        safeSetState(() {
+                                                          _model
+                                                              .searchTextFieldTextController
+                                                              ?.clear();
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        width: 150.0,
+                                                        height: 70.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 4.0,
+                                                              color: Color(
+                                                                  0x33000000),
+                                                              offset: Offset(
+                                                                0.0,
+                                                                2.0,
+                                                              ),
+                                                            )
+                                                          ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        child: Stack(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Container(
+                                                                        width:
+                                                                            26.0,
+                                                                        height:
+                                                                            26.0,
+                                                                        child:
+                                                                            Stack(
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(-1.0, -1.0),
+                                                                              child: Icon(
+                                                                                Icons.person_outline_sharp,
+                                                                                color: Colors.black,
+                                                                                size: 26.0,
+                                                                              ),
+                                                                            ),
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(1.0, 1.0),
+                                                                              child: Container(
+                                                                                width: 12.0,
+                                                                                height: 12.0,
+                                                                                decoration: BoxDecoration(
+                                                                                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                  shape: BoxShape.circle,
+                                                                                ),
+                                                                                child: FaIcon(
+                                                                                  FontAwesomeIcons.moneyBillAlt,
+                                                                                  color: Colors.black,
+                                                                                  size: 12.0,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        'รอจ่ายค่างวด',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              color: Colors.black,
+                                                                              fontSize: 16.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                      ),
+                                                                    ].divide(SizedBox(
+                                                                        width:
+                                                                            16.0)),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComWaitingPayAmt, '0')}',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              color: FlutterFlowTheme.of(context).error,
+                                                                              fontSize: 18.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        safeSetState(() {
+                                                          _model
+                                                              .choiceChipsValueController
+                                                              ?.value = [
+                                                            'รออนุมัติ'
+                                                          ];
+                                                        });
+                                                        _model.showingLeadData = _model
+                                                            .commissionData!
+                                                            .details
+                                                            .where((e) =>
+                                                                double.parse(e
+                                                                    .comWaitingApproveAmt) >
+                                                                0)
+                                                            .toList()
+                                                            .cast<
+                                                                AgentCommissionLeadDataModelStruct>();
+                                                        safeSetState(() {});
+                                                        safeSetState(() {
+                                                          _model
+                                                              .searchTextFieldTextController
+                                                              ?.clear();
+                                                        });
+                                                      },
+                                                      child: Container(
+                                                        width: 150.0,
+                                                        height: 70.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 4.0,
+                                                              color: Color(
+                                                                  0x33000000),
+                                                              offset: Offset(
+                                                                0.0,
+                                                                2.0,
+                                                              ),
+                                                            )
+                                                          ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                        ),
+                                                        child: Stack(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: [
+                                                                  Expanded(
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children:
+                                                                          [
+                                                                        FaIcon(
+                                                                          FontAwesomeIcons
+                                                                              .wallet,
+                                                                          color:
+                                                                              Colors.black,
+                                                                          size:
+                                                                              24.0,
+                                                                        ),
+                                                                        Text(
+                                                                          'รออนุมัติ',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: Colors.black,
+                                                                                fontSize: 16.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                        ),
+                                                                      ].divide(SizedBox(
+                                                                              width: 16.0)),
+                                                                    ),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: [
+                                                                      Text(
+                                                                        '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComWaitingApproveAmt, '0')}',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyMedium
+                                                                            .override(
+                                                                              fontFamily: 'Noto San Thai',
+                                                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                                                              fontSize: 18.0,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          safeSetState(() {
+                                                            _model
+                                                                .choiceChipsValueController
+                                                                ?.value = [
+                                                              'ได้รับในรอบถัดไป'
+                                                            ];
+                                                          });
+                                                          _model.showingLeadData = _model
+                                                              .commissionData!
+                                                              .details
+                                                              .where((e) =>
+                                                                  double.parse(e
+                                                                      .comNextPayAmt) >
+                                                                  0)
+                                                              .toList()
+                                                              .cast<
+                                                                  AgentCommissionLeadDataModelStruct>();
+                                                          safeSetState(() {});
+                                                          safeSetState(() {
+                                                            _model
+                                                                .searchTextFieldTextController
+                                                                ?.clear();
+                                                          });
+                                                        },
+                                                        child: Container(
+                                                          width: 150.0,
+                                                          height: 70.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            boxShadow: [
+                                                              BoxShadow(
+                                                                blurRadius: 4.0,
+                                                                color: Color(
+                                                                    0x33000000),
+                                                                offset: Offset(
+                                                                  0.0,
+                                                                  2.0,
+                                                                ),
+                                                              )
+                                                            ],
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                          child: Stack(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8.0,
+                                                                            8.0,
+                                                                            8.0,
+                                                                            8.0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.start,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children:
+                                                                            [
+                                                                          FaIcon(
+                                                                            FontAwesomeIcons.moneyBillAlt,
+                                                                            color:
+                                                                                Colors.black,
+                                                                            size:
+                                                                                24.0,
+                                                                          ),
+                                                                          Container(
+                                                                            decoration:
+                                                                                BoxDecoration(),
+                                                                            child:
+                                                                                Text(
+                                                                              'ได้รับในรอบถัดไป',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Colors.black,
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        ].divide(SizedBox(width: 4.0)),
+                                                                      ),
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.center,
+                                                                        children: [
+                                                                          Text(
+                                                                            '${functions.returnNumberWithCommaFullNumber(_model.commissionData?.summary.totalComNextPayAmt, '0')}',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: Color(0xFF3AA9FA),
+                                                                                  fontSize: 18.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ].divide(
+                                                      SizedBox(width: 16.0)),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
@@ -1336,7 +2412,7 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                               size: 20.0,
                                             ),
                                             Text(
-                                              'ข้อมูล ณ วันที่ ${_model.commissionData?.dataDate}',
+                                              'ข้อมูล ณ วันที่ ${functions.formatToThaiDate('${_model.commissionData?.dataDate}')}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium
@@ -1911,6 +2987,15 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                 'ได้รับในรอบถัดไป'
                                                               ];
                                                             });
+                                                          } else if (_model
+                                                                  .choiceChipsValues
+                                                                  ?.lastOrNull ==
+                                                              'ยังไม่ถึงรอบจ่าย') {
+                                                            safeSetState(() {
+                                                              _model
+                                                                  .choiceChipsValueController
+                                                                  ?.reset();
+                                                            });
                                                           } else {
                                                             safeSetState(() {
                                                               _model
@@ -1921,12 +3006,10 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                         }
                                                         _model.showingLeadData =
                                                             () {
-                                                          if ((_model.choiceChipsValues !=
-                                                                      null &&
+                                                          if ((_model.choiceChipsValues != null &&
                                                                   (_model.choiceChipsValues)!
                                                                       .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
+                                                              (_model.choiceChipsValues?.firstOrNull ==
                                                                   'รอจ่ายค่างวด')) {
                                                             return _model
                                                                 .commissionData!
@@ -1936,13 +3019,10 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                         e.comWaitingPayAmt) >
                                                                     0)
                                                                 .toList();
-                                                          } else if ((_model
-                                                                          .choiceChipsValues !=
-                                                                      null &&
+                                                          } else if ((_model.choiceChipsValues != null &&
                                                                   (_model.choiceChipsValues)!
                                                                       .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
+                                                              (_model.choiceChipsValues?.firstOrNull ==
                                                                   'รออนุมัติ')) {
                                                             return _model
                                                                 .commissionData!
@@ -1952,13 +3032,10 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                         e.comWaitingApproveAmt) >
                                                                     0)
                                                                 .toList();
-                                                          } else if ((_model
-                                                                          .choiceChipsValues !=
-                                                                      null &&
+                                                          } else if ((_model.choiceChipsValues != null &&
                                                                   (_model.choiceChipsValues)!
                                                                       .isNotEmpty) &&
-                                                              (_model.choiceChipsValues
-                                                                      ?.firstOrNull ==
+                                                              (_model.choiceChipsValues?.firstOrNull ==
                                                                   'ได้รับในรอบถัดไป')) {
                                                             return _model
                                                                 .commissionData!
@@ -1968,14 +3045,25 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                         e.comNextPayAmt) >
                                                                     0)
                                                                 .toList();
-                                                          } else if ((_model
-                                                                          .choiceChipsValues !=
-                                                                      null &&
+                                                          } else if ((_model.choiceChipsValues != null &&
+                                                                  (_model.choiceChipsValues)!
+                                                                      .isNotEmpty) &&
+                                                              (_model.choiceChipsValues?.firstOrNull ==
+                                                                  'จ่ายแล้ว')) {
+                                                            return _model
+                                                                .commissionData!
+                                                                .details
+                                                                .where((e) =>
+                                                                    double.parse(
+                                                                        e.comReceivedAmt) >
+                                                                    0)
+                                                                .toList();
+                                                          } else if ((_model.choiceChipsValues != null &&
                                                                   (_model.choiceChipsValues)!
                                                                       .isNotEmpty) &&
                                                               (_model.choiceChipsValues
                                                                       ?.firstOrNull ==
-                                                                  'จ่ายแล้ว')) {
+                                                                  'ยังไม่ถึงรอบจ่าย')) {
                                                             return _model
                                                                 .commissionData!
                                                                 .details
@@ -2567,12 +3655,296 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                  if (double.parse((leadListItemsItem.expDay !=
-                                                                              ''
-                                                                          ? leadListItemsItem
-                                                                              .expDay
-                                                                          : '0')) >
-                                                                      0)
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Text(
+                                                                              'ค่าตอบแทนทั้งหมด',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Color(0xFF646464),
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                  ),
+                                                                            ),
+                                                                            Text(
+                                                                              '${leadListItemsItem.comPayAmt}',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Colors.black,
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  if (false)
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          18.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'รอจ่ายค่างวด',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${leadListItemsItem.comPayAmt}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'รออนุมัติ',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${leadListItemsItem.comPayAmt}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'ได้รับในรอบถัดไป',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${leadListItemsItem.comPayAmt}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'จ่ายแล้ว',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${leadListItemsItem.comPayAmt}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      'ยังไม่ถึงรอบจ่าย',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${leadListItemsItem.comPayAmt}',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  if ((double.parse((leadListItemsItem.expDay != ''
+                                                                              ? leadListItemsItem.expDay
+                                                                              : '0')) >
+                                                                          0) ==
+                                                                      false)
                                                                     Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize
@@ -2797,15 +4169,9 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                                               children: [
                                                                                 Text(
-                                                                                  '${() {
-                                                                                    if (leadListItemsItem.paymentMethod == 'one_time') {
-                                                                                      return 'รับครั้งเดียว';
-                                                                                    } else if (leadListItemsItem.paymentMethod == 'installment') {
-                                                                                      return 'รับเต็มจำนวน(แบ่งจ่ายตามงวดสัญญา)';
-                                                                                    } else {
-                                                                                      return '-';
-                                                                                    }
-                                                                                  }()}',
+                                                                                  '${functions.createUniqueValueListLabel(((String input) {
+                                                                                        return [input];
+                                                                                      }(leadListItemsItem.paymentMethod)).toList())?.firstOrNull}',
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Noto San Thai',
                                                                                         color: Colors.black,
@@ -2821,50 +4187,62 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                  Container(
-                                                                    width: double
-                                                                        .infinity,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryBackground,
-                                                                    ),
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
                                                                     child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          12.0,
-                                                                          0.0,
-                                                                          12.0,
-                                                                          0.0),
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
                                                                       child:
-                                                                          Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: [
-                                                                          Text(
-                                                                            'ช่องทางการรับเงิน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: Color(0xFF646464),
-                                                                                  fontSize: 14.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.normal,
-                                                                                ),
-                                                                          ),
-                                                                          Text(
-                                                                            '${leadListItemsItem.paymentChannel}',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: Colors.black,
-                                                                                  fontSize: 14.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                ),
-                                                                          ),
-                                                                        ],
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Text(
+                                                                              'ช่องทางการรับเงิน',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Color(0xFF646464),
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                  ),
+                                                                            ),
+                                                                            Text(
+                                                                              '${functions.createUniqueValueListLabel(((String input) {
+                                                                                    return [
+                                                                                      input
+                                                                                    ];
+                                                                                  }(leadListItemsItem.paymentChannel)).toList())?.firstOrNull}',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Colors.black,
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -3389,8 +4767,8 @@ class _MyPayDashboardPageWidgetState extends State<MyPayDashboardPageWidget> {
                                                                             CommissionHistoryPageWidget.routeName,
                                                                             queryParameters:
                                                                                 {
-                                                                              'leadId': serializeParam(
-                                                                                leadListItemsItem.id.toString(),
+                                                                              'contNo': serializeParam(
+                                                                                leadListItemsItem.contNo,
                                                                                 ParamType.String,
                                                                               ),
                                                                             }.withoutNulls,

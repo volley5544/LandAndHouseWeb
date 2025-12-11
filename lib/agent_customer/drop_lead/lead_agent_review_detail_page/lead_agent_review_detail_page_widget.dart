@@ -11,6 +11,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/loading/loading_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'lead_agent_review_detail_page_model.dart';
@@ -49,6 +50,26 @@ class _LeadAgentReviewDetailPageWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => LeadAgentReviewDetailPageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if ((FFAppState().saveLeadAgentData.agentCode == '') &&
+          (FFAppState().platform != 'mobile')) {
+        context.goNamed(
+          TimeoutPageWidget.routeName,
+          queryParameters: {
+            'text': serializeParam(
+              'พบข้อผิดพลาด',
+              ParamType.String,
+            ),
+            'code': serializeParam(
+              '410',
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
+      }
+    });
 
     animationsMap.addAll({
       'columnOnPageLoadAnimation': AnimationInfo(

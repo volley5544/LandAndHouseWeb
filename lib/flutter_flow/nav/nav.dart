@@ -693,8 +693,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: CommissionHistoryPageWidget.routeName,
           path: CommissionHistoryPageWidget.routePath,
           builder: (context, params) => CommissionHistoryPageWidget(
-            leadId: params.getParam(
-              'leadId',
+            contNo: params.getParam(
+              'contNo',
               ParamType.String,
             ),
           ),
@@ -750,6 +750,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: MyLeadDashboardNewPageWidget.routeName,
+          path: MyLeadDashboardNewPageWidget.routePath,
+          builder: (context, params) => MyLeadDashboardNewPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

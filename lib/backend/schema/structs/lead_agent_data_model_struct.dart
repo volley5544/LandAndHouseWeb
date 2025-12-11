@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class LeadAgentDataModelStruct extends FFFirebaseStruct {
@@ -73,6 +74,8 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
     String? agentWht,
     String? comEstimateVatAmt,
     String? requestNo,
+    String? tabCategoryName,
+    List<LeadAgentStateDataModelStruct>? state,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -139,6 +142,8 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         _agentWht = agentWht,
         _comEstimateVatAmt = comEstimateVatAmt,
         _requestNo = requestNo,
+        _tabCategoryName = tabCategoryName,
+        _state = state,
         super(firestoreUtilData);
 
   // "id" field.
@@ -598,6 +603,24 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasRequestNo() => _requestNo != null;
 
+  // "tab_category_name" field.
+  String? _tabCategoryName;
+  String get tabCategoryName => _tabCategoryName ?? '';
+  set tabCategoryName(String? val) => _tabCategoryName = val;
+
+  bool hasTabCategoryName() => _tabCategoryName != null;
+
+  // "state" field.
+  List<LeadAgentStateDataModelStruct>? _state;
+  List<LeadAgentStateDataModelStruct> get state => _state ?? const [];
+  set state(List<LeadAgentStateDataModelStruct>? val) => _state = val;
+
+  void updateState(Function(List<LeadAgentStateDataModelStruct>) updateFn) {
+    updateFn(_state ??= []);
+  }
+
+  bool hasState() => _state != null;
+
   static LeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       LeadAgentDataModelStruct(
         id: castToType<int>(data['id']),
@@ -665,6 +688,11 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         agentWht: data['agent_wht'] as String?,
         comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
         requestNo: data['request_no'] as String?,
+        tabCategoryName: data['tab_category_name'] as String?,
+        state: getStructList(
+          data['state'],
+          LeadAgentStateDataModelStruct.fromMap,
+        ),
       );
 
   static LeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -737,6 +765,8 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         'agent_wht': _agentWht,
         'com_estimate_vat_amt': _comEstimateVatAmt,
         'request_no': _requestNo,
+        'tab_category_name': _tabCategoryName,
+        'state': _state?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
   @override
@@ -1000,6 +1030,15 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         'request_no': serializeParam(
           _requestNo,
           ParamType.String,
+        ),
+        'tab_category_name': serializeParam(
+          _tabCategoryName,
+          ParamType.String,
+        ),
+        'state': serializeParam(
+          _state,
+          ParamType.DataStruct,
+          isList: true,
         ),
       }.withoutNulls;
 
@@ -1331,6 +1370,17 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        tabCategoryName: deserializeParam(
+          data['tab_category_name'],
+          ParamType.String,
+          false,
+        ),
+        state: deserializeStructParam<LeadAgentStateDataModelStruct>(
+          data['state'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: LeadAgentStateDataModelStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -1338,6 +1388,7 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is LeadAgentDataModelStruct &&
         id == other.id &&
         agentCode == other.agentCode &&
@@ -1403,7 +1454,9 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         actualComPercent == other.actualComPercent &&
         agentWht == other.agentWht &&
         comEstimateVatAmt == other.comEstimateVatAmt &&
-        requestNo == other.requestNo;
+        requestNo == other.requestNo &&
+        tabCategoryName == other.tabCategoryName &&
+        listEquality.equals(state, other.state);
   }
 
   @override
@@ -1472,7 +1525,9 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         actualComPercent,
         agentWht,
         comEstimateVatAmt,
-        requestNo
+        requestNo,
+        tabCategoryName,
+        state
       ]);
 }
 
@@ -1542,6 +1597,7 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
   String? agentWht,
   String? comEstimateVatAmt,
   String? requestNo,
+  String? tabCategoryName,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1613,6 +1669,7 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
       agentWht: agentWht,
       comEstimateVatAmt: comEstimateVatAmt,
       requestNo: requestNo,
+      tabCategoryName: tabCategoryName,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

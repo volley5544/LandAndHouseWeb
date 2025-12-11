@@ -22,6 +22,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
     String? overdueTo,
     String? latestPaidDate,
     String? currentDateTime,
+    double? collectionFee,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _installmentAmount = installmentAmount,
         _overdueAmount = overdueAmount,
@@ -37,6 +38,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         _overdueTo = overdueTo,
         _latestPaidDate = latestPaidDate,
         _currentDateTime = currentDateTime,
+        _collectionFee = collectionFee,
         super(firestoreUtilData);
 
   // "installment_amount" field.
@@ -162,6 +164,16 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
 
   bool hasCurrentDateTime() => _currentDateTime != null;
 
+  // "collection_fee" field.
+  double? _collectionFee;
+  double get collectionFee => _collectionFee ?? 0.0;
+  set collectionFee(double? val) => _collectionFee = val;
+
+  void incrementCollectionFee(double amount) =>
+      collectionFee = collectionFee + amount;
+
+  bool hasCollectionFee() => _collectionFee != null;
+
   static PaymentDetailsStruct fromMap(Map<String, dynamic> data) =>
       PaymentDetailsStruct(
         installmentAmount: castToType<int>(data['installment_amount']),
@@ -180,6 +192,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         overdueTo: data['overdue_to'] as String?,
         latestPaidDate: data['latest_paid_date'] as String?,
         currentDateTime: data['current_date_time'] as String?,
+        collectionFee: castToType<double>(data['collection_fee']),
       );
 
   static PaymentDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -201,6 +214,7 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         'overdue_to': _overdueTo,
         'latest_paid_date': _latestPaidDate,
         'current_date_time': _currentDateTime,
+        'collection_fee': _collectionFee,
       }.withoutNulls;
 
   @override
@@ -260,6 +274,10 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         'current_date_time': serializeParam(
           _currentDateTime,
           ParamType.String,
+        ),
+        'collection_fee': serializeParam(
+          _collectionFee,
+          ParamType.double,
         ),
       }.withoutNulls;
 
@@ -335,6 +353,11 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        collectionFee: deserializeParam(
+          data['collection_fee'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -356,7 +379,8 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         overdueFrom == other.overdueFrom &&
         overdueTo == other.overdueTo &&
         latestPaidDate == other.latestPaidDate &&
-        currentDateTime == other.currentDateTime;
+        currentDateTime == other.currentDateTime &&
+        collectionFee == other.collectionFee;
   }
 
   @override
@@ -374,7 +398,8 @@ class PaymentDetailsStruct extends FFFirebaseStruct {
         overdueFrom,
         overdueTo,
         latestPaidDate,
-        currentDateTime
+        currentDateTime,
+        collectionFee
       ]);
 }
 
@@ -393,6 +418,7 @@ PaymentDetailsStruct createPaymentDetailsStruct({
   String? overdueTo,
   String? latestPaidDate,
   String? currentDateTime,
+  double? collectionFee,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -413,6 +439,7 @@ PaymentDetailsStruct createPaymentDetailsStruct({
       overdueTo: overdueTo,
       latestPaidDate: latestPaidDate,
       currentDateTime: currentDateTime,
+      collectionFee: collectionFee,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

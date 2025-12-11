@@ -18,10 +18,10 @@ export 'commission_history_page_model.dart';
 class CommissionHistoryPageWidget extends StatefulWidget {
   const CommissionHistoryPageWidget({
     super.key,
-    required this.leadId,
+    required this.contNo,
   });
 
-  final String? leadId;
+  final String? contNo;
 
   static String routeName = 'commissionHistoryPage';
   static String routePath = '/commissionHistoryPage';
@@ -65,13 +65,13 @@ class _CommissionHistoryPageWidgetState
       );
 
       _model.commissionOutput = await AgentAPIGroup.commissionHistoryCall.call(
-        leadId: widget.leadId,
         url: FFDevEnvironmentValues().isProduction
             ? FFAppState().apiUrlDocData.agentWebApiUrl
             : FFAppState().apiUrlDocData.agentWebApiUrlUat,
         tokenHeader: FFDevEnvironmentValues().isProduction
             ? FFAppState().apiUrlDocData.agentWebApiToken
             : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+        contNo: widget.contNo,
       );
 
       if ((_model.commissionOutput?.statusCode ?? 200) != 200) {
@@ -590,7 +590,11 @@ class _CommissionHistoryPageWidgetState
                                               size: 20.0,
                                             ),
                                             Text(
-                                              'ข้อมูล ณ วันที่ 29/08/2568',
+                                              'ข้อมูล ณ วันที่ ${'${functions.formatToThaiDate(AgentAPIGroup.commissionHistoryCall.dataDate(
+                                                (_model.commissionOutput
+                                                        ?.jsonBody ??
+                                                    ''),
+                                              ))}'}',
                                               style: FlutterFlowTheme.of(
                                                       context)
                                                   .bodyMedium

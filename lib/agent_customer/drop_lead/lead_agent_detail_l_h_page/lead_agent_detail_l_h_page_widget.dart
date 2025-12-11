@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -153,6 +154,22 @@ class _LeadAgentDetailLHPageWidgetState
       safeSetState(() {});
       safeSetState(() {});
       Navigator.pop(context);
+      if ((FFAppState().saveLeadAgentData.agentCode == '') &&
+          (FFAppState().platform != 'mobile')) {
+        context.goNamed(
+          TimeoutPageWidget.routeName,
+          queryParameters: {
+            'text': serializeParam(
+              'พบข้อผิดพลาด',
+              ParamType.String,
+            ),
+            'code': serializeParam(
+              '410',
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));

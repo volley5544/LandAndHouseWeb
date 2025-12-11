@@ -634,7 +634,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                                       10.0,
                                                                       0.0),
                                                           child: Text(
-                                                            '${functions.returnNumberWithComma2Decimal(FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString())} บาท',
+                                                            '${functions.returnNumberWithComma2Decimal((FFAppState().getLoanListSelected.paymentDetails.currentDueAmount + FFAppState().getLoanListSelected.paymentDetails.collectionFee).toString())} บาท',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
@@ -707,7 +707,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                         0.0, 8.0, 0.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 140.0,
+                                                  height: 190.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -803,6 +803,125 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                               ),
                                                               Text(
                                                                 '${functions.returnNumberWithComma2Decimal(FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString())} บาท',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        if (FFAppState()
+                                                                .getLoanListSelected
+                                                                .paymentDetails
+                                                                .collectionFee !=
+                                                            0.0)
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        12.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  'ค่าติดตามทวงถาม',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                                Text(
+                                                                  '${functions.returnNumberWithComma2Decimal(FFAppState().getLoanListSelected.paymentDetails.collectionFee.toString())} บาท',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      12.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                'รวม',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                              Text(
+                                                                '${functions.returnNumberWithComma2Decimal((FFAppState().getLoanListSelected.paymentDetails.overdueAmount + FFAppState().getLoanListSelected.paymentDetails.collectionFee).toString())} บาท',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -1211,7 +1330,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                                       10.0,
                                                                       0.0),
                                                           child: Text(
-                                                            '${functions.returnNumberWithComma2Decimal(FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString())} บาท',
+                                                            '${functions.returnNumberWithComma2Decimal((double.parse(FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()) + double.parse(FFAppState().getLoanListSelected.paymentDetails.collectionFee.toString())).toString())} บาท',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyMedium
@@ -1284,7 +1403,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                         0.0, 8.0, 0.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 140.0,
+                                                  height: 190.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1401,6 +1520,126 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                             ],
                                                           ),
                                                         ),
+                                                        if (FFAppState()
+                                                                .getLoanListSelected
+                                                                .paymentDetails
+                                                                .collectionFee !=
+                                                            0.0)
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        12.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  'ค่าติดตามทวงถาม',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                                Text(
+                                                                  '${functions.returnNumberWithComma2Decimal(FFAppState().getLoanListSelected.paymentDetails.collectionFee.toString())} บาท',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        if (FFAppState()
+                                                                .getLoanListSelected
+                                                                .paymentDetails
+                                                                .collectionFee !=
+                                                            0.0)
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        12.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  'รวม',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                                Text(
+                                                                  '${functions.returnNumberWithComma2Decimal((FFAppState().getLoanListSelected.paymentDetails.overdueAmount + FFAppState().getLoanListSelected.paymentDetails.collectionFee).toString())} บาท',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -1731,7 +1970,7 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                             24.0, 8.0, 40.0, 30.0),
                                         child: Container(
                                           width: double.infinity,
-                                          height: 180.0,
+                                          height: 240.0,
                                           decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
@@ -1832,37 +2071,76 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                          0.0, 30.0, 0.0, 0.0),
+                                                          0.0, 10.0, 0.0, 20.0),
                                                   child: Container(
                                                     width: double.infinity,
                                                     decoration: BoxDecoration(),
-                                                    child: Row(
+                                                    child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
                                                       children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            '*ไม่สามารถระบุจำนวนเงินเกินยอดหนี้คงเหลือได้',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: Color(
-                                                                      0xFFFF0000),
-                                                                  fontSize:
-                                                                      14.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                ),
-                                                          ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                '*การกำหนดยอดชำระเอง: การชำระค่างวดไม่เต็มจำนวน จะมีดอกเบี้ยเพิ่มขึ้นและค่าติดตามทวงถามหนี้ (ถ้ามี) ส่งผลให้ชำระหนี้ไม่ครบตามระยะเวลาที่กำหนด สอบถามข้อมูลเพิ่มเติมติดต่อ 1652',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: Color(
+                                                                          0xFFFF0000),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Text(
+                                                                '**ไม่สามารถระบุจำนวนเงินเกินยอดหนี้คงเหลือได้',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: Color(
+                                                                          0xFFFF0000),
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
@@ -2092,12 +2370,12 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                       onPressed: () {
                                         if (_model.installmentTypeSelectedList
                                             .elementAtOrNull(0)!) {
-                                          return ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' ==
+                                          return ('${(FFAppState().getLoanListSelected.paymentDetails.currentDueAmount + FFAppState().getLoanListSelected.paymentDetails.collectionFee).toString()}' ==
                                               '0');
                                         } else if (_model
                                             .installmentTypeSelectedList
                                             .elementAtOrNull(1)!) {
-                                          return ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' ==
+                                          return ('${(double.parse(FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()) + double.parse(FFAppState().getLoanListSelected.paymentDetails.collectionFee.toString())).toString()}' ==
                                               '0');
                                         } else {
                                           return (('${functions.removeCommaFromNumText(_model.textController.text)}' ==
@@ -2276,20 +2554,30 @@ class _SelectPaymentPageWidgetState extends State<SelectPaymentPageWidget>
                                                           .installmentTypeSelectedList
                                                           .elementAtOrNull(
                                                               0)!) {
-                                                        return FFAppState()
-                                                            .getLoanListSelected
-                                                            .paymentDetails
-                                                            .currentDueAmount
-                                                            .toString();
+                                                        return ((FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .paymentDetails
+                                                                    .currentDueAmount +
+                                                                FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .paymentDetails
+                                                                    .collectionFee)
+                                                            .toString());
                                                       } else if (_model
                                                           .installmentTypeSelectedList
                                                           .elementAtOrNull(
                                                               1)!) {
-                                                        return FFAppState()
-                                                            .getLoanListSelected
-                                                            .paymentDetails
-                                                            .overdueAmount
-                                                            .toString();
+                                                        return ((double.parse(FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .paymentDetails
+                                                                    .overdueAmount
+                                                                    .toString()) +
+                                                                double.parse(FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .paymentDetails
+                                                                    .collectionFee
+                                                                    .toString()))
+                                                            .toString());
                                                       } else {
                                                         return functions
                                                             .removeCommaFromNumText(

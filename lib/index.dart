@@ -113,3 +113,5 @@ export '/agent_customer/agent_detail/timeout_page/timeout_page_widget.dart'
     show TimeoutPageWidget;
 export '/agent_customer/drop_lead/pdf_viewer_agent_page/pdf_viewer_agent_page_widget.dart'
     show PdfViewerAgentPageWidget;
+export '/agent_customer/agent_detail/my_lead_dashboard_new_page/my_lead_dashboard_new_page_widget.dart'
+    show MyLeadDashboardNewPageWidget;
