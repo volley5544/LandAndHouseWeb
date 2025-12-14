@@ -14,7 +14,6 @@ import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:styled_divider/styled_divider.dart';
 import 'package:collection/collection.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -948,162 +947,190 @@ class _MyLeadDashboardNewPageWidgetState
                                         children: [
                                           Container(
                                             width: double.infinity,
+                                            height: 40.0,
                                             decoration: BoxDecoration(),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 Expanded(
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    child: TextFormField(
-                                                      controller: _model
-                                                          .searchTextFieldTextController,
-                                                      focusNode: _model
-                                                          .searchTextFieldFocusNode,
-                                                      onChanged: (_) =>
-                                                          EasyDebounce.debounce(
-                                                        '_model.searchTextFieldTextController',
-                                                        Duration(
-                                                            milliseconds: 2000),
-                                                        () =>
-                                                            safeSetState(() {}),
+                                                  child: Stack(
+                                                    children: [
+                                                      Container(
+                                                        width: double.infinity,
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .searchTextFieldTextController,
+                                                          focusNode: _model
+                                                              .searchTextFieldFocusNode,
+                                                          autofocus: false,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            isDense: true,
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'คำค้น ชื่อ นามสกุล',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: Color(
+                                                                          0x98646464),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x80646464),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color(
+                                                                    0x00000000),
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            errorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 1.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            filled: true,
+                                                            fillColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                            prefixIcon: Icon(
+                                                              FontAwesomeIcons
+                                                                  .search,
+                                                              color: Color(
+                                                                  0x80646464),
+                                                              size: 24.0,
+                                                            ),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                          cursorColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primaryText,
+                                                          enableInteractiveSelection:
+                                                              true,
+                                                          validator: _model
+                                                              .searchTextFieldTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                        ),
                                                       ),
-                                                      autofocus: false,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        isDense: true,
-                                                        labelStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  letterSpacing:
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                1.0, 0.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
                                                                       0.0,
-                                                                ),
-                                                        hintText:
-                                                            'คำค้น ชื่อ นามสกุล',
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: Color(
-                                                                      0x98646464),
-                                                                  letterSpacing:
                                                                       0.0,
-                                                                ),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x80646464),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1.0,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                        prefixIcon: Icon(
-                                                          FontAwesomeIcons
-                                                              .search,
-                                                          color:
-                                                              Color(0x80646464),
-                                                          size: 24.0,
-                                                        ),
-                                                        suffixIcon: _model
-                                                                .searchTextFieldTextController!
-                                                                .text
-                                                                .isNotEmpty
-                                                            ? InkWell(
-                                                                onTap:
-                                                                    () async {
+                                                                      8.0,
+                                                                      0.0),
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              safeSetState(() {
+                                                                _model
+                                                                    .searchTextFieldTextController
+                                                                    ?.clear();
+                                                              });
+                                                              safeSetState(() => _model
+                                                                  .choiceChipsValueController
+                                                                  ?.value = []);
+                                                              _model.showingLeadData =
                                                                   _model
-                                                                      .searchTextFieldTextController
-                                                                      ?.clear();
-                                                                  safeSetState(
-                                                                      () {});
-                                                                },
-                                                                child: Icon(
-                                                                  Icons.clear,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  size: 20.0,
-                                                                ),
-                                                              )
-                                                            : null,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            letterSpacing: 0.0,
+                                                                      .allLeadList
+                                                                      .toList()
+                                                                      .cast<
+                                                                          LeadAgentDataModelStruct>();
+                                                              safeSetState(
+                                                                  () {});
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .close_outlined,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 24.0,
+                                                            ),
                                                           ),
-                                                      cursorColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      enableInteractiveSelection:
-                                                          true,
-                                                      validator: _model
-                                                          .searchTextFieldTextControllerValidator
-                                                          .asValidator(context),
-                                                    ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                                 Builder(
@@ -1244,9 +1271,20 @@ class _MyLeadDashboardNewPageWidgetState
                                                             val);
                                                         if (_model
                                                                 .choiceChipsValues!
-                                                                .length >
+                                                                .length >=
                                                             1) {
                                                         } else {
+                                                          _model.showingLeadData =
+                                                              _model.allLeadList
+                                                                  .toList()
+                                                                  .cast<
+                                                                      LeadAgentDataModelStruct>();
+                                                          safeSetState(() {});
+                                                          safeSetState(() {
+                                                            _model
+                                                                .searchTextFieldTextController
+                                                                ?.clear();
+                                                          });
                                                           return;
                                                         }
 
@@ -1932,8 +1970,9 @@ class _MyLeadDashboardNewPageWidgetState
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                  if ('${leadListItemsItem.leadStatus}' !=
-                                                                      'ทำสัญญาแล้ว')
+                                                                  if (('${leadListItemsItem.leadStatus}' !=
+                                                                          'ทำสัญญาแล้ว') ||
+                                                                      true)
                                                                     Column(
                                                                       mainAxisSize:
                                                                           MainAxisSize

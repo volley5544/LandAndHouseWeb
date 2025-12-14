@@ -262,14 +262,14 @@ class _MyCommissionAdvanceSearchComponentWidgetState
                               ),
                               options: List<String>.from(functions
                                   .createUniqueValueList(widget.showingLeadData
-                                      ?.map((e) => e.loanTypeName)
+                                      ?.map((e) => e.contnoTypeName)
                                       .toList()
                                       .toList())!),
                               optionLabels:
                                   functions.createUniqueValueListLabel(functions
                                       .createUniqueValueList(widget
                                           .showingLeadData
-                                          ?.map((e) => e.loanTypeName)
+                                          ?.map((e) => e.contnoTypeName)
                                           .toList()
                                           .toList())
                                       ?.toList())!,
@@ -537,10 +537,11 @@ class _MyCommissionAdvanceSearchComponentWidgetState
                             _model.productDropDownValue != ''
                         ? _model.productDropDownValue
                         : '${''}',
-                    'loanTypeName': _model.loanTypeNameDropDownValue != null &&
-                            _model.loanTypeNameDropDownValue != ''
-                        ? _model.loanTypeNameDropDownValue
-                        : '${''}',
+                    'contno_type_name':
+                        _model.loanTypeNameDropDownValue != null &&
+                                _model.loanTypeNameDropDownValue != ''
+                            ? _model.loanTypeNameDropDownValue
+                            : '${''}',
                     'paymentMethod':
                         _model.paymentMethodDropDownValue != null &&
                                 _model.paymentMethodDropDownValue != ''

@@ -54,6 +54,12 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
     String? requestNo,
     String? brandName,
     String? carModel,
+    String? contnoTypeName,
+    String? comPaymentNotDueAmt,
+    String? carRegistration,
+    String? carProvince,
+    String? typecod,
+    String? modelcod,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentId = agentId,
@@ -101,6 +107,12 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         _requestNo = requestNo,
         _brandName = brandName,
         _carModel = carModel,
+        _contnoTypeName = contnoTypeName,
+        _comPaymentNotDueAmt = comPaymentNotDueAmt,
+        _carRegistration = carRegistration,
+        _carProvince = carProvince,
+        _typecod = typecod,
+        _modelcod = modelcod,
         super(firestoreUtilData);
 
   // "id" field.
@@ -427,6 +439,48 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
 
   bool hasCarModel() => _carModel != null;
 
+  // "contno_type_name" field.
+  String? _contnoTypeName;
+  String get contnoTypeName => _contnoTypeName ?? '';
+  set contnoTypeName(String? val) => _contnoTypeName = val;
+
+  bool hasContnoTypeName() => _contnoTypeName != null;
+
+  // "com_payment_not_due_amt" field.
+  String? _comPaymentNotDueAmt;
+  String get comPaymentNotDueAmt => _comPaymentNotDueAmt ?? '';
+  set comPaymentNotDueAmt(String? val) => _comPaymentNotDueAmt = val;
+
+  bool hasComPaymentNotDueAmt() => _comPaymentNotDueAmt != null;
+
+  // "car_registration" field.
+  String? _carRegistration;
+  String get carRegistration => _carRegistration ?? '';
+  set carRegistration(String? val) => _carRegistration = val;
+
+  bool hasCarRegistration() => _carRegistration != null;
+
+  // "car_province" field.
+  String? _carProvince;
+  String get carProvince => _carProvince ?? '';
+  set carProvince(String? val) => _carProvince = val;
+
+  bool hasCarProvince() => _carProvince != null;
+
+  // "TYPECOD" field.
+  String? _typecod;
+  String get typecod => _typecod ?? '';
+  set typecod(String? val) => _typecod = val;
+
+  bool hasTypecod() => _typecod != null;
+
+  // "MODELCOD" field.
+  String? _modelcod;
+  String get modelcod => _modelcod ?? '';
+  set modelcod(String? val) => _modelcod = val;
+
+  bool hasModelcod() => _modelcod != null;
+
   static AgentCommissionLeadDataModelStruct fromMap(
           Map<String, dynamic> data) =>
       AgentCommissionLeadDataModelStruct(
@@ -476,6 +530,12 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         requestNo: data['request_no'] as String?,
         brandName: data['brand_name'] as String?,
         carModel: data['car_model'] as String?,
+        contnoTypeName: data['contno_type_name'] as String?,
+        comPaymentNotDueAmt: data['com_payment_not_due_amt'] as String?,
+        carRegistration: data['car_registration'] as String?,
+        carProvince: data['car_province'] as String?,
+        typecod: data['TYPECOD'] as String?,
+        modelcod: data['MODELCOD'] as String?,
       );
 
   static AgentCommissionLeadDataModelStruct? maybeFromMap(dynamic data) => data
@@ -530,6 +590,12 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         'request_no': _requestNo,
         'brand_name': _brandName,
         'car_model': _carModel,
+        'contno_type_name': _contnoTypeName,
+        'com_payment_not_due_amt': _comPaymentNotDueAmt,
+        'car_registration': _carRegistration,
+        'car_province': _carProvince,
+        'TYPECOD': _typecod,
+        'MODELCOD': _modelcod,
       }.withoutNulls;
 
   @override
@@ -716,6 +782,30 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         ),
         'car_model': serializeParam(
           _carModel,
+          ParamType.String,
+        ),
+        'contno_type_name': serializeParam(
+          _contnoTypeName,
+          ParamType.String,
+        ),
+        'com_payment_not_due_amt': serializeParam(
+          _comPaymentNotDueAmt,
+          ParamType.String,
+        ),
+        'car_registration': serializeParam(
+          _carRegistration,
+          ParamType.String,
+        ),
+        'car_province': serializeParam(
+          _carProvince,
+          ParamType.String,
+        ),
+        'TYPECOD': serializeParam(
+          _typecod,
+          ParamType.String,
+        ),
+        'MODELCOD': serializeParam(
+          _modelcod,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -953,6 +1043,36 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        contnoTypeName: deserializeParam(
+          data['contno_type_name'],
+          ParamType.String,
+          false,
+        ),
+        comPaymentNotDueAmt: deserializeParam(
+          data['com_payment_not_due_amt'],
+          ParamType.String,
+          false,
+        ),
+        carRegistration: deserializeParam(
+          data['car_registration'],
+          ParamType.String,
+          false,
+        ),
+        carProvince: deserializeParam(
+          data['car_province'],
+          ParamType.String,
+          false,
+        ),
+        typecod: deserializeParam(
+          data['TYPECOD'],
+          ParamType.String,
+          false,
+        ),
+        modelcod: deserializeParam(
+          data['MODELCOD'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1006,7 +1126,13 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         comStatus == other.comStatus &&
         requestNo == other.requestNo &&
         brandName == other.brandName &&
-        carModel == other.carModel;
+        carModel == other.carModel &&
+        contnoTypeName == other.contnoTypeName &&
+        comPaymentNotDueAmt == other.comPaymentNotDueAmt &&
+        carRegistration == other.carRegistration &&
+        carProvince == other.carProvince &&
+        typecod == other.typecod &&
+        modelcod == other.modelcod;
   }
 
   @override
@@ -1056,7 +1182,13 @@ class AgentCommissionLeadDataModelStruct extends FFFirebaseStruct {
         comStatus,
         requestNo,
         brandName,
-        carModel
+        carModel,
+        contnoTypeName,
+        comPaymentNotDueAmt,
+        carRegistration,
+        carProvince,
+        typecod,
+        modelcod
       ]);
 }
 
@@ -1107,6 +1239,12 @@ AgentCommissionLeadDataModelStruct createAgentCommissionLeadDataModelStruct({
   String? requestNo,
   String? brandName,
   String? carModel,
+  String? contnoTypeName,
+  String? comPaymentNotDueAmt,
+  String? carRegistration,
+  String? carProvince,
+  String? typecod,
+  String? modelcod,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1159,6 +1297,12 @@ AgentCommissionLeadDataModelStruct createAgentCommissionLeadDataModelStruct({
       requestNo: requestNo,
       brandName: brandName,
       carModel: carModel,
+      contnoTypeName: contnoTypeName,
+      comPaymentNotDueAmt: comPaymentNotDueAmt,
+      carRegistration: carRegistration,
+      carProvince: carProvince,
+      typecod: typecod,
+      modelcod: modelcod,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -65,20 +65,6 @@ class _LeadAgentConsentPageWidgetState
       _model.linkidPageState = '${widget.linkId}';
       safeSetState(() {});
       if ('${widget.fromPage}' == 'customer') {
-        await showDialog(
-          context: context,
-          builder: (alertDialogContext) {
-            return AlertDialog(
-              content: Text('${FFAppState().saveLeadAgentData.agentCode}'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(alertDialogContext),
-                  child: Text('Ok'),
-                ),
-              ],
-            );
-          },
-        );
         if (FFAppState().saveLeadAgentData.agentCode == '') {
           context.goNamed(
             TimeoutPageWidget.routeName,

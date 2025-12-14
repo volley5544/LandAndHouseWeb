@@ -297,6 +297,7 @@ class _ProgressLeadComponentNewWidgetState
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
+                        flex: 3,
                         child: Container(
                           width: 100.0,
                           decoration: BoxDecoration(
@@ -340,6 +341,7 @@ class _ProgressLeadComponentNewWidgetState
                         ),
                       ),
                       Expanded(
+                        flex: 5,
                         child: Container(
                           width: 100.0,
                           decoration: BoxDecoration(
@@ -347,7 +349,7 @@ class _ProgressLeadComponentNewWidgetState
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(-0.9, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Text(
                               valueOrDefault<String>(
                                 widget.progressStatusList?.elementAtOrNull(1),
@@ -386,6 +388,7 @@ class _ProgressLeadComponentNewWidgetState
                         ),
                       ),
                       Expanded(
+                        flex: 5,
                         child: Container(
                           width: 100.0,
                           decoration: BoxDecoration(
@@ -393,7 +396,7 @@ class _ProgressLeadComponentNewWidgetState
                                 .secondaryBackground,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.8, 0.0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: Text(
                               valueOrDefault<String>(
                                 widget.progressStatusList?.elementAtOrNull(2),
@@ -435,6 +438,7 @@ class _ProgressLeadComponentNewWidgetState
                         ),
                       ),
                       Expanded(
+                        flex: 3,
                         child: Container(
                           width: 100.0,
                           decoration: BoxDecoration(
@@ -534,7 +538,7 @@ class _ProgressLeadComponentNewWidgetState
                               ),
                             ),
                             Container(
-                              width: MediaQuery.sizeOf(context).width * 0.25,
+                              width: 108.0,
                               height: 20.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
@@ -604,7 +608,7 @@ class _ProgressLeadComponentNewWidgetState
                     Align(
                       alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Container(
-                        width: MediaQuery.sizeOf(context).width * 0.55,
+                        width: double.infinity,
                         decoration: BoxDecoration(),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -613,62 +617,91 @@ class _ProgressLeadComponentNewWidgetState
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: Container(
-                                  width: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                              Container(
+                                width: 100.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    widget.progressStatusList?.firstOrNull,
+                                    'status1',
                                   ),
+                                  textAlign: TextAlign.start,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: widget.step == '1'
+                                            ? Color(0xFF4AC225)
+                                            : FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                        fontSize: () {
+                                          if (MediaQuery.sizeOf(context).width <
+                                              kBreakpointSmall) {
+                                            return 10.0;
+                                          } else if (MediaQuery.sizeOf(context)
+                                                  .width <
+                                              kBreakpointMedium) {
+                                            return 12.0;
+                                          } else if (MediaQuery.sizeOf(context)
+                                                  .width <
+                                              kBreakpointLarge) {
+                                            return 12.0;
+                                          } else {
+                                            return 12.0;
+                                          }
+                                        }(),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
+                              ),
+                              Container(
+                                width: 150.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     valueOrDefault<String>(
-                                      widget.progressStatusList?.firstOrNull,
-                                      'status1',
+                                      widget.progressStatusList?.lastOrNull,
+                                      'status4',
                                     ),
-                                    textAlign: TextAlign.start,
+                                    textAlign: TextAlign.center,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Noto San Thai',
-                                          color: widget.step == '1'
-                                              ? Color(0xFF4AC225)
+                                          color: widget.step == '2'
+                                              ? Color(0xFFDA100B)
                                               : FlutterFlowTheme.of(context)
                                                   .secondaryText,
-                                          fontSize: 12.0,
+                                          fontSize: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 10.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 12.0;
+                                            } else {
+                                              return 12.0;
+                                            }
+                                          }(),
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: 100.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
-                                  child: Align(
-                                    alignment: AlignmentDirectional(-1.0, 0.0),
-                                    child: Text(
-                                      valueOrDefault<String>(
-                                        widget.progressStatusList?.lastOrNull,
-                                        'status4',
-                                      ),
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: widget.step == '2'
-                                                ? Color(0xFFDA100B)
-                                                : FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            fontSize: 12.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
                                   ),
                                 ),
                               ),

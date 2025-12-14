@@ -3059,7 +3059,7 @@ class GetLeadAgentByTypeNewCall {
 
   List<LeadAgentDataModelStruct>? dataJson(dynamic response) => (getJsonField(
         response,
-        r'''$.results.data.items[:]''',
+        r'''$.results.data.items''',
         true,
       ) as List?)
           ?.withoutNulls

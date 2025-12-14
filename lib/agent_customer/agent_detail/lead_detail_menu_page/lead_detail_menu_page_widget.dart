@@ -144,7 +144,7 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
                               highlightColor: Colors.transparent,
                               onTap: () async {
                                 context.pushNamed(
-                                  MyLeadDashboardPageWidget.routeName,
+                                  MyLeadDashboardNewPageWidget.routeName,
                                   extra: <String, dynamic>{
                                     kTransitionInfoKey: TransitionInfo(
                                       hasTransition: true,

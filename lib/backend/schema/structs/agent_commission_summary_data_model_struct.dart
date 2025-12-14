@@ -15,6 +15,8 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
     String? totalComNextPayAmt,
     String? totalComReceivedAmt,
     String? totalComDueAmt,
+    String? totalComPaymentNotDueAmt,
+    String? totalComWaitingAmt,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _totalContract = totalContract,
         _totalComPayAmt = totalComPayAmt,
@@ -23,6 +25,8 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         _totalComNextPayAmt = totalComNextPayAmt,
         _totalComReceivedAmt = totalComReceivedAmt,
         _totalComDueAmt = totalComDueAmt,
+        _totalComPaymentNotDueAmt = totalComPaymentNotDueAmt,
+        _totalComWaitingAmt = totalComWaitingAmt,
         super(firestoreUtilData);
 
   // "total_contract" field.
@@ -75,6 +79,20 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
 
   bool hasTotalComDueAmt() => _totalComDueAmt != null;
 
+  // "total_com_payment_not_due_amt" field.
+  String? _totalComPaymentNotDueAmt;
+  String get totalComPaymentNotDueAmt => _totalComPaymentNotDueAmt ?? '';
+  set totalComPaymentNotDueAmt(String? val) => _totalComPaymentNotDueAmt = val;
+
+  bool hasTotalComPaymentNotDueAmt() => _totalComPaymentNotDueAmt != null;
+
+  // "total_com_waiting_amt" field.
+  String? _totalComWaitingAmt;
+  String get totalComWaitingAmt => _totalComWaitingAmt ?? '';
+  set totalComWaitingAmt(String? val) => _totalComWaitingAmt = val;
+
+  bool hasTotalComWaitingAmt() => _totalComWaitingAmt != null;
+
   static AgentCommissionSummaryDataModelStruct fromMap(
           Map<String, dynamic> data) =>
       AgentCommissionSummaryDataModelStruct(
@@ -86,6 +104,9 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         totalComNextPayAmt: data['total_com_next_pay_amt'] as String?,
         totalComReceivedAmt: data['total_com_received_amt'] as String?,
         totalComDueAmt: data['total_com_due_amt'] as String?,
+        totalComPaymentNotDueAmt:
+            data['total_com_payment_not_due_amt'] as String?,
+        totalComWaitingAmt: data['total_com_waiting_amt'] as String?,
       );
 
   static AgentCommissionSummaryDataModelStruct? maybeFromMap(dynamic data) =>
@@ -102,6 +123,8 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         'total_com_next_pay_amt': _totalComNextPayAmt,
         'total_com_received_amt': _totalComReceivedAmt,
         'total_com_due_amt': _totalComDueAmt,
+        'total_com_payment_not_due_amt': _totalComPaymentNotDueAmt,
+        'total_com_waiting_amt': _totalComWaitingAmt,
       }.withoutNulls;
 
   @override
@@ -132,6 +155,14 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         ),
         'total_com_due_amt': serializeParam(
           _totalComDueAmt,
+          ParamType.String,
+        ),
+        'total_com_payment_not_due_amt': serializeParam(
+          _totalComPaymentNotDueAmt,
+          ParamType.String,
+        ),
+        'total_com_waiting_amt': serializeParam(
+          _totalComWaitingAmt,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -174,6 +205,16 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        totalComPaymentNotDueAmt: deserializeParam(
+          data['total_com_payment_not_due_amt'],
+          ParamType.String,
+          false,
+        ),
+        totalComWaitingAmt: deserializeParam(
+          data['total_com_waiting_amt'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -188,7 +229,9 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         totalComWaitingApproveAmt == other.totalComWaitingApproveAmt &&
         totalComNextPayAmt == other.totalComNextPayAmt &&
         totalComReceivedAmt == other.totalComReceivedAmt &&
-        totalComDueAmt == other.totalComDueAmt;
+        totalComDueAmt == other.totalComDueAmt &&
+        totalComPaymentNotDueAmt == other.totalComPaymentNotDueAmt &&
+        totalComWaitingAmt == other.totalComWaitingAmt;
   }
 
   @override
@@ -199,7 +242,9 @@ class AgentCommissionSummaryDataModelStruct extends FFFirebaseStruct {
         totalComWaitingApproveAmt,
         totalComNextPayAmt,
         totalComReceivedAmt,
-        totalComDueAmt
+        totalComDueAmt,
+        totalComPaymentNotDueAmt,
+        totalComWaitingAmt
       ]);
 }
 
@@ -212,6 +257,8 @@ AgentCommissionSummaryDataModelStruct
   String? totalComNextPayAmt,
   String? totalComReceivedAmt,
   String? totalComDueAmt,
+  String? totalComPaymentNotDueAmt,
+  String? totalComWaitingAmt,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -225,6 +272,8 @@ AgentCommissionSummaryDataModelStruct
           totalComNextPayAmt: totalComNextPayAmt,
           totalComReceivedAmt: totalComReceivedAmt,
           totalComDueAmt: totalComDueAmt,
+          totalComPaymentNotDueAmt: totalComPaymentNotDueAmt,
+          totalComWaitingAmt: totalComWaitingAmt,
           firestoreUtilData: FirestoreUtilData(
             clearUnsetFields: clearUnsetFields,
             create: create,
