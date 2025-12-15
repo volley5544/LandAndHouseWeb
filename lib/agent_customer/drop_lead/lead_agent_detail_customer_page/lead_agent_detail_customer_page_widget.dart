@@ -1570,7 +1570,8 @@ class _LeadAgentDetailCustomerPageWidgetState
                                           (_model.customerConsentFlag == 'N') ||
                                           (_model.customerConsentFlag ==
                                               'Y')) &&
-                                      (FFAppState().platform == 'mobile'))
+                                      (FFAppState().platform == 'mobile') &&
+                                      _model.appConfig!.isUseOtp)
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -1674,10 +1675,55 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                             .customerConsentFlag ==
                                                         'P') ||
                                                     (_model.customerConsentFlag ==
-                                                        'N'))
+                                                        'N') ||
+                                                    _model.appConfig!.isUseOtp)
                                                 ? null
                                                 : () async {
                                                     var _shouldSetState = false;
+                                                    if (!(_model.firstNameTextController
+                                                                .text !=
+                                                            '')) {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (dialogContext) {
+                                                          return Dialog(
+                                                            elevation: 0,
+                                                            insetPadding:
+                                                                EdgeInsets.zero,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            alignment: AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                FocusScope.of(
+                                                                        dialogContext)
+                                                                    .unfocus();
+                                                                FocusManager
+                                                                    .instance
+                                                                    .primaryFocus
+                                                                    ?.unfocus();
+                                                              },
+                                                              child:
+                                                                  ErrorMessageComponentWidget(
+                                                                textMessage:
+                                                                    'กรุณาระบุชื่อ',
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      );
+
+                                                      if (_shouldSetState)
+                                                        safeSetState(() {});
+                                                      return;
+                                                    }
                                                     if (!(_model.lastNameTextController
                                                                 .text !=
                                                             '')) {
@@ -2386,10 +2432,12 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                     if (_shouldSetState)
                                                       safeSetState(() {});
                                                   },
-                                            text: (_model.customerConsentFlag !=
+                                            text: (_model
+                                                            .customerConsentFlag !=
                                                         'N') &&
                                                     (_model.customerConsentFlag !=
-                                                        'Y')
+                                                        'Y') &&
+                                                    _model.appConfig!.isUseOtp
                                                 ? 'ส่งข้อความยินยอมการเก็บข้อมูลส่วนตัว'
                                                 : 'ถัดไป',
                                             options: FFButtonOptions(
@@ -2400,10 +2448,12 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                       16.0, 0.0, 16.0, 0.0),
                                               iconPadding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color: (_model.customerConsentFlag !=
+                                              color: (_model
+                                                              .customerConsentFlag !=
                                                           'N') &&
                                                       (_model.customerConsentFlag !=
-                                                          'Y')
+                                                          'Y') &&
+                                                      _model.appConfig!.isUseOtp
                                                   ? Color(0xFFFCEFE4)
                                                   : FlutterFlowTheme.of(context)
                                                       .primary,
@@ -2416,7 +2466,9 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                     .customerConsentFlag !=
                                                                 'N') &&
                                                             (_model.customerConsentFlag !=
-                                                                'Y')
+                                                                'Y') &&
+                                                            _model.appConfig!
+                                                                .isUseOtp
                                                         ? FlutterFlowTheme.of(
                                                                 context)
                                                             .primary
