@@ -7,6 +7,7 @@ import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
 import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -3296,7 +3297,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 'Noto San Thai',
                                                             fontSize: 14.0,
                                                             letterSpacing: 0.0,
-                                                            lineHeight: 3.0,
+                                                            lineHeight: 1.0,
                                                           ),
                                                       maxLines: null,
                                                       validator: _model
@@ -3731,7 +3732,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     letterSpacing:
                                                                         0.0,
                                                                     lineHeight:
-                                                                        3.0,
+                                                                        1.0,
                                                                   ),
                                                               maxLines: null,
                                                               keyboardType:
@@ -3766,6 +3767,183 @@ class _LeadAgentDetailCarPageWidgetState
                                                     ),
                                                   ],
                                                 ),
+                                                if (FFAppState().platform ==
+                                                    'mobile')
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0,
+                                                                16.0, 0.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Text(
+                                                          'วิธีการรับเงิน ',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                        Text(
+                                                          '*',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                if (FFAppState().platform ==
+                                                    'mobile')
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(16.0,
+                                                                16.0, 0.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Expanded(
+                                                          child:
+                                                              FlutterFlowChoiceChips(
+                                                            options: [
+                                                              ChipData(
+                                                                  'รับทันที'),
+                                                              ChipData(
+                                                                  'รับแบบแบ่งจ่าย')
+                                                            ],
+                                                            onChanged:
+                                                                (val) async {
+                                                              safeSetState(() =>
+                                                                  _model.choiceChipsValue =
+                                                                      val?.firstOrNull);
+                                                              if (_model
+                                                                      .choiceChipsValue ==
+                                                                  'รับทันที') {
+                                                                FFAppState()
+                                                                    .updateAgentProfileDataTypeStruct(
+                                                                  (e) => e
+                                                                    ..paymentMethod =
+                                                                        'one_time'
+                                                                    ..actualPercent =
+                                                                        '${FFAppState().agentProfileDataType.percentOnetime}'
+                                                                    ..defaultPercent =
+                                                                        '${FFAppState().agentProfileDataType.percentOnetime}',
+                                                                );
+                                                                safeSetState(
+                                                                    () {});
+                                                              } else {
+                                                                FFAppState()
+                                                                    .updateAgentProfileDataTypeStruct(
+                                                                  (e) => e
+                                                                    ..paymentMethod =
+                                                                        'installment'
+                                                                    ..actualPercent =
+                                                                        '${FFAppState().agentProfileDataType.percentInstallment}'
+                                                                    ..defaultPercent =
+                                                                        '${FFAppState().agentProfileDataType.percentInstallment}',
+                                                                );
+                                                                safeSetState(
+                                                                    () {});
+                                                              }
+                                                            },
+                                                            selectedChipStyle:
+                                                                ChipStyle(
+                                                              backgroundColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                              textStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .info,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              iconColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .info,
+                                                              iconSize: 16.0,
+                                                              elevation: 0.0,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            unselectedChipStyle:
+                                                                ChipStyle(
+                                                              backgroundColor:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                              textStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              iconColor: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              iconSize: 16.0,
+                                                              elevation: 0.0,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            chipSpacing: 8.0,
+                                                            rowSpacing: 8.0,
+                                                            multiselect: false,
+                                                            initialized: _model
+                                                                    .choiceChipsValue !=
+                                                                null,
+                                                            alignment:
+                                                                WrapAlignment
+                                                                    .spaceEvenly,
+                                                            controller: _model
+                                                                    .choiceChipsValueController ??=
+                                                                FormFieldController<
+                                                                    List<
+                                                                        String>>(
+                                                              [
+                                                                'รับแบบแบ่งจ่าย'
+                                                              ],
+                                                            ),
+                                                            wrapped: true,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                               ],
                                             ).animateOnPageLoad(animationsMap[
                                                 'columnOnPageLoadAnimation9']!),
@@ -3781,7 +3959,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                   .loanAmountTextController
                                                   .text)!)) >
                                           0) &&
-                                      (FFAppState().platform == 'mobile'))
+                                      (FFAppState().platform == 'mobile') &&
+                                      (_model.choiceChipsValue != null &&
+                                          _model.choiceChipsValue != ''))
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),

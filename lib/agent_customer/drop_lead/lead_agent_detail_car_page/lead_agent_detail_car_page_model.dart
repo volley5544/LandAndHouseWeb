@@ -156,6 +156,12 @@ class LeadAgentDetailCarPageModel
   FocusNode? loanAmountFocusNode;
   TextEditingController? loanAmountTextController;
   String? Function(BuildContext, String?)? loanAmountTextControllerValidator;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
   DateTime? datePicked;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   FFUploadedFile? bluebookFileOutput;

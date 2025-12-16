@@ -1675,8 +1675,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                             .customerConsentFlag ==
                                                         'P') ||
                                                     (_model.customerConsentFlag ==
-                                                        'N') ||
-                                                    _model.appConfig!.isUseOtp)
+                                                        'N'))
                                                 ? null
                                                 : () async {
                                                     var _shouldSetState = false;

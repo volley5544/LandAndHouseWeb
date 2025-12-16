@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'check_rate_l_h_form_component_widget.dart'
     show CheckRateLHFormComponentWidget;
 import 'package:flutter/material.dart';
@@ -49,6 +50,12 @@ class CheckRateLHFormComponentModel
   FocusNode? textFieldFocusNode;
   TextEditingController? textController6;
   String? Function(BuildContext, String?)? textController6Validator;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
   DateTime? datePicked;
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Button widget.
   ApiCallResponse? aPIcheckRateOutput;

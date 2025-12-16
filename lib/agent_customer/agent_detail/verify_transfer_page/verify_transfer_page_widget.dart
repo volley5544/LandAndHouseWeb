@@ -274,15 +274,12 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                         agentCode: FFAppState()
                                             .agentProfileDataType
                                             .agentCode,
-                                        paymentMethod: _model.paymentMethod,
                                         deductionPercent: FFAppState()
                                             .agentProfileDataType
                                             .deductionPercent,
                                         paymentNumber: _model.paymentChannel ==
                                                 'bank_account'
-                                            ? FFAppState()
-                                                .agentProfileDataType
-                                                .accountNumber
+                                            ? '${FFAppState().agentProfileDataType.agentBankNo}'
                                             : FFAppState()
                                                 .agentProfileDataType
                                                 .promptpayNumber,
@@ -303,6 +300,9 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                             : FFAppState()
                                                 .apiUrlDocData
                                                 .agentWebApiTokenUat,
+                                        paymentMethod: FFAppState()
+                                            .agentProfileDataType
+                                            .paymentMethod,
                                       );
 
                                       _shouldSetState = true;

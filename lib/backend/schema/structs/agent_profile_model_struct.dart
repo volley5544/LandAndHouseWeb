@@ -114,6 +114,8 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
     String? comEstimateVatAmt,
     String? actualPercent,
     String? defaultPercent,
+    String? percentOnetime,
+    String? percentInstallment,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -221,6 +223,8 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         _comEstimateVatAmt = comEstimateVatAmt,
         _actualPercent = actualPercent,
         _defaultPercent = defaultPercent,
+        _percentOnetime = percentOnetime,
+        _percentInstallment = percentInstallment,
         super(firestoreUtilData);
 
   // "id" field.
@@ -967,6 +971,20 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
 
   bool hasDefaultPercent() => _defaultPercent != null;
 
+  // "percent_onetime" field.
+  String? _percentOnetime;
+  String get percentOnetime => _percentOnetime ?? '';
+  set percentOnetime(String? val) => _percentOnetime = val;
+
+  bool hasPercentOnetime() => _percentOnetime != null;
+
+  // "percent_installment" field.
+  String? _percentInstallment;
+  String get percentInstallment => _percentInstallment ?? '';
+  set percentInstallment(String? val) => _percentInstallment = val;
+
+  bool hasPercentInstallment() => _percentInstallment != null;
+
   static AgentProfileModelStruct fromMap(Map<String, dynamic> data) =>
       AgentProfileModelStruct(
         id: castToType<int>(data['id']),
@@ -1075,6 +1093,8 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
         actualPercent: data['actual_percent'] as String?,
         defaultPercent: data['default_percent'] as String?,
+        percentOnetime: data['percent_onetime'] as String?,
+        percentInstallment: data['percent_installment'] as String?,
       );
 
   static AgentProfileModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -1188,6 +1208,8 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         'com_estimate_vat_amt': _comEstimateVatAmt,
         'actual_percent': _actualPercent,
         'default_percent': _defaultPercent,
+        'percent_onetime': _percentOnetime,
+        'percent_installment': _percentInstallment,
       }.withoutNulls;
 
   @override
@@ -1614,6 +1636,14 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         ),
         'default_percent': serializeParam(
           _defaultPercent,
+          ParamType.String,
+        ),
+        'percent_onetime': serializeParam(
+          _percentOnetime,
+          ParamType.String,
+        ),
+        'percent_installment': serializeParam(
+          _percentInstallment,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -2151,6 +2181,16 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        percentOnetime: deserializeParam(
+          data['percent_onetime'],
+          ParamType.String,
+          false,
+        ),
+        percentInstallment: deserializeParam(
+          data['percent_installment'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -2264,7 +2304,9 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         actualComPercent == other.actualComPercent &&
         comEstimateVatAmt == other.comEstimateVatAmt &&
         actualPercent == other.actualPercent &&
-        defaultPercent == other.defaultPercent;
+        defaultPercent == other.defaultPercent &&
+        percentOnetime == other.percentOnetime &&
+        percentInstallment == other.percentInstallment;
   }
 
   @override
@@ -2374,7 +2416,9 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         actualComPercent,
         comEstimateVatAmt,
         actualPercent,
-        defaultPercent
+        defaultPercent,
+        percentOnetime,
+        percentInstallment
       ]);
 }
 
@@ -2485,6 +2529,8 @@ AgentProfileModelStruct createAgentProfileModelStruct({
   String? comEstimateVatAmt,
   String? actualPercent,
   String? defaultPercent,
+  String? percentOnetime,
+  String? percentInstallment,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -2597,6 +2643,8 @@ AgentProfileModelStruct createAgentProfileModelStruct({
       comEstimateVatAmt: comEstimateVatAmt,
       actualPercent: actualPercent,
       defaultPercent: defaultPercent,
+      percentOnetime: percentOnetime,
+      percentInstallment: percentInstallment,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
