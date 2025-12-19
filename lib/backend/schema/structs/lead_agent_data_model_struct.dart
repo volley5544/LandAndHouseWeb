@@ -76,6 +76,11 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
     String? requestNo,
     String? tabCategoryName,
     List<LeadAgentStateDataModelStruct>? state,
+    String? isAgent,
+    String? isPaymentMethod,
+    String? isPaymentMethodDate,
+    String? percentInstallment,
+    String? percentOnetime,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -144,6 +149,11 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         _requestNo = requestNo,
         _tabCategoryName = tabCategoryName,
         _state = state,
+        _isAgent = isAgent,
+        _isPaymentMethod = isPaymentMethod,
+        _isPaymentMethodDate = isPaymentMethodDate,
+        _percentInstallment = percentInstallment,
+        _percentOnetime = percentOnetime,
         super(firestoreUtilData);
 
   // "id" field.
@@ -621,6 +631,41 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasState() => _state != null;
 
+  // "is_agent" field.
+  String? _isAgent;
+  String get isAgent => _isAgent ?? '';
+  set isAgent(String? val) => _isAgent = val;
+
+  bool hasIsAgent() => _isAgent != null;
+
+  // "is_payment_method" field.
+  String? _isPaymentMethod;
+  String get isPaymentMethod => _isPaymentMethod ?? '';
+  set isPaymentMethod(String? val) => _isPaymentMethod = val;
+
+  bool hasIsPaymentMethod() => _isPaymentMethod != null;
+
+  // "is_payment_method_date" field.
+  String? _isPaymentMethodDate;
+  String get isPaymentMethodDate => _isPaymentMethodDate ?? '';
+  set isPaymentMethodDate(String? val) => _isPaymentMethodDate = val;
+
+  bool hasIsPaymentMethodDate() => _isPaymentMethodDate != null;
+
+  // "percent_installment" field.
+  String? _percentInstallment;
+  String get percentInstallment => _percentInstallment ?? '';
+  set percentInstallment(String? val) => _percentInstallment = val;
+
+  bool hasPercentInstallment() => _percentInstallment != null;
+
+  // "percent_onetime" field.
+  String? _percentOnetime;
+  String get percentOnetime => _percentOnetime ?? '';
+  set percentOnetime(String? val) => _percentOnetime = val;
+
+  bool hasPercentOnetime() => _percentOnetime != null;
+
   static LeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       LeadAgentDataModelStruct(
         id: castToType<int>(data['id']),
@@ -693,6 +738,11 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
           data['state'],
           LeadAgentStateDataModelStruct.fromMap,
         ),
+        isAgent: data['is_agent'] as String?,
+        isPaymentMethod: data['is_payment_method'] as String?,
+        isPaymentMethodDate: data['is_payment_method_date'] as String?,
+        percentInstallment: data['percent_installment'] as String?,
+        percentOnetime: data['percent_onetime'] as String?,
       );
 
   static LeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -767,6 +817,11 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         'request_no': _requestNo,
         'tab_category_name': _tabCategoryName,
         'state': _state?.map((e) => e.toMap()).toList(),
+        'is_agent': _isAgent,
+        'is_payment_method': _isPaymentMethod,
+        'is_payment_method_date': _isPaymentMethodDate,
+        'percent_installment': _percentInstallment,
+        'percent_onetime': _percentOnetime,
       }.withoutNulls;
 
   @override
@@ -1039,6 +1094,26 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
           _state,
           ParamType.DataStruct,
           isList: true,
+        ),
+        'is_agent': serializeParam(
+          _isAgent,
+          ParamType.String,
+        ),
+        'is_payment_method': serializeParam(
+          _isPaymentMethod,
+          ParamType.String,
+        ),
+        'is_payment_method_date': serializeParam(
+          _isPaymentMethodDate,
+          ParamType.String,
+        ),
+        'percent_installment': serializeParam(
+          _percentInstallment,
+          ParamType.String,
+        ),
+        'percent_onetime': serializeParam(
+          _percentOnetime,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -1381,6 +1456,31 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
           true,
           structBuilder: LeadAgentStateDataModelStruct.fromSerializableMap,
         ),
+        isAgent: deserializeParam(
+          data['is_agent'],
+          ParamType.String,
+          false,
+        ),
+        isPaymentMethod: deserializeParam(
+          data['is_payment_method'],
+          ParamType.String,
+          false,
+        ),
+        isPaymentMethodDate: deserializeParam(
+          data['is_payment_method_date'],
+          ParamType.String,
+          false,
+        ),
+        percentInstallment: deserializeParam(
+          data['percent_installment'],
+          ParamType.String,
+          false,
+        ),
+        percentOnetime: deserializeParam(
+          data['percent_onetime'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1456,7 +1556,12 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateVatAmt == other.comEstimateVatAmt &&
         requestNo == other.requestNo &&
         tabCategoryName == other.tabCategoryName &&
-        listEquality.equals(state, other.state);
+        listEquality.equals(state, other.state) &&
+        isAgent == other.isAgent &&
+        isPaymentMethod == other.isPaymentMethod &&
+        isPaymentMethodDate == other.isPaymentMethodDate &&
+        percentInstallment == other.percentInstallment &&
+        percentOnetime == other.percentOnetime;
   }
 
   @override
@@ -1527,7 +1632,12 @@ class LeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateVatAmt,
         requestNo,
         tabCategoryName,
-        state
+        state,
+        isAgent,
+        isPaymentMethod,
+        isPaymentMethodDate,
+        percentInstallment,
+        percentOnetime
       ]);
 }
 
@@ -1598,6 +1708,11 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
   String? comEstimateVatAmt,
   String? requestNo,
   String? tabCategoryName,
+  String? isAgent,
+  String? isPaymentMethod,
+  String? isPaymentMethodDate,
+  String? percentInstallment,
+  String? percentOnetime,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1670,6 +1785,11 @@ LeadAgentDataModelStruct createLeadAgentDataModelStruct({
       comEstimateVatAmt: comEstimateVatAmt,
       requestNo: requestNo,
       tabCategoryName: tabCategoryName,
+      isAgent: isAgent,
+      isPaymentMethod: isPaymentMethod,
+      isPaymentMethodDate: isPaymentMethodDate,
+      percentInstallment: percentInstallment,
+      percentOnetime: percentOnetime,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

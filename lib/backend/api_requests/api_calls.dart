@@ -3432,6 +3432,7 @@ class MgmLeadsSaveCall {
     String? actualComPercent = '',
     String? comEstimateVatAmt = '',
     String? smsCode = '',
+    String? isAgent = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -3498,6 +3499,7 @@ class MgmLeadsSaveCall {
         'actual_com_percent': actualComPercent,
         'com_estimate_vat_amt': comEstimateVatAmt,
         'sms_code': smsCode,
+        'is_agent': isAgent,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,

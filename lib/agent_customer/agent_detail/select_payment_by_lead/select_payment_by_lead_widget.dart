@@ -3,6 +3,7 @@ import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +22,8 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
     required this.defaultComPercent,
     required this.agentWht,
     required this.actualComPercent,
+    required this.percentOnetime,
+    required this.percentInstallment,
   }) : this.paymentMethodDefault =
             paymentMethodDefault ?? 'paymentMethodDefault';
 
@@ -32,6 +35,8 @@ class SelectPaymentByLeadWidget extends StatefulWidget {
   final String? defaultComPercent;
   final String? agentWht;
   final String? actualComPercent;
+  final String? percentOnetime;
+  final String? percentInstallment;
 
   @override
   State<SelectPaymentByLeadWidget> createState() =>
@@ -55,6 +60,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.paymentMethodState = widget.paymentMethodDefault;
+      _model.defaultPaymentState = widget.paymentMethodDefault;
       safeSetState(() {});
     });
 
@@ -158,7 +164,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
+                                    16.0, 0.0, 0.0, 12.0),
                                 child: Builder(
                                   builder: (context) {
                                     if (_model.paymentMethodState ==
@@ -191,7 +197,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'รับทันที',
+                                        'รับทันที ค่าตอบแทน ${widget.percentOnetime} %',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -204,35 +210,83 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
-                                      Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                'ค่าตอบแทน 1% ของยอดจัดสินเชื่อ ไม่เกิน 50,000 บาท',
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 0.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(),
+                                                    child: Text(
+                                                      'ค่าตอบแทนที่คาดว่าจะได้',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${'${valueOrDefault<String>(
+                                                  functions.returnNumberWithComma2Decimal(FFAppState()
+                                                              .maxCommissionAmountOnetime <
+                                                          0.0
+                                                      ? (((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) *
+                                                              (double.parse((widget
+                                                                  .percentOnetime!))) /
+                                                              100)
+                                                          .toString())
+                                                      : (double.parse((((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) * (double.parse((widget.percentOnetime!))) / 100)
+                                                                  .toString())) <
+                                                              FFAppState()
+                                                                  .maxCommissionAmountOnetime
+                                                          ? (((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) *
+                                                                  (double.parse((widget.percentOnetime!))) /
+                                                                  100)
+                                                              .toString())
+                                                          : '${FFAppState().maxCommissionAmountOnetime.toString()}')),
+                                                  '0',
+                                                )} บาท'}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
                                                         .override(
                                                           fontFamily:
                                                               'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
+                                                          color: Colors.black,
                                                           fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ],
+                                    ].divide(SizedBox(height: 4.0)),
                                   ),
                                 ),
                               ),
@@ -270,7 +324,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 0.0, 0.0),
+                                    16.0, 0.0, 0.0, 12.0),
                                 child: Builder(
                                   builder: (context) {
                                     if (_model.paymentMethodState ==
@@ -303,7 +357,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'รับแบบแบ่งจ่าย',
+                                        'รับแบบแบ่งจ่าย ค่าตอบแทน ${widget.percentInstallment} %',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -316,25 +370,83 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                                               fontWeight: FontWeight.w600,
                                             ),
                                       ),
-                                      Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(),
-                                        child: Text(
-                                          'ค่าตอบแทน 3% ของยอดจัดสินเชื่อ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 0.0, 0.0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 8.0, 0.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(),
+                                                    child: Text(
+                                                      'ค่าตอบแทนที่คาดว่าจะได้ ',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: Colors.black,
+                                                            fontSize: 14.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
+                                              Text(
+                                                '${'${valueOrDefault<String>(
+                                                  functions.returnNumberWithComma2Decimal(FFAppState()
+                                                              .maxCommissionAmountInstallment <
+                                                          0.0
+                                                      ? (((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) *
+                                                              (double.parse((widget
+                                                                  .percentInstallment!))) /
+                                                              100)
+                                                          .toString())
+                                                      : (double.parse((((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) * (double.parse((widget.percentInstallment!))) / 100)
+                                                                  .toString())) <
+                                                              FFAppState()
+                                                                  .maxCommissionAmountInstallment
+                                                          ? (((double.parse((functions.removeCommaFromNumText(widget.loanAmount)!))) *
+                                                                  (double.parse((widget.percentInstallment!))) /
+                                                                  100)
+                                                              .toString())
+                                                          : '${FFAppState().maxCommissionAmountInstallment.toString()}')),
+                                                  '0',
+                                                )} บาท'}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: Colors.black,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ],
+                                    ].divide(SizedBox(height: 4.0)),
                                   ),
                                 ),
                               ),
@@ -360,81 +472,138 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 5.0),
                       child: FFButtonWidget(
-                        onPressed: () async {
-                          var _shouldSetState = false;
-                          _model.apiResultyyt =
-                              await AgentAPIGroup.agentLeadSaveByLeadCall.call(
-                            agentCode:
-                                FFAppState().agentProfileDataType.agentCode,
-                            paymentMethod: _model.paymentMethodState,
-                            deductionPercent: widget.reductPercent,
-                            id: widget.id,
-                            loanAmount: widget.loanAmount,
-                            defaultComPercent: widget.defaultComPercent,
-                            agentWht: widget.agentWht,
-                            url: FFDevEnvironmentValues().isProduction
-                                ? FFAppState().apiUrlDocData.agentWebApiUrl
-                                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
-                            actualComPercent: widget.actualComPercent,
-                            tokenHeader: FFDevEnvironmentValues().isProduction
-                                ? FFAppState().apiUrlDocData.agentWebApiToken
-                                : FFAppState()
-                                    .apiUrlDocData
-                                    .agentWebApiTokenUat,
-                          );
-
-                          _shouldSetState = true;
-                          if ((_model.apiResultyyt?.statusCode ?? 200) != 200) {
-                            await showDialog(
-                              context: context,
-                              builder: (dialogContext) {
-                                return Dialog(
-                                  elevation: 0,
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.transparent,
-                                  alignment: AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  child: ErrorMessageComponentWidget(
-                                    textMessage:
-                                        'พบข้อผิดพลาด(${(_model.apiResultyyt?.statusCode ?? 200).toString()})',
-                                  ),
+                        onPressed: (_model.paymentMethodState ==
+                                _model.defaultPaymentState)
+                            ? null
+                            : () async {
+                                var _shouldSetState = false;
+                                _model.apiResultyyt = await AgentAPIGroup
+                                    .agentLeadSaveByLeadCall
+                                    .call(
+                                  agentCode: FFAppState()
+                                      .agentProfileDataType
+                                      .agentCode,
+                                  paymentMethod: _model.paymentMethodState,
+                                  deductionPercent: widget.reductPercent,
+                                  id: widget.id,
+                                  loanAmount: widget.loanAmount,
+                                  defaultComPercent: widget.defaultComPercent,
+                                  agentWht: widget.agentWht,
+                                  url: FFDevEnvironmentValues().isProduction
+                                      ? FFAppState()
+                                          .apiUrlDocData
+                                          .agentWebApiUrl
+                                      : FFAppState()
+                                          .apiUrlDocData
+                                          .agentWebApiUrlUat,
+                                  actualComPercent: widget.actualComPercent,
+                                  tokenHeader:
+                                      FFDevEnvironmentValues().isProduction
+                                          ? FFAppState()
+                                              .apiUrlDocData
+                                              .agentWebApiToken
+                                          : FFAppState()
+                                              .apiUrlDocData
+                                              .agentWebApiTokenUat,
                                 );
-                              },
-                            );
 
-                            if (_shouldSetState) safeSetState(() {});
-                            return;
-                          }
-                          if ('${getJsonField(
-                                (_model.apiResultyyt?.jsonBody ?? ''),
-                                r'''$.code''',
-                              ).toString()}' !=
-                              '200') {
-                            await showDialog(
-                              context: context,
-                              builder: (dialogContext) {
-                                return Dialog(
-                                  elevation: 0,
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Colors.transparent,
-                                  alignment: AlignmentDirectional(0.0, 0.0)
-                                      .resolve(Directionality.of(context)),
-                                  child: ErrorMessageComponentWidget(
-                                    textMessage:
-                                        '${AgentAPIGroup.agentLeadSaveByLeadCall.code(
+                                _shouldSetState = true;
+                                if ('${(_model.apiResultyyt?.statusCode ?? 200).toString()}' !=
+                                    '200') {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return Dialog(
+                                        elevation: 0,
+                                        insetPadding: EdgeInsets.zero,
+                                        backgroundColor: Colors.transparent,
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0)
+                                                .resolve(
+                                                    Directionality.of(context)),
+                                        child: ErrorMessageComponentWidget(
+                                          textMessage:
+                                              'พบข้อผิดพลาด(${(_model.apiResultyyt?.statusCode ?? 200).toString()})',
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if ('${getJsonField(
                                       (_model.apiResultyyt?.jsonBody ?? ''),
-                                    )}',
-                                  ),
-                                );
-                              },
-                            );
+                                      r'''$.code''',
+                                    ).toString()}' !=
+                                    '200') {
+                                  if ('${getJsonField(
+                                        (_model.apiResultyyt?.jsonBody ?? ''),
+                                        r'''$.code''',
+                                      ).toString()}' ==
+                                      '409') {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: ErrorMessageComponentWidget(
+                                            textMessage:
+                                                '${AgentAPIGroup.agentLeadSaveByLeadCall.message(
+                                              (_model.apiResultyyt?.jsonBody ??
+                                                  ''),
+                                            )}',
+                                          ),
+                                        );
+                                      },
+                                    );
 
-                            if (_shouldSetState) safeSetState(() {});
-                            return;
-                          }
-                          Navigator.pop(context, _model.paymentMethodState);
-                          if (_shouldSetState) safeSetState(() {});
-                        },
+                                    Navigator.pop(
+                                        context,
+                                        '${getJsonField(
+                                          (_model.apiResultyyt?.jsonBody ?? ''),
+                                          r'''$.code''',
+                                        ).toString()}');
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: ErrorMessageComponentWidget(
+                                            textMessage: AgentAPIGroup
+                                                .agentLeadSaveByLeadCall
+                                                .message(
+                                              (_model.apiResultyyt?.jsonBody ??
+                                                  ''),
+                                            )!,
+                                          ),
+                                        );
+                                      },
+                                    );
+
+                                    if (_shouldSetState) safeSetState(() {});
+                                    return;
+                                  }
+                                }
+                                Navigator.pop(
+                                    context, _model.paymentMethodState);
+                                if (_shouldSetState) safeSetState(() {});
+                              },
                         text: 'บันทึกข้อมูล',
                         options: FFButtonOptions(
                           width: double.infinity,
@@ -464,6 +633,7 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
                             topLeft: Radius.circular(14.0),
                             topRight: Radius.circular(14.0),
                           ),
+                          disabledColor: Color(0x7FDB771A),
                         ),
                       ),
                     ),

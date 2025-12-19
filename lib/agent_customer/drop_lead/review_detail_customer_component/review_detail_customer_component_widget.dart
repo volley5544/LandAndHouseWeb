@@ -546,7 +546,8 @@ class _ReviewDetailCustomerComponentWidgetState
               ),
             if ((widget.fromPage != 'LandAndHousePage') &&
                 (widget.commission != null && widget.commission != '') &&
-                (FFAppState().platform == 'mobile'))
+                (FFAppState().platform == 'mobile') &&
+                false)
               Container(
                 decoration: BoxDecoration(),
                 child: Row(

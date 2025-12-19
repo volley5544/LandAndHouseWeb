@@ -7,7 +7,6 @@ import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
 import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_choice_chips.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -3813,29 +3812,36 @@ class _LeadAgentDetailCarPageWidgetState
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(16.0,
-                                                                16.0, 0.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Expanded(
-                                                          child:
-                                                              FlutterFlowChoiceChips(
-                                                            options: [
-                                                              ChipData(
-                                                                  'รับทันที'),
-                                                              ChipData(
-                                                                  'รับแบบแบ่งจ่าย')
-                                                            ],
-                                                            onChanged:
-                                                                (val) async {
-                                                              safeSetState(() =>
-                                                                  _model.choiceChipsValue =
-                                                                      val?.firstOrNull);
-                                                              if (_model
-                                                                      .choiceChipsValue ==
-                                                                  'รับทันที') {
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      height: 50.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Expanded(
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                _model.paymentState =
+                                                                    true;
+                                                                safeSetState(
+                                                                    () {});
                                                                 FFAppState()
                                                                     .updateAgentProfileDataTypeStruct(
                                                                   (e) => e
@@ -3848,7 +3854,104 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 );
                                                                 safeSetState(
                                                                     () {});
-                                                              } else {
+                                                              },
+                                                              child: Container(
+                                                                width: 100.0,
+                                                                height: 45.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: _model
+                                                                          .paymentState
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: _model.paymentState
+                                                                        ? FlutterFlowTheme.of(context)
+                                                                            .secondary
+                                                                        : FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                    width: _model
+                                                                            .paymentState
+                                                                        ? 0.0
+                                                                        : 2.0,
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    if (_model
+                                                                        .paymentState)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondary,
+                                                                        size:
+                                                                            24.0,
+                                                                      ),
+                                                                    Text(
+                                                                      'รับทันที',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color: _model.paymentState
+                                                                                ? FlutterFlowTheme.of(context).secondaryBackground
+                                                                                : FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ]
+                                                                      .divide(SizedBox(
+                                                                          width:
+                                                                              8.0))
+                                                                      .addToStart(SizedBox(
+                                                                          width:
+                                                                              8.0))
+                                                                      .addToEnd(SizedBox(
+                                                                          width:
+                                                                              8.0)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                _model.paymentState =
+                                                                    false;
+                                                                safeSetState(
+                                                                    () {});
                                                                 FFAppState()
                                                                     .updateAgentProfileDataTypeStruct(
                                                                   (e) => e
@@ -3861,87 +3964,97 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 );
                                                                 safeSetState(
                                                                     () {});
-                                                              }
-                                                            },
-                                                            selectedChipStyle:
-                                                                ChipStyle(
-                                                              backgroundColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
+                                                              },
+                                                              child: Container(
+                                                                width: 100.0,
+                                                                height: 45.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: !_model.paymentState
+                                                                      ? FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary
+                                                                      : FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: !_model.paymentState
+                                                                        ? FlutterFlowTheme.of(context)
+                                                                            .secondary
+                                                                        : FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                    width: !_model
+                                                                            .paymentState
+                                                                        ? 0.0
+                                                                        : 2.0,
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    if (!_model
+                                                                        .paymentState)
+                                                                      Icon(
+                                                                        Icons
+                                                                            .check_circle,
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .info,
-                                                                        letterSpacing:
-                                                                            0.0,
+                                                                            .secondary,
+                                                                        size:
+                                                                            24.0,
                                                                       ),
-                                                              iconColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .info,
-                                                              iconSize: 16.0,
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
+                                                                    Text(
+                                                                      'รับแบบแบ่งจ่าย',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color: !_model.paymentState
+                                                                                ? FlutterFlowTheme.of(context).secondaryBackground
+                                                                                : FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ]
+                                                                      .divide(SizedBox(
+                                                                          width:
+                                                                              8.0))
+                                                                      .addToStart(SizedBox(
+                                                                          width:
+                                                                              8.0))
+                                                                      .addToEnd(SizedBox(
+                                                                          width:
+                                                                              8.0)),
+                                                                ),
+                                                              ),
                                                             ),
-                                                            unselectedChipStyle:
-                                                                ChipStyle(
-                                                              backgroundColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                              textStyle:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Noto San Thai',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryText,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                      ),
-                                                              iconColor: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText,
-                                                              iconSize: 16.0,
-                                                              elevation: 0.0,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            chipSpacing: 8.0,
-                                                            rowSpacing: 8.0,
-                                                            multiselect: false,
-                                                            initialized: _model
-                                                                    .choiceChipsValue !=
-                                                                null,
-                                                            alignment:
-                                                                WrapAlignment
-                                                                    .spaceEvenly,
-                                                            controller: _model
-                                                                    .choiceChipsValueController ??=
-                                                                FormFieldController<
-                                                                    List<
-                                                                        String>>(
-                                                              [
-                                                                'รับแบบแบ่งจ่าย'
-                                                              ],
-                                                            ),
-                                                            wrapped: true,
                                                           ),
-                                                        ),
-                                                      ],
+                                                        ]
+                                                            .divide(SizedBox(
+                                                                width: 16.0))
+                                                            .addToStart(
+                                                                SizedBox(
+                                                                    width:
+                                                                        24.0))
+                                                            .addToEnd(SizedBox(
+                                                                width: 24.0)),
+                                                      ),
                                                     ),
                                                   ),
                                               ],
@@ -3960,8 +4073,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                   .text)!)) >
                                           0) &&
                                       (FFAppState().platform == 'mobile') &&
-                                      (_model.choiceChipsValue != null &&
-                                          _model.choiceChipsValue != ''))
+                                      (_model.paymentState != null))
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
@@ -4859,8 +4971,9 @@ class _LeadAgentDetailCarPageWidgetState
                                         ],
                                       ),
                                     ),
-                                  if ((_model.stateNumber! >= 7) ||
-                                      _model.canNextButton)
+                                  if (((_model.stateNumber! >= 7) ||
+                                          _model.canNextButton) &&
+                                      (FFAppState().platform == 'mobile'))
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),

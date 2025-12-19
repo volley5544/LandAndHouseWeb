@@ -3176,6 +3176,8 @@ class _MyLeadDashboardPageWidgetState extends State<MyLeadDashboardPageWidget> {
                                                                                               defaultComPercent: leadListItemsItem.defaultComPercent,
                                                                                               agentWht: leadListItemsItem.comEstimateVat,
                                                                                               actualComPercent: leadListItemsItem.actualComPercent,
+                                                                                              percentOnetime: leadListItemsItem.percentOnetime,
+                                                                                              percentInstallment: leadListItemsItem.percentInstallment,
                                                                                             ),
                                                                                           ),
                                                                                         ),

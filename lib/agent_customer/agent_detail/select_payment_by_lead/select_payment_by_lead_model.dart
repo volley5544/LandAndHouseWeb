@@ -9,6 +9,8 @@ class SelectPaymentByLeadModel
 
   String paymentMethodState = 'paymentMethodState';
 
+  String defaultPaymentState = 'defaultPaymentState';
+
   ///  State fields for stateful widgets in this component.
 
   // Stores action output result for [Backend Call - API (AgentLeadSaveByLead)] action in Button widget.

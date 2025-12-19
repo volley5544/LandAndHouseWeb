@@ -1716,15 +1716,18 @@ class _MyLeadDashboardNewPageWidgetState
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
-                                                                            Text(
-                                                                              '${leadListItemsItem.product}' == 'loan' ? 'วงเงินที่ต้องการ' : 'ค่าเบี้ยสุทธิ',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF646464),
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '${leadListItemsItem.product}' == 'loan' ? 'วงเงินที่ต้องการ' : 'ค่าเบี้ยสุทธิ',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
                                                                             ),
                                                                             Text(
                                                                               '${functions.returnNumberWithComma2Decimal('${leadListItemsItem.loanAmount}')} บาท',
@@ -1834,15 +1837,18 @@ class _MyLeadDashboardNewPageWidgetState
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
-                                                                            Text(
-                                                                              'ประเภทสินทรัพย์',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF646464),
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                'ประเภทสินทรัพย์',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
                                                                             ),
                                                                             Text(
                                                                               '${leadListItemsItem.loanTypeName}',
@@ -1890,15 +1896,18 @@ class _MyLeadDashboardNewPageWidgetState
                                                                             mainAxisAlignment:
                                                                                 MainAxisAlignment.spaceBetween,
                                                                             children: [
-                                                                              Text(
-                                                                                'ยี่ห้อ / รุ่น',
-                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                      fontFamily: 'Noto San Thai',
-                                                                                      color: Color(0xFF646464),
-                                                                                      fontSize: 14.0,
-                                                                                      letterSpacing: 0.0,
-                                                                                      fontWeight: FontWeight.normal,
-                                                                                    ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  'ยี่ห้อ / รุ่น',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Color(0xFF646464),
+                                                                                        fontSize: 14.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.normal,
+                                                                                      ),
+                                                                                ),
                                                                               ),
                                                                               Text(
                                                                                 '${leadListItemsItem.brandName} / ${leadListItemsItem.carModel}',
@@ -1945,18 +1954,137 @@ class _MyLeadDashboardNewPageWidgetState
                                                                           mainAxisAlignment:
                                                                               MainAxisAlignment.spaceBetween,
                                                                           children: [
-                                                                            Text(
-                                                                              'วันที่บันทึกข้อมูล',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF646464),
-                                                                                    fontSize: 14.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                'วันที่บันทึกข้อมูล',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
                                                                             ),
                                                                             Text(
                                                                               '${functions.showDateBE('${leadListItemsItem.createdAt}')}',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Colors.black,
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                'วิธีการรับเงิน',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              '${leadListItemsItem.paymentMethod}' == 'one_time' ? 'รับทันที' : 'รับแบบแบ่งจ่าย',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Colors.black,
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                      ),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                'ช่องทางการรับเงิน',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF646464),
+                                                                                      fontSize: 14.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.normal,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              '${leadListItemsItem.paymentChannel}' == 'bank_account' ? 'บัญชีธนาคาร' : 'พร้อมเพย์',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
                                                                                     color: Colors.black,
@@ -2027,7 +2155,7 @@ class _MyLeadDashboardNewPageWidgetState
                                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                               children: [
                                                                                 Text(
-                                                                                  'ค่าตอบแทนที่คาดว่าจะได้',
+                                                                                  'ค่าตอบแทน',
                                                                                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                         fontFamily: 'Noto San Thai',
                                                                                         color: Colors.black,
@@ -2062,15 +2190,18 @@ class _MyLeadDashboardNewPageWidgetState
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                                                 children: [
-                                                                                  Text(
-                                                                                    'จำนวนเงินที่จะได้ทั้งหมด',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          color: Color(0xFF646464),
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.normal,
-                                                                                        ),
+                                                                                  Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                    child: Text(
+                                                                                      'ค่าตอบแทนที่คาดว่าจะได้',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Color(0xFF646464),
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.normal,
+                                                                                          ),
+                                                                                    ),
                                                                                   ),
                                                                                   Column(
                                                                                     mainAxisSize: MainAxisSize.max,
@@ -2093,98 +2224,100 @@ class _MyLeadDashboardNewPageWidgetState
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            ),
+                                                                        if (false)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
                                                                             child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    'WHT (${'${leadListItemsItem.comEstimateVat}%'})',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          color: Color(0xFF646464),
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.normal,
-                                                                                        ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '${functions.returnNumberWithComma2Decimal('${leadListItemsItem.comEstimateVatAmt}')} บาท',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          color: Colors.black,
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                        ),
-                                                                                  ),
-                                                                                ],
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                      child: Text(
+                                                                                        'WHT (${'${leadListItemsItem.comEstimateVat}%'})',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Noto San Thai',
+                                                                                              color: Color(0xFF646464),
+                                                                                              fontSize: 14.0,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.normal,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${functions.returnNumberWithComma2Decimal('${leadListItemsItem.comEstimateVatAmt}')} บาท',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
-                                                                            width:
-                                                                                double.infinity,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              color: FlutterFlowTheme.of(context).secondaryBackground,
-                                                                            ),
+                                                                        if (false)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
                                                                             child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                                                                              child: Row(
-                                                                                mainAxisSize: MainAxisSize.max,
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                children: [
-                                                                                  Text(
-                                                                                    'จำนวนเงินที่คาดว่าจะได้',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          color: Color(0xFF646464),
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.normal,
-                                                                                        ),
-                                                                                  ),
-                                                                                  Text(
-                                                                                    '${functions.returnNumberWithComma2Decimal('${'${leadListItemsItem.comEstimateNetAmt}'}')} บาท',
-                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                          fontFamily: 'Noto San Thai',
-                                                                                          color: Colors.black,
-                                                                                          fontSize: 14.0,
-                                                                                          letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.bold,
-                                                                                        ),
-                                                                                  ),
-                                                                                ],
+                                                                                Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(
+                                                                                color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                              ),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                child: Row(
+                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                  children: [
+                                                                                    Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                      child: Text(
+                                                                                        'จำนวนเงินที่คาดว่าจะได้',
+                                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                              fontFamily: 'Noto San Thai',
+                                                                                              color: Color(0xFF646464),
+                                                                                              fontSize: 14.0,
+                                                                                              letterSpacing: 0.0,
+                                                                                              fontWeight: FontWeight.normal,
+                                                                                            ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    Text(
+                                                                                      '${functions.returnNumberWithComma2Decimal('${'${leadListItemsItem.comEstimateNetAmt}'}')} บาท',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: Colors.black,
+                                                                                            fontSize: 14.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                        ),
                                                                       ],
                                                                     ),
                                                                 ].divide(SizedBox(
@@ -2192,8 +2325,11 @@ class _MyLeadDashboardNewPageWidgetState
                                                                         0.0)),
                                                               ),
                                                               if (('${leadListItemsItem.leadStatus}' ==
-                                                                      'ลูกค้าใหม่') &&
-                                                                  false)
+                                                                      'รายชื่อใหม่') &&
+                                                                  ('${leadListItemsItem.isAgent}' !=
+                                                                      'Y') &&
+                                                                  ('${leadListItemsItem.isPaymentMethod}' ==
+                                                                          ''))
                                                                 Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
@@ -2250,6 +2386,8 @@ class _MyLeadDashboardNewPageWidgetState
                                                                                               defaultComPercent: leadListItemsItem.defaultComPercent,
                                                                                               agentWht: leadListItemsItem.comEstimateVat,
                                                                                               actualComPercent: leadListItemsItem.actualComPercent,
+                                                                                              percentOnetime: leadListItemsItem.percentOnetime,
+                                                                                              percentInstallment: leadListItemsItem.percentInstallment,
                                                                                             ),
                                                                                           ),
                                                                                         ),
@@ -2259,12 +2397,8 @@ class _MyLeadDashboardNewPageWidgetState
 
                                                                                   _shouldSetState = true;
                                                                                   if (_model.paymentMethodSelected != null && _model.paymentMethodSelected != '') {
-                                                                                    _model.showingLeadData = [];
-                                                                                    _model.allLeadList = [];
-                                                                                    _model.categoryData = [];
-                                                                                    safeSetState(() {});
                                                                                     _model.getLeadAgentApiPaymentButtonOutput = await AgentAPIGroup.getLeadAgentByTypeNewCall.call(
-                                                                                      agentCode: FFAppState().agentProfileDataType.agentCode,
+                                                                                      agentCode: '${FFAppState().agentProfileDataType.agentCode}',
                                                                                       url: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiUrl : FFAppState().apiUrlDocData.agentWebApiUrlUat,
                                                                                       tokenHeader: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiToken : FFAppState().apiUrlDocData.agentWebApiTokenUat,
                                                                                     );
@@ -2346,48 +2480,46 @@ class _MyLeadDashboardNewPageWidgetState
                                                                                     safeSetState(() {});
                                                                                     _model.showingLeadData = _model.allLeadList.toList().cast<LeadAgentDataModelStruct>();
                                                                                     safeSetState(() {});
-                                                                                    await showDialog(
-                                                                                      context: context,
-                                                                                      builder: (dialogContext) {
-                                                                                        return Dialog(
-                                                                                          elevation: 0,
-                                                                                          insetPadding: EdgeInsets.zero,
-                                                                                          backgroundColor: Colors.transparent,
-                                                                                          alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                          child: GestureDetector(
-                                                                                            onTap: () {
-                                                                                              FocusScope.of(dialogContext).unfocus();
-                                                                                              FocusManager.instance.primaryFocus?.unfocus();
-                                                                                            },
-                                                                                            child: MessageComponentWidget(
-                                                                                              textMessage: 'บันทึกสำเร็จ',
+                                                                                    if (_model.paymentMethodSelected != '409') {
+                                                                                      await showDialog(
+                                                                                        context: context,
+                                                                                        builder: (dialogContext) {
+                                                                                          return Dialog(
+                                                                                            elevation: 0,
+                                                                                            insetPadding: EdgeInsets.zero,
+                                                                                            backgroundColor: Colors.transparent,
+                                                                                            alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                            child: GestureDetector(
+                                                                                              onTap: () {
+                                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                              },
+                                                                                              child: MessageComponentWidget(
+                                                                                                textMessage: 'บันทึกสำเร็จ',
+                                                                                              ),
                                                                                             ),
-                                                                                          ),
-                                                                                        );
-                                                                                      },
-                                                                                    );
+                                                                                          );
+                                                                                        },
+                                                                                      );
+                                                                                    }
                                                                                   }
                                                                                   if (_shouldSetState) safeSetState(() {});
                                                                                 },
-                                                                                text: 'เปลี่ยนวิธีการรับเงิน',
+                                                                                text: 'เลือกประเภทรับเงินค่าตอบแทน',
                                                                                 options: FFButtonOptions(
                                                                                   width: 12.0,
                                                                                   height: 35.0,
                                                                                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                                                                                   iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  color: FlutterFlowTheme.of(context).primary,
                                                                                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                                                                                         fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).primary,
+                                                                                        color: FlutterFlowTheme.of(context).secondary,
                                                                                         fontSize: 14.0,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.normal,
                                                                                       ),
                                                                                   elevation: 0.0,
-                                                                                  borderSide: BorderSide(
-                                                                                    color: FlutterFlowTheme.of(context).primary,
-                                                                                    width: 1.0,
-                                                                                  ),
                                                                                   borderRadius: BorderRadius.circular(8.0),
                                                                                 ),
                                                                               ),
@@ -2486,7 +2618,7 @@ class _MyLeadDashboardNewPageWidgetState
                         ].divide(SizedBox(height: 8.0)),
                       ),
                     ),
-                  ],
+                  ].addToEnd(SizedBox(height: 16.0)),
                 ),
               ),
             ),

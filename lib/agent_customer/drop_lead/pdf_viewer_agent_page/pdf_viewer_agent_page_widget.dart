@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'pdf_viewer_agent_page_model.dart';
 export 'pdf_viewer_agent_page_model.dart';
 
@@ -48,6 +49,8 @@ class _PdfViewerAgentPageWidgetState extends State<PdfViewerAgentPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Title(
         title: 'โครงการเพื่อนแนะนำเพื่อน',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
@@ -90,7 +93,7 @@ class _PdfViewerAgentPageWidgetState extends State<PdfViewerAgentPageWidget> {
                           defaultLocation: LatLng(0.0, 0.0));
                     },
                     child: Text(
-                      'เงื่อนไขโครงการ เพื่อนแนะนำเพื่อน',
+                      'เงื่อนไขโครงการ เพื่อนแนะนำเพื่อน${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
                       style:
                           FlutterFlowTheme.of(context).headlineMedium.override(
                                 fontFamily: 'Noto San Thai',
