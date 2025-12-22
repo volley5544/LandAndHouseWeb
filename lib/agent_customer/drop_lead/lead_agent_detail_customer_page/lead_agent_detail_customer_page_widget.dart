@@ -2408,19 +2408,66 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                         );
                                                       }
                                                     } else {
-                                                      if (widget.product ==
-                                                          'L') {
-                                                        context.pushNamed(
-                                                            LeadAgentDetailLHPageWidget
-                                                                .routeName);
+                                                      if (FFAppState()
+                                                              .platform ==
+                                                          'mobile') {
+                                                        if (widget.product ==
+                                                            'L') {
+                                                          context.pushNamed(
+                                                              LeadAgentDetailLHPageWidget
+                                                                  .routeName);
+                                                        } else {
+                                                          context.pushNamed(
+                                                            LeadAgentDetailCarPageWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'product':
+                                                                  serializeParam(
+                                                                widget.product,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        }
                                                       } else {
                                                         context.pushNamed(
-                                                          LeadAgentDetailCarPageWidget
+                                                          LeadAgentConsentPageWidget
                                                               .routeName,
                                                           queryParameters: {
+                                                            'ref':
+                                                                serializeParam(
+                                                              '',
+                                                              ParamType.String,
+                                                            ),
+                                                            'phone':
+                                                                serializeParam(
+                                                              functions.removeDash(
+                                                                  _model
+                                                                      .textController4
+                                                                      .text),
+                                                              ParamType.String,
+                                                            ),
+                                                            'fromPage':
+                                                                serializeParam(
+                                                              'customer',
+                                                              ParamType.String,
+                                                            ),
                                                             'product':
                                                                 serializeParam(
                                                               widget.product,
+                                                              ParamType.String,
+                                                            ),
+                                                            'agent':
+                                                                serializeParam(
+                                                              FFAppState()
+                                                                  .saveLeadAgentData
+                                                                  .agentCode,
+                                                              ParamType.String,
+                                                            ),
+                                                            'linkId':
+                                                                serializeParam(
+                                                              '',
                                                               ParamType.String,
                                                             ),
                                                           }.withoutNulls,
