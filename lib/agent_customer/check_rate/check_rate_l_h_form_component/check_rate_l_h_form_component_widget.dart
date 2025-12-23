@@ -11,6 +11,7 @@ import '/land_and_house_app/imgdetails_rawang/imgdetails_rawang_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -4462,6 +4463,16 @@ class _CheckRateLHFormComponentWidgetState
                                                               .textController6,
                                                           focusNode: _model
                                                               .textFieldFocusNode,
+                                                          onChanged: (_) =>
+                                                              EasyDebounce
+                                                                  .debounce(
+                                                            '_model.textController6',
+                                                            Duration(
+                                                                milliseconds:
+                                                                    100),
+                                                            () => safeSetState(
+                                                                () {}),
+                                                          ),
                                                           autofocus: false,
                                                           textCapitalization:
                                                               TextCapitalization
@@ -5117,7 +5128,13 @@ class _CheckRateLHFormComponentWidgetState
                                                               .text !=
                                                           '') &&
                                                   (FFAppState().platform ==
-                                                      'mobile'))
+                                                      'mobile') &&
+                                                  (double.parse((functions
+                                                          .removeCommaFromNumText(
+                                                              _model
+                                                                  .textController6
+                                                                  .text)!)) >
+                                                      0))
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
