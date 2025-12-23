@@ -738,8 +738,7 @@ class _ReviewDetailLHComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          functions.returnNumberWithCommaFullNumber(
-                              widget.wa, '0'),
+                          functions.returnNumberWithComma2Decimal(widget.wa),
                           '0',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
