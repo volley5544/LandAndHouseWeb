@@ -4973,7 +4973,8 @@ class _LeadAgentDetailCarPageWidgetState
                                     ),
                                   if (((_model.stateNumber! >= 7) ||
                                           _model.canNextButton) &&
-                                      (FFAppState().platform == 'mobile'))
+                                      ((FFAppState().platform == 'mobile') ||
+                                          true))
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
@@ -5001,7 +5002,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                   ),
                                                 ),
                                                 Text(
-                                                  'ยินยอมให้เก็บข้อมูลส่วนตัว',
+                                                  FFAppState().consentText,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

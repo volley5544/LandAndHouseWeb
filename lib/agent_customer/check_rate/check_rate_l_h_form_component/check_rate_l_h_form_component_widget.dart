@@ -23,10 +23,12 @@ class CheckRateLHFormComponentWidget extends StatefulWidget {
     super.key,
     required this.updateFormState,
     bool? isOnlyCheckRate,
+    this.searchingDoneAction,
   }) : this.isOnlyCheckRate = isOnlyCheckRate ?? true;
 
   final Future Function(bool isFormState)? updateFormState;
   final bool isOnlyCheckRate;
+  final Future Function()? searchingDoneAction;
 
   @override
   State<CheckRateLHFormComponentWidget> createState() =>
@@ -131,8 +133,8 @@ class _CheckRateLHFormComponentWidgetState
           } else {
             safeSetState(() {
               _model.tarangWaTextFieldTextController?.text =
-                  functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldTextController.text, '0')!;
+                  functions.returnNumberWithComma2Decimal(
+                      _model.tarangWaTextFieldTextController.text)!;
             });
           }
         }
@@ -196,6 +198,18 @@ class _CheckRateLHFormComponentWidgetState
             delay: 0.0.ms,
             duration: 600.0.ms,
             begin: Offset(0.0, -30.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'columnOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
             end: Offset(0.0, 0.0),
           ),
         ],
@@ -2435,7 +2449,7 @@ class _CheckRateLHFormComponentWidgetState
                                             }(),
                                             letterSpacing: 0.0,
                                           ),
-                                      maxLength: 3,
+                                      maxLength: 6,
                                       maxLengthEnforcement:
                                           MaxLengthEnforcement.enforced,
                                       buildCounter: (context,
@@ -2443,16 +2457,14 @@ class _CheckRateLHFormComponentWidgetState
                                               required isFocused,
                                               maxLength}) =>
                                           null,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
                                       cursorColor: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       validator: _model
                                           .tarangWaTextFieldTextControllerValidator
                                           .asValidator(context),
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.allow(
-                                            RegExp('[0-9]'))
-                                      ],
                                     ),
                                   ),
                                 ),
@@ -3351,7 +3363,7 @@ class _CheckRateLHFormComponentWidgetState
                                         if (FFAppState()
                                                 .chanodOutput
                                                 .ltv1Amount !=
-                                            0) {
+                                            0.0) {
                                           return Container(
                                             decoration: BoxDecoration(),
                                             child: Column(
@@ -3717,7 +3729,7 @@ class _CheckRateLHFormComponentWidgetState
                                         if (FFAppState()
                                                 .chanodOutput
                                                 .ltv2Amount !=
-                                            0) {
+                                            0.0) {
                                           return Container(
                                             decoration: BoxDecoration(),
                                             child: Column(
@@ -5377,6 +5389,113 @@ class _CheckRateLHFormComponentWidgetState
                               ),
                             ),
                           ),
+                          if (true &&
+                              ((FFAppState().platform == 'mobile') || true))
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 16.0, 0.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 25.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 40.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 40.0;
+                                            } else {
+                                              return 40.0;
+                                            }
+                                          }(),
+                                          child: VerticalDivider(
+                                            thickness: 3.0,
+                                            color: Color(0x7FDB771A),
+                                          ),
+                                        ),
+                                        Text(
+                                          FFAppState().consentText,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                      ]
+                                          .divide(SizedBox(width: 12.0))
+                                          .addToStart(SizedBox(width: 16.0))
+                                          .addToEnd(SizedBox(width: 16.0)),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 16.0, 0.0, 0.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  24.0, 0.0, 24.0, 0.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Icon(
+                                                Icons.check_circle,
+                                                color: Color(0xFF24DB1A),
+                                                size: 24.0,
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        8.0, 0.0, 0.0, 0.0),
+                                                child: Text(
+                                                  'ยินยอมให้เก็บข้อมูลส่วนตัวแล้ว',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color:
+                                                            Color(0xFF24DB1A),
+                                                        fontSize: 14.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ).animateOnPageLoad(animationsMap[
+                                        'columnOnPageLoadAnimation']!),
+                                  ),
+                                ],
+                              ),
+                            ),
                         ]
                             .addToStart(SizedBox(height: 12.0))
                             .addToEnd(SizedBox(height: 30.0)),
@@ -6057,6 +6176,7 @@ class _CheckRateLHFormComponentWidgetState
                                         _model.isFormState,
                                       );
                                       Navigator.pop(context);
+                                      await widget.searchingDoneAction?.call();
                                     } else {
                                       if (!(_model.textController6.text != '')) {
                                         await showDialog(

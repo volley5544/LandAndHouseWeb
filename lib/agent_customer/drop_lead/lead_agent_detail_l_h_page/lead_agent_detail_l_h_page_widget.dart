@@ -251,6 +251,7 @@ class _LeadAgentDetailLHPageWidgetState
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                     ),
                     child: SingleChildScrollView(
+                      controller: _model.primaryContainerScrollController,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -454,6 +455,14 @@ class _LeadAgentDetailLHPageWidgetState
                                 updateFormState: (isFormState) async {
                                   _model.isFormState = isFormState;
                                   safeSetState(() {});
+                                },
+                                searchingDoneAction: () async {
+                                  await _model.primaryContainerScrollController
+                                      ?.animateTo(
+                                    0,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease,
+                                  );
                                 },
                               ),
                             ),

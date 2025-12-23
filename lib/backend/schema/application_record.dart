@@ -85,6 +85,16 @@ class ApplicationRecord extends FirestoreRecord {
   bool hasMaxCommissionTextInstallment() =>
       _maxCommissionTextInstallment != null;
 
+  // "consent_text_agent" field.
+  String? _consentTextAgent;
+  String get consentTextAgent => _consentTextAgent ?? '';
+  bool hasConsentTextAgent() => _consentTextAgent != null;
+
+  // "consent_text_customer" field.
+  String? _consentTextCustomer;
+  String get consentTextCustomer => _consentTextCustomer ?? '';
+  bool hasConsentTextCustomer() => _consentTextCustomer != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -108,6 +118,8 @@ class ApplicationRecord extends FirestoreRecord {
         snapshotData['max_commission_text_onetime'] as String?;
     _maxCommissionTextInstallment =
         snapshotData['max_commission_text_installment'] as String?;
+    _consentTextAgent = snapshotData['consent_text_agent'] as String?;
+    _consentTextCustomer = snapshotData['consent_text_customer'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -156,6 +168,8 @@ Map<String, dynamic> createApplicationRecordData({
   double? maxCommissionAmountInstallment,
   String? maxCommissionTextOnetime,
   String? maxCommissionTextInstallment,
+  String? consentTextAgent,
+  String? consentTextCustomer,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -170,6 +184,8 @@ Map<String, dynamic> createApplicationRecordData({
       'max_commission_amount_installment': maxCommissionAmountInstallment,
       'max_commission_text_onetime': maxCommissionTextOnetime,
       'max_commission_text_installment': maxCommissionTextInstallment,
+      'consent_text_agent': consentTextAgent,
+      'consent_text_customer': consentTextCustomer,
     }.withoutNulls,
   );
 
@@ -203,7 +219,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.maxCommissionAmountInstallment ==
             e2?.maxCommissionAmountInstallment &&
         e1?.maxCommissionTextOnetime == e2?.maxCommissionTextOnetime &&
-        e1?.maxCommissionTextInstallment == e2?.maxCommissionTextInstallment;
+        e1?.maxCommissionTextInstallment == e2?.maxCommissionTextInstallment &&
+        e1?.consentTextAgent == e2?.consentTextAgent &&
+        e1?.consentTextCustomer == e2?.consentTextCustomer;
   }
 
   @override
@@ -220,7 +238,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.maxCommissionAmountOnetime,
         e?.maxCommissionAmountInstallment,
         e?.maxCommissionTextOnetime,
-        e?.maxCommissionTextInstallment
+        e?.maxCommissionTextInstallment,
+        e?.consentTextAgent,
+        e?.consentTextCustomer
       ]);
 
   @override

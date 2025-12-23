@@ -554,13 +554,13 @@ class FFAppState extends ChangeNotifier {
     _LeadUrlProd = value;
   }
 
-  int _webProdVersion = 34;
+  int _webProdVersion = 35;
   int get webProdVersion => _webProdVersion;
   set webProdVersion(int value) {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 117;
+  int _webUatVersion = 119;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -768,6 +768,12 @@ class FFAppState extends ChangeNotifier {
   String get maxCommissionTextInstallment => _maxCommissionTextInstallment;
   set maxCommissionTextInstallment(String value) {
     _maxCommissionTextInstallment = value;
+  }
+
+  String _consentText = '';
+  String get consentText => _consentText;
+  set consentText(String value) {
+    _consentText = value;
   }
 }
 

@@ -17,7 +17,7 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
     String? chanodNo,
     String? surveyNo,
     double? landAreaOrg,
-    int? landAreaAdj,
+    double? landAreaAdj,
     String? changwatCode,
     String? changwatName,
     String? branchCode,
@@ -25,13 +25,13 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
     String? amphurCode,
     String? amphurName,
     String? tumbonName,
-    int? currEvaprice,
-    int? totalEvaprice,
-    int? ltv1,
-    int? ltv1Amount,
-    int? ltv2,
-    int? ltv2Amount,
-    int? ltv2waAmount,
+    double? currEvaprice,
+    double? totalEvaprice,
+    double? ltv1,
+    double? ltv1Amount,
+    double? ltv2,
+    double? ltv2Amount,
+    double? ltv2waAmount,
     String? lat,
     String? long,
     String? locationUrl,
@@ -142,11 +142,12 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
   bool hasLandAreaOrg() => _landAreaOrg != null;
 
   // "LAND_AREA_ADJ" field.
-  int? _landAreaAdj;
-  int get landAreaAdj => _landAreaAdj ?? 0;
-  set landAreaAdj(int? val) => _landAreaAdj = val;
+  double? _landAreaAdj;
+  double get landAreaAdj => _landAreaAdj ?? 0.0;
+  set landAreaAdj(double? val) => _landAreaAdj = val;
 
-  void incrementLandAreaAdj(int amount) => landAreaAdj = landAreaAdj + amount;
+  void incrementLandAreaAdj(double amount) =>
+      landAreaAdj = landAreaAdj + amount;
 
   bool hasLandAreaAdj() => _landAreaAdj != null;
 
@@ -200,67 +201,67 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
   bool hasTumbonName() => _tumbonName != null;
 
   // "CURR_EVAPRICE" field.
-  int? _currEvaprice;
-  int get currEvaprice => _currEvaprice ?? 0;
-  set currEvaprice(int? val) => _currEvaprice = val;
+  double? _currEvaprice;
+  double get currEvaprice => _currEvaprice ?? 0.0;
+  set currEvaprice(double? val) => _currEvaprice = val;
 
-  void incrementCurrEvaprice(int amount) =>
+  void incrementCurrEvaprice(double amount) =>
       currEvaprice = currEvaprice + amount;
 
   bool hasCurrEvaprice() => _currEvaprice != null;
 
   // "TOTAL_EVAPRICE" field.
-  int? _totalEvaprice;
-  int get totalEvaprice => _totalEvaprice ?? 0;
-  set totalEvaprice(int? val) => _totalEvaprice = val;
+  double? _totalEvaprice;
+  double get totalEvaprice => _totalEvaprice ?? 0.0;
+  set totalEvaprice(double? val) => _totalEvaprice = val;
 
-  void incrementTotalEvaprice(int amount) =>
+  void incrementTotalEvaprice(double amount) =>
       totalEvaprice = totalEvaprice + amount;
 
   bool hasTotalEvaprice() => _totalEvaprice != null;
 
   // "LTV1" field.
-  int? _ltv1;
-  int get ltv1 => _ltv1 ?? 0;
-  set ltv1(int? val) => _ltv1 = val;
+  double? _ltv1;
+  double get ltv1 => _ltv1 ?? 0.0;
+  set ltv1(double? val) => _ltv1 = val;
 
-  void incrementLtv1(int amount) => ltv1 = ltv1 + amount;
+  void incrementLtv1(double amount) => ltv1 = ltv1 + amount;
 
   bool hasLtv1() => _ltv1 != null;
 
   // "LTV1_AMOUNT" field.
-  int? _ltv1Amount;
-  int get ltv1Amount => _ltv1Amount ?? 0;
-  set ltv1Amount(int? val) => _ltv1Amount = val;
+  double? _ltv1Amount;
+  double get ltv1Amount => _ltv1Amount ?? 0.0;
+  set ltv1Amount(double? val) => _ltv1Amount = val;
 
-  void incrementLtv1Amount(int amount) => ltv1Amount = ltv1Amount + amount;
+  void incrementLtv1Amount(double amount) => ltv1Amount = ltv1Amount + amount;
 
   bool hasLtv1Amount() => _ltv1Amount != null;
 
   // "LTV2" field.
-  int? _ltv2;
-  int get ltv2 => _ltv2 ?? 0;
-  set ltv2(int? val) => _ltv2 = val;
+  double? _ltv2;
+  double get ltv2 => _ltv2 ?? 0.0;
+  set ltv2(double? val) => _ltv2 = val;
 
-  void incrementLtv2(int amount) => ltv2 = ltv2 + amount;
+  void incrementLtv2(double amount) => ltv2 = ltv2 + amount;
 
   bool hasLtv2() => _ltv2 != null;
 
   // "LTV2_AMOUNT" field.
-  int? _ltv2Amount;
-  int get ltv2Amount => _ltv2Amount ?? 0;
-  set ltv2Amount(int? val) => _ltv2Amount = val;
+  double? _ltv2Amount;
+  double get ltv2Amount => _ltv2Amount ?? 0.0;
+  set ltv2Amount(double? val) => _ltv2Amount = val;
 
-  void incrementLtv2Amount(int amount) => ltv2Amount = ltv2Amount + amount;
+  void incrementLtv2Amount(double amount) => ltv2Amount = ltv2Amount + amount;
 
   bool hasLtv2Amount() => _ltv2Amount != null;
 
   // "LTV2WA_AMOUNT" field.
-  int? _ltv2waAmount;
-  int get ltv2waAmount => _ltv2waAmount ?? 0;
-  set ltv2waAmount(int? val) => _ltv2waAmount = val;
+  double? _ltv2waAmount;
+  double get ltv2waAmount => _ltv2waAmount ?? 0.0;
+  set ltv2waAmount(double? val) => _ltv2waAmount = val;
 
-  void incrementLtv2waAmount(int amount) =>
+  void incrementLtv2waAmount(double amount) =>
       ltv2waAmount = ltv2waAmount + amount;
 
   bool hasLtv2waAmount() => _ltv2waAmount != null;
@@ -335,7 +336,7 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         chanodNo: data['CHANOD_NO'] as String?,
         surveyNo: data['SURVEY_NO'] as String?,
         landAreaOrg: castToType<double>(data['LAND_AREA_ORG']),
-        landAreaAdj: castToType<int>(data['LAND_AREA_ADJ']),
+        landAreaAdj: castToType<double>(data['LAND_AREA_ADJ']),
         changwatCode: data['CHANGWAT_CODE'] as String?,
         changwatName: data['CHANGWAT_NAME'] as String?,
         branchCode: data['BRANCH_CODE'] as String?,
@@ -343,13 +344,13 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         amphurCode: data['AMPHUR_CODE'] as String?,
         amphurName: data['AMPHUR_NAME'] as String?,
         tumbonName: data['TUMBON_NAME'] as String?,
-        currEvaprice: castToType<int>(data['CURR_EVAPRICE']),
-        totalEvaprice: castToType<int>(data['TOTAL_EVAPRICE']),
-        ltv1: castToType<int>(data['LTV1']),
-        ltv1Amount: castToType<int>(data['LTV1_AMOUNT']),
-        ltv2: castToType<int>(data['LTV2']),
-        ltv2Amount: castToType<int>(data['LTV2_AMOUNT']),
-        ltv2waAmount: castToType<int>(data['LTV2WA_AMOUNT']),
+        currEvaprice: castToType<double>(data['CURR_EVAPRICE']),
+        totalEvaprice: castToType<double>(data['TOTAL_EVAPRICE']),
+        ltv1: castToType<double>(data['LTV1']),
+        ltv1Amount: castToType<double>(data['LTV1_AMOUNT']),
+        ltv2: castToType<double>(data['LTV2']),
+        ltv2Amount: castToType<double>(data['LTV2_AMOUNT']),
+        ltv2waAmount: castToType<double>(data['LTV2WA_AMOUNT']),
         lat: data['LAT'] as String?,
         long: data['LONG'] as String?,
         locationUrl: data['LOCATION_URL'] as String?,
@@ -439,7 +440,7 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         ),
         'LAND_AREA_ADJ': serializeParam(
           _landAreaAdj,
-          ParamType.int,
+          ParamType.double,
         ),
         'CHANGWAT_CODE': serializeParam(
           _changwatCode,
@@ -471,31 +472,31 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         ),
         'CURR_EVAPRICE': serializeParam(
           _currEvaprice,
-          ParamType.int,
+          ParamType.double,
         ),
         'TOTAL_EVAPRICE': serializeParam(
           _totalEvaprice,
-          ParamType.int,
+          ParamType.double,
         ),
         'LTV1': serializeParam(
           _ltv1,
-          ParamType.int,
+          ParamType.double,
         ),
         'LTV1_AMOUNT': serializeParam(
           _ltv1Amount,
-          ParamType.int,
+          ParamType.double,
         ),
         'LTV2': serializeParam(
           _ltv2,
-          ParamType.int,
+          ParamType.double,
         ),
         'LTV2_AMOUNT': serializeParam(
           _ltv2Amount,
-          ParamType.int,
+          ParamType.double,
         ),
         'LTV2WA_AMOUNT': serializeParam(
           _ltv2waAmount,
-          ParamType.int,
+          ParamType.double,
         ),
         'LAT': serializeParam(
           _lat,
@@ -580,7 +581,7 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         ),
         landAreaAdj: deserializeParam(
           data['LAND_AREA_ADJ'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         changwatCode: deserializeParam(
@@ -620,37 +621,37 @@ class ChanodDataModelStruct extends FFFirebaseStruct {
         ),
         currEvaprice: deserializeParam(
           data['CURR_EVAPRICE'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         totalEvaprice: deserializeParam(
           data['TOTAL_EVAPRICE'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         ltv1: deserializeParam(
           data['LTV1'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         ltv1Amount: deserializeParam(
           data['LTV1_AMOUNT'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         ltv2: deserializeParam(
           data['LTV2'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         ltv2Amount: deserializeParam(
           data['LTV2_AMOUNT'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         ltv2waAmount: deserializeParam(
           data['LTV2WA_AMOUNT'],
-          ParamType.int,
+          ParamType.double,
           false,
         ),
         lat: deserializeParam(
@@ -782,7 +783,7 @@ ChanodDataModelStruct createChanodDataModelStruct({
   String? chanodNo,
   String? surveyNo,
   double? landAreaOrg,
-  int? landAreaAdj,
+  double? landAreaAdj,
   String? changwatCode,
   String? changwatName,
   String? branchCode,
@@ -790,13 +791,13 @@ ChanodDataModelStruct createChanodDataModelStruct({
   String? amphurCode,
   String? amphurName,
   String? tumbonName,
-  int? currEvaprice,
-  int? totalEvaprice,
-  int? ltv1,
-  int? ltv1Amount,
-  int? ltv2,
-  int? ltv2Amount,
-  int? ltv2waAmount,
+  double? currEvaprice,
+  double? totalEvaprice,
+  double? ltv1,
+  double? ltv1Amount,
+  double? ltv2,
+  double? ltv2Amount,
+  double? ltv2waAmount,
   String? lat,
   String? long,
   String? locationUrl,

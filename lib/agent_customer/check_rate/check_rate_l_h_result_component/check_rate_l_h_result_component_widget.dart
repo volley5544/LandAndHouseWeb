@@ -124,7 +124,7 @@ class _CheckRateLHResultComponentWidgetState
                               ],
                             ),
                           ),
-                          if (FFAppState().chanodOutput.ltv1Amount != 0)
+                          if (FFAppState().chanodOutput.ltv1Amount != 0.0)
                             Container(
                               decoration: BoxDecoration(),
                               child: Column(
@@ -297,7 +297,7 @@ class _CheckRateLHResultComponentWidgetState
                                 ],
                               ),
                             ),
-                          if (FFAppState().chanodOutput.ltv2Amount != 0)
+                          if (FFAppState().chanodOutput.ltv2Amount != 0.0)
                             Container(
                               decoration: BoxDecoration(),
                               child: Column(
@@ -654,8 +654,8 @@ class _CheckRateLHResultComponentWidgetState
                                 ],
                               ),
                             ),
-                          if ((FFAppState().chanodOutput.ltv1Amount != 0) ||
-                              (FFAppState().chanodOutput.ltv2Amount != 0))
+                          if ((FFAppState().chanodOutput.ltv1Amount != 0.0) ||
+                              (FFAppState().chanodOutput.ltv2Amount != 0.0))
                             Align(
                               alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(

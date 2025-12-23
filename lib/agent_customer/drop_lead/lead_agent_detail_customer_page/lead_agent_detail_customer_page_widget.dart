@@ -88,6 +88,9 @@ class _LeadAgentDetailCustomerPageWidgetState
           _model.appConfig!.maxCommissionTextOnetime;
       FFAppState().maxCommissionTextInstallment =
           _model.appConfig!.maxCommissionTextInstallment;
+      FFAppState().consentText = FFAppState().platform == 'mobile'
+          ? _model.appConfig!.consentTextAgent
+          : _model.appConfig!.consentTextCustomer;
       safeSetState(() {});
       Navigator.pop(context);
       if (FFAppState().platform == 'mobile') {

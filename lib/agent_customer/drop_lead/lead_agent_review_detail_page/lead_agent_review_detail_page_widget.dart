@@ -612,7 +612,7 @@ class _LeadAgentReviewDetailPageWidgetState
                                     ),
                                   ),
                                 ),
-                              if (FFAppState().platform == 'mobile')
+                              if ((FFAppState().platform == 'mobile') || true)
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       12.0, 12.0, 12.0, 0.0),
@@ -661,7 +661,7 @@ class _LeadAgentReviewDetailPageWidgetState
                                                   ),
                                                 ),
                                                 Text(
-                                                  'ยินยอมให้เก็บข้อมูลส่วนตัว',
+                                                  FFAppState().consentText,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium

@@ -176,8 +176,8 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
           } else {
             safeSetState(() {
               _model.tarangWaTextFieldTextController?.text =
-                  functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldTextController.text, '0')!;
+                  functions.returnNumberWithComma2Decimal(
+                      _model.tarangWaTextFieldTextController.text)!;
             });
           }
         }
@@ -3818,7 +3818,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               0.0,
                                                                         ),
                                                                     maxLength:
-                                                                        3,
+                                                                        6,
                                                                     maxLengthEnforcement:
                                                                         MaxLengthEnforcement
                                                                             .enforced,
@@ -3827,9 +3827,10 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             required isFocused,
                                                                             maxLength}) =>
                                                                         null,
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .number,
+                                                                    keyboardType: const TextInputType
+                                                                        .numberWithOptions(
+                                                                        decimal:
+                                                                            true),
                                                                     cursorColor:
                                                                         FlutterFlowTheme.of(context)
                                                                             .primaryText,
@@ -3837,11 +3838,6 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                         .tarangWaTextFieldTextControllerValidator
                                                                         .asValidator(
                                                                             context),
-                                                                    inputFormatters: [
-                                                                      FilteringTextInputFormatter
-                                                                          .allow(
-                                                                              RegExp('[0-9]'))
-                                                                    ],
                                                                   ),
                                                                 ),
                                                               ),

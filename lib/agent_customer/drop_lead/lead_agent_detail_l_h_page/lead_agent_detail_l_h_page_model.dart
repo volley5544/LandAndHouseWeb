@@ -36,6 +36,8 @@ class LeadAgentDetailLHPageModel
   ApplicationRecord? queryAPIUrl;
   // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailLHPage widget.
   ApiCallResponse? getAssetTypeMaster;
+  // State field(s) for primaryContainer widget.
+  ScrollController? primaryContainerScrollController;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
   // Model for ReviewDetailCustomerComponent component.
@@ -48,6 +50,7 @@ class LeadAgentDetailLHPageModel
 
   @override
   void initState(BuildContext context) {
+    primaryContainerScrollController = ScrollController();
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
     reviewDetailCustomerComponentModel =
@@ -58,6 +61,7 @@ class LeadAgentDetailLHPageModel
 
   @override
   void dispose() {
+    primaryContainerScrollController?.dispose();
     progressBarComponentModel.dispose();
     reviewDetailCustomerComponentModel.dispose();
     checkRateLHFormComponentModel.dispose();

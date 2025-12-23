@@ -51,7 +51,7 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
             elevation: 0,
             insetPadding: EdgeInsets.zero,
             backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
+            alignment: AlignmentDirectional(1.0, 1.0)
                 .resolve(Directionality.of(context)),
             child: GestureDetector(
               onTap: () {
@@ -344,7 +344,7 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                       if (FFAppState()
                                               .chanodOutput
                                               .ltv1Amount !=
-                                          0)
+                                          0.0)
                                         Container(
                                           decoration: BoxDecoration(),
                                           child: Column(
@@ -534,7 +534,7 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                       if (FFAppState()
                                               .chanodOutput
                                               .ltv2Amount !=
-                                          0)
+                                          0.0)
                                         Container(
                                           decoration: BoxDecoration(),
                                           child: Column(
@@ -917,11 +917,11 @@ class _SerchChanodPageWidgetState extends State<SerchChanodPageWidget> {
                                       if ((FFAppState()
                                                   .chanodOutput
                                                   .ltv1Amount !=
-                                              0) ||
+                                              0.0) ||
                                           (FFAppState()
                                                   .chanodOutput
                                                   .ltv2Amount !=
-                                              0))
+                                              0.0))
                                         Align(
                                           alignment:
                                               AlignmentDirectional(0.0, 0.0),

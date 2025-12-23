@@ -197,6 +197,7 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
                             _model.isFormState = isFormState;
                             safeSetState(() {});
                           },
+                          searchingDoneAction: () async {},
                         ),
                       ),
                     ].addToStart(SizedBox(height: 4.0)),

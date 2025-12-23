@@ -236,8 +236,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
           } else {
             safeSetState(() {
               _model.tarangWaTextFieldTextController?.text =
-                  functions.returnNumberWithCommaFullNumber(
-                      _model.tarangWaTextFieldTextController.text, '0')!;
+                  functions.returnNumberWithComma2Decimal(
+                      _model.tarangWaTextFieldTextController.text)!;
             });
           }
         }
@@ -3067,7 +3067,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                           }(),
                                                           letterSpacing: 0.0,
                                                         ),
-                                                maxLength: 3,
+                                                maxLength: 6,
                                                 maxLengthEnforcement:
                                                     MaxLengthEnforcement
                                                         .enforced,
@@ -3077,17 +3077,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                         maxLength}) =>
                                                     null,
                                                 keyboardType:
-                                                    TextInputType.number,
+                                                    const TextInputType
+                                                        .numberWithOptions(
+                                                        decimal: true),
                                                 cursorColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
                                                 validator: _model
                                                     .tarangWaTextFieldTextControllerValidator
                                                     .asValidator(context),
-                                                inputFormatters: [
-                                                  FilteringTextInputFormatter
-                                                      .allow(RegExp('[0-9]'))
-                                                ],
                                               ),
                                             ),
                                           ),
