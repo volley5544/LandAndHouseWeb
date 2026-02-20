@@ -30,6 +30,7 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
     Color? installmentAmountColor,
     Color? overdueAmountColor,
     bool? isShowVmi,
+    this.platform,
   })  : this.isShowDownload = isShowDownload ?? false,
         this.installmentAmountColor =
             installmentAmountColor ?? const Color(0xFF003063),
@@ -53,6 +54,7 @@ class LoanDetailCardComponentWidget extends StatefulWidget {
   final Color installmentAmountColor;
   final Color overdueAmountColor;
   final bool isShowVmi;
+  final String? platform;
 
   @override
   State<LoanDetailCardComponentWidget> createState() =>
@@ -374,6 +376,12 @@ class _LoanDetailCardComponentWidgetState
                                                     recognizer:
                                                         TapGestureRecognizer()
                                                           ..onTap = () async {
+                                                            if ('${widget.platform}' !=
+                                                                'mobile') {
+                                                              await launchURL(
+                                                                  '${widget.contractLink}');
+                                                              return;
+                                                            }
                                                             await actions
                                                                 .openTableauInApp(
                                                               '${widget.contractLink}',

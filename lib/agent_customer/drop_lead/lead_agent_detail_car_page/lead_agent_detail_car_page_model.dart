@@ -5,6 +5,7 @@ import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'lead_agent_detail_car_page_widget.dart'
     show LeadAgentDetailCarPageWidget;
@@ -101,6 +102,8 @@ class LeadAgentDetailCarPageModel
 
   bool paymentState = false;
 
+  String commissionPageState = '0';
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCarPage widget.
@@ -109,6 +112,8 @@ class LeadAgentDetailCarPageModel
   ApiCallResponse? provinceApiOutput;
   // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailCarPage widget.
   ApiCallResponse? getVehicleMaster;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // State field(s) for Column widget.
   ScrollController? columnController;
   // Model for progressBarComponent component.
@@ -158,12 +163,16 @@ class LeadAgentDetailCarPageModel
   FocusNode? loanAmountFocusNode;
   TextEditingController? loanAmountTextController;
   String? Function(BuildContext, String?)? loanAmountTextControllerValidator;
+  // Stores action output result for [Backend Call - API (agent commission)] action in loanAmount widget.
+  ApiCallResponse? apiResulthzdcommission;
   DateTime? datePicked;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   FFUploadedFile? bluebookFileOutput;
 
   @override
   void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
     columnController = ScrollController();
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
@@ -173,6 +182,7 @@ class LeadAgentDetailCarPageModel
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     columnController?.dispose();
     progressBarComponentModel.dispose();
     reviewDetailCustomerComponentModel.dispose();

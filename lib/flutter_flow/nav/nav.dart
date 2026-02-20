@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 
-import '/auth/base_auth_user_provider.dart';
+import '/auth/custom_auth/custom_auth_user_provider.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,8 +25,8 @@ class AppStateNotifier extends ChangeNotifier {
   static AppStateNotifier? _instance;
   static AppStateNotifier get instance => _instance ??= AppStateNotifier._();
 
-  BaseAuthUser? initialUser;
-  BaseAuthUser? user;
+  LandAndHouseWebAuthUser? initialUser;
+  LandAndHouseWebAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -51,7 +51,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(BaseAuthUser newUser) {
+  void update(LandAndHouseWebAuthUser newUser) {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
@@ -78,15 +78,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? SerchChanodPageWidget()
-          : AddCustomerLeadWidget(),
+          ? AgentMainMenuPageWidget()
+          : AgentLoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? SerchChanodPageWidget()
-              : AddCustomerLeadWidget(),
+              ? AgentMainMenuPageWidget()
+              : AgentLoginPageWidget(),
         ),
         FFRoute(
           name: HomePageWidget.routeName,
@@ -475,6 +475,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'token',
               ParamType.String,
             ),
+            platform: params.getParam(
+              'platform',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -526,7 +530,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: ShareAgentReferPageWidget.routeName,
           path: ShareAgentReferPageWidget.routePath,
-          builder: (context, params) => ShareAgentReferPageWidget(),
+          builder: (context, params) => ShareAgentReferPageWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+            platform: params.getParam(
+              'platform',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: MyLeadDashboardPageWidget.routeName,
@@ -575,7 +588,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: CheckRateLHPageWidget.routeName,
           path: CheckRateLHPageWidget.routePath,
-          builder: (context, params) => CheckRateLHPageWidget(),
+          builder: (context, params) => CheckRateLHPageWidget(
+            customerId: params.getParam(
+              'customerId',
+              ParamType.String,
+            ),
+            projectCode: params.getParam(
+              'projectCode',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: LeadAgentReviewDetailPageWidget.routeName,
@@ -755,6 +777,118 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: MyLeadDashboardNewPageWidget.routeName,
           path: MyLeadDashboardNewPageWidget.routePath,
           builder: (context, params) => MyLeadDashboardNewPageWidget(),
+        ),
+        FFRoute(
+          name: CheckRateMCPageWidget.routeName,
+          path: CheckRateMCPageWidget.routePath,
+          builder: (context, params) => CheckRateMCPageWidget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+            customerId: params.getParam(
+              'customerId',
+              ParamType.String,
+            ),
+            projectCode: params.getParam(
+              'projectCode',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AgentRegisterPage01Widget.routeName,
+          path: AgentRegisterPage01Widget.routePath,
+          builder: (context, params) => AgentRegisterPage01Widget(),
+        ),
+        FFRoute(
+          name: IdCardDetailPage04Widget.routeName,
+          path: IdCardDetailPage04Widget.routePath,
+          builder: (context, params) => IdCardDetailPage04Widget(),
+        ),
+        FFRoute(
+          name: AgentSettingPage03Widget.routeName,
+          path: AgentSettingPage03Widget.routePath,
+          builder: (context, params) => AgentSettingPage03Widget(
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: RegisterResultPage05Widget.routeName,
+          path: RegisterResultPage05Widget.routePath,
+          builder: (context, params) => RegisterResultPage05Widget(),
+        ),
+        FFRoute(
+          name: AgentDetailPage01Widget.routeName,
+          path: AgentDetailPage01Widget.routePath,
+          builder: (context, params) => AgentDetailPage01Widget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AgentRegisterConsentPage02Widget.routeName,
+          path: AgentRegisterConsentPage02Widget.routePath,
+          builder: (context, params) => AgentRegisterConsentPage02Widget(
+            ref: params.getParam(
+              'ref',
+              ParamType.String,
+            ),
+            phone: params.getParam(
+              'phone',
+              ParamType.String,
+            ),
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+            agent: params.getParam(
+              'agent',
+              ParamType.String,
+            ),
+            linkId: params.getParam(
+              'linkId',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AddressDetailPage02Widget.routeName,
+          path: AddressDetailPage02Widget.routePath,
+          builder: (context, params) => AddressDetailPage02Widget(
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AgentLoginPageWidget.routeName,
+          path: AgentLoginPageWidget.routePath,
+          builder: (context, params) => AgentLoginPageWidget(),
+        ),
+        FFRoute(
+          name: AgentChangePasswordPageWidget.routeName,
+          path: AgentChangePasswordPageWidget.routePath,
+          builder: (context, params) => AgentChangePasswordPageWidget(),
+        ),
+        FFRoute(
+          name: AgentConfirmOtpPageWidget.routeName,
+          path: AgentConfirmOtpPageWidget.routePath,
+          builder: (context, params) => AgentConfirmOtpPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -927,7 +1061,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/AddCustomerLead';
+            return '/AgentLoginPage';
           }
           return null;
         },

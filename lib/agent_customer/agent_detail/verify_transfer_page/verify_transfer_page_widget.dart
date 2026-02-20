@@ -1,12 +1,15 @@
 import '/agent_customer/agent_detail/agent_save_success/agent_save_success_widget.dart';
 import '/agent_customer/agent_detail/user_agent_detail_component/user_agent_detail_component_widget.dart';
 import '/agent_customer/select_payment_transfer_component/select_payment_transfer_component_widget.dart';
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/components/banner_agent_component_widget.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +39,28 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if ('${FFAppState().platform}' != 'mobile') {
+        if (loggedIn) {
+          if (currentAuthTokenExpiration!.secondsSinceEpoch <
+              getCurrentTimestamp.secondsSinceEpoch) {
+            _model.apiResultjxr = await AgentAPIGroup.logoutAgentCall.call(
+              username: FFAppState().agentCode,
+              url: FFDevEnvironmentValues().isProduction
+                  ? FFAppState().apiUrlDocData.agentWebApiUrl
+                  : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+              tokenHeader: FFDevEnvironmentValues().isProduction
+                  ? FFAppState().apiUrlDocData.agentWebApiToken
+                  : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+            );
+
+            GoRouter.of(context).prepareAuthEvent();
+            await authManager.signOut();
+            GoRouter.of(context).clearRedirectLocation();
+          }
+        } else {
+          context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+        }
+      }
       _model.paymentMethod = FFAppState().agentProfileDataType.paymentMethod;
       _model.paymentChannel = FFAppState().agentProfileDataType.paymentChannel;
       safeSetState(() {});
@@ -71,6 +96,11 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  wrapWithModel(
+                    model: _model.webAppBarComponentModel,
+                    updateCallback: () => safeSetState(() {}),
+                    child: WebAppBarComponentWidget(),
+                  ),
                   Expanded(
                     child: Container(
                       width: double.infinity,
@@ -81,162 +111,288 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: Image.asset(
-                                    'assets/images/header-background2.png',
-                                  ).image,
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Container(
+                                width: () {
+                                  if (MediaQuery.sizeOf(context).width <
+                                      kBreakpointSmall) {
+                                    return MediaQuery.sizeOf(context).width;
+                                  } else if (MediaQuery.sizeOf(context).width <
+                                      kBreakpointMedium) {
+                                    return MediaQuery.sizeOf(context).width;
+                                  } else if (MediaQuery.sizeOf(context).width <
+                                      kBreakpointLarge) {
+                                    return MediaQuery.sizeOf(context).width;
+                                  } else {
+                                    return 700.0;
+                                  }
+                                }(),
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: Image.asset(
+                                      'assets/images/header-background2.png',
+                                    ).image,
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x33000000),
+                                      offset: Offset(
+                                        0.0,
+                                        2.0,
+                                      ),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(30.0),
+                                    bottomRight: Radius.circular(30.0),
+                                    topLeft: Radius.circular(0.0),
+                                    topRight: Radius.circular(0.0),
+                                  ),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x33000000),
-                                    offset: Offset(
-                                      0.0,
-                                      2.0,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(30.0),
-                                  bottomRight: Radius.circular(30.0),
-                                  topLeft: Radius.circular(0.0),
-                                  topRight: Radius.circular(0.0),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 8.0, 24.0, 12.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Container(
-                                            width: 32.0,
-                                            height: 32.0,
-                                            child: Stack(
-                                              children: [
-                                                Icon(
-                                                  Icons.people_alt_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                  size: 30.0,
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          1.0, 1.0),
-                                                  child: Container(
-                                                    width: 16.0,
-                                                    height: 16.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFFFAE4D1),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Icon(
-                                                      Icons.chat_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      size: 16.0,
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 8.0, 24.0, 12.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: () {
+                                          if (MediaQuery.sizeOf(context).width <
+                                              kBreakpointSmall) {
+                                            return MediaQuery.sizeOf(context)
+                                                .width;
+                                          } else if (MediaQuery.sizeOf(context)
+                                                  .width <
+                                              kBreakpointMedium) {
+                                            return MediaQuery.sizeOf(context)
+                                                .width;
+                                          } else if (MediaQuery.sizeOf(context)
+                                                  .width <
+                                              kBreakpointLarge) {
+                                            return MediaQuery.sizeOf(context)
+                                                .width;
+                                          } else {
+                                            return 500.0;
+                                          }
+                                        }(),
+                                        decoration: BoxDecoration(),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Container(
+                                              width: 32.0,
+                                              height: 32.0,
+                                              child: Stack(
+                                                children: [
+                                                  Icon(
+                                                    Icons.people_alt_outlined,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    size: 30.0,
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            1.0, 1.0),
+                                                    child: Container(
+                                                      width: 16.0,
+                                                      height: 16.0,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Color(0xFFFAE4D1),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      child: Icon(
+                                                        Icons.chat_rounded,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        size: 16.0,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8.0, 0.0, 0.0, 0.0),
-                                            child: Text(
-                                              'ข้อมูลของฉัน',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    fontSize: 20.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
+                                              child: Text(
+                                                'ข้อมูลของฉัน',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          fontSize: 20.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: wrapWithModel(
-                                        model: _model.bannerAgentComponentModel,
-                                        updateCallback: () =>
-                                            safeSetState(() {}),
-                                        child: BannerAgentComponentWidget(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 8.0, 0.0, 0.0),
-                                      child: wrapWithModel(
-                                        model: _model
-                                            .userAgentDetailComponentModel,
-                                        updateCallback: () =>
-                                            safeSetState(() {}),
-                                        child: UserAgentDetailComponentWidget(
-                                          name:
-                                              '${FFAppState().agentProfileDataType.agentNameTh}',
-                                          lastName:
-                                              '${FFAppState().agentProfileDataType.agentLastnameTh}',
-                                          idCard:
-                                              '${FFAppState().agentProfileDataType.agentTaxId}',
-                                          phoneNumber:
-                                              '${FFAppState().agentProfileDataType.agentMobilePhone}',
-                                          backAccount:
-                                              '${FFAppState().agentProfileDataType.agentBankNo}',
-                                          bankName:
-                                              '${FFAppState().agentProfileDataType.agentBankName}',
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                          width: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else {
+                                              return 400.0;
+                                            }
+                                          }(),
+                                          decoration: BoxDecoration(),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 8.0, 0.0, 0.0),
+                                            child: wrapWithModel(
+                                              model: _model
+                                                  .bannerAgentComponentModel,
+                                              updateCallback: () =>
+                                                  safeSetState(() {}),
+                                              child:
+                                                  BannerAgentComponentWidget(),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                          width: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else {
+                                              return 500.0;
+                                            }
+                                          }(),
+                                          decoration: BoxDecoration(),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 8.0, 0.0, 0.0),
+                                            child: wrapWithModel(
+                                              model: _model
+                                                  .userAgentDetailComponentModel,
+                                              updateCallback: () =>
+                                                  safeSetState(() {}),
+                                              child:
+                                                  UserAgentDetailComponentWidget(
+                                                name:
+                                                    '${FFAppState().agentProfileDataType.agentNameTh}',
+                                                lastName:
+                                                    '${FFAppState().agentProfileDataType.agentLastnameTh}',
+                                                idCard:
+                                                    '${FFAppState().agentProfileDataType.agentTaxId}',
+                                                phoneNumber:
+                                                    '${FFAppState().agentProfileDataType.agentMobilePhone}',
+                                                backAccount:
+                                                    '${FFAppState().agentProfileDataType.agentBankNo}',
+                                                bankName:
+                                                    '${FFAppState().agentProfileDataType.agentBankName}',
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                            wrapWithModel(
-                              model: _model.selectPaymentTransferComponentModel,
-                              updateCallback: () => safeSetState(() {}),
-                              child: SelectPaymentTransferComponentWidget(
-                                reductPercent:
-                                    '${FFAppState().agentProfileDataType.deductionPercent}',
-                                bankAccount:
-                                    '${FFAppState().agentProfileDataType.agentBankNo}',
-                                promptPay:
-                                    '${FFAppState().agentProfileDataType.promptpayNumber}',
-                                paymentMethodDefault:
-                                    '${FFAppState().agentProfileDataType.paymentMethod}',
-                                paymentChannelDefault:
-                                    '${FFAppState().agentProfileDataType.paymentChannel}',
-                                bankName:
-                                    '${FFAppState().agentProfileDataType.agentBankName}',
-                                returnPayment:
-                                    (paymentMethod, paymentChannel) async {
-                                  _model.paymentMethod = paymentMethod;
-                                  _model.paymentChannel = paymentChannel;
-                                  safeSetState(() {});
-                                },
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 0.0),
+                                child: Container(
+                                  width: () {
+                                    if (MediaQuery.sizeOf(context).width <
+                                        kBreakpointSmall) {
+                                      return MediaQuery.sizeOf(context).width;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointMedium) {
+                                      return MediaQuery.sizeOf(context).width;
+                                    } else if (MediaQuery.sizeOf(context)
+                                            .width <
+                                        kBreakpointLarge) {
+                                      return MediaQuery.sizeOf(context).width;
+                                    } else {
+                                      return 500.0;
+                                    }
+                                  }(),
+                                  decoration: BoxDecoration(),
+                                  child: wrapWithModel(
+                                    model: _model
+                                        .selectPaymentTransferComponentModel,
+                                    updateCallback: () => safeSetState(() {}),
+                                    child: SelectPaymentTransferComponentWidget(
+                                      reductPercent:
+                                          '${FFAppState().agentProfileDataType.deductionPercent}',
+                                      bankAccount:
+                                          '${FFAppState().agentProfileDataType.agentBankNo}',
+                                      promptPay:
+                                          '${FFAppState().agentProfileDataType.promptpayNumber}',
+                                      paymentMethodDefault:
+                                          '${FFAppState().agentProfileDataType.paymentMethod}',
+                                      paymentChannelDefault:
+                                          '${FFAppState().agentProfileDataType.paymentChannel}',
+                                      bankName:
+                                          '${FFAppState().agentProfileDataType.agentBankName}',
+                                      returnPayment: (paymentMethod,
+                                          paymentChannel) async {
+                                        _model.paymentMethod = paymentMethod;
+                                        _model.paymentChannel = paymentChannel;
+                                        safeSetState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ].addToEnd(SizedBox(height: 30.0)),
@@ -245,7 +401,19 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                     ),
                   ),
                   Container(
-                    width: double.infinity,
+                    width: () {
+                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                        return MediaQuery.sizeOf(context).width;
+                      } else if (MediaQuery.sizeOf(context).width <
+                          kBreakpointMedium) {
+                        return MediaQuery.sizeOf(context).width;
+                      } else if (MediaQuery.sizeOf(context).width <
+                          kBreakpointLarge) {
+                        return MediaQuery.sizeOf(context).width;
+                      } else {
+                        return 600.0;
+                      }
+                    }(),
                     height: 90.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -262,8 +430,9 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                               24.0, 0.0, 24.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
+                              Flexible(
                                 child: Builder(
                                   builder: (context) => FFButtonWidget(
                                     onPressed: () async {
@@ -432,6 +601,25 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
                                     },
                                     text: 'ยืนยันข้อมูล',
                                     options: FFButtonOptions(
+                                      width: () {
+                                        if (MediaQuery.sizeOf(context).width <
+                                            kBreakpointSmall) {
+                                          return MediaQuery.sizeOf(context)
+                                              .width;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointMedium) {
+                                          return MediaQuery.sizeOf(context)
+                                              .width;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointLarge) {
+                                          return MediaQuery.sizeOf(context)
+                                              .width;
+                                        } else {
+                                          return 300.0;
+                                        }
+                                      }(),
                                       height: 60.0,
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 0.0, 16.0, 0.0),

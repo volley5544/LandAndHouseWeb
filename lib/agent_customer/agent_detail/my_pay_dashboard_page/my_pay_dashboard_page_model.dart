@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'my_pay_dashboard_page_widget.dart' show MyPayDashboardPageWidget;
 import 'package:flutter/material.dart';
@@ -35,8 +36,12 @@ class MyPayDashboardPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (logout agent)] action in MyPayDashboardPage widget.
+  ApiCallResponse? apiResultjxr;
   // Stores action output result for [Backend Call - API (GetCommissionLead)] action in MyPayDashboardPage widget.
   ApiCallResponse? getCommissionLeadApiOutput;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Text widget.
   dynamic advanceSearchOutput;
   // State field(s) for SearchTextField widget.
@@ -51,10 +56,14 @@ class MyPayDashboardPageModel
       choiceChipsValueController?.value = val;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
+  }
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     searchTextFieldFocusNode?.dispose();
     searchTextFieldTextController?.dispose();
   }

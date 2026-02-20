@@ -16,6 +16,7 @@ class AddressDataModelStruct extends FFFirebaseStruct {
     String? keyword,
     int? districtId,
     int? subdistrictId,
+    String? addressDetail,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _provinceId = provinceId,
         _provinceName = provinceName,
@@ -25,6 +26,7 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         _keyword = keyword,
         _districtId = districtId,
         _subdistrictId = subdistrictId,
+        _addressDetail = addressDetail,
         super(firestoreUtilData);
 
   // "province_id" field.
@@ -88,6 +90,13 @@ class AddressDataModelStruct extends FFFirebaseStruct {
 
   bool hasSubdistrictId() => _subdistrictId != null;
 
+  // "address_detail" field.
+  String? _addressDetail;
+  String get addressDetail => _addressDetail ?? '';
+  set addressDetail(String? val) => _addressDetail = val;
+
+  bool hasAddressDetail() => _addressDetail != null;
+
   static AddressDataModelStruct fromMap(Map<String, dynamic> data) =>
       AddressDataModelStruct(
         provinceId: data['province_id'] as String?,
@@ -98,6 +107,7 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         keyword: data['keyword'] as String?,
         districtId: castToType<int>(data['district_id']),
         subdistrictId: castToType<int>(data['subdistrict_id']),
+        addressDetail: data['address_detail'] as String?,
       );
 
   static AddressDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -113,6 +123,7 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         'keyword': _keyword,
         'district_id': _districtId,
         'subdistrict_id': _subdistrictId,
+        'address_detail': _addressDetail,
       }.withoutNulls;
 
   @override
@@ -148,6 +159,10 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         'subdistrict_id': serializeParam(
           _subdistrictId,
           ParamType.int,
+        ),
+        'address_detail': serializeParam(
+          _addressDetail,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -194,6 +209,11 @@ class AddressDataModelStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        addressDetail: deserializeParam(
+          data['address_detail'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -209,7 +229,8 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         zipCode == other.zipCode &&
         keyword == other.keyword &&
         districtId == other.districtId &&
-        subdistrictId == other.subdistrictId;
+        subdistrictId == other.subdistrictId &&
+        addressDetail == other.addressDetail;
   }
 
   @override
@@ -221,7 +242,8 @@ class AddressDataModelStruct extends FFFirebaseStruct {
         zipCode,
         keyword,
         districtId,
-        subdistrictId
+        subdistrictId,
+        addressDetail
       ]);
 }
 
@@ -234,6 +256,7 @@ AddressDataModelStruct createAddressDataModelStruct({
   String? keyword,
   int? districtId,
   int? subdistrictId,
+  String? addressDetail,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -248,6 +271,7 @@ AddressDataModelStruct createAddressDataModelStruct({
       keyword: keyword,
       districtId: districtId,
       subdistrictId: subdistrictId,
+      addressDetail: addressDetail,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

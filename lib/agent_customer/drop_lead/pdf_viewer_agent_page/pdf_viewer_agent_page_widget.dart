@@ -219,7 +219,7 @@ class _PdfViewerAgentPageWidgetState extends State<PdfViewerAgentPageWidget> {
                                                   ),
                                                 }.withoutNulls,
                                                 extra: <String, dynamic>{
-                                                  kTransitionInfoKey:
+                                                  '__transition_info__':
                                                       TransitionInfo(
                                                     hasTransition: true,
                                                     transitionType:

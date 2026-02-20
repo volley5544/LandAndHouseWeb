@@ -176,7 +176,7 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
       context.goNamed(
         AddCustomerLeadWidget.routeName,
         extra: <String, dynamic>{
-          kTransitionInfoKey: TransitionInfo(
+          '__transition_info__': TransitionInfo(
             hasTransition: true,
             transitionType: PageTransitionType.fade,
             duration: Duration(milliseconds: 0),
@@ -191,7 +191,7 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
       context.goNamed(
         AddCustomerLeadWidget.routeName,
         extra: <String, dynamic>{
-          kTransitionInfoKey: TransitionInfo(
+          '__transition_info__': TransitionInfo(
             hasTransition: true,
             transitionType: PageTransitionType.fade,
             duration: Duration(milliseconds: 0),
@@ -211,7 +211,7 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
       context.goNamed(
         AddCustomerLeadWidget.routeName,
         extra: <String, dynamic>{
-          kTransitionInfoKey: TransitionInfo(
+          '__transition_info__': TransitionInfo(
             hasTransition: true,
             transitionType: PageTransitionType.fade,
             duration: Duration(milliseconds: 0),

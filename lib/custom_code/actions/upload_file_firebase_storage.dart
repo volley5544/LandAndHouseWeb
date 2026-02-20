@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
-import '/backend/firebase_storage/storage.dart'; // Imports firebase storage function
+// import '/backend/firebase_storage/storage.dart'; // Imports firebase storage function
+import '/custom_code/firebase_storage.dart';
 
 Future<String?> uploadFileFirebaseStorage(
   String? uploadedFolderName,

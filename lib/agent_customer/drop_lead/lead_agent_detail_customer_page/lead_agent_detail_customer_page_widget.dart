@@ -1,4 +1,5 @@
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/confirm_dialog_component_widget.dart';
@@ -11,6 +12,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/instant_timer.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -55,6 +57,28 @@ class _LeadAgentDetailCustomerPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if ('${FFAppState().platform}' != 'mobile') {
+        if (loggedIn) {
+          if (currentAuthTokenExpiration!.secondsSinceEpoch <
+              getCurrentTimestamp.secondsSinceEpoch) {
+            _model.apiResultjxr = await AgentAPIGroup.logoutAgentCall.call(
+              username: FFAppState().agentCode,
+              url: FFDevEnvironmentValues().isProduction
+                  ? FFAppState().apiUrlDocData.agentWebApiUrl
+                  : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+              tokenHeader: FFDevEnvironmentValues().isProduction
+                  ? FFAppState().apiUrlDocData.agentWebApiToken
+                  : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+            );
+
+            GoRouter.of(context).prepareAuthEvent();
+            await authManager.signOut();
+            GoRouter.of(context).clearRedirectLocation();
+          }
+        } else {
+          context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+        }
+      }
       showDialog(
         context: context,
         builder: (dialogContext) {
@@ -253,451 +277,3834 @@ class _LeadAgentDetailCustomerPageWidgetState
             child: Scaffold(
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-              appBar: AppBar(
-                backgroundColor: FlutterFlowTheme.of(context).secondary,
-                automaticallyImplyLeading: false,
-                leading: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    _model.checkConsentStatusTimer?.cancel();
-                    context.safePop();
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: FlutterFlowTheme.of(context).primary,
-                    size: 24.0,
-                  ),
-                ),
-                actions: [],
-                flexibleSpace: FlexibleSpaceBar(
-                  title: Text(
-                    FFAppState().platform == 'mobile'
-                        ? 'กรอกข้อมูลลูกค้า'
-                        : 'กรุณากรอกข้อมูลให้ถูกต้อง',
-                    style: FlutterFlowTheme.of(context).headlineMedium.override(
-                          fontFamily: 'Noto San Thai',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 18.0,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w600,
+              appBar: () {
+                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                  return true;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointMedium) {
+                  return true;
+                } else if (MediaQuery.sizeOf(context).width <
+                    kBreakpointLarge) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }()
+                  ? AppBar(
+                      backgroundColor: FlutterFlowTheme.of(context).secondary,
+                      automaticallyImplyLeading: false,
+                      leading: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          _model.checkConsentStatusTimer?.cancel();
+                          context.safePop();
+                        },
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 24.0,
                         ),
-                  ),
-                  centerTitle: true,
-                  expandedTitleScale: 1.0,
-                ),
-                elevation: 2.0,
-              ),
+                      ),
+                      actions: [],
+                      flexibleSpace: FlexibleSpaceBar(
+                        title: Text(
+                          FFAppState().platform == 'mobile'
+                              ? 'กรอกข้อมูลลูกค้า'
+                              : 'กรุณากรอกข้อมูลให้ถูกต้อง',
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Noto San Thai',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 18.0,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                        ),
+                        centerTitle: true,
+                        expandedTitleScale: 1.0,
+                      ),
+                      elevation: 2.0,
+                    )
+                  : null,
               body: SafeArea(
                 top: true,
-                child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    constraints: BoxConstraints(
-                      maxWidth: 670.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    wrapWithModel(
+                      model: _model.webAppBarComponentModel,
+                      updateCallback: () => safeSetState(() {}),
+                      child: WebAppBarComponentWidget(),
                     ),
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 12.0, 0.0),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  wrapWithModel(
-                                    model: _model.progressBarComponentModel,
-                                    updateCallback: () => safeSetState(() {}),
-                                    child: ProgressBarComponentWidget(
-                                      step: '1',
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          height: 22.0,
-                                          child: VerticalDivider(
-                                            thickness: 4.0,
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 0.0),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 12.0, 0.0),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Container(
+                                          width: () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return MediaQuery.sizeOf(context)
+                                                  .width;
+                                            } else {
+                                              return 670.0;
+                                            }
+                                          }(),
+                                          decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .primary,
+                                                .secondaryBackground,
                                           ),
-                                        ),
-                                        Text(
-                                          'ข้อมูลของลูกค้า',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              wrapWithModel(
+                                                model: _model
+                                                    .progressBarComponentModel,
+                                                updateCallback: () =>
+                                                    safeSetState(() {}),
+                                                child:
+                                                    ProgressBarComponentWidget(
+                                                  step: '1',
+                                                ),
                                               ),
-                                        ),
-                                      ].divide(SizedBox(width: 8.0)),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                'ชื่อ',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: 22.0,
+                                                      child: VerticalDivider(
+                                                        thickness: 4.0,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      'ข้อมูลของลูกค้า',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ].divide(
+                                                      SizedBox(width: 8.0)),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'ชื่อ',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
                                                         ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                '*',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      8.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            '*',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
                                                         ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 50.0,
+                                                            decoration:
+                                                                BoxDecoration(),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              child:
+                                                                  TextFormField(
+                                                                controller: _model
+                                                                    .firstNameTextController,
+                                                                focusNode: _model
+                                                                    .firstNameFocusNode,
+                                                                autofocus:
+                                                                    false,
+                                                                textCapitalization:
+                                                                    TextCapitalization
+                                                                        .words,
+                                                                obscureText:
+                                                                    false,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  labelStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelLarge
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                  hintText:
+                                                                      'ระบุชื่อ',
+                                                                  hintStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                  enabledBorder:
+                                                                      UnderlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      width:
+                                                                          2.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              4.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              4.0),
+                                                                    ),
+                                                                  ),
+                                                                  focusedBorder:
+                                                                      UnderlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      width:
+                                                                          2.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              4.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              4.0),
+                                                                    ),
+                                                                  ),
+                                                                  errorBorder:
+                                                                      UnderlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          2.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              4.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              4.0),
+                                                                    ),
+                                                                  ),
+                                                                  focusedErrorBorder:
+                                                                      UnderlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      width:
+                                                                          2.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              4.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              4.0),
+                                                                    ),
+                                                                  ),
+                                                                  contentPadding:
+                                                                      EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          16.0,
+                                                                          16.0,
+                                                                          8.0),
+                                                                ),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          14.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      lineHeight:
+                                                                          3.0,
+                                                                    ),
+                                                                validator: _model
+                                                                    .firstNameTextControllerValidator
+                                                                    .asValidator(
+                                                                        context),
+                                                                inputFormatters: [
+                                                                  if (!isAndroid &&
+                                                                      !isiOS)
+                                                                    TextInputFormatter.withFunction(
+                                                                        (oldValue,
+                                                                            newValue) {
+                                                                      return TextEditingValue(
+                                                                        selection:
+                                                                            newValue.selection,
+                                                                        text: newValue
+                                                                            .text
+                                                                            .toCapitalization(TextCapitalization.words),
+                                                                      );
+                                                                    }),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Builder(
+                                                          builder: (context) =>
+                                                              Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                            child: InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                var _shouldSetState =
+                                                                    false;
+                                                                if (FFAppState()
+                                                                        .platform ==
+                                                                    'mobile') {
+                                                                  await actions
+                                                                      .openCameraWebview(
+                                                                    'idCard',
+                                                                    'idCardOCR',
+                                                                  );
+                                                                } else {
+                                                                  await showModalBottomSheet(
+                                                                    isScrollControlled:
+                                                                        true,
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .transparent,
+                                                                    isDismissible:
+                                                                        false,
+                                                                    enableDrag:
+                                                                        false,
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (context) {
+                                                                      return GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          FocusScope.of(context)
+                                                                              .unfocus();
+                                                                          FocusManager
+                                                                              .instance
+                                                                              .primaryFocus
+                                                                              ?.unfocus();
+                                                                        },
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              MediaQuery.viewInsetsOf(context),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                double.infinity,
+                                                                            child:
+                                                                                CapturePictureComponentWidget(
+                                                                              imageType: 'idCard',
+                                                                              title: 'ถ่ายรูปภาพบัตรประชาชน',
+                                                                              descriptionText: 'กรุณาถ่ายรูปโดยให้บัตรประชาชนพอดีกับกรอบ',
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  ).then((value) =>
+                                                                      safeSetState(() =>
+                                                                          _model.cameraTriggerComponentReturn =
+                                                                              value));
+
+                                                                  _shouldSetState =
+                                                                      true;
+                                                                  if (!(_model.cameraTriggerComponentReturn !=
+                                                                          null &&
+                                                                      (_model
+                                                                              .cameraTriggerComponentReturn
+                                                                              ?.bytes
+                                                                              ?.isNotEmpty ??
+                                                                          false))) {
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                  _model.idCardFile =
+                                                                      _model
+                                                                          .cameraTriggerComponentReturn;
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (dialogContext) {
+                                                                      return Dialog(
+                                                                        elevation:
+                                                                            0,
+                                                                        insetPadding:
+                                                                            EdgeInsets.zero,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        alignment:
+                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              LoadingWidget(),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+
+                                                                  _model.visionOutputThaiId =
+                                                                      await SrisawadApiGroup
+                                                                          .visionThaiIdCall
+                                                                          .call(
+                                                                    file: _model
+                                                                        .idCardFile,
+                                                                    apiUrl:
+                                                                        'https://dev.swpfin.com:7076',
+                                                                  );
+
+                                                                  _shouldSetState =
+                                                                      true;
+                                                                  if ((_model.visionOutputThaiId
+                                                                              ?.statusCode ??
+                                                                          200) !=
+                                                                      200) {
+                                                                    await showDialog(
+                                                                      barrierDismissible:
+                                                                          false,
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (dialogContext) {
+                                                                        return Dialog(
+                                                                          elevation:
+                                                                              0,
+                                                                          insetPadding:
+                                                                              EdgeInsets.zero,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          alignment:
+                                                                              AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                          child:
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              FocusScope.of(dialogContext).unfocus();
+                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                            },
+                                                                            child:
+                                                                                ErrorMessageComponentWidget(
+                                                                              textMessage: 'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    );
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                  FFAppState()
+                                                                      .updateSaveLeadAgentDataStruct(
+                                                                    (e) => e
+                                                                      ..firstName =
+                                                                          getJsonField(
+                                                                        (_model.visionOutputThaiId?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.first_name''',
+                                                                      ).toString()
+                                                                      ..lastName =
+                                                                          getJsonField(
+                                                                        (_model.visionOutputThaiId?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.last_name''',
+                                                                      ).toString()
+                                                                      ..registerId =
+                                                                          getJsonField(
+                                                                        (_model.visionOutputThaiId?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.thai_id''',
+                                                                      ).toString(),
+                                                                  );
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  safeSetState(
+                                                                      () {
+                                                                    _model.firstNameTextController
+                                                                            ?.text =
+                                                                        FFAppState()
+                                                                            .saveLeadAgentData
+                                                                            .firstName;
+                                                                  });
+                                                                  safeSetState(
+                                                                      () {
+                                                                    _model.lastNameTextController
+                                                                            ?.text =
+                                                                        FFAppState()
+                                                                            .saveLeadAgentData
+                                                                            .lastName;
+                                                                  });
+                                                                  safeSetState(
+                                                                      () {
+                                                                    _model.idcardTextController
+                                                                            ?.text =
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                      functions
+                                                                          .showThaiIdNumberForm(
+                                                                              '${FFAppState().saveLeadAgentData.registerId}'),
+                                                                      'idcard',
+                                                                    );
+                                                                    _model
+                                                                        .idcardMask
+                                                                        .updateMask(
+                                                                      newValue:
+                                                                          TextEditingValue(
+                                                                        text: _model
+                                                                            .idcardTextController!
+                                                                            .text,
+                                                                      ),
+                                                                    );
+                                                                  });
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                }
+
+                                                                if (_shouldSetState)
+                                                                  safeSetState(
+                                                                      () {});
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .camera_alt,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                size: 36.0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 50.0,
-                                                decoration: BoxDecoration(),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          16.0, 0.0, 16.0, 0.0),
-                                                  child: TextFormField(
-                                                    controller: _model
-                                                        .firstNameTextController,
-                                                    focusNode: _model
-                                                        .firstNameFocusNode,
-                                                    autofocus: false,
-                                                    textCapitalization:
-                                                        TextCapitalization
-                                                            .words,
-                                                    obscureText: false,
-                                                    decoration: InputDecoration(
-                                                      labelStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelLarge
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'นามสกุล',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      8.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            '*',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      width: double.infinity,
+                                                      height: 50.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .lastNameTextController,
+                                                          focusNode: _model
+                                                              .lastNameFocusNode,
+                                                          autofocus: false,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .words,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'ระบุนามสกุล',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        16.0,
+                                                                        16.0,
+                                                                        8.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Noto San Thai',
+                                                                fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
+                                                                lineHeight: 1.0,
                                                               ),
-                                                      hintText: 'ระบุชื่อ',
-                                                      hintStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .labelMedium
+                                                          validator: _model
+                                                              .lastNameTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                          inputFormatters: [
+                                                            if (!isAndroid &&
+                                                                !isiOS)
+                                                              TextInputFormatter
+                                                                  .withFunction(
+                                                                      (oldValue,
+                                                                          newValue) {
+                                                                return TextEditingValue(
+                                                                  selection:
+                                                                      newValue
+                                                                          .selection,
+                                                                  text: newValue
+                                                                      .text
+                                                                      .toCapitalization(
+                                                                          TextCapitalization
+                                                                              .words),
+                                                                );
+                                                              }),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'เลขบัตรประชาชน',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      8.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            '*',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      width: double.infinity,
+                                                      height: 50.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .idcardTextController,
+                                                          focusNode: _model
+                                                              .idcardFocusNode,
+                                                          autofocus: false,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .words,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'ระบุเลขบัตรประชาชน',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        16.0,
+                                                                        16.0,
+                                                                        8.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyLarge
                                                               .override(
                                                                 fontFamily:
                                                                     'Noto San Thai',
-                                                                fontSize: 12.0,
+                                                                fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.0,
+                                                                lineHeight: 1.0,
                                                               ),
-                                                      enabledBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .alternate,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  4.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  4.0),
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          validator: _model
+                                                              .idcardTextControllerValidator
+                                                              .asValidator(
+                                                                  context),
+                                                          inputFormatters: [
+                                                            _model.idcardMask
+                                                          ],
                                                         ),
                                                       ),
-                                                      focusedBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          width: 2.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 16.0, 0.0, 0.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            'เบอร์โทรศัพท์',
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
                                                         ),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  4.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  4.0),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      8.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            '*',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      width: double.infinity,
+                                                      height: 50.0,
+                                                      decoration:
+                                                          BoxDecoration(),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: TextFormField(
+                                                          controller: _model
+                                                              .textController4,
+                                                          focusNode: _model
+                                                              .textFieldFocusNode1,
+                                                          autofocus: false,
+                                                          textCapitalization:
+                                                              TextCapitalization
+                                                                  .words,
+                                                          obscureText: false,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            hintText:
+                                                                'ระบุเบอร์โทรศัพท์',
+                                                            hintStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                            enabledBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            errorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            focusedErrorBorder:
+                                                                UnderlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .error,
+                                                                width: 2.0,
+                                                              ),
+                                                              borderRadius:
+                                                                  const BorderRadius
+                                                                      .only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        4.0),
+                                                              ),
+                                                            ),
+                                                            contentPadding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0.0,
+                                                                        16.0,
+                                                                        16.0,
+                                                                        8.0),
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyLarge
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                fontSize: 14.0,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                lineHeight: 1.0,
+                                                              ),
+                                                          keyboardType:
+                                                              TextInputType
+                                                                  .number,
+                                                          validator: _model
+                                                              .textController4Validator
+                                                              .asValidator(
+                                                                  context),
+                                                          inputFormatters: [
+                                                            _model
+                                                                .textFieldMask1
+                                                          ],
                                                         ),
                                                       ),
-                                                      errorBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  4.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  4.0),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              if (((_model
+                                                              .customerConsentFlag ==
+                                                          'P') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'N') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'Y')) &&
+                                                  (FFAppState().platform ==
+                                                      'mobile'))
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  12.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'สถานะความยินยอมลูกค้า :',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                          Text(
+                                                            () {
+                                                              if (_model
+                                                                      .customerConsentFlag ==
+                                                                  'P') {
+                                                                return 'รอลูกค้ายืนยัน';
+                                                              } else if (_model
+                                                                      .customerConsentFlag ==
+                                                                  'N') {
+                                                                return 'ลูกค้าไม่ยินยอม';
+                                                              } else if (_model
+                                                                      .customerConsentFlag ==
+                                                                  'Y') {
+                                                                return 'ลูกค้ายินยอม';
+                                                              } else {
+                                                                return '-';
+                                                              }
+                                                            }(),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: () {
+                                                                    if (_model
+                                                                            .customerConsentFlag ==
+                                                                        'P') {
+                                                                      return FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText;
+                                                                    } else if (_model
+                                                                            .customerConsentFlag ==
+                                                                        'N') {
+                                                                      return FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error;
+                                                                    } else if (_model
+                                                                            .customerConsentFlag ==
+                                                                        'Y') {
+                                                                      return Color(
+                                                                          0xFF4DBA2D);
+                                                                    } else {
+                                                                      return FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                    if (_model
+                                                            .customerConsentFlag ==
+                                                        'N')
+                                                      Container(
+                                                        width: double.infinity,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      4.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(
+                                                                  '***ลูกค้าไม่ยินยอมให้เก็บข้อมูลส่วนตัว ท่านไม่สามารถบันทึกข้อมูลลูกค้าต่อได้',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ].divide(SizedBox(
+                                                                width: 8.0)),
+                                                          ),
                                                         ),
                                                       ),
-                                                      focusedErrorBorder:
-                                                          UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  4.0),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  4.0),
+                                                    if (_model
+                                                            .customerConsentFlag ==
+                                                        'P')
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    12.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              'ระยะเวลาลูกค้ากดยืนยัน ก่อนหมดอายุ : ',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                            FlutterFlowTimer(
+                                                              initialTime: _model
+                                                                  .timerInitialTimeMs,
+                                                              getDisplayTime: (value) =>
+                                                                  StopWatchTimer
+                                                                      .getDisplayTime(
+                                                                value,
+                                                                hours: false,
+                                                                milliSecond:
+                                                                    false,
+                                                              ),
+                                                              controller: _model
+                                                                  .timerController,
+                                                              updateStateInterval:
+                                                                  Duration(
+                                                                      milliseconds:
+                                                                          1000),
+                                                              onChanged: (value,
+                                                                  displayTime,
+                                                                  shouldUpdate) {
+                                                                _model.timerMilliseconds =
+                                                                    value;
+                                                                _model.timerValue =
+                                                                    displayTime;
+                                                                if (shouldUpdate)
+                                                                  safeSetState(
+                                                                      () {});
+                                                              },
+                                                              onEnded:
+                                                                  () async {
+                                                                _model
+                                                                    .checkConsentStatusTimer
+                                                                    ?.cancel();
+                                                                _model.customerConsentFlag =
+                                                                    null;
+                                                                safeSetState(
+                                                                    () {});
+                                                              },
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .headlineSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    fontSize:
+                                                                        20.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ].divide(SizedBox(
+                                                              width: 12.0)),
                                                         ),
                                                       ),
-                                                      contentPadding:
+                                                  ],
+                                                ),
+                                              if (!((_model
+                                                              .customerConsentFlag ==
+                                                          'P') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'N') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'Y')) &&
+                                                  (FFAppState().platform ==
+                                                      'mobile') &&
+                                                  _model.appConfig!.isUseOtp)
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'ระบบจะส่ง OTP ไปยังเบอร์โทรศัพท์ที่ระบุไว้ด้านบน',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'กรุณาให้เพื่อนของคุณทำรายการจนกว่าจะเสร็จสิ้น',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
                                                                   0.0,
                                                                   16.0,
-                                                                  16.0,
-                                                                  8.0),
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'กรุณาอย่าปิดหน้าจอ จนกว่าเพื่อนของคุณจะทำรายการเสร็จสิ้น',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          lineHeight: 3.0,
-                                                        ),
-                                                    validator: _model
-                                                        .firstNameTextControllerValidator
-                                                        .asValidator(context),
-                                                    inputFormatters: [
-                                                      if (!isAndroid && !isiOS)
-                                                        TextInputFormatter
-                                                            .withFunction(
-                                                                (oldValue,
-                                                                    newValue) {
-                                                          return TextEditingValue(
-                                                            selection: newValue
-                                                                .selection,
-                                                            text: newValue.text
-                                                                .toCapitalization(
-                                                                    TextCapitalization
-                                                                        .words),
-                                                          );
-                                                        }),
-                                                    ],
-                                                  ),
+                                                  ],
                                                 ),
-                                              ),
-                                            ),
-                                            Builder(
-                                              builder: (context) => Padding(
+                                              Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        0.0, 0.0, 16.0, 0.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    var _shouldSetState = false;
-                                                    if (FFAppState().platform ==
-                                                        'mobile') {
-                                                      await actions
-                                                          .openCameraWebview(
-                                                        'idCard',
-                                                        'idCardOCR',
-                                                      );
-                                                    } else {
-                                                      await showModalBottomSheet(
-                                                        isScrollControlled:
-                                                            true,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        isDismissible: false,
-                                                        enableDrag: false,
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
+                                                        0.0, 16.0, 0.0, 8.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Builder(
+                                                      builder: (context) =>
+                                                          FFButtonWidget(
+                                                        onPressed:
+                                                            ((_model.customerConsentFlag ==
+                                                                        'P') ||
+                                                                    (_model.customerConsentFlag ==
+                                                                        'N'))
+                                                                ? null
+                                                                : () async {
+                                                                    var _shouldSetState =
+                                                                        false;
+                                                                    if (!(_model.firstNameTextController.text !=
+                                                                            '')) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'กรุณาระบุชื่อ',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    if (!(_model.lastNameTextController.text !=
+                                                                            '')) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'กรุณาระบุนามสกุล',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    if (!(_model.idcardTextController.text !=
+                                                                            '')) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'กรุณาระบุเลขบัตรประชาชน',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    if (!functions.checkIdCard(functions.removeDash(_model
+                                                                        .idcardTextController
+                                                                        .text))!) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'เลขบัตรประชาชนไม่ถูกต้อง',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    if (!(_model.textController4.text !=
+                                                                            '')) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'กรุณาระบุเบอร์โทรศัพท์',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    if (!functions.checkPhoneNumberChar(functions.removeDash(_model
+                                                                        .textController4
+                                                                        .text))!) {
+                                                                      await showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (dialogContext) {
+                                                                          return Dialog(
+                                                                            elevation:
+                                                                                0,
+                                                                            insetPadding:
+                                                                                EdgeInsets.zero,
+                                                                            backgroundColor:
+                                                                                Colors.transparent,
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                            child:
+                                                                                GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: ErrorMessageComponentWidget(
+                                                                                textMessage: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      );
+
+                                                                      if (_shouldSetState)
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+                                                                    FFAppState()
+                                                                            .saveLeadAgentData =
+                                                                        SaveLeadAgentDataModelStruct(
+                                                                      agentGroupId: FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .agentGroupId,
+                                                                      agentId: FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .id
+                                                                          .toString(),
+                                                                      agentCode: FFAppState()
+                                                                          .agentProfileDataType
+                                                                          .agentCode,
+                                                                      firstName: _model
+                                                                          .firstNameTextController
+                                                                          .text,
+                                                                      lastName: _model
+                                                                          .lastNameTextController
+                                                                          .text,
+                                                                      registerId: functions.removeDash(_model
+                                                                          .idcardTextController
+                                                                          .text),
+                                                                      mobilePhoneNumber: functions.removeDash(_model
+                                                                          .textController4
+                                                                          .text),
+                                                                    );
+                                                                    safeSetState(
+                                                                        () {});
+                                                                    if (_model
+                                                                        .appConfig!
+                                                                        .isUseOtp) {
+                                                                      if (FFAppState()
+                                                                              .platform ==
+                                                                          'mobile') {
+                                                                        if (_model.customerConsentFlag ==
+                                                                            'Y') {
+                                                                          FFAppState()
+                                                                              .updateSaveLeadAgentDataStruct(
+                                                                            (e) => e
+                                                                              ..smsCode = _model.smsCode,
+                                                                          );
+                                                                          safeSetState(
+                                                                              () {});
+                                                                          if (widget.product ==
+                                                                              'L') {
+                                                                            context.pushNamed(LeadAgentDetailLHPageWidget.routeName);
+                                                                          } else {
+                                                                            context.pushNamed(
+                                                                              LeadAgentDetailCarPageWidget.routeName,
+                                                                              queryParameters: {
+                                                                                'product': serializeParam(
+                                                                                  widget.product,
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                              }.withoutNulls,
+                                                                            );
+                                                                          }
+
+                                                                          if (_shouldSetState)
+                                                                            safeSetState(() {});
+                                                                          return;
+                                                                        }
+                                                                        _model.sendConsentSmsApiOutput = await AgentAPIGroup
+                                                                            .sendConsentSmsApiCall
+                                                                            .call(
+                                                                          agentCode: FFAppState()
+                                                                              .agentProfileDataType
+                                                                              .agentCode,
+                                                                          firstName: _model
+                                                                              .firstNameTextController
+                                                                              .text,
+                                                                          lastName: _model
+                                                                              .lastNameTextController
+                                                                              .text,
+                                                                          phoneNumber: functions.removeDash(_model
+                                                                              .textController4
+                                                                              .text),
+                                                                          registerId: functions.removeDash(_model
+                                                                              .idcardTextController
+                                                                              .text),
+                                                                          pathConsent: FFDevEnvironmentValues().isProduction
+                                                                              ? FFAppState().apiUrlDocData.agentWebCustomerConsent
+                                                                              : FFAppState().apiUrlDocData.agentWebCustomerConsentUat,
+                                                                          url: FFDevEnvironmentValues().isProduction
+                                                                              ? FFAppState().apiUrlDocData.agentWebApiUrl
+                                                                              : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+                                                                          tokenHeader: FFDevEnvironmentValues().isProduction
+                                                                              ? FFAppState().apiUrlDocData.agentWebApiToken
+                                                                              : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+                                                                        );
+
+                                                                        _shouldSetState =
+                                                                            true;
+                                                                        if ((_model.sendConsentSmsApiOutput?.statusCode ??
+                                                                                200) !=
+                                                                            200) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (dialogContext) {
+                                                                              return Dialog(
+                                                                                elevation: 0,
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(dialogContext).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: ErrorMessageComponentWidget(
+                                                                                    textMessage: 'พบข้อผิดพลาด Connection(${(_model.sendConsentSmsApiOutput?.statusCode ?? 200).toString()})',
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          if (_shouldSetState)
+                                                                            safeSetState(() {});
+                                                                          return;
+                                                                        }
+                                                                        if ('${getJsonField(
+                                                                              (_model.sendConsentSmsApiOutput?.jsonBody ?? ''),
+                                                                              r'''$.code''',
+                                                                            ).toString()}' !=
+                                                                            '200') {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (dialogContext) {
+                                                                              return Dialog(
+                                                                                elevation: 0,
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(dialogContext).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: ErrorMessageComponentWidget(
+                                                                                    textMessage: '${getJsonField(
+                                                                                      (_model.sendConsentSmsApiOutput?.jsonBody ?? ''),
+                                                                                      r'''$.message''',
+                                                                                    ).toString()}',
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          if (_shouldSetState)
+                                                                            safeSetState(() {});
+                                                                          return;
+                                                                        }
+                                                                        _model.customerConsentFlag =
+                                                                            'P';
+                                                                        safeSetState(
+                                                                            () {});
+                                                                        _model
+                                                                            .timerController
+                                                                            .onResetTimer();
+
+                                                                        await Future
+                                                                            .delayed(
+                                                                          Duration(
+                                                                            milliseconds:
+                                                                                200,
+                                                                          ),
+                                                                        );
+                                                                        _model
+                                                                            .timerController
+                                                                            .onStartTimer();
+                                                                        _model.checkConsentStatusTimer =
+                                                                            InstantTimer.periodic(
+                                                                          duration:
+                                                                              Duration(milliseconds: 5000),
+                                                                          callback:
+                                                                              (timer) async {
+                                                                            _model.checkConsentStatusApiOutput =
+                                                                                await AgentAPIGroup.checkConsentStatusApiCall.call(
+                                                                              agentCode: FFAppState().agentProfileDataType.agentCode,
+                                                                              phoneNumber: functions.removeDash(_model.textController4.text),
+                                                                              token: AgentAPIGroup.sendConsentSmsApiCall.token(
+                                                                                (_model.sendConsentSmsApiOutput?.jsonBody ?? ''),
+                                                                              ),
+                                                                              url: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiUrl : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+                                                                              tokenHeader: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiToken : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+                                                                            );
+
+                                                                            _shouldSetState =
+                                                                                true;
+                                                                            if ((_model.checkConsentStatusApiOutput?.statusCode ?? 200) !=
+                                                                                200) {
+                                                                              await showDialog(
+                                                                                context: context,
+                                                                                builder: (dialogContext) {
+                                                                                  return Dialog(
+                                                                                    elevation: 0,
+                                                                                    insetPadding: EdgeInsets.zero,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                    child: GestureDetector(
+                                                                                      onTap: () {
+                                                                                        FocusScope.of(dialogContext).unfocus();
+                                                                                        FocusManager.instance.primaryFocus?.unfocus();
+                                                                                      },
+                                                                                      child: ErrorMessageComponentWidget(
+                                                                                        textMessage: 'พบข้อผิดพลาด Connection(${(_model.checkConsentStatusApiOutput?.statusCode ?? 200).toString()})',
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              );
+
+                                                                              if (_shouldSetState)
+                                                                                safeSetState(() {});
+                                                                              return;
+                                                                            }
+                                                                            if ('${getJsonField(
+                                                                                  (_model.checkConsentStatusApiOutput?.jsonBody ?? ''),
+                                                                                  r'''$.code''',
+                                                                                ).toString()}' !=
+                                                                                '404') {
+                                                                              _model.customerConsentFlag = '${AgentAPIGroup.checkConsentStatusApiCall.isConsent(
+                                                                                (_model.checkConsentStatusApiOutput?.jsonBody ?? ''),
+                                                                              )}';
+                                                                              _model.smsCode = '${AgentAPIGroup.checkConsentStatusApiCall.token(
+                                                                                (_model.checkConsentStatusApiOutput?.jsonBody ?? ''),
+                                                                              )}';
+                                                                              safeSetState(() {});
+                                                                            } else {
+                                                                              await showDialog(
+                                                                                context: context,
+                                                                                builder: (dialogContext) {
+                                                                                  return Dialog(
+                                                                                    elevation: 0,
+                                                                                    insetPadding: EdgeInsets.zero,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                    child: GestureDetector(
+                                                                                      onTap: () {
+                                                                                        FocusScope.of(dialogContext).unfocus();
+                                                                                        FocusManager.instance.primaryFocus?.unfocus();
+                                                                                      },
+                                                                                      child: ErrorMessageComponentWidget(
+                                                                                        textMessage: '${getJsonField(
+                                                                                          (_model.checkConsentStatusApiOutput?.jsonBody ?? ''),
+                                                                                          r'''$.message''',
+                                                                                        ).toString()}',
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              );
+
+                                                                              if (_shouldSetState)
+                                                                                safeSetState(() {});
+                                                                              return;
+                                                                            }
+
+                                                                            if (_model.customerConsentFlag !=
+                                                                                'P') {
+                                                                              _model.timerController.onStopTimer();
+                                                                              _model.timerController.onResetTimer();
+
+                                                                              _model.checkConsentStatusTimer?.cancel();
+                                                                            }
+                                                                          },
+                                                                          startImmediately:
+                                                                              false,
+                                                                        );
+                                                                      } else {
+                                                                        context
+                                                                            .pushNamed(
+                                                                          LeadAgentConsentPageWidget
+                                                                              .routeName,
+                                                                          queryParameters:
+                                                                              {
+                                                                            'ref':
+                                                                                serializeParam(
+                                                                              '',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'phone':
+                                                                                serializeParam(
+                                                                              functions.removeDash(_model.textController4.text),
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'fromPage':
+                                                                                serializeParam(
+                                                                              'customer',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'product':
+                                                                                serializeParam(
+                                                                              widget.product,
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'agent':
+                                                                                serializeParam(
+                                                                              FFAppState().saveLeadAgentData.agentCode,
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'linkId':
+                                                                                serializeParam(
+                                                                              '',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                          }.withoutNulls,
+                                                                        );
+                                                                      }
+                                                                    } else {
+                                                                      if ((FFAppState().platform ==
+                                                                              'mobile') ||
+                                                                          loggedIn) {
+                                                                        if (widget.product ==
+                                                                            'L') {
+                                                                          context
+                                                                              .pushNamed(LeadAgentDetailLHPageWidget.routeName);
+                                                                        } else {
+                                                                          context
+                                                                              .pushNamed(
+                                                                            LeadAgentDetailCarPageWidget.routeName,
+                                                                            queryParameters:
+                                                                                {
+                                                                              'product': serializeParam(
+                                                                                widget.product,
+                                                                                ParamType.String,
+                                                                              ),
+                                                                            }.withoutNulls,
+                                                                          );
+                                                                        }
+                                                                      } else {
+                                                                        context
+                                                                            .pushNamed(
+                                                                          LeadAgentConsentPageWidget
+                                                                              .routeName,
+                                                                          queryParameters:
+                                                                              {
+                                                                            'ref':
+                                                                                serializeParam(
+                                                                              '',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'phone':
+                                                                                serializeParam(
+                                                                              functions.removeDash(_model.textController4.text),
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'fromPage':
+                                                                                serializeParam(
+                                                                              'customer',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'product':
+                                                                                serializeParam(
+                                                                              widget.product,
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'agent':
+                                                                                serializeParam(
+                                                                              FFAppState().saveLeadAgentData.agentCode,
+                                                                              ParamType.String,
+                                                                            ),
+                                                                            'linkId':
+                                                                                serializeParam(
+                                                                              '',
+                                                                              ParamType.String,
+                                                                            ),
+                                                                          }.withoutNulls,
+                                                                        );
+                                                                      }
+                                                                    }
+
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                  },
+                                                        text: (_model
+                                                                        .customerConsentFlag !=
+                                                                    'N') &&
+                                                                (_model.customerConsentFlag !=
+                                                                    'Y') &&
+                                                                _model
+                                                                    .appConfig!
+                                                                    .isUseOtp
+                                                            ? 'ส่งข้อความยินยอมการเก็บข้อมูลส่วนตัว'
+                                                            : 'ถัดไป',
+                                                        options:
+                                                            FFButtonOptions(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 40.0,
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          iconPadding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          color: (_model
+                                                                          .customerConsentFlag !=
+                                                                      'N') &&
+                                                                  (_model.customerConsentFlag !=
+                                                                      'Y') &&
+                                                                  _model
+                                                                      .appConfig!
+                                                                      .isUseOtp
+                                                              ? Color(
+                                                                  0xFFFCEFE4)
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                          textStyle:
+                                                              FlutterFlowTheme.of(
                                                                       context)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child: Padding(
-                                                              padding: MediaQuery
-                                                                  .viewInsetsOf(
-                                                                      context),
-                                                              child: Container(
-                                                                height: double
-                                                                    .infinity,
+                                                                  .titleSmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: (_model.customerConsentFlag != 'N') &&
+                                                                            (_model.customerConsentFlag !=
+                                                                                'Y') &&
+                                                                            _model
+                                                                                .appConfig!.isUseOtp
+                                                                        ? FlutterFlowTheme.of(context)
+                                                                            .primary
+                                                                        : FlutterFlowTheme.of(context)
+                                                                            .secondaryBackground,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                          elevation: 0.0,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0),
+                                                          disabledColor:
+                                                              Color(0x7FDB771A),
+                                                          disabledTextColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .secondary,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              if (((_model
+                                                              .customerConsentFlag ==
+                                                          'P') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'N') ||
+                                                      (_model.customerConsentFlag ==
+                                                          'Y')) &&
+                                                  (FFAppState().platform ==
+                                                      'mobile'))
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  12.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'ระบบจะส่ง OTP ไปยังเบอร์โทรศัพท์ที่ระบุไว้ด้านบน',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'กรุณาให้เพื่อนของคุณทำรายการจนกว่าจะเสร็จสิ้น',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'กรุณาอย่าปิดหน้าจอ จนกว่าเพื่อนของคุณจะทำรายการเสร็จสิ้น',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
+                                                        ].divide(SizedBox(
+                                                            width: 8.0)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              if (false)
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    if (false)
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    'วงเงินที่ต้องการ',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .start,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    '*',
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).error,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Container(
+                                                              width: double
+                                                                  .infinity,
+                                                              height: 50.0,
+                                                              decoration:
+                                                                  BoxDecoration(),
+                                                              child: Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
                                                                 child:
-                                                                    CapturePictureComponentWidget(
-                                                                  imageType:
-                                                                      'idCard',
-                                                                  title:
-                                                                      'ถ่ายรูปภาพบัตรประชาชน',
-                                                                  descriptionText:
-                                                                      'กรุณาถ่ายรูปโดยให้บัตรประชาชนพอดีกับกรอบ',
+                                                                    TextFormField(
+                                                                  controller: _model
+                                                                      .textController5,
+                                                                  focusNode: _model
+                                                                      .textFieldFocusNode2,
+                                                                  autofocus:
+                                                                      false,
+                                                                  textCapitalization:
+                                                                      TextCapitalization
+                                                                          .words,
+                                                                  obscureText:
+                                                                      false,
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    labelStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelLarge
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                    hintText:
+                                                                        'ระบุวงเงินที่ต้องการ',
+                                                                    hintStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .labelMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                    enabledBorder:
+                                                                        UnderlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                        width:
+                                                                            2.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .only(
+                                                                        topLeft:
+                                                                            Radius.circular(4.0),
+                                                                        topRight:
+                                                                            Radius.circular(4.0),
+                                                                      ),
+                                                                    ),
+                                                                    focusedBorder:
+                                                                        UnderlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        width:
+                                                                            2.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .only(
+                                                                        topLeft:
+                                                                            Radius.circular(4.0),
+                                                                        topRight:
+                                                                            Radius.circular(4.0),
+                                                                      ),
+                                                                    ),
+                                                                    errorBorder:
+                                                                        UnderlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                        width:
+                                                                            2.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .only(
+                                                                        topLeft:
+                                                                            Radius.circular(4.0),
+                                                                        topRight:
+                                                                            Radius.circular(4.0),
+                                                                      ),
+                                                                    ),
+                                                                    focusedErrorBorder:
+                                                                        UnderlineInputBorder(
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                        width:
+                                                                            2.0,
+                                                                      ),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .only(
+                                                                        topLeft:
+                                                                            Radius.circular(4.0),
+                                                                        topRight:
+                                                                            Radius.circular(4.0),
+                                                                      ),
+                                                                    ),
+                                                                    contentPadding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            16.0,
+                                                                            16.0,
+                                                                            8.0),
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyLarge
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            14.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        lineHeight:
+                                                                            1.0,
+                                                                      ),
+                                                                  maxLines:
+                                                                      null,
+                                                                  keyboardType:
+                                                                      TextInputType
+                                                                          .number,
+                                                                  validator: _model
+                                                                      .textController5Validator
+                                                                      .asValidator(
+                                                                          context),
+                                                                  inputFormatters: [
+                                                                    if (!isAndroid &&
+                                                                        !isiOS)
+                                                                      TextInputFormatter.withFunction(
+                                                                          (oldValue,
+                                                                              newValue) {
+                                                                        return TextEditingValue(
+                                                                          selection:
+                                                                              newValue.selection,
+                                                                          text: newValue
+                                                                              .text
+                                                                              .toCapitalization(TextCapitalization.words),
+                                                                        );
+                                                                      }),
+                                                                  ],
                                                                 ),
                                                               ),
                                                             ),
-                                                          );
-                                                        },
-                                                      ).then((value) =>
-                                                          safeSetState(() =>
-                                                              _model.cameraTriggerComponentReturn =
-                                                                  value));
-
-                                                      _shouldSetState = true;
-                                                      if (!(_model.cameraTriggerComponentReturn !=
-                                                              null &&
-                                                          (_model
-                                                                  .cameraTriggerComponentReturn
-                                                                  ?.bytes
-                                                                  ?.isNotEmpty ??
-                                                              false))) {
-                                                        if (_shouldSetState)
-                                                          safeSetState(() {});
-                                                        return;
-                                                      }
-                                                      _model.idCardFile = _model
-                                                          .cameraTriggerComponentReturn;
-                                                      safeSetState(() {});
-                                                      showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  LoadingWidget(),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    if (false)
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child: Text(
+                                                                    'เวลาที่สะดวกให้ติดต่อ',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .start,
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Noto San Thai',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).secondaryText,
+                                                                          fontSize:
+                                                                              12.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          );
-                                                        },
-                                                      );
+                                                            InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                final _datePickedTime =
+                                                                    await showTimePicker(
+                                                                  context:
+                                                                      context,
+                                                                  initialTime: TimeOfDay
+                                                                      .fromDateTime(
+                                                                          getCurrentTimestamp),
+                                                                  builder:
+                                                                      (context,
+                                                                          child) {
+                                                                    return wrapInMaterialTimePickerTheme(
+                                                                      context,
+                                                                      child!,
+                                                                      headerBackgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primary,
+                                                                      headerForegroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .info,
+                                                                      headerTextStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .headlineLarge
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            fontSize:
+                                                                                32.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                      pickerBackgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .secondaryBackground,
+                                                                      pickerForegroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primaryText,
+                                                                      selectedDateTimeBackgroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primary,
+                                                                      selectedDateTimeForegroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .info,
+                                                                      actionButtonForegroundColor:
+                                                                          FlutterFlowTheme.of(context)
+                                                                              .primaryText,
+                                                                      iconSize:
+                                                                          24.0,
+                                                                    );
+                                                                  },
+                                                                );
+                                                                if (_datePickedTime !=
+                                                                    null) {
+                                                                  safeSetState(
+                                                                      () {
+                                                                    _model.datePicked =
+                                                                        DateTime(
+                                                                      getCurrentTimestamp
+                                                                          .year,
+                                                                      getCurrentTimestamp
+                                                                          .month,
+                                                                      getCurrentTimestamp
+                                                                          .day,
+                                                                      _datePickedTime
+                                                                          .hour,
+                                                                      _datePickedTime
+                                                                          .minute,
+                                                                    );
+                                                                  });
+                                                                } else if (_model
+                                                                        .datePicked !=
+                                                                    null) {
+                                                                  safeSetState(
+                                                                      () {
+                                                                    _model.datePicked =
+                                                                        getCurrentTimestamp;
+                                                                  });
+                                                                }
+                                                              },
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                height: 50.0,
+                                                                decoration:
+                                                                    BoxDecoration(),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          -1.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            0.0,
+                                                                            16.0,
+                                                                            0.0),
+                                                                    child: Text(
+                                                                      _model.datePicked !=
+                                                                              null
+                                                                          ? dateTimeFormat(
+                                                                              "Hm",
+                                                                              _model.datePicked)
+                                                                          : 'ระบุเวลาที่สะดวกให้ติดต่อ',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Divider(
+                                                              thickness: 2.0,
+                                                              indent: 16.0,
+                                                              endIndent: 16.0,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ),
+                                              if (false)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 16.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              'ประเภทสินทรัพย์',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        12.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              '*',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .error,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: 50.0,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child:
+                                                            FlutterFlowDropDown<
+                                                                String>(
+                                                          controller: _model
+                                                                  .dropDownLoanTypeValueController ??=
+                                                              FormFieldController<
+                                                                  String>(
+                                                            _model.dropDownLoanTypeValue ??=
+                                                                '',
+                                                          ),
+                                                          options: List<
+                                                                  String>.from(
+                                                              _model
+                                                                  .masterLoanTypeData
+                                                                  .map((e) => e
+                                                                      .vehicleCode)
+                                                                  .toList()),
+                                                          optionLabels: _model
+                                                              .masterLoanTypeData
+                                                              .map((e) =>
+                                                                  e.vehicleName)
+                                                              .toList(),
+                                                          onChanged:
+                                                              (val) async {
+                                                            safeSetState(() =>
+                                                                _model.dropDownLoanTypeValue =
+                                                                    val);
+                                                            _model.productSelected = _model
+                                                                .masterLoanTypeData
+                                                                .elementAtOrNull(functions.findIndexInList(
+                                                                    _model
+                                                                        .masterLoanTypeData
+                                                                        .map((e) => e
+                                                                            .vehicleCode)
+                                                                        .toList(),
+                                                                    _model
+                                                                        .dropDownLoanTypeValue)!);
+                                                            safeSetState(() {});
+                                                          },
+                                                          width: 200.0,
+                                                          height: 40.0,
+                                                          textStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        12.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                          hintText:
+                                                              'ระบุประเภทสินทรัพย์',
+                                                          icon: Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down_rounded,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                            size: 24.0,
+                                                          ),
+                                                          fillColor: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          elevation: 2.0,
+                                                          borderColor: Colors
+                                                              .transparent,
+                                                          borderWidth: 0.0,
+                                                          borderRadius: 8.0,
+                                                          margin:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          hidesUnderline: true,
+                                                          isOverButton: false,
+                                                          isSearchable: false,
+                                                          isMultiSelect: false,
+                                                        ),
+                                                      ),
+                                                      Divider(
+                                                        thickness: 2.0,
+                                                        indent: 16.0,
+                                                        endIndent: 16.0,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              if ((_model.productSelected
+                                                          ?.vehicleCode !=
+                                                      'LH') &&
+                                                  (_model.productSelected
+                                                          ?.vehicleCode !=
+                                                      'LA') &&
+                                                  false)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 16.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                            child: Text(
+                                                              'ทะเบียนรถ',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        12.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: double.infinity,
+                                                        height: 50.0,
+                                                        decoration:
+                                                            BoxDecoration(),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                .textController6,
+                                                            focusNode: _model
+                                                                .textFieldFocusNode3,
+                                                            autofocus: false,
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelLarge
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              hintText:
+                                                                  'ระบุทะเบียน',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              enabledBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              errorBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              contentPadding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          16.0,
+                                                                          16.0,
+                                                                          8.0),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  lineHeight:
+                                                                      1.0,
+                                                                ),
+                                                            maxLines: null,
+                                                            validator: _model
+                                                                .textController6Validator
+                                                                .asValidator(
+                                                                    context),
+                                                            inputFormatters: [
+                                                              if (!isAndroid &&
+                                                                  !isiOS)
+                                                                TextInputFormatter
+                                                                    .withFunction(
+                                                                        (oldValue,
+                                                                            newValue) {
+                                                                  return TextEditingValue(
+                                                                    selection:
+                                                                        newValue
+                                                                            .selection,
+                                                                    text: newValue
+                                                                        .text
+                                                                        .toCapitalization(
+                                                                            TextCapitalization.words),
+                                                                  );
+                                                                }),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              if (false)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 16.0, 0.0, 0.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                          ),
+                                                          child: RichText(
+                                                            textScaler:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .textScaler,
+                                                            text: TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                  text:
+                                                                      'ข้าพเจ้าให้ความยินยอมกับบริษัทฯ ในการเก็บรวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าในการติดต่อเพื่อเสนอผลิตภัณฑ์และบริการของบริษัทฯและรับรองว่าได้อ่านและรับทราบประกาศความเป็นส่วนตัวแล้ว \n',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                TextSpan(
+                                                                  text:
+                                                                      'ประกาศความเป็นส่วนตัวแล้ว ',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        decoration:
+                                                                            TextDecoration.underline,
+                                                                      ),
+                                                                  mouseCursor:
+                                                                      SystemMouseCursors
+                                                                          .click,
+                                                                  recognizer:
+                                                                      TapGestureRecognizer()
+                                                                        ..onTap =
+                                                                            () async {
+                                                                          await actions
+                                                                              .launchUrlInApp(
+                                                                            'https://www.sawad.co.th/',
+                                                                          );
+                                                                        },
+                                                                )
+                                                              ],
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    16.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 50.0,
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: [
+                                                              Expanded(
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Theme(
+                                                                      data:
+                                                                          ThemeData(
+                                                                        checkboxTheme:
+                                                                            CheckboxThemeData(
+                                                                          visualDensity:
+                                                                              VisualDensity.compact,
+                                                                          materialTapTargetSize:
+                                                                              MaterialTapTargetSize.shrinkWrap,
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(24.0),
+                                                                          ),
+                                                                        ),
+                                                                        unselectedWidgetColor:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                      ),
+                                                                      child:
+                                                                          Checkbox(
+                                                                        value: _model.checkboxValue1 ??=
+                                                                            false,
+                                                                        onChanged:
+                                                                            (newValue) async {
+                                                                          safeSetState(() =>
+                                                                              _model.checkboxValue1 = newValue!);
+                                                                          if (newValue!) {
+                                                                            safeSetState(() {
+                                                                              _model.checkboxValue2 = false;
+                                                                            });
+                                                                          }
+                                                                        },
+                                                                        side: (FlutterFlowTheme.of(context).alternate !=
+                                                                                null)
+                                                                            ? BorderSide(
+                                                                                width: 2,
+                                                                                color: FlutterFlowTheme.of(context).alternate,
+                                                                              )
+                                                                            : null,
+                                                                        activeColor:
+                                                                            FlutterFlowTheme.of(context).primary,
+                                                                        checkColor:
+                                                                            FlutterFlowTheme.of(context).info,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      'ยินยอม',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            fontSize:
+                                                                                14.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  children: [
+                                                                    Theme(
+                                                                      data:
+                                                                          ThemeData(
+                                                                        checkboxTheme:
+                                                                            CheckboxThemeData(
+                                                                          visualDensity:
+                                                                              VisualDensity.compact,
+                                                                          materialTapTargetSize:
+                                                                              MaterialTapTargetSize.shrinkWrap,
+                                                                          shape:
+                                                                              RoundedRectangleBorder(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(24.0),
+                                                                          ),
+                                                                        ),
+                                                                        unselectedWidgetColor:
+                                                                            FlutterFlowTheme.of(context).alternate,
+                                                                      ),
+                                                                      child:
+                                                                          Checkbox(
+                                                                        value: _model.checkboxValue2 ??=
+                                                                            true,
+                                                                        onChanged:
+                                                                            (newValue) async {
+                                                                          safeSetState(() =>
+                                                                              _model.checkboxValue2 = newValue!);
+                                                                          if (newValue!) {
+                                                                            safeSetState(() {
+                                                                              _model.checkboxValue1 = false;
+                                                                            });
+                                                                          }
+                                                                        },
+                                                                        side: (FlutterFlowTheme.of(context).alternate !=
+                                                                                null)
+                                                                            ? BorderSide(
+                                                                                width: 2,
+                                                                                color: FlutterFlowTheme.of(context).alternate,
+                                                                              )
+                                                                            : null,
+                                                                        activeColor:
+                                                                            FlutterFlowTheme.of(context).primary,
+                                                                        checkColor:
+                                                                            FlutterFlowTheme.of(context).info,
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      'ไม่ยินยอม',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            fontSize:
+                                                                                14.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            if (false)
+                              Container(
+                                width: double.infinity,
+                                height: 100.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 0.0, 24.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Builder(
+                                          builder: (context) => FFButtonWidget(
+                                            onPressed: () async {
+                                              var _shouldSetState = false;
+                                              await showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child:
+                                                          ConfirmDialogComponentWidget(
+                                                        textMessage:
+                                                            'คุณต้องการจะยกเลิกทำรายการนี้หรือไม่?',
+                                                        cancelButtonText:
+                                                            'ยกเลิก',
+                                                        confirmButtonText:
+                                                            'ยืนยัน',
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) => safeSetState(
+                                                  () => _model.confirmOutput =
+                                                      value));
 
-                                                      _model.visionOutputThaiId =
-                                                          await SrisawadApiGroup
-                                                              .visionThaiIdCall
-                                                              .call(
-                                                        file: _model.idCardFile,
-                                                        apiUrl:
-                                                            'https://dev.swpfin.com:7076',
-                                                      );
-
-                                                      _shouldSetState = true;
-                                                      if ((_model.visionOutputThaiId
-                                                                  ?.statusCode ??
-                                                              200) !=
-                                                          200) {
+                                              _shouldSetState = true;
+                                              if (!_model.confirmOutput!) {
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              context.safePop();
+                                              if (_shouldSetState)
+                                                safeSetState(() {});
+                                            },
+                                            text: valueOrDefault<String>(
+                                              'ย้อนกลับ',
+                                              'ย้อนกลับ',
+                                            ),
+                                            options: FFButtonOptions(
+                                              height: 60.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    letterSpacing: 0.0,
+                                                  ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Builder(
+                                          builder: (context) => FFButtonWidget(
+                                            onPressed: ((_model.firstNameTextController.text ==
+                                                            '') ||
+                                                    (_model.lastNameTextController.text ==
+                                                            '') ||
+                                                    (_model.idcardTextController
+                                                                .text ==
+                                                            '') ||
+                                                    (_model.textController4.text ==
+                                                            '') ||
+                                                    (_model.textController5
+                                                                .text ==
+                                                            '') ||
+                                                    (_model.dropDownLoanTypeValue ==
+                                                            null ||
+                                                        _model.dropDownLoanTypeValue ==
+                                                            ''))
+                                                ? null
+                                                : () async {
+                                                    if (!false) {
+                                                      if (!(_model.firstNameTextController
+                                                                  .text !=
+                                                              '')) {
                                                         await showDialog(
-                                                          barrierDismissible:
-                                                              false,
                                                           context: context,
                                                           builder:
                                                               (dialogContext) {
@@ -728,3530 +4135,466 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                 child:
                                                                     ErrorMessageComponentWidget(
                                                                   textMessage:
-                                                                      'กรุณาถ่ายภาพบัตรประชาชนใหม่อีกครั้ง',
+                                                                      'กรุณาระบุชื่อ',
                                                                 ),
                                                               ),
                                                             );
                                                           },
                                                         );
 
-                                                        Navigator.pop(context);
-                                                        if (_shouldSetState)
-                                                          safeSetState(() {});
+                                                        return;
+                                                      }
+                                                      if (!(_model.lastNameTextController
+                                                                  .text !=
+                                                              '')) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'กรุณาระบุนามสกุล',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!(_model.idcardTextController
+                                                                  .text !=
+                                                              '')) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'กรุณาระบุเลขบัตรประชาชน',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!functions
+                                                          .checkIdCard(functions
+                                                              .removeDash(_model
+                                                                  .idcardTextController
+                                                                  .text))!) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'เลขบัตรประชาชนไม่ถูกต้อง',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!(_model.textController4
+                                                                  .text !=
+                                                              '')) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'กรุณาระบุเบอร์โทรศัพท์',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!functions
+                                                          .checkPhoneNumberChar(
+                                                              functions.removeDash(
+                                                                  _model
+                                                                      .textController4
+                                                                      .text))!) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'เบอร์โทรศัพท์ไม่ถูกต้อง',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!(_model.textController5
+                                                                  .text !=
+                                                              '')) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'กรุณาระบุวงเงินที่ต้องการ',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        return;
+                                                      }
+                                                      if (!(_model.dropDownLoanTypeValue !=
+                                                              null &&
+                                                          _model.dropDownLoanTypeValue !=
+                                                              '')) {
+                                                        await showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    ErrorMessageComponentWidget(
+                                                                  textMessage:
+                                                                      'กรุณาระบุประเภทสินทรัพย์',
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
                                                         return;
                                                       }
                                                       FFAppState()
-                                                          .updateSaveLeadAgentDataStruct(
-                                                        (e) => e
-                                                          ..firstName =
-                                                              getJsonField(
-                                                            (_model.visionOutputThaiId
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                            r'''$.first_name''',
-                                                          ).toString()
-                                                          ..lastName =
-                                                              getJsonField(
-                                                            (_model.visionOutputThaiId
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                            r'''$.last_name''',
-                                                          ).toString()
-                                                          ..registerId =
-                                                              getJsonField(
-                                                            (_model.visionOutputThaiId
-                                                                    ?.jsonBody ??
-                                                                ''),
-                                                            r'''$.thai_id''',
-                                                          ).toString(),
-                                                      );
-                                                      safeSetState(() {});
-                                                      safeSetState(() {
-                                                        _model.firstNameTextController
-                                                                ?.text =
-                                                            FFAppState()
-                                                                .saveLeadAgentData
-                                                                .firstName;
-                                                      });
-                                                      safeSetState(() {
-                                                        _model.lastNameTextController
-                                                                ?.text =
-                                                            FFAppState()
-                                                                .saveLeadAgentData
-                                                                .lastName;
-                                                      });
-                                                      safeSetState(() {
-                                                        _model.idcardTextController
-                                                                ?.text =
-                                                            valueOrDefault<
-                                                                String>(
-                                                          functions
-                                                              .showThaiIdNumberForm(
-                                                                  '${FFAppState().saveLeadAgentData.registerId}'),
-                                                          'idcard',
-                                                        );
-                                                        _model.idcardMask
-                                                            .updateMask(
-                                                          newValue:
-                                                              TextEditingValue(
-                                                            text: _model
-                                                                .idcardTextController!
-                                                                .text,
-                                                          ),
-                                                        );
-                                                      });
-                                                      Navigator.pop(context);
-                                                    }
-
-                                                    if (_shouldSetState)
-                                                      safeSetState(() {});
-                                                  },
-                                                  child: Icon(
-                                                    Icons.camera_alt,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 36.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                'นามสกุล',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                '*',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            child: TextFormField(
-                                              controller:
-                                                  _model.lastNameTextController,
-                                              focusNode:
-                                                  _model.lastNameFocusNode,
-                                              autofocus: false,
-                                              textCapitalization:
-                                                  TextCapitalization.words,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                hintText: 'ระบุนามสกุล',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                errorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedErrorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(0.0, 16.0,
-                                                            16.0, 8.0),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        lineHeight: 1.0,
-                                                      ),
-                                              validator: _model
-                                                  .lastNameTextControllerValidator
-                                                  .asValidator(context),
-                                              inputFormatters: [
-                                                if (!isAndroid && !isiOS)
-                                                  TextInputFormatter
-                                                      .withFunction(
-                                                          (oldValue, newValue) {
-                                                    return TextEditingValue(
-                                                      selection:
-                                                          newValue.selection,
-                                                      text: newValue.text
-                                                          .toCapitalization(
-                                                              TextCapitalization
-                                                                  .words),
-                                                    );
-                                                  }),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                'เลขบัตรประชาชน',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                '*',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            child: TextFormField(
-                                              controller:
-                                                  _model.idcardTextController,
-                                              focusNode: _model.idcardFocusNode,
-                                              autofocus: false,
-                                              textCapitalization:
-                                                  TextCapitalization.words,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                hintText: 'ระบุเลขบัตรประชาชน',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                errorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedErrorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(0.0, 16.0,
-                                                            16.0, 8.0),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        lineHeight: 1.0,
-                                                      ),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              validator: _model
-                                                  .idcardTextControllerValidator
-                                                  .asValidator(context),
-                                              inputFormatters: [
-                                                _model.idcardMask
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                'เบอร์โทรศัพท์',
-                                                textAlign: TextAlign.start,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                '*',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .error,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          width: double.infinity,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            child: TextFormField(
-                                              controller:
-                                                  _model.textController4,
-                                              focusNode:
-                                                  _model.textFieldFocusNode1,
-                                              autofocus: false,
-                                              textCapitalization:
-                                                  TextCapitalization.words,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                labelStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                hintText: 'ระบุเบอร์โทรศัพท์',
-                                                hintStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 12.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                errorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                focusedErrorBorder:
-                                                    UnderlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .error,
-                                                    width: 2.0,
-                                                  ),
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(4.0),
-                                                    topRight:
-                                                        Radius.circular(4.0),
-                                                  ),
-                                                ),
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(0.0, 16.0,
-                                                            16.0, 8.0),
-                                              ),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.0,
-                                                        lineHeight: 1.0,
-                                                      ),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              validator: _model
-                                                  .textController4Validator
-                                                  .asValidator(context),
-                                              inputFormatters: [
-                                                _model.textFieldMask1
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  if (((_model.customerConsentFlag == 'P') ||
-                                          (_model.customerConsentFlag == 'N') ||
-                                          (_model.customerConsentFlag ==
-                                              'Y')) &&
-                                      (FFAppState().platform == 'mobile'))
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 12.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'สถานะความยินยอมลูกค้า :',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                              Text(
-                                                () {
-                                                  if (_model
-                                                          .customerConsentFlag ==
-                                                      'P') {
-                                                    return 'รอลูกค้ายืนยัน';
-                                                  } else if (_model
-                                                          .customerConsentFlag ==
-                                                      'N') {
-                                                    return 'ลูกค้าไม่ยินยอม';
-                                                  } else if (_model
-                                                          .customerConsentFlag ==
-                                                      'Y') {
-                                                    return 'ลูกค้ายินยอม';
-                                                  } else {
-                                                    return '-';
-                                                  }
-                                                }(),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: () {
-                                                            if (_model
-                                                                    .customerConsentFlag ==
-                                                                'P') {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText;
-                                                            } else if (_model
-                                                                    .customerConsentFlag ==
-                                                                'N') {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .error;
-                                                            } else if (_model
-                                                                    .customerConsentFlag ==
-                                                                'Y') {
-                                                              return Color(
-                                                                  0xFF4DBA2D);
-                                                            } else {
-                                                              return FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText;
-                                                            }
-                                                          }(),
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                        if (_model.customerConsentFlag == 'N')
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 4.0, 0.0, 0.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '***ลูกค้าไม่ยินยอมให้เก็บข้อมูลส่วนตัว ท่านไม่สามารถบันทึกข้อมูลลูกค้าต่อได้',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                ].divide(SizedBox(width: 8.0)),
-                                              ),
-                                            ),
-                                          ),
-                                        if (_model.customerConsentFlag == 'P')
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 12.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'ระยะเวลาลูกค้ากดยืนยัน ก่อนหมดอายุ : ',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                                FlutterFlowTimer(
-                                                  initialTime:
-                                                      _model.timerInitialTimeMs,
-                                                  getDisplayTime: (value) =>
-                                                      StopWatchTimer
-                                                          .getDisplayTime(
-                                                    value,
-                                                    hours: false,
-                                                    milliSecond: false,
-                                                  ),
-                                                  controller:
-                                                      _model.timerController,
-                                                  updateStateInterval: Duration(
-                                                      milliseconds: 1000),
-                                                  onChanged: (value,
-                                                      displayTime,
-                                                      shouldUpdate) {
-                                                    _model.timerMilliseconds =
-                                                        value;
-                                                    _model.timerValue =
-                                                        displayTime;
-                                                    if (shouldUpdate)
-                                                      safeSetState(() {});
-                                                  },
-                                                  onEnded: () async {
-                                                    _model
-                                                        .checkConsentStatusTimer
-                                                        ?.cancel();
-                                                    _model.customerConsentFlag =
-                                                        null;
-                                                    safeSetState(() {});
-                                                  },
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .headlineSmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        fontSize: 20.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ].divide(SizedBox(width: 12.0)),
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  if (!((_model.customerConsentFlag == 'P') ||
-                                          (_model.customerConsentFlag == 'N') ||
-                                          (_model.customerConsentFlag ==
-                                              'Y')) &&
-                                      (FFAppState().platform == 'mobile') &&
-                                      _model.appConfig!.isUseOtp)
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 12.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'ระบบจะส่ง OTP ไปยังเบอร์โทรศัพท์ที่ระบุไว้ด้านบน',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'กรุณาให้เพื่อนของคุณทำรายการจนกว่าจะเสร็จสิ้น',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'กรุณาอย่าปิดหน้าจอ จนกว่าเพื่อนของคุณจะทำรายการเสร็จสิ้น',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 8.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Builder(
-                                          builder: (context) => FFButtonWidget(
-                                            onPressed: ((_model
-                                                            .customerConsentFlag ==
-                                                        'P') ||
-                                                    (_model.customerConsentFlag ==
-                                                        'N'))
-                                                ? null
-                                                : () async {
-                                                    var _shouldSetState = false;
-                                                    if (!(_model.firstNameTextController
-                                                                .text !=
-                                                            '')) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'กรุณาระบุชื่อ',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (!(_model.lastNameTextController
-                                                                .text !=
-                                                            '')) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'กรุณาระบุนามสกุล',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (!(_model.idcardTextController
-                                                                .text !=
-                                                            '')) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'กรุณาระบุเลขบัตรประชาชน',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (!functions.checkIdCard(
-                                                        functions.removeDash(_model
-                                                            .idcardTextController
-                                                            .text))!) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'เลขบัตรประชาชนไม่ถูกต้อง',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (!(_model.textController4
-                                                                .text !=
-                                                            '')) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'กรุณาระบุเบอร์โทรศัพท์',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (!functions
-                                                        .checkPhoneNumberChar(
-                                                            functions.removeDash(
+                                                              .saveLeadAgentData =
+                                                          SaveLeadAgentDataModelStruct(
+                                                        agentGroupId: FFAppState()
+                                                            .agentProfileDataType
+                                                            .agentGroupId,
+                                                        agentId: FFAppState()
+                                                            .agentProfileDataType
+                                                            .id
+                                                            .toString(),
+                                                        agentCode: FFAppState()
+                                                            .agentProfileDataType
+                                                            .agentCode,
+                                                        firstName: _model
+                                                            .firstNameTextController
+                                                            .text,
+                                                        lastName: _model
+                                                            .lastNameTextController
+                                                            .text,
+                                                        registerId: functions
+                                                            .removeDash(_model
+                                                                .idcardTextController
+                                                                .text),
+                                                        mobilePhoneNumber: functions
+                                                            .removeDash(_model
+                                                                .textController4
+                                                                .text),
+                                                        contactTime:
+                                                            _model.datePicked !=
+                                                                    null
+                                                                ? _model
+                                                                    .datePicked
+                                                                    ?.toString()
+                                                                : '',
+                                                        loanAmount: functions
+                                                            .removeCommaFromNumText(
                                                                 _model
-                                                                    .textController4
-                                                                    .text))!) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'เบอร์โทรศัพท์ไม่ถูกต้อง',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
+                                                                    .textController5
+                                                                    .text),
+                                                        loanTypeId: _model
+                                                            .productSelected
+                                                            ?.vehicleId,
+                                                        loanTypeCode: _model
+                                                            .productSelected
+                                                            ?.vehicleCode,
+                                                        loanTypeName: _model
+                                                            .productSelected
+                                                            ?.vehicleName,
+                                                        privacyConsentFlag:
+                                                            _model.checkboxValue1!
+                                                                ? 'Y'
+                                                                : 'N',
+                                                        privacyConsentDate:
+                                                            getCurrentTimestamp
+                                                                .toString(),
+                                                        carRegistration: (_model
+                                                                        .productSelected
+                                                                        ?.vehicleCode !=
+                                                                    'LH') ||
+                                                                (_model.productSelected
+                                                                        ?.vehicleCode !=
+                                                                    'LA')
+                                                            ? _model
+                                                                .textController6
+                                                                .text
+                                                            : '',
                                                       );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    FFAppState()
-                                                            .saveLeadAgentData =
-                                                        SaveLeadAgentDataModelStruct(
-                                                      agentGroupId: FFAppState()
-                                                          .agentProfileDataType
-                                                          .agentGroupId,
-                                                      agentId: FFAppState()
-                                                          .agentProfileDataType
-                                                          .id
-                                                          .toString(),
-                                                      agentCode: FFAppState()
-                                                          .agentProfileDataType
-                                                          .agentCode,
-                                                      firstName: _model
-                                                          .firstNameTextController
-                                                          .text,
-                                                      lastName: _model
-                                                          .lastNameTextController
-                                                          .text,
-                                                      registerId: functions
-                                                          .removeDash(_model
-                                                              .idcardTextController
-                                                              .text),
-                                                      mobilePhoneNumber: functions
-                                                          .removeDash(_model
-                                                              .textController4
-                                                              .text),
-                                                    );
-                                                    safeSetState(() {});
-                                                    if (_model
-                                                        .appConfig!.isUseOtp) {
-                                                      if (FFAppState()
-                                                              .platform ==
-                                                          'mobile') {
-                                                        if (_model
-                                                                .customerConsentFlag ==
-                                                            'Y') {
-                                                          FFAppState()
-                                                              .updateSaveLeadAgentDataStruct(
-                                                            (e) => e
-                                                              ..smsCode = _model
-                                                                  .smsCode,
-                                                          );
-                                                          safeSetState(() {});
-                                                          if (widget.product ==
-                                                              'L') {
-                                                            context.pushNamed(
-                                                                LeadAgentDetailLHPageWidget
-                                                                    .routeName);
-                                                          } else {
-                                                            context.pushNamed(
-                                                              LeadAgentDetailCarPageWidget
-                                                                  .routeName,
-                                                              queryParameters: {
-                                                                'product':
-                                                                    serializeParam(
-                                                                  widget
-                                                                      .product,
-                                                                  ParamType
-                                                                      .String,
-                                                                ),
-                                                              }.withoutNulls,
-                                                            );
-                                                          }
-
-                                                          if (_shouldSetState)
-                                                            safeSetState(() {});
-                                                          return;
-                                                        }
-                                                        _model.sendConsentSmsApiOutput =
-                                                            await AgentAPIGroup
-                                                                .sendConsentSmsApiCall
-                                                                .call(
-                                                          agentCode: FFAppState()
-                                                              .agentProfileDataType
-                                                              .agentCode,
-                                                          firstName: _model
-                                                              .firstNameTextController
-                                                              .text,
-                                                          lastName: _model
-                                                              .lastNameTextController
-                                                              .text,
-                                                          phoneNumber: functions
-                                                              .removeDash(_model
-                                                                  .textController4
-                                                                  .text),
-                                                          registerId: functions
-                                                              .removeDash(_model
-                                                                  .idcardTextController
-                                                                  .text),
-                                                          pathConsent: FFDevEnvironmentValues()
-                                                                  .isProduction
-                                                              ? FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebCustomerConsent
-                                                              : FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebCustomerConsentUat,
-                                                          url: FFDevEnvironmentValues()
-                                                                  .isProduction
-                                                              ? FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebApiUrl
-                                                              : FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebApiUrlUat,
-                                                          tokenHeader: FFDevEnvironmentValues()
-                                                                  .isProduction
-                                                              ? FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebApiToken
-                                                              : FFAppState()
-                                                                  .apiUrlDocData
-                                                                  .agentWebApiTokenUat,
-                                                        );
-
-                                                        _shouldSetState = true;
-                                                        if ((_model.sendConsentSmsApiOutput
-                                                                    ?.statusCode ??
-                                                                200) !=
-                                                            200) {
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            dialogContext)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      ErrorMessageComponentWidget(
-                                                                    textMessage:
-                                                                        'พบข้อผิดพลาด Connection(${(_model.sendConsentSmsApiOutput?.statusCode ?? 200).toString()})',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-
-                                                          if (_shouldSetState)
-                                                            safeSetState(() {});
-                                                          return;
-                                                        }
-                                                        if ('${getJsonField(
-                                                              (_model.sendConsentSmsApiOutput
-                                                                      ?.jsonBody ??
-                                                                  ''),
-                                                              r'''$.code''',
-                                                            ).toString()}' !=
-                                                            '200') {
-                                                          await showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                (dialogContext) {
-                                                              return Dialog(
-                                                                elevation: 0,
-                                                                insetPadding:
-                                                                    EdgeInsets
-                                                                        .zero,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                alignment: AlignmentDirectional(
-                                                                        0.0,
-                                                                        0.0)
-                                                                    .resolve(
-                                                                        Directionality.of(
-                                                                            context)),
-                                                                child:
-                                                                    GestureDetector(
-                                                                  onTap: () {
-                                                                    FocusScope.of(
-                                                                            dialogContext)
-                                                                        .unfocus();
-                                                                    FocusManager
-                                                                        .instance
-                                                                        .primaryFocus
-                                                                        ?.unfocus();
-                                                                  },
-                                                                  child:
-                                                                      ErrorMessageComponentWidget(
-                                                                    textMessage:
-                                                                        '${getJsonField(
-                                                                      (_model.sendConsentSmsApiOutput
-                                                                              ?.jsonBody ??
-                                                                          ''),
-                                                                      r'''$.message''',
-                                                                    ).toString()}',
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
-                                                          );
-
-                                                          if (_shouldSetState)
-                                                            safeSetState(() {});
-                                                          return;
-                                                        }
-                                                        _model.customerConsentFlag =
-                                                            'P';
-                                                        safeSetState(() {});
-                                                        _model.timerController
-                                                            .onResetTimer();
-
-                                                        await Future.delayed(
-                                                          Duration(
-                                                            milliseconds: 200,
-                                                          ),
-                                                        );
-                                                        _model.timerController
-                                                            .onStartTimer();
-                                                        _model.checkConsentStatusTimer =
-                                                            InstantTimer
-                                                                .periodic(
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  5000),
-                                                          callback:
-                                                              (timer) async {
-                                                            _model.checkConsentStatusApiOutput =
-                                                                await AgentAPIGroup
-                                                                    .checkConsentStatusApiCall
-                                                                    .call(
-                                                              agentCode: FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .agentCode,
-                                                              phoneNumber: functions
-                                                                  .removeDash(_model
-                                                                      .textController4
-                                                                      .text),
-                                                              token: AgentAPIGroup
-                                                                  .sendConsentSmsApiCall
-                                                                  .token(
-                                                                (_model.sendConsentSmsApiOutput
-                                                                        ?.jsonBody ??
-                                                                    ''),
-                                                              ),
-                                                              url: FFDevEnvironmentValues()
-                                                                      .isProduction
-                                                                  ? FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiUrl
-                                                                  : FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiUrlUat,
-                                                              tokenHeader: FFDevEnvironmentValues()
-                                                                      .isProduction
-                                                                  ? FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiToken
-                                                                  : FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiTokenUat,
-                                                            );
-
-                                                            _shouldSetState =
-                                                                true;
-                                                            if ((_model.checkConsentStatusApiOutput
-                                                                        ?.statusCode ??
-                                                                    200) !=
-                                                                200) {
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (dialogContext) {
-                                                                  return Dialog(
-                                                                    elevation:
-                                                                        0,
-                                                                    insetPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                    child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(dialogContext)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          ErrorMessageComponentWidget(
-                                                                        textMessage:
-                                                                            'พบข้อผิดพลาด Connection(${(_model.checkConsentStatusApiOutput?.statusCode ?? 200).toString()})',
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              );
-
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
-                                                            if ('${getJsonField(
-                                                                  (_model.checkConsentStatusApiOutput
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.code''',
-                                                                ).toString()}' !=
-                                                                '404') {
-                                                              _model.customerConsentFlag =
-                                                                  '${AgentAPIGroup.checkConsentStatusApiCall.isConsent(
-                                                                (_model.checkConsentStatusApiOutput
-                                                                        ?.jsonBody ??
-                                                                    ''),
-                                                              )}';
-                                                              _model.smsCode =
-                                                                  '${AgentAPIGroup.checkConsentStatusApiCall.token(
-                                                                (_model.checkConsentStatusApiOutput
-                                                                        ?.jsonBody ??
-                                                                    ''),
-                                                              )}';
-                                                              safeSetState(
-                                                                  () {});
-                                                            } else {
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (dialogContext) {
-                                                                  return Dialog(
-                                                                    elevation:
-                                                                        0,
-                                                                    insetPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                    child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(dialogContext)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          ErrorMessageComponentWidget(
-                                                                        textMessage:
-                                                                            '${getJsonField(
-                                                                          (_model.checkConsentStatusApiOutput?.jsonBody ??
-                                                                              ''),
-                                                                          r'''$.message''',
-                                                                        ).toString()}',
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                              );
-
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
-
-                                                            if (_model
-                                                                    .customerConsentFlag !=
-                                                                'P') {
-                                                              _model
-                                                                  .timerController
-                                                                  .onStopTimer();
-                                                              _model
-                                                                  .timerController
-                                                                  .onResetTimer();
-
-                                                              _model
-                                                                  .checkConsentStatusTimer
-                                                                  ?.cancel();
-                                                            }
-                                                          },
-                                                          startImmediately:
-                                                              false,
-                                                        );
-                                                      } else {
-                                                        context.pushNamed(
-                                                          LeadAgentConsentPageWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'ref':
-                                                                serializeParam(
-                                                              '',
-                                                              ParamType.String,
-                                                            ),
-                                                            'phone':
-                                                                serializeParam(
-                                                              functions.removeDash(
-                                                                  _model
-                                                                      .textController4
-                                                                      .text),
-                                                              ParamType.String,
-                                                            ),
-                                                            'fromPage':
-                                                                serializeParam(
-                                                              'customer',
-                                                              ParamType.String,
-                                                            ),
-                                                            'product':
-                                                                serializeParam(
-                                                              widget.product,
-                                                              ParamType.String,
-                                                            ),
-                                                            'agent':
-                                                                serializeParam(
-                                                              FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .agentCode,
-                                                              ParamType.String,
-                                                            ),
-                                                            'linkId':
-                                                                serializeParam(
-                                                              '',
-                                                              ParamType.String,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      }
-                                                    } else {
-                                                      if (FFAppState()
-                                                              .platform ==
-                                                          'mobile') {
-                                                        if (widget.product ==
-                                                            'L') {
-                                                          context.pushNamed(
-                                                              LeadAgentDetailLHPageWidget
-                                                                  .routeName);
-                                                        } else {
-                                                          context.pushNamed(
-                                                            LeadAgentDetailCarPageWidget
-                                                                .routeName,
-                                                            queryParameters: {
-                                                              'product':
-                                                                  serializeParam(
-                                                                widget.product,
-                                                                ParamType
-                                                                    .String,
-                                                              ),
-                                                            }.withoutNulls,
-                                                          );
-                                                        }
-                                                      } else {
-                                                        context.pushNamed(
-                                                          LeadAgentConsentPageWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'ref':
-                                                                serializeParam(
-                                                              '',
-                                                              ParamType.String,
-                                                            ),
-                                                            'phone':
-                                                                serializeParam(
-                                                              functions.removeDash(
-                                                                  _model
-                                                                      .textController4
-                                                                      .text),
-                                                              ParamType.String,
-                                                            ),
-                                                            'fromPage':
-                                                                serializeParam(
-                                                              'customer',
-                                                              ParamType.String,
-                                                            ),
-                                                            'product':
-                                                                serializeParam(
-                                                              widget.product,
-                                                              ParamType.String,
-                                                            ),
-                                                            'agent':
-                                                                serializeParam(
-                                                              FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .agentCode,
-                                                              ParamType.String,
-                                                            ),
-                                                            'linkId':
-                                                                serializeParam(
-                                                              '',
-                                                              ParamType.String,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      }
-                                                    }
-
-                                                    if (_shouldSetState)
                                                       safeSetState(() {});
+                                                      if ((_model.productSelected
+                                                                  ?.vehicleCode ==
+                                                              'LH') ||
+                                                          (_model.productSelected
+                                                                  ?.vehicleCode ==
+                                                              'LA')) {
+                                                        context.pushNamed(
+                                                          LeadAgentDetailLHPageWidget
+                                                              .routeName,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            '__transition_info__':
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                      } else {
+                                                        context.pushNamed(
+                                                          LeadAgentDetailCarPageWidget
+                                                              .routeName,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            '__transition_info__':
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                      }
+                                                    }
                                                   },
-                                            text: (_model
-                                                            .customerConsentFlag !=
-                                                        'N') &&
-                                                    (_model.customerConsentFlag !=
-                                                        'Y') &&
-                                                    _model.appConfig!.isUseOtp
-                                                ? 'ส่งข้อความยินยอมการเก็บข้อมูลส่วนตัว'
-                                                : 'ถัดไป',
+                                            text: 'ถัดไป',
                                             options: FFButtonOptions(
-                                              width: double.infinity,
-                                              height: 40.0,
+                                              height: 60.0,
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
                                                       16.0, 0.0, 16.0, 0.0),
                                               iconPadding: EdgeInsetsDirectional
                                                   .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                              color: (_model
-                                                              .customerConsentFlag !=
-                                                          'N') &&
-                                                      (_model.customerConsentFlag !=
-                                                          'Y') &&
-                                                      _model.appConfig!.isUseOtp
-                                                  ? Color(0xFFFCEFE4)
-                                                  : FlutterFlowTheme.of(context)
+                                              color:
+                                                  FlutterFlowTheme.of(context)
                                                       .primary,
-                                              textStyle: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: (_model
-                                                                    .customerConsentFlag !=
-                                                                'N') &&
-                                                            (_model.customerConsentFlag !=
-                                                                'Y') &&
-                                                            _model.appConfig!
-                                                                .isUseOtp
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .primary
-                                                        : FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondaryBackground,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              elevation: 0.0,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
+                                                      ),
                                               borderRadius:
-                                                  BorderRadius.circular(16.0),
+                                                  BorderRadius.circular(12.0),
                                               disabledColor: Color(0x7FDB771A),
-                                              disabledTextColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
                                             ),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ].divide(SizedBox(width: 12.0)),
                                   ),
-                                  if (((_model.customerConsentFlag == 'P') ||
-                                          (_model.customerConsentFlag == 'N') ||
-                                          (_model.customerConsentFlag ==
-                                              'Y')) &&
-                                      (FFAppState().platform == 'mobile'))
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 12.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'ระบบจะส่ง OTP ไปยังเบอร์โทรศัพท์ที่ระบุไว้ด้านบน',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'กรุณาให้เพื่อนของคุณทำรายการจนกว่าจะเสร็จสิ้น',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'กรุณาอย่าปิดหน้าจอ จนกว่าเพื่อนของคุณจะทำรายการเสร็จสิ้น',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                              ),
-                                            ].divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  if (false)
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        if (false)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        'วงเงินที่ต้องการ',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  8.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        '*',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .error,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  width: double.infinity,
-                                                  height: 50.0,
-                                                  decoration: BoxDecoration(),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(16.0, 0.0,
-                                                                16.0, 0.0),
-                                                    child: TextFormField(
-                                                      controller: _model
-                                                          .textController5,
-                                                      focusNode: _model
-                                                          .textFieldFocusNode2,
-                                                      autofocus: false,
-                                                      textCapitalization:
-                                                          TextCapitalization
-                                                              .words,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        labelStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelLarge
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        hintText:
-                                                            'ระบุวงเงินที่ต้องการ',
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        enabledBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            width: 2.0,
-                                                          ),
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                          ),
-                                                        ),
-                                                        focusedBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            width: 2.0,
-                                                          ),
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                          ),
-                                                        ),
-                                                        errorBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 2.0,
-                                                          ),
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                          ),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            UnderlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 2.0,
-                                                          ),
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                  .only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    4.0),
-                                                          ),
-                                                        ),
-                                                        contentPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    16.0,
-                                                                    16.0,
-                                                                    8.0),
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            fontSize: 14.0,
-                                                            letterSpacing: 0.0,
-                                                            lineHeight: 1.0,
-                                                          ),
-                                                      maxLines: null,
-                                                      keyboardType:
-                                                          TextInputType.number,
-                                                      validator: _model
-                                                          .textController5Validator
-                                                          .asValidator(context),
-                                                      inputFormatters: [
-                                                        if (!isAndroid &&
-                                                            !isiOS)
-                                                          TextInputFormatter
-                                                              .withFunction(
-                                                                  (oldValue,
-                                                                      newValue) {
-                                                            return TextEditingValue(
-                                                              selection: newValue
-                                                                  .selection,
-                                                              text: newValue
-                                                                  .text
-                                                                  .toCapitalization(
-                                                                      TextCapitalization
-                                                                          .words),
-                                                            );
-                                                          }),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        if (false)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 16.0, 0.0, 0.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  16.0,
-                                                                  0.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        'เวลาที่สะดวกให้ติดต่อ',
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  fontSize:
-                                                                      12.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    final _datePickedTime =
-                                                        await showTimePicker(
-                                                      context: context,
-                                                      initialTime: TimeOfDay
-                                                          .fromDateTime(
-                                                              getCurrentTimestamp),
-                                                      builder:
-                                                          (context, child) {
-                                                        return wrapInMaterialTimePickerTheme(
-                                                          context,
-                                                          child!,
-                                                          headerBackgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
-                                                          headerForegroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .info,
-                                                          headerTextStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .headlineLarge
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Noto San Thai',
-                                                                    fontSize:
-                                                                        32.0,
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                  ),
-                                                          pickerBackgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .secondaryBackground,
-                                                          pickerForegroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          selectedDateTimeBackgroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
-                                                          selectedDateTimeForegroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .info,
-                                                          actionButtonForegroundColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          iconSize: 24.0,
-                                                        );
-                                                      },
-                                                    );
-                                                    if (_datePickedTime !=
-                                                        null) {
-                                                      safeSetState(() {
-                                                        _model.datePicked =
-                                                            DateTime(
-                                                          getCurrentTimestamp
-                                                              .year,
-                                                          getCurrentTimestamp
-                                                              .month,
-                                                          getCurrentTimestamp
-                                                              .day,
-                                                          _datePickedTime.hour,
-                                                          _datePickedTime
-                                                              .minute,
-                                                        );
-                                                      });
-                                                    } else if (_model
-                                                            .datePicked !=
-                                                        null) {
-                                                      safeSetState(() {
-                                                        _model.datePicked =
-                                                            getCurrentTimestamp;
-                                                      });
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    width: double.infinity,
-                                                    height: 50.0,
-                                                    decoration: BoxDecoration(),
-                                                    child: Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1.0, 0.0),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    0.0,
-                                                                    16.0,
-                                                                    0.0),
-                                                        child: Text(
-                                                          _model.datePicked !=
-                                                                  null
-                                                              ? dateTimeFormat(
-                                                                  "Hm",
-                                                                  _model
-                                                                      .datePicked)
-                                                              : 'ระบุเวลาที่สะดวกให้ติดต่อ',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                                fontSize: 12.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Divider(
-                                                  thickness: 2.0,
-                                                  indent: 16.0,
-                                                  endIndent: 16.0,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  if (false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'ประเภทสินทรัพย์',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  '*',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .error,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(),
-                                            child: FlutterFlowDropDown<String>(
-                                              controller: _model
-                                                      .dropDownLoanTypeValueController ??=
-                                                  FormFieldController<String>(
-                                                _model.dropDownLoanTypeValue ??=
-                                                    '',
-                                              ),
-                                              options: List<String>.from(_model
-                                                  .masterLoanTypeData
-                                                  .map((e) => e.vehicleCode)
-                                                  .toList()),
-                                              optionLabels: _model
-                                                  .masterLoanTypeData
-                                                  .map((e) => e.vehicleName)
-                                                  .toList(),
-                                              onChanged: (val) async {
-                                                safeSetState(() => _model
-                                                        .dropDownLoanTypeValue =
-                                                    val);
-                                                _model.productSelected = _model
-                                                    .masterLoanTypeData
-                                                    .elementAtOrNull(functions
-                                                        .findIndexInList(
-                                                            _model
-                                                                .masterLoanTypeData
-                                                                .map((e) => e
-                                                                    .vehicleCode)
-                                                                .toList(),
-                                                            _model
-                                                                .dropDownLoanTypeValue)!);
-                                                safeSetState(() {});
-                                              },
-                                              width: 200.0,
-                                              height: 40.0,
-                                              textStyle: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              hintText: 'ระบุประเภทสินทรัพย์',
-                                              icon: Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 24.0,
-                                              ),
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              elevation: 2.0,
-                                              borderColor: Colors.transparent,
-                                              borderWidth: 0.0,
-                                              borderRadius: 8.0,
-                                              margin: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                              hidesUnderline: true,
-                                              isOverButton: false,
-                                              isSearchable: false,
-                                              isMultiSelect: false,
-                                            ),
-                                          ),
-                                          Divider(
-                                            thickness: 2.0,
-                                            indent: 16.0,
-                                            endIndent: 16.0,
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  if ((_model.productSelected?.vehicleCode !=
-                                          'LH') &&
-                                      (_model.productSelected?.vehicleCode !=
-                                          'LA') &&
-                                      false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        16.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'ทะเบียนรถ',
-                                                  textAlign: TextAlign.start,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontSize: 12.0,
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                              child: TextFormField(
-                                                controller:
-                                                    _model.textController6,
-                                                focusNode:
-                                                    _model.textFieldFocusNode3,
-                                                autofocus: false,
-                                                textCapitalization:
-                                                    TextCapitalization.words,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  labelStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  hintText: 'ระบุทะเบียน',
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            fontSize: 12.0,
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  errorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .error,
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(0.0, 16.0,
-                                                              16.0, 8.0),
-                                                ),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          fontSize: 14.0,
-                                                          letterSpacing: 0.0,
-                                                          lineHeight: 1.0,
-                                                        ),
-                                                maxLines: null,
-                                                validator: _model
-                                                    .textController6Validator
-                                                    .asValidator(context),
-                                                inputFormatters: [
-                                                  if (!isAndroid && !isiOS)
-                                                    TextInputFormatter
-                                                        .withFunction((oldValue,
-                                                            newValue) {
-                                                      return TextEditingValue(
-                                                        selection:
-                                                            newValue.selection,
-                                                        text: newValue.text
-                                                            .toCapitalization(
-                                                                TextCapitalization
-                                                                    .words),
-                                                      );
-                                                    }),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  if (false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 16.0, 0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: RichText(
-                                                textScaler:
-                                                    MediaQuery.of(context)
-                                                        .textScaler,
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text:
-                                                          'ข้าพเจ้าให้ความยินยอมกับบริษัทฯ ในการเก็บรวบรวม ใช้และเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าในการติดต่อเพื่อเสนอผลิตภัณฑ์และบริการของบริษัทฯและรับรองว่าได้อ่านและรับทราบประกาศความเป็นส่วนตัวแล้ว \n',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                    ),
-                                                    TextSpan(
-                                                      text:
-                                                          'ประกาศความเป็นส่วนตัวแล้ว ',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Noto San Thai',
-                                                            letterSpacing: 0.0,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                          ),
-                                                      mouseCursor:
-                                                          SystemMouseCursors
-                                                              .click,
-                                                      recognizer:
-                                                          TapGestureRecognizer()
-                                                            ..onTap = () async {
-                                                              await actions
-                                                                  .launchUrlInApp(
-                                                                'https://www.sawad.co.th/',
-                                                              );
-                                                            },
-                                                    )
-                                                  ],
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Noto San Thai',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 0.0, 0.0),
-                                            child: Container(
-                                              width: double.infinity,
-                                              height: 50.0,
-                                              decoration: BoxDecoration(),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  Expanded(
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Theme(
-                                                          data: ThemeData(
-                                                            checkboxTheme:
-                                                                CheckboxThemeData(
-                                                              visualDensity:
-                                                                  VisualDensity
-                                                                      .compact,
-                                                              materialTapTargetSize:
-                                                                  MaterialTapTargetSize
-                                                                      .shrinkWrap,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            24.0),
-                                                              ),
-                                                            ),
-                                                            unselectedWidgetColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                          ),
-                                                          child: Checkbox(
-                                                            value: _model
-                                                                    .checkboxValue1 ??=
-                                                                false,
-                                                            onChanged:
-                                                                (newValue) async {
-                                                              safeSetState(() =>
-                                                                  _model.checkboxValue1 =
-                                                                      newValue!);
-                                                              if (newValue!) {
-                                                                safeSetState(
-                                                                    () {
-                                                                  _model.checkboxValue2 =
-                                                                      false;
-                                                                });
-                                                              }
-                                                            },
-                                                            side: (FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate !=
-                                                                    null)
-                                                                ? BorderSide(
-                                                                    width: 2,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                  )
-                                                                : null,
-                                                            activeColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                            checkColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .info,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          'ยินยอม',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Theme(
-                                                          data: ThemeData(
-                                                            checkboxTheme:
-                                                                CheckboxThemeData(
-                                                              visualDensity:
-                                                                  VisualDensity
-                                                                      .compact,
-                                                              materialTapTargetSize:
-                                                                  MaterialTapTargetSize
-                                                                      .shrinkWrap,
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            24.0),
-                                                              ),
-                                                            ),
-                                                            unselectedWidgetColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                          ),
-                                                          child: Checkbox(
-                                                            value: _model
-                                                                    .checkboxValue2 ??=
-                                                                true,
-                                                            onChanged:
-                                                                (newValue) async {
-                                                              safeSetState(() =>
-                                                                  _model.checkboxValue2 =
-                                                                      newValue!);
-                                                              if (newValue!) {
-                                                                safeSetState(
-                                                                    () {
-                                                                  _model.checkboxValue1 =
-                                                                      false;
-                                                                });
-                                                              }
-                                                            },
-                                                            side: (FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate !=
-                                                                    null)
-                                                                ? BorderSide(
-                                                                    width: 2,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                  )
-                                                                : null,
-                                                            activeColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                            checkColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .info,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          'ไม่ยินยอม',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
+                          ].addToStart(SizedBox(height: 12.0)),
                         ),
-                        if (false)
-                          Container(
-                            width: double.infinity,
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Builder(
-                                      builder: (context) => FFButtonWidget(
-                                        onPressed: () async {
-                                          var _shouldSetState = false;
-                                          await showDialog(
-                                            context: context,
-                                            builder: (dialogContext) {
-                                              return Dialog(
-                                                elevation: 0,
-                                                insetPadding: EdgeInsets.zero,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                alignment: AlignmentDirectional(
-                                                        0.0, 0.0)
-                                                    .resolve(Directionality.of(
-                                                        context)),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    FocusScope.of(dialogContext)
-                                                        .unfocus();
-                                                    FocusManager
-                                                        .instance.primaryFocus
-                                                        ?.unfocus();
-                                                  },
-                                                  child:
-                                                      ConfirmDialogComponentWidget(
-                                                    textMessage:
-                                                        'คุณต้องการจะยกเลิกทำรายการนี้หรือไม่?',
-                                                    cancelButtonText: 'ยกเลิก',
-                                                    confirmButtonText: 'ยืนยัน',
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ).then((value) => safeSetState(() =>
-                                              _model.confirmOutput = value));
-
-                                          _shouldSetState = true;
-                                          if (!_model.confirmOutput!) {
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                            return;
-                                          }
-                                          context.safePop();
-                                          if (_shouldSetState)
-                                            safeSetState(() {});
-                                        },
-                                        text: valueOrDefault<String>(
-                                          'ย้อนกลับ',
-                                          'ย้อนกลับ',
-                                        ),
-                                        options: FFButtonOptions(
-                                          height: 60.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color:
-                                              FlutterFlowTheme.of(context).info,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                letterSpacing: 0.0,
-                                              ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Builder(
-                                      builder: (context) => FFButtonWidget(
-                                        onPressed: ((_model.firstNameTextController.text == '') ||
-                                                (_model.lastNameTextController
-                                                            .text ==
-                                                        '') ||
-                                                (_model.idcardTextController
-                                                            .text ==
-                                                        '') ||
-                                                (_model.textController4
-                                                            .text ==
-                                                        '') ||
-                                                (_model.textController5
-                                                            .text ==
-                                                        '') ||
-                                                (_model.dropDownLoanTypeValue ==
-                                                        null ||
-                                                    _model.dropDownLoanTypeValue ==
-                                                        ''))
-                                            ? null
-                                            : () async {
-                                                if (!false) {
-                                                  if (!(_model.firstNameTextController
-                                                              .text !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุชื่อ',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!(_model.lastNameTextController
-                                                              .text !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุนามสกุล',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!(_model.idcardTextController
-                                                              .text !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุเลขบัตรประชาชน',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!functions.checkIdCard(
-                                                      functions.removeDash(_model
-                                                          .idcardTextController
-                                                          .text))!) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'เลขบัตรประชาชนไม่ถูกต้อง',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!(_model.textController4
-                                                              .text !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุเบอร์โทรศัพท์',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!functions
-                                                      .checkPhoneNumberChar(
-                                                          functions.removeDash(
-                                                              _model
-                                                                  .textController4
-                                                                  .text))!) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'เบอร์โทรศัพท์ไม่ถูกต้อง',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!(_model.textController5
-                                                              .text !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุวงเงินที่ต้องการ',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  if (!(_model.dropDownLoanTypeValue !=
-                                                          null &&
-                                                      _model.dropDownLoanTypeValue !=
-                                                          '')) {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'กรุณาระบุประเภทสินทรัพย์',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    return;
-                                                  }
-                                                  FFAppState()
-                                                          .saveLeadAgentData =
-                                                      SaveLeadAgentDataModelStruct(
-                                                    agentGroupId: FFAppState()
-                                                        .agentProfileDataType
-                                                        .agentGroupId,
-                                                    agentId: FFAppState()
-                                                        .agentProfileDataType
-                                                        .id
-                                                        .toString(),
-                                                    agentCode: FFAppState()
-                                                        .agentProfileDataType
-                                                        .agentCode,
-                                                    firstName: _model
-                                                        .firstNameTextController
-                                                        .text,
-                                                    lastName: _model
-                                                        .lastNameTextController
-                                                        .text,
-                                                    registerId: functions
-                                                        .removeDash(_model
-                                                            .idcardTextController
-                                                            .text),
-                                                    mobilePhoneNumber: functions
-                                                        .removeDash(_model
-                                                            .textController4
-                                                            .text),
-                                                    contactTime:
-                                                        _model.datePicked !=
-                                                                null
-                                                            ? _model.datePicked
-                                                                ?.toString()
-                                                            : '',
-                                                    loanAmount: functions
-                                                        .removeCommaFromNumText(
-                                                            _model
-                                                                .textController5
-                                                                .text),
-                                                    loanTypeId: _model
-                                                        .productSelected
-                                                        ?.vehicleId,
-                                                    loanTypeCode: _model
-                                                        .productSelected
-                                                        ?.vehicleCode,
-                                                    loanTypeName: _model
-                                                        .productSelected
-                                                        ?.vehicleName,
-                                                    privacyConsentFlag:
-                                                        _model.checkboxValue1!
-                                                            ? 'Y'
-                                                            : 'N',
-                                                    privacyConsentDate:
-                                                        getCurrentTimestamp
-                                                            .toString(),
-                                                    carRegistration: (_model
-                                                                    .productSelected
-                                                                    ?.vehicleCode !=
-                                                                'LH') ||
-                                                            (_model.productSelected
-                                                                    ?.vehicleCode !=
-                                                                'LA')
-                                                        ? _model.textController6
-                                                            .text
-                                                        : '',
-                                                  );
-                                                  safeSetState(() {});
-                                                  if ((_model.productSelected
-                                                              ?.vehicleCode ==
-                                                          'LH') ||
-                                                      (_model.productSelected
-                                                              ?.vehicleCode ==
-                                                          'LA')) {
-                                                    context.pushNamed(
-                                                      LeadAgentDetailLHPageWidget
-                                                          .routeName,
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                            TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
-                                                        ),
-                                                      },
-                                                    );
-                                                  } else {
-                                                    context.pushNamed(
-                                                      LeadAgentDetailCarPageWidget
-                                                          .routeName,
-                                                      extra: <String, dynamic>{
-                                                        kTransitionInfoKey:
-                                                            TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
-                                                        ),
-                                                      },
-                                                    );
-                                                  }
-                                                }
-                                              },
-                                        text: 'ถัดไป',
-                                        options: FFButtonOptions(
-                                          height: 60.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                          disabledColor: Color(0x7FDB771A),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ].divide(SizedBox(width: 12.0)),
-                              ),
-                            ),
-                          ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

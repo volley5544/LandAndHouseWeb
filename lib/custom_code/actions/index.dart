@@ -5,6 +5,8 @@ export 'convert_base64_to_f_f_files_copy.dart' show convertBase64ToFFFilesCopy;
 export 'open3_c_x_action.dart' show open3CXAction;
 export 'call_phone_number.dart' show callPhoneNumber;
 export 'upload_file_firebase_storage.dart' show uploadFileFirebaseStorage;
+export 'upload_file_firebase_storage_check_rate.dart'
+    show uploadFileFirebaseStorageCheckRate;
 export 'authen_firebase.dart' show authenFirebase;
 export 'convert_base64_to_f_f_files.dart' show convertBase64ToFFFiles;
 export 'encode_base64_from_f_f_file.dart' show encodeBase64FromFFFile;
@@ -31,3 +33,9 @@ export 'listen_webview_event_camera.dart' show listenWebviewEventCamera;
 export 'return_text_to_appreturn_text_to_app.dart'
     show returnTextToAppreturnTextToApp;
 export 'gen_pdf_agent_file_byte.dart' show genPdfAgentFileByte;
+export 'clear_image_cache.dart' show clearImageCache;
+export 'callback_action.dart' show callbackAction;
+export 'gen_f_f_uploaded_file_from_img_url.dart'
+    show genFFUploadedFileFromImgUrl;
+export 'get_client_device_platform.dart' show getClientDevicePlatform;
+export 'set_client_platform_action.dart' show setClientPlatformAction;

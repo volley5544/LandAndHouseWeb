@@ -3,6 +3,8 @@ import '/agent_customer/select_payment_transfer_component/select_payment_transfe
 import '/backend/api_requests/api_calls.dart';
 import '/components/banner_agent_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
+import '/index.dart';
 import 'verify_transfer_page_widget.dart' show VerifyTransferPageWidget;
 import 'package:flutter/material.dart';
 
@@ -16,6 +18,10 @@ class VerifyTransferPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (logout agent)] action in VerifyTransferPage widget.
+  ApiCallResponse? apiResultjxr;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // Model for BannerAgentComponent component.
   late BannerAgentComponentModel bannerAgentComponentModel;
   // Model for userAgentDetailComponent component.
@@ -27,6 +33,8 @@ class VerifyTransferPageModel
 
   @override
   void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
     bannerAgentComponentModel =
         createModel(context, () => BannerAgentComponentModel());
     userAgentDetailComponentModel =
@@ -37,6 +45,7 @@ class VerifyTransferPageModel
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     bannerAgentComponentModel.dispose();
     userAgentDetailComponentModel.dispose();
     selectPaymentTransferComponentModel.dispose();

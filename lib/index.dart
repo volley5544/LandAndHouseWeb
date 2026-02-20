@@ -115,3 +115,25 @@ export '/agent_customer/drop_lead/pdf_viewer_agent_page/pdf_viewer_agent_page_wi
     show PdfViewerAgentPageWidget;
 export '/agent_customer/agent_detail/my_lead_dashboard_new_page/my_lead_dashboard_new_page_widget.dart'
     show MyLeadDashboardNewPageWidget;
+export '/agent_customer/check_rate/check_rate_m_c_page/check_rate_m_c_page_widget.dart'
+    show CheckRateMCPageWidget;
+export '/m_g_m_agent/register_agent/agent_register_page01/agent_register_page01_widget.dart'
+    show AgentRegisterPage01Widget;
+export '/m_g_m_agent/register_agent/id_card_detail_page04/id_card_detail_page04_widget.dart'
+    show IdCardDetailPage04Widget;
+export '/m_g_m_agent/register_agent/agent_setting_page03/agent_setting_page03_widget.dart'
+    show AgentSettingPage03Widget;
+export '/m_g_m_agent/register_agent/register_result_page05/register_result_page05_widget.dart'
+    show RegisterResultPage05Widget;
+export '/m_g_m_agent/edit_agent_data/agent_detail_page01/agent_detail_page01_widget.dart'
+    show AgentDetailPage01Widget;
+export '/m_g_m_agent/register_agent/agent_register_consent_page02/agent_register_consent_page02_widget.dart'
+    show AgentRegisterConsentPage02Widget;
+export '/m_g_m_agent/edit_agent_data/address_detail_page02/address_detail_page02_widget.dart'
+    show AddressDetailPage02Widget;
+export '/m_g_m_agent/agent_login_page/agent_login_page_widget.dart'
+    show AgentLoginPageWidget;
+export '/m_g_m_agent/agent_change_password_page/agent_change_password_page_widget.dart'
+    show AgentChangePasswordPageWidget;
+export '/m_g_m_agent/agent_confirm_otp_page/agent_confirm_otp_page_widget.dart'
+    show AgentConfirmOtpPageWidget;

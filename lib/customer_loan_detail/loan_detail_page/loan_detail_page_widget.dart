@@ -25,12 +25,14 @@ class LoanDetailPageWidget extends StatefulWidget {
     this.hashThaiId,
     this.contNo,
     this.token,
-  });
+    String? platform,
+  }) : this.platform = platform ?? 'mobile';
 
   final FFUploadedFile? bankIcon;
   final String? hashThaiId;
   final String? contNo;
   final String? token;
+  final String platform;
 
   static String routeName = 'LoanDetailPage';
   static String routePath = '/LoanDetailPage';
@@ -437,44 +439,37 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                               .toString(),
                           contractLink:
                               '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.barcodeDetails.comcode}',
-                          isShowDownload: functions.checkContractException(
-                                  functions
-                                      .getDataListFromMapJson(
-                                          _model.comCodeConfigDoc,
-                                          'exception_contract')
-                                      ?.toList(),
-                                  functions
-                                      .getDataListFromMapJson(
-                                          _model.comCodeConfigDoc,
-                                          'exception_contract_comcode')
-                                      ?.toList(),
-                                  FFAppState().getLoanListSelected.contractNo,
-                                  FFAppState()
-                                      .getLoanListSelected
-                                      .barcodeDetails
-                                      .comcode)! ||
-                              (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
-                                  !(functions
-                                      .getDataListBoolFromMapJson(
-                                          _model.comCodeConfigDoc,
-                                          'this_comcode_is_contract')!
-                                      .elementAtOrNull(functions.findIndexInList(
-                                          functions
-                                              .getDataListFromMapJson(
-                                                  _model.comCodeConfigDoc,
-                                                  'comcode')
-                                              ?.toList(),
+                          isShowDownload: functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'ticket_comcode_check_list')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'ticket_branch_check_list')!.contains(functions.returnStringLength('${FFAppState().getLoanListSelected.contractNo}')! > 17 ? functions.substringText('${FFAppState().getLoanListSelected.contractNo}', 1, 5) : functions.substringText('${FFAppState().getLoanListSelected.contractNo}', 1, 2)) && (DateTime.parse((functions.removeDoubleCoot(functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date2'))!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate)))
+                              ? true
+                              : (functions.checkContractException(
+                                      functions
+                                          .getDataListFromMapJson(
+                                              _model.comCodeConfigDoc,
+                                              'exception_contract')
+                                          ?.toList(),
+                                      functions
+                                          .getDataListFromMapJson(
+                                              _model.comCodeConfigDoc,
+                                              'exception_contract_comcode')
+                                          ?.toList(),
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .contractNo,
+                                      FFAppState()
+                                          .getLoanListSelected
+                                          .barcodeDetails
+                                          .comcode)! ||
+                                  (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(
                                           FFAppState()
                                               .getLoanListSelected
                                               .barcodeDetails
-                                              .comcode)!))! &&
-                                  functions
-                                      .getDataListFromMapJson(
-                                          functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'),
-                                          FFAppState().getLoanListSelected.barcodeDetails.comcode)!
-                                      .contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) &&
-                                  !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode)) ||
-                              (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && (DateTime.parse((functions.removeDoubleCoot(functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date'))!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate)))),
+                                              .comcode) &&
+                                      !(functions
+                                          .getDataListBoolFromMapJson(_model.comCodeConfigDoc, 'this_comcode_is_contract')!
+                                          .elementAtOrNull(functions.findIndexInList(functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')?.toList(), FFAppState().getLoanListSelected.barcodeDetails.comcode)!))! &&
+                                      functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) &&
+                                      !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode)) ||
+                                  (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && (DateTime.parse((functions.removeDoubleCoot(functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date'))!)).isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate))))),
                           installmentAmountColor:
                               '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
                                       '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
@@ -529,6 +524,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                               .getLoanListSelected
                               .insurances
                               .isNotEmpty,
+                          platform: '${widget.platform}',
                         ),
                       ),
                       Expanded(
@@ -2447,54 +2443,39 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                       ),
                                     ),
                                   ),
-                                  if (functions
-                                          .getDataListFromMapJson(
-                                              _model.comCodeConfigDoc,
-                                              'comcode')!
-                                          .contains(FFAppState()
-                                              .getLoanListSelected
-                                              .barcodeDetails
-                                              .comcode) &&
-                                      (functions
-                                          .getDataListBoolFromMapJson(
-                                              _model.comCodeConfigDoc,
-                                              'this_comcode_is_contract')!
-                                          .elementAtOrNull(
-                                              functions.findIndexInList(
-                                                  functions
-                                                      .getDataListFromMapJson(
-                                                          _model
-                                                              .comCodeConfigDoc,
-                                                          'comcode')
-                                                      ?.toList(),
+                                  if (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'ticket_comcode_check_list')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) &&
+                                          functions
+                                              .getDataListFromMapJson(
+                                                  functions.getJsonDataFromMapJson(
+                                                      _model.comCodeConfigDoc,
+                                                      'loan_type_code'),
                                                   FFAppState()
                                                       .getLoanListSelected
                                                       .barcodeDetails
-                                                      .comcode)!))! &&
-                                      functions
-                                          .getDataListFromMapJson(
-                                              functions.getJsonDataFromMapJson(
-                                                  _model.comCodeConfigDoc,
-                                                  'loan_type_code'),
-                                              FFAppState()
+                                                      .comcode)!
+                                              .contains(FFAppState()
                                                   .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .comcode)!
-                                          .contains(FFAppState()
-                                              .getLoanListSelected
-                                              .contractDetails
-                                              .loanTypeCode) &&
-                                      !functions
-                                          .getDataListFromMapJson(
-                                              _model.comCodeConfigDoc,
-                                              'check_contract_date')!
-                                          .contains(FFAppState()
-                                              .getLoanListSelected
-                                              .barcodeDetails
-                                              .comcode))
+                                                  .contractDetails
+                                                  .loanTypeCode) &&
+                                          functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'ticket_branch_check_list')!.contains(
+                                              functions.returnStringLength('${FFAppState().getLoanListSelected.contractNo}')! > 17
+                                                  ? functions.substringText(
+                                                      '${FFAppState().getLoanListSelected.contractNo}', 1, 5)
+                                                  : functions.substringText(
+                                                      '${FFAppState().getLoanListSelected.contractNo}', 1, 2)) &&
+                                          (DateTime.parse((functions.removeDoubleCoot(functions.getDataFromMapJson(_model.comCodeConfigDoc, 'contract_default_date2'))!))
+                                              .isBefore(DateTime.parse(FFAppState().getLoanListSelected.contractDate)))
+                                      ? false
+                                      : (functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode) && (functions.getDataListBoolFromMapJson(_model.comCodeConfigDoc, 'this_comcode_is_contract')!.elementAtOrNull(functions.findIndexInList(functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'comcode')?.toList(), FFAppState().getLoanListSelected.barcodeDetails.comcode)!))! && functions.getDataListFromMapJson(functions.getJsonDataFromMapJson(_model.comCodeConfigDoc, 'loan_type_code'), FFAppState().getLoanListSelected.barcodeDetails.comcode)!.contains(FFAppState().getLoanListSelected.contractDetails.loanTypeCode) && !functions.getDataListFromMapJson(_model.comCodeConfigDoc, 'check_contract_date')!.contains(FFAppState().getLoanListSelected.barcodeDetails.comcode)))
                                     Expanded(
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          if ('${widget.platform}' !=
+                                              'mobile') {
+                                            await launchURL(
+                                                '${FFDevEnvironmentValues().isProduction ? _model.configOutput?.apiUrl.contractUrl : _model.configOutput?.apiUrl.contractUrlDev}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}');
+                                            return;
+                                          }
                                           await Clipboard.setData(ClipboardData(
                                               text:
                                                   '${_model.configOutput?.apiUrl.contractUrl}/contract?contno=${FFAppState().getLoanListSelected.contractNo}&comcode=${FFAppState().getLoanListSelected.contractDetails.comcodeCode}'));

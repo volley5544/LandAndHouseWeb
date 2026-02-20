@@ -32,6 +32,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? agentWebCustomerConsentUat,
     String? agentWebApiToken,
     String? agentWebApiTokenUat,
+    String? agentWebLoginPage,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -57,6 +58,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _agentWebCustomerConsentUat = agentWebCustomerConsentUat,
         _agentWebApiToken = agentWebApiToken,
         _agentWebApiTokenUat = agentWebApiTokenUat,
+        _agentWebLoginPage = agentWebLoginPage,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -228,6 +230,13 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasAgentWebApiTokenUat() => _agentWebApiTokenUat != null;
 
+  // "agent_web_login_page" field.
+  String? _agentWebLoginPage;
+  String get agentWebLoginPage => _agentWebLoginPage ?? '';
+  set agentWebLoginPage(String? val) => _agentWebLoginPage = val;
+
+  bool hasAgentWebLoginPage() => _agentWebLoginPage != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -254,6 +263,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
             data['agent_web_customer_consent_uat'] as String?,
         agentWebApiToken: data['agent_web_api_token'] as String?,
         agentWebApiTokenUat: data['agent_web_api_token_uat'] as String?,
+        agentWebLoginPage: data['agent_web_login_page'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -284,6 +294,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'agent_web_customer_consent_uat': _agentWebCustomerConsentUat,
         'agent_web_api_token': _agentWebApiToken,
         'agent_web_api_token_uat': _agentWebApiTokenUat,
+        'agent_web_login_page': _agentWebLoginPage,
       }.withoutNulls;
 
   @override
@@ -382,6 +393,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'agent_web_api_token_uat': serializeParam(
           _agentWebApiTokenUat,
+          ParamType.String,
+        ),
+        'agent_web_login_page': serializeParam(
+          _agentWebLoginPage,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -508,6 +523,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentWebLoginPage: deserializeParam(
+          data['agent_web_login_page'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -539,7 +559,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebCustomerConsent == other.agentWebCustomerConsent &&
         agentWebCustomerConsentUat == other.agentWebCustomerConsentUat &&
         agentWebApiToken == other.agentWebApiToken &&
-        agentWebApiTokenUat == other.agentWebApiTokenUat;
+        agentWebApiTokenUat == other.agentWebApiTokenUat &&
+        agentWebLoginPage == other.agentWebLoginPage;
   }
 
   @override
@@ -567,7 +588,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebCustomerConsent,
         agentWebCustomerConsentUat,
         agentWebApiToken,
-        agentWebApiTokenUat
+        agentWebApiTokenUat,
+        agentWebLoginPage
       ]);
 }
 
@@ -596,6 +618,7 @@ ApiUrlStruct createApiUrlStruct({
   String? agentWebCustomerConsentUat,
   String? agentWebApiToken,
   String? agentWebApiTokenUat,
+  String? agentWebLoginPage,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -626,6 +649,7 @@ ApiUrlStruct createApiUrlStruct({
       agentWebCustomerConsentUat: agentWebCustomerConsentUat,
       agentWebApiToken: agentWebApiToken,
       agentWebApiTokenUat: agentWebApiTokenUat,
+      agentWebLoginPage: agentWebLoginPage,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

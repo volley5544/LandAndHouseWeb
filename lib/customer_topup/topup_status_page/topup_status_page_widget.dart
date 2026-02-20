@@ -1309,7 +1309,7 @@ class _TopupStatusPageWidgetState extends State<TopupStatusPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:
@@ -1527,7 +1527,7 @@ class _TopupStatusPageWidgetState extends State<TopupStatusPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:
@@ -1745,7 +1745,7 @@ class _TopupStatusPageWidgetState extends State<TopupStatusPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:

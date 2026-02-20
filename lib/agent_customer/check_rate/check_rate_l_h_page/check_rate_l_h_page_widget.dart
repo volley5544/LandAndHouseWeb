@@ -14,7 +14,14 @@ import 'check_rate_l_h_page_model.dart';
 export 'check_rate_l_h_page_model.dart';
 
 class CheckRateLHPageWidget extends StatefulWidget {
-  const CheckRateLHPageWidget({super.key});
+  const CheckRateLHPageWidget({
+    super.key,
+    this.customerId,
+    this.projectCode,
+  });
+
+  final String? customerId;
+  final String? projectCode;
 
   static String routeName = 'CheckRateLHPage';
   static String routePath = '/checkRateLHPage';
@@ -64,6 +71,32 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
         },
       );
 
+      _model.checkRateData = CheckRateDataModelStruct(
+        firstName: '',
+        lastName: '',
+        email: '',
+        customerId: '',
+        registerId: '',
+        mobilePhoneNumber: '',
+        loanTypeCode: '',
+        loanTypeName: '',
+        productDetail: '',
+        landDistrict: '',
+        landSubdistrict: '',
+        landProvince: '',
+        landPostcode: '',
+        landAreaRai: '0',
+        landAreaNgan: '0',
+        landAreaWa: '0',
+        landNo: '',
+        utmmap: '',
+        surveyNo: '',
+        ltv1Amount: '0',
+        ltv2Amount: '0',
+        privacyConsentFlag: 'Y',
+        privacyConsentDate: '',
+      );
+      safeSetState(() {});
       _model.queryAPIUrl = await ApplicationRecord.getDocumentOnce(
           FFAppState().landAndHouseAPIDocRef!);
       FFAppState().landAndHouseAPIUrl = _model.queryAPIUrl!.apiUrl.landHouseUrl;
@@ -88,7 +121,7 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
 
     return Builder(
       builder: (context) => Title(
-          title: 'โครงการเพื่อนแนะนำเพื่อน',
+          title: 'ประเมินราคาบ้านและที่ดิน',
           color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
           child: GestureDetector(
             onTap: () {
@@ -158,7 +191,7 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
                         ),
                       }.withoutNulls,
                       extra: <String, dynamic>{
-                        kTransitionInfoKey: TransitionInfo(
+                        '__transition_info__': TransitionInfo(
                           hasTransition: true,
                           transitionType: PageTransitionType.rightToLeft,
                         ),
@@ -184,6 +217,7 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
               body: SafeArea(
                 top: true,
                 child: SingleChildScrollView(
+                  controller: _model.columnController,
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -193,11 +227,19 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
                         updateOnChange: true,
                         child: CheckRateLHFormComponentWidget(
                           isOnlyCheckRate: true,
+                          customerId: widget.customerId,
+                          projectCode: widget.projectCode,
                           updateFormState: (isFormState) async {
                             _model.isFormState = isFormState;
                             safeSetState(() {});
                           },
-                          searchingDoneAction: () async {},
+                          searchingDoneAction: () async {
+                            await _model.columnController?.animateTo(
+                              0,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                          },
                         ),
                       ),
                     ].addToStart(SizedBox(height: 4.0)),

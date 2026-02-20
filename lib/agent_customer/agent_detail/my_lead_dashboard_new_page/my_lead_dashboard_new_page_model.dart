@@ -2,6 +2,8 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
+import '/index.dart';
 import 'my_lead_dashboard_new_page_widget.dart'
     show MyLeadDashboardNewPageWidget;
 import 'package:flutter/material.dart';
@@ -82,10 +84,14 @@ class MyLeadDashboardNewPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (logout agent)] action in MyLeadDashboardNewPage widget.
+  ApiCallResponse? apiResultjxr;
   // Stores action output result for [Backend Call - API (GetLeadAgentByTypeNew)] action in MyLeadDashboardNewPage widget.
   ApiCallResponse? getLeadAgentApiOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in MyLeadDashboardNewPage widget.
   ApplicationRecord? appConfig;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Text widget.
   dynamic advanceSearchOutput;
   // State field(s) for SearchTextField widget.
@@ -104,10 +110,14 @@ class MyLeadDashboardNewPageModel
   ApiCallResponse? getLeadAgentApiPaymentButtonOutput;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
+  }
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     searchTextFieldFocusNode?.dispose();
     searchTextFieldTextController?.dispose();
   }

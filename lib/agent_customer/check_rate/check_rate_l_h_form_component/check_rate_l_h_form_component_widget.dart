@@ -1,5 +1,8 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -9,10 +12,12 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/land_and_house_app/imgdetails_rawang/imgdetails_rawang_widget.dart';
 import '/pages/loading/loading_widget.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +30,15 @@ class CheckRateLHFormComponentWidget extends StatefulWidget {
     required this.updateFormState,
     bool? isOnlyCheckRate,
     this.searchingDoneAction,
+    this.customerId,
+    this.projectCode,
   }) : this.isOnlyCheckRate = isOnlyCheckRate ?? true;
 
   final Future Function(bool isFormState)? updateFormState;
   final bool isOnlyCheckRate;
   final Future Function()? searchingDoneAction;
+  final String? customerId;
+  final String? projectCode;
 
   @override
   State<CheckRateLHFormComponentWidget> createState() =>
@@ -53,6 +62,36 @@ class _CheckRateLHFormComponentWidgetState
   void initState() {
     super.initState();
     _model = createModel(context, () => CheckRateLHFormComponentModel());
+
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.checkRateData = CheckRateDataModelStruct(
+        firstName: '',
+        lastName: '',
+        email: '',
+        customerId: '',
+        registerId: '',
+        mobilePhoneNumber: '',
+        loanTypeCode: '',
+        loanTypeName: '',
+        productDetail: '',
+        landDistrict: '',
+        landSubdistrict: '',
+        landProvince: '',
+        landPostcode: '',
+        landAreaRai: '0',
+        landAreaNgan: '0',
+        landAreaWa: '0',
+        landNo: '',
+        utmmap: '',
+        surveyNo: '',
+        ltv1Amount: '0',
+        ltv2Amount: '0',
+        privacyConsentFlag: 'Y',
+        privacyConsentDate: '',
+      );
+      safeSetState(() {});
+    });
 
     _model.chanodNumberTextFieldTextController ??= TextEditingController();
     _model.chanodNumberTextFieldFocusNode ??= FocusNode();
@@ -145,6 +184,7 @@ class _CheckRateLHFormComponentWidgetState
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(
       () async {
+        var _shouldSetState = false;
         if ((_model.textFieldFocusNode?.hasFocus ?? false)) {
           safeSetState(() {
             _model.textController6?.text =
@@ -162,6 +202,85 @@ class _CheckRateLHFormComponentWidgetState
             });
           }
         }
+
+        if ((FFAppState().agentProfileDataType.agentGroupId == '7') &&
+            (loggedIn || (FFAppState().platform == 'mobile'))) {
+          _model.apiResulthzdcommissionLH =
+              await AgentAPIGroup.agentCommissionCall.call(
+            groupChannelCode: FFAppState().agentProfileDataType.agentGroupId,
+            product: 'loan',
+            subProduct: 'H',
+            amount:
+                functions.removeCommaFromNumText(_model.textController6.text),
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+            tokenHeader: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiToken
+                : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+          );
+
+          _shouldSetState = true;
+          if ((_model.apiResulthzdcommissionLH?.statusCode ?? 200) != 200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: MessageComponentWidget(
+                    textMessage:
+                        'พบข้อผิดพลาด connection (${(_model.apiResulthzdcommissionLH?.statusCode ?? 200).toString()})',
+                  ),
+                );
+              },
+            );
+
+            if (_shouldSetState) safeSetState(() {});
+            return;
+          }
+          if ('${getJsonField(
+                (_model.apiResulthzdcommissionLH?.jsonBody ?? ''),
+                r'''$.code''',
+              ).toString()}' !=
+              '200') {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: MessageComponentWidget(
+                    textMessage: '${getJsonField(
+                      (_model.apiResulthzdcommissionLH?.jsonBody ?? ''),
+                      r'''$.message''',
+                    ).toString()}',
+                  ),
+                );
+              },
+            );
+
+            if (_shouldSetState) safeSetState(() {});
+            return;
+          }
+          FFAppState().commissionLHAppState =
+              AgentAPIGroup.agentCommissionCall.commissionamount(
+            (_model.apiResulthzdcommissionLH?.jsonBody ?? ''),
+          )!;
+          safeSetState(() {});
+          _model.commissionPageState =
+              AgentAPIGroup.agentCommissionCall.commissionamount(
+            (_model.apiResulthzdcommissionLH?.jsonBody ?? ''),
+          )!;
+          safeSetState(() {});
+        }
+        if (_shouldSetState) safeSetState(() {});
       },
     );
     animationsMap.addAll({
@@ -4335,40 +4454,68 @@ class _CheckRateLHFormComponentWidgetState
                                                                 0x7FDB771A),
                                                           ),
                                                         ),
-                                                        Text(
-                                                          'ข้อมูลเพิ่มเติม',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                fontSize: () {
-                                                                  if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointSmall) {
-                                                                    return 18.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointMedium) {
-                                                                    return 24.0;
-                                                                  } else if (MediaQuery.sizeOf(
-                                                                              context)
-                                                                          .width <
-                                                                      kBreakpointLarge) {
-                                                                    return 24.0;
-                                                                  } else {
-                                                                    return 24.0;
-                                                                  }
-                                                                }(),
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                              ),
+                                                        InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
+                                                          onTap: () async {
+                                                            await showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return AlertDialog(
+                                                                  content: Text(
+                                                                      '${FFAppState().agentProfileDataType.agentGroupId}'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed:
+                                                                          () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                      child: Text(
+                                                                          'Ok'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                          child: Text(
+                                                            'ข้อมูลเพิ่มเติม',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  fontSize: () {
+                                                                    if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointSmall) {
+                                                                      return 18.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointMedium) {
+                                                                      return 24.0;
+                                                                    } else if (MediaQuery.sizeOf(context)
+                                                                            .width <
+                                                                        kBreakpointLarge) {
+                                                                      return 24.0;
+                                                                    } else {
+                                                                      return 24.0;
+                                                                    }
+                                                                  }(),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                ),
+                                                          ),
                                                         ),
                                                       ].divide(SizedBox(
                                                           width: 12.0)),
@@ -4450,196 +4597,205 @@ class _CheckRateLHFormComponentWidgetState
                                                       height: 50.0,
                                                       decoration:
                                                           BoxDecoration(),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    0.0,
-                                                                    16.0,
-                                                                    0.0),
-                                                        child: TextFormField(
-                                                          controller: _model
-                                                              .textController6,
-                                                          focusNode: _model
-                                                              .textFieldFocusNode,
-                                                          onChanged: (_) =>
-                                                              EasyDebounce
-                                                                  .debounce(
-                                                            '_model.textController6',
-                                                            Duration(
-                                                                milliseconds:
-                                                                    100),
-                                                            () => safeSetState(
-                                                                () {}),
+                                                      child: Builder(
+                                                        builder: (context) =>
+                                                            Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          child: TextFormField(
+                                                            controller: _model
+                                                                .textController6,
+                                                            focusNode: _model
+                                                                .textFieldFocusNode,
+                                                            onChanged: (_) =>
+                                                                EasyDebounce
+                                                                    .debounce(
+                                                              '_model.textController6',
+                                                              Duration(
+                                                                  milliseconds:
+                                                                      100),
+                                                              () =>
+                                                                  safeSetState(
+                                                                      () {}),
+                                                            ),
+                                                            autofocus: false,
+                                                            textCapitalization:
+                                                                TextCapitalization
+                                                                    .words,
+                                                            obscureText: false,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              labelStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelLarge
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              hintText:
+                                                                  'ระบุวงเงินที่ต้องการ',
+                                                              hintStyle:
+                                                                  FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            12.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                              enabledBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              errorBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              focusedErrorBorder:
+                                                                  UnderlineInputBorder(
+                                                                borderSide:
+                                                                    BorderSide(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  width: 2.0,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          4.0),
+                                                                ),
+                                                              ),
+                                                              contentPadding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          16.0,
+                                                                          16.0,
+                                                                          8.0),
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyLarge
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  fontSize:
+                                                                      14.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  lineHeight:
+                                                                      1.0,
+                                                                ),
+                                                            maxLines: null,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            validator: _model
+                                                                .textController6Validator
+                                                                .asValidator(
+                                                                    context),
+                                                            inputFormatters: [
+                                                              if (!isAndroid &&
+                                                                  !isiOS)
+                                                                TextInputFormatter
+                                                                    .withFunction(
+                                                                        (oldValue,
+                                                                            newValue) {
+                                                                  return TextEditingValue(
+                                                                    selection:
+                                                                        newValue
+                                                                            .selection,
+                                                                    text: newValue
+                                                                        .text
+                                                                        .toCapitalization(
+                                                                            TextCapitalization.words),
+                                                                  );
+                                                                }),
+                                                            ],
                                                           ),
-                                                          autofocus: false,
-                                                          textCapitalization:
-                                                              TextCapitalization
-                                                                  .words,
-                                                          obscureText: false,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            labelStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelLarge
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Noto San Thai',
-                                                                      fontSize:
-                                                                          12.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            hintText:
-                                                                'ระบุวงเงินที่ต้องการ',
-                                                            hintStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Noto San Thai',
-                                                                      fontSize:
-                                                                          12.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            enabledBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                              ),
-                                                            ),
-                                                            focusedBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                              ),
-                                                            ),
-                                                            errorBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                              ),
-                                                            ),
-                                                            focusedErrorBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  const BorderRadius
-                                                                      .only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        4.0),
-                                                              ),
-                                                            ),
-                                                            contentPadding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        16.0,
-                                                                        16.0,
-                                                                        16.0,
-                                                                        8.0),
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyLarge
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Noto San Thai',
-                                                                fontSize: 14.0,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                lineHeight: 1.0,
-                                                              ),
-                                                          maxLines: null,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .number,
-                                                          validator: _model
-                                                              .textController6Validator
-                                                              .asValidator(
-                                                                  context),
-                                                          inputFormatters: [
-                                                            if (!isAndroid &&
-                                                                !isiOS)
-                                                              TextInputFormatter
-                                                                  .withFunction(
-                                                                      (oldValue,
-                                                                          newValue) {
-                                                                return TextEditingValue(
-                                                                  selection:
-                                                                      newValue
-                                                                          .selection,
-                                                                  text: newValue
-                                                                      .text
-                                                                      .toCapitalization(
-                                                                          TextCapitalization
-                                                                              .words),
-                                                                );
-                                                              }),
-                                                          ],
                                                         ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              if (FFAppState().platform ==
-                                                  'mobile')
+                                              if ((FFAppState().platform ==
+                                                      'mobile') &&
+                                                  (FFAppState()
+                                                          .agentProfileDataType
+                                                          .agentGroupId !=
+                                                      '7'))
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -5124,230 +5280,392 @@ class _CheckRateLHFormComponentWidgetState
                                                   ],
                                                 ),
                                               ),
-                                              if ((_model.textController6
-                                                              .text !=
-                                                          '') &&
-                                                  (FFAppState().platform ==
-                                                      'mobile') &&
-                                                  (double.parse((functions
-                                                          .removeCommaFromNumText(
-                                                              _model
+                                              Builder(
+                                                builder: (context) {
+                                                  if ((FFAppState()
+                                                              .agentProfileDataType
+                                                              .agentGroupId ==
+                                                          '7') &&
+                                                      (loggedIn ||
+                                                          (FFAppState()
+                                                                  .platform ==
+                                                              'mobile'))) {
+                                                    return Visibility(
+                                                      visible: (_model
                                                                   .textController6
-                                                                  .text)!)) >
-                                                      0))
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 12.0, 0.0, 0.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
+                                                                  .text !=
+                                                              '') &&
+                                                          (double.parse((functions.removeCommaFromNumText(_model
+                                                                          .textController6
+                                                                          .text !=
+                                                                      ''
+                                                                  ? _model
+                                                                      .textController6
+                                                                      .text
+                                                                  : '0.0')!)) >
+                                                              0),
+                                                      child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    16.0,
                                                                     0.0,
-                                                                    16.0,
+                                                                    12.0,
+                                                                    0.0,
                                                                     0.0),
-                                                        child: Container(
-                                                          height: () {
-                                                            if (MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .width <
-                                                                kBreakpointSmall) {
-                                                              return 25.0;
-                                                            } else if (MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width <
-                                                                kBreakpointMedium) {
-                                                              return 40.0;
-                                                            } else if (MediaQuery
-                                                                        .sizeOf(
-                                                                            context)
-                                                                    .width <
-                                                                kBreakpointLarge) {
-                                                              return 40.0;
-                                                            } else {
-                                                              return 40.0;
-                                                            }
-                                                          }(),
-                                                          decoration:
-                                                              BoxDecoration(),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 100.0,
-                                                                child:
-                                                                    VerticalDivider(
-                                                                  width: 3.0,
-                                                                  thickness:
-                                                                      3.0,
-                                                                  color: Color(
-                                                                      0x7FDB771A),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                'ค่าคอมที่คาดว่าจะได้รับ',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Noto San Thai',
-                                                                      fontSize:
-                                                                          () {
-                                                                        if (MediaQuery.sizeOf(context).width <
-                                                                            kBreakpointSmall) {
-                                                                          return 18.0;
-                                                                        } else if (MediaQuery.sizeOf(context).width <
-                                                                            kBreakpointMedium) {
-                                                                          return 24.0;
-                                                                        } else if (MediaQuery.sizeOf(context).width <
-                                                                            kBreakpointLarge) {
-                                                                          return 24.0;
-                                                                        } else {
-                                                                          return 24.0;
-                                                                        }
-                                                                      }(),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
-                                                              ),
-                                                            ].divide(SizedBox(
-                                                                width: 12.0)),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    16.0,
-                                                                    0.0,
-                                                                    16.0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
                                                           children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          24.0,
+                                                                          16.0,
                                                                           0.0,
-                                                                          0.0,
+                                                                          16.0,
                                                                           0.0),
-                                                                  child: Text(
-                                                                    '${valueOrDefault<String>(
-                                                                      functions.returnNumberWithComma2Decimal(FFAppState().agentProfileDataType.paymentMethod ==
-                                                                              'installment'
-                                                                          ? (FFAppState().maxCommissionAmountInstallment < 0.0
-                                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString())
-                                                                              : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
-                                                                          : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))),
-                                                                      '0',
-                                                                    )} บาท',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .start,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Noto San Thai',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primary,
-                                                                          fontSize:
-                                                                              24.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            if (FFAppState()
-                                                                        .agentProfileDataType
-                                                                        .paymentMethod ==
-                                                                    'installment'
-                                                                ? ((double
-                                                                    maxCommission) {
-                                                                    return maxCommission >=
-                                                                        0.0;
-                                                                  }(FFAppState()
-                                                                    .maxCommissionAmountInstallment))
-                                                                : ((double
-                                                                    maxCommission) {
-                                                                    return maxCommission >=
-                                                                        0.0;
-                                                                  }(FFAppState()
-                                                                    .maxCommissionAmountOnetime)))
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            24.0,
-                                                                            4.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                              child: Container(
+                                                                height: () {
+                                                                  if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointSmall) {
+                                                                    return 25.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointMedium) {
+                                                                    return 40.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointLarge) {
+                                                                    return 40.0;
+                                                                  } else {
+                                                                    return 40.0;
+                                                                  }
+                                                                }(),
+                                                                decoration:
+                                                                    BoxDecoration(),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
                                                                           .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
                                                                   children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          100.0,
+                                                                      child:
+                                                                          VerticalDivider(
+                                                                        width:
+                                                                            3.0,
+                                                                        thickness:
+                                                                            3.0,
+                                                                        color: Color(
+                                                                            0x7FDB771A),
+                                                                      ),
+                                                                    ),
                                                                     Text(
-                                                                      FFAppState().agentProfileDataType.paymentMethod ==
-                                                                              'installment'
-                                                                          ? '${FFAppState().maxCommissionTextInstallment}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountInstallment.toString()}')} บาท'
-                                                                          : '${FFAppState().maxCommissionTextOnetime}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountOnetime.toString()}')} บาท',
+                                                                      'ค่าคอมที่คาดว่าจะได้รับ',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodyMedium
                                                                           .override(
                                                                             fontFamily:
                                                                                 'Noto San Thai',
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).error,
                                                                             fontSize:
-                                                                                12.0,
+                                                                                () {
+                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                return 18.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                return 24.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                return 24.0;
+                                                                              } else {
+                                                                                return 24.0;
+                                                                              }
+                                                                            }(),
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
                                                                                 FontWeight.w600,
                                                                           ),
                                                                     ),
-                                                                  ],
+                                                                  ].divide(SizedBox(
+                                                                      width:
+                                                                          12.0)),
                                                                 ),
                                                               ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            24.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Text(
+                                                                          '${valueOrDefault<String>(
+                                                                            functions.returnNumberWithComma2Decimal(FFAppState().commissionLHAppState),
+                                                                            '0',
+                                                                          )} บาท',
+                                                                          textAlign:
+                                                                              TextAlign.start,
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                fontSize: 24.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
+                                                    );
+                                                  } else {
+                                                    return Visibility(
+                                                      visible: (_model.textController6
+                                                                      .text !=
+                                                                  '') &&
+                                                          (FFAppState()
+                                                                  .platform ==
+                                                              'mobile') &&
+                                                          (double.parse((functions
+                                                                  .removeCommaFromNumText(_model
+                                                                      .textController6
+                                                                      .text)!)) >
+                                                              0),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    12.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0),
+                                                              child: Container(
+                                                                height: () {
+                                                                  if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointSmall) {
+                                                                    return 25.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointMedium) {
+                                                                    return 40.0;
+                                                                  } else if (MediaQuery.sizeOf(
+                                                                              context)
+                                                                          .width <
+                                                                      kBreakpointLarge) {
+                                                                    return 40.0;
+                                                                  } else {
+                                                                    return 40.0;
+                                                                  }
+                                                                }(),
+                                                                decoration:
+                                                                    BoxDecoration(),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          100.0,
+                                                                      child:
+                                                                          VerticalDivider(
+                                                                        width:
+                                                                            3.0,
+                                                                        thickness:
+                                                                            3.0,
+                                                                        color: Color(
+                                                                            0x7FDB771A),
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      'ค่าคอมที่คาดว่าจะได้รับ',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            fontSize:
+                                                                                () {
+                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                return 18.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                return 24.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                return 24.0;
+                                                                              } else {
+                                                                                return 24.0;
+                                                                              }
+                                                                            }(),
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ].divide(SizedBox(
+                                                                      width:
+                                                                          12.0)),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          16.0,
+                                                                          0.0,
+                                                                          16.0),
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            24.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Text(
+                                                                          '${valueOrDefault<String>(
+                                                                            functions.returnNumberWithComma2Decimal(FFAppState().agentProfileDataType.paymentMethod == 'installment'
+                                                                                ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
+                                                                                : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.defaultPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))),
+                                                                            '0',
+                                                                          )} บาท',
+                                                                          textAlign:
+                                                                              TextAlign.start,
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                fontSize: 24.0,
+                                                                                letterSpacing: 0.0,
+                                                                                fontWeight: FontWeight.w600,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  if (FFAppState()
+                                                                              .agentProfileDataType
+                                                                              .paymentMethod ==
+                                                                          'installment'
+                                                                      ? ((double
+                                                                          maxCommission) {
+                                                                          return maxCommission >=
+                                                                              0.0;
+                                                                        }(FFAppState()
+                                                                          .maxCommissionAmountInstallment))
+                                                                      : ((double
+                                                                          maxCommission) {
+                                                                          return maxCommission >=
+                                                                              0.0;
+                                                                        }(FFAppState()
+                                                                          .maxCommissionAmountOnetime)))
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          24.0,
+                                                                          4.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Text(
+                                                                            FFAppState().agentProfileDataType.paymentMethod == 'installment'
+                                                                                ? '${FFAppState().maxCommissionTextInstallment}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountInstallment.toString()}')} บาท'
+                                                                                : '${FFAppState().maxCommissionTextOnetime}${functions.returnNumberWithComma2Decimal('${FFAppState().maxCommissionAmountOnetime.toString()}')} บาท',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).error,
+                                                                                  fontSize: 12.0,
+                                                                                  letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                },
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -5407,7 +5725,8 @@ class _CheckRateLHFormComponentWidgetState
                             ),
                           ),
                           if (true &&
-                              ((FFAppState().platform == 'mobile') || true))
+                              ((FFAppState().platform == 'mobile') &&
+                                  !widget.isOnlyCheckRate))
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
@@ -5635,7 +5954,10 @@ class _CheckRateLHFormComponentWidgetState
                           ),
                         ),
                       ),
-                    if (!widget.isOnlyCheckRate ? true : _model.isFormState)
+                    if ((!widget.isOnlyCheckRate
+                            ? true
+                            : _model.isFormState) ||
+                        true)
                       Expanded(
                         child: Builder(
                           builder: (context) => FFButtonWidget(
@@ -5646,9 +5968,12 @@ class _CheckRateLHFormComponentWidgetState
                                         ((_model.uploadedLocalFile_uploadDataSqd2Component
                                                     .bytes?.isNotEmpty ??
                                                 false)))
-                                    : (_model.textController6.text != ''
-                                        ? false
-                                        : true))
+                                    : (!widget.isOnlyCheckRate
+                                        ? (_model.textController6.text !=
+                                                    ''
+                                            ? false
+                                            : true)
+                                        : false))
                                 ? null
                                 : () async {
                                     var _shouldSetState = false;
@@ -6195,13 +6520,82 @@ class _CheckRateLHFormComponentWidgetState
                                       Navigator.pop(context);
                                       await widget.searchingDoneAction?.call();
                                     } else {
-                                      if (!(_model.textController6.text != '')) {
+                                      if (widget.isOnlyCheckRate) {
+                                        _model.uploadedChanodeFrontUrl =
+                                            await actions
+                                                .uploadFileFirebaseStorageCheckRate(
+                                          'CheckRateLH',
+                                          _model
+                                              .uploadedLocalFile_uploadDataSqdComponent,
+                                          widget.projectCode,
+                                          widget.customerId,
+                                        );
+                                        _shouldSetState = true;
+                                        _model.uploadedChanodeBackUrl =
+                                            await actions
+                                                .uploadFileFirebaseStorageCheckRate(
+                                          'CheckRateLH',
+                                          _model
+                                              .uploadedLocalFile_uploadDataSqd2Component,
+                                          widget.projectCode,
+                                          widget.customerId,
+                                        );
+                                        _shouldSetState = true;
+                                        _model.checkRateData =
+                                            CheckRateDataModelStruct(
+                                          customerId: widget.customerId,
+                                          loanTypeCode: 'L',
+                                          loanTypeName: 'ที่ดินเปล่า',
+                                          landDistrict: FFAppState()
+                                              .addressOutput
+                                              .districtName,
+                                          landSubdistrict: FFAppState()
+                                              .addressOutput
+                                              .subdistrictName,
+                                          landProvince: FFAppState()
+                                              .addressOutput
+                                              .provinceName,
+                                          landPostcode: FFAppState()
+                                              .addressOutput
+                                              .zipCode,
+                                          landAreaRai: FFAppState()
+                                              .chanodOutput
+                                              .landAreaRai,
+                                          landAreaNgan: FFAppState()
+                                              .chanodOutput
+                                              .landAreaNgan,
+                                          landAreaWa: FFAppState()
+                                              .chanodOutput
+                                              .landAreaWa,
+                                          landNo:
+                                              FFAppState().chanodOutput.landNo,
+                                          utmmap:
+                                              FFAppState().chanodOutput.utmmap1,
+                                          surveyNo: FFAppState()
+                                              .chanodOutput
+                                              .surveyNo,
+                                          ltv1Amount: FFAppState()
+                                              .chanodOutput
+                                              .ltv1Amount
+                                              .toString(),
+                                          ltv2Amount: FFAppState()
+                                              .chanodOutput
+                                              .ltv2Amount
+                                              .toString(),
+                                          chanodFrontImageUrl:
+                                              '${_model.uploadedChanodeFrontUrl}',
+                                          chanodBackImageUrl:
+                                              '${_model.uploadedChanodeBackUrl}',
+                                        );
+                                        safeSetState(() {});
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              content: Text(
-                                                  'กรุณากรอกวงเงินที่ต้องการ'),
+                                              content: Text((_model
+                                                      .checkRateData!
+                                                      .toMap())
+                                                  .toString()),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -6213,127 +6607,306 @@ class _CheckRateLHFormComponentWidgetState
                                             );
                                           },
                                         );
-                                        if (_shouldSetState)
-                                          safeSetState(() {});
-                                        return;
+                                        _model.createCustomerOutput =
+                                            await OcrDataCenterGroup
+                                                .customerCreateApiCall
+                                                .call(
+                                          checkRateDataJson:
+                                              _model.checkRateData?.toMap(),
+                                          projectCode: widget.projectCode,
+                                        );
+
+                                        _shouldSetState = true;
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              content: Text((_model
+                                                          .createCustomerOutput
+                                                          ?.jsonBody ??
+                                                      '')
+                                                  .toString()),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        await launchURL(getJsonField(
+                                          (_model.createCustomerOutput
+                                                  ?.jsonBody ??
+                                              ''),
+                                          r'''$.data.callback_url''',
+                                        ).toString());
+                                      } else {
+                                        if (!(_model.textController6.text !=
+                                                '')) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                content: Text(
+                                                    'กรุณากรอกวงเงินที่ต้องการ'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          if (_shouldSetState)
+                                            safeSetState(() {});
+                                          return;
+                                        }
                                       }
+
                                       _model.isFormState = true;
                                       safeSetState(() {});
                                       await widget.updateFormState?.call(
                                         _model.isFormState,
                                       );
-                                      FFAppState()
-                                          .updateSaveLeadAgentDataStruct(
-                                        (e) => e
-                                          ..landDistrict = FFAppState()
-                                              .addressOutput
-                                              .districtName
-                                          ..landSubdistrict = FFAppState()
-                                              .addressOutput
-                                              .subdistrictName
-                                          ..landProvince = FFAppState()
-                                              .addressOutput
-                                              .provinceName
-                                          ..landPostcode =
-                                              FFAppState().addressOutput.zipCode
-                                          ..landAreaRai = FFAppState()
-                                                  .chanodOutput
-                                                  .hasLandAreaRai()
-                                              ? FFAppState()
-                                                  .chanodOutput
-                                                  .landAreaRai
-                                              : ''
-                                          ..landAreaNgan = FFAppState()
-                                                  .chanodOutput
-                                                  .hasLandAreaNgan()
-                                              ? FFAppState()
-                                                  .chanodOutput
-                                                  .landAreaNgan
-                                              : ''
-                                          ..landAreaWa = FFAppState()
-                                                  .chanodOutput
-                                                  .hasLandAreaWa()
-                                              ? FFAppState()
-                                                  .chanodOutput
-                                                  .landAreaWa
-                                              : ''
-                                          ..landNo = FFAppState()
-                                                      .chanodOutput
-                                                      .landNo !=
-                                                  ''
-                                              ? FFAppState().chanodOutput.landNo
-                                              : ''
-                                          ..utmmap = FFAppState()
-                                                      .chanodOutput
-                                                      .utmmap !=
-                                                  ''
-                                              ? FFAppState().chanodOutput.utmmap
-                                              : ''
-                                          ..surveyNo = ''
-                                          ..ltv1Amount = FFAppState()
-                                              .chanodOutput
-                                              .ltv1Amount
-                                              .toString()
-                                          ..ltv2Amount = FFAppState()
-                                              .chanodOutput
-                                              .ltv2Amount
-                                              .toString()
-                                          ..carRegistration = FFAppState()
-                                                      .chanodOutput
-                                                      .chanodNo !=
-                                                  ''
-                                              ? FFAppState()
-                                                  .chanodOutput
-                                                  .chanodNo
-                                              : ''
-                                          ..loanAmount =
-                                              functions.removeCommaFromNumText(
-                                                  _model.textController6.text)
-                                          ..contactTime = _model.datePicked !=
-                                                  null
-                                              ? _model.datePicked?.toString()
-                                              : ''
-                                          ..comEstimateAmt =
-                                              '${FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))}'
-                                          ..comEstimateVat = FFAppState()
-                                              .agentProfileDataType
-                                              .agentWht
-                                          ..comEstimateNetAmt = ((double.parse((FFAppState()
-                                                              .agentProfileDataType
-                                                              .paymentMethod ==
-                                                          'installment'
-                                                      ? (FFAppState().maxCommissionAmountInstallment < 0.0
-                                                          ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
-                                                              .toString())
-                                                          : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment
-                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
-                                                                  .toString())
-                                                              : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
-                                                      : (FFAppState().maxCommissionAmountOnetime < 0.0
-                                                          ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
-                                                              .toString())
-                                                          : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime
-                                                              ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
-                                                                  .toString())
-                                                              : '${FFAppState().maxCommissionAmountOnetime.toString()}'))))) -
-                                                  (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) *
-                                                      double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) /
-                                                      100))
-                                              .toString()
-                                          ..comEstimateVatAmt =
-                                              '${(double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100).toString()}'
-                                          ..agentGroupId = FFAppState()
-                                              .agentProfileDataType
-                                              .agentGroupId
-                                          ..defaultComPercent = FFAppState()
-                                              .agentProfileDataType
-                                              .defaultPercent
-                                          ..actualComPercent = FFAppState()
-                                              .agentProfileDataType
-                                              .actualPercent
-                                          ..agentCode = FFAppState().agentCode,
-                                      );
-                                      safeSetState(() {});
+                                      if ((FFAppState()
+                                                  .agentProfileDataType
+                                                  .agentGroupId ==
+                                              '7') &&
+                                          (loggedIn ||
+                                              (FFAppState().platform ==
+                                                  'mobile'))) {
+                                        FFAppState()
+                                            .updateSaveLeadAgentDataStruct(
+                                          (e) => e
+                                            ..landDistrict = FFAppState()
+                                                .addressOutput
+                                                .districtName
+                                            ..landSubdistrict = FFAppState()
+                                                .addressOutput
+                                                .subdistrictName
+                                            ..landProvince = FFAppState()
+                                                .addressOutput
+                                                .provinceName
+                                            ..landPostcode = FFAppState()
+                                                .addressOutput
+                                                .zipCode
+                                            ..landAreaRai = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaRai()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaRai
+                                                : ''
+                                            ..landAreaNgan = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaNgan()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaNgan
+                                                : ''
+                                            ..landAreaWa = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaWa()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaWa
+                                                : ''
+                                            ..landNo = FFAppState()
+                                                        .chanodOutput
+                                                        .landNo !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landNo
+                                                : ''
+                                            ..utmmap = FFAppState()
+                                                        .chanodOutput
+                                                        .utmmap !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .utmmap
+                                                : ''
+                                            ..surveyNo = ''
+                                            ..ltv1Amount = FFAppState()
+                                                .chanodOutput
+                                                .ltv1Amount
+                                                .toString()
+                                            ..ltv2Amount = FFAppState()
+                                                .chanodOutput
+                                                .ltv2Amount
+                                                .toString()
+                                            ..carRegistration = FFAppState()
+                                                        .chanodOutput
+                                                        .chanodNo !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .chanodNo
+                                                : ''
+                                            ..loanAmount = functions
+                                                .removeCommaFromNumText(
+                                                    _model.textController6.text)
+                                            ..contactTime = _model.datePicked !=
+                                                    null
+                                                ? _model.datePicked?.toString()
+                                                : ''
+                                            ..comEstimateAmt = FFAppState()
+                                                            .commissionLHAppState !=
+                                                        ''
+                                                ? FFAppState()
+                                                    .commissionLHAppState
+                                                : '0'
+                                            ..comEstimateVat = FFAppState()
+                                                .agentProfileDataType
+                                                .agentWht
+                                            ..comEstimateNetAmt = FFAppState()
+                                                            .commissionLHAppState !=
+                                                        ''
+                                                ? FFAppState()
+                                                    .commissionLHAppState
+                                                : '0'
+                                            ..comEstimateVatAmt =
+                                                '${(double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100).toString()}'
+                                            ..agentGroupId = FFAppState()
+                                                .agentProfileDataType
+                                                .agentGroupId
+                                            ..defaultComPercent = FFAppState()
+                                                .agentProfileDataType
+                                                .defaultPercent
+                                            ..actualComPercent = FFAppState()
+                                                .agentProfileDataType
+                                                .actualPercent
+                                            ..agentCode =
+                                                FFAppState().agentCode,
+                                        );
+                                        safeSetState(() {});
+                                      } else {
+                                        FFAppState()
+                                            .updateSaveLeadAgentDataStruct(
+                                          (e) => e
+                                            ..landDistrict = FFAppState()
+                                                .addressOutput
+                                                .districtName
+                                            ..landSubdistrict = FFAppState()
+                                                .addressOutput
+                                                .subdistrictName
+                                            ..landProvince = FFAppState()
+                                                .addressOutput
+                                                .provinceName
+                                            ..landPostcode = FFAppState()
+                                                .addressOutput
+                                                .zipCode
+                                            ..landAreaRai = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaRai()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaRai
+                                                : ''
+                                            ..landAreaNgan = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaNgan()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaNgan
+                                                : ''
+                                            ..landAreaWa = FFAppState()
+                                                    .chanodOutput
+                                                    .hasLandAreaWa()
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landAreaWa
+                                                : ''
+                                            ..landNo = FFAppState()
+                                                        .chanodOutput
+                                                        .landNo !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .landNo
+                                                : ''
+                                            ..utmmap = FFAppState()
+                                                        .chanodOutput
+                                                        .utmmap !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .utmmap
+                                                : ''
+                                            ..surveyNo = ''
+                                            ..ltv1Amount = FFAppState()
+                                                .chanodOutput
+                                                .ltv1Amount
+                                                .toString()
+                                            ..ltv2Amount = FFAppState()
+                                                .chanodOutput
+                                                .ltv2Amount
+                                                .toString()
+                                            ..carRegistration = FFAppState()
+                                                        .chanodOutput
+                                                        .chanodNo !=
+                                                    ''
+                                                ? FFAppState()
+                                                    .chanodOutput
+                                                    .chanodNo
+                                                : ''
+                                            ..loanAmount = functions
+                                                .removeCommaFromNumText(
+                                                    _model.textController6.text)
+                                            ..contactTime = _model.datePicked !=
+                                                    null
+                                                ? _model.datePicked?.toString()
+                                                : ''
+                                            ..comEstimateAmt =
+                                                '${FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}'))}'
+                                            ..comEstimateVat = FFAppState()
+                                                .agentProfileDataType
+                                                .agentWht
+                                            ..comEstimateNetAmt = ((double.parse((FFAppState()
+                                                                .agentProfileDataType
+                                                                .paymentMethod ==
+                                                            'installment'
+                                                        ? (FFAppState().maxCommissionAmountInstallment < 0.0
+                                                            ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                .toString())
+                                                            : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment
+                                                                ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                    .toString())
+                                                                : '${FFAppState().maxCommissionAmountInstallment.toString()}'))
+                                                        : (FFAppState().maxCommissionAmountOnetime < 0.0
+                                                            ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                .toString())
+                                                            : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime
+                                                                ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100)
+                                                                    .toString())
+                                                                : '${FFAppState().maxCommissionAmountOnetime.toString()}'))))) -
+                                                    (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) *
+                                                        double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) /
+                                                        100))
+                                                .toString()
+                                            ..comEstimateVatAmt =
+                                                '${(double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.textController6.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100).toString()}'
+                                            ..agentGroupId = FFAppState()
+                                                .agentProfileDataType
+                                                .agentGroupId
+                                            ..defaultComPercent = FFAppState()
+                                                .agentProfileDataType
+                                                .defaultPercent
+                                            ..actualComPercent = FFAppState()
+                                                .agentProfileDataType
+                                                .actualPercent
+                                            ..agentCode =
+                                                FFAppState().agentCode,
+                                        );
+                                        safeSetState(() {});
+                                      }
 
                                       context.pushNamed(
                                         LeadAgentReviewDetailPageWidget
@@ -6351,7 +6924,7 @@ class _CheckRateLHFormComponentWidgetState
                                           ),
                                         }.withoutNulls,
                                         extra: <String, dynamic>{
-                                          kTransitionInfoKey: TransitionInfo(
+                                          '__transition_info__': TransitionInfo(
                                             hasTransition: true,
                                             transitionType:
                                                 PageTransitionType.rightToLeft,

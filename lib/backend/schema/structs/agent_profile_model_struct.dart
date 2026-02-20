@@ -116,6 +116,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
     String? defaultPercent,
     String? percentOnetime,
     String? percentInstallment,
+    String? agentPrivacyConsent,
+    String? password,
+    String? latitude,
+    String? longitude,
+    String? agentDocStatus,
+    String? isAgentImageIdcard,
+    String? isAgentImageBank,
+    String? imageIdcardUrl,
+    String? imageBankUrl,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _id = id,
         _agentCode = agentCode,
@@ -225,6 +234,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         _defaultPercent = defaultPercent,
         _percentOnetime = percentOnetime,
         _percentInstallment = percentInstallment,
+        _agentPrivacyConsent = agentPrivacyConsent,
+        _password = password,
+        _latitude = latitude,
+        _longitude = longitude,
+        _agentDocStatus = agentDocStatus,
+        _isAgentImageIdcard = isAgentImageIdcard,
+        _isAgentImageBank = isAgentImageBank,
+        _imageIdcardUrl = imageIdcardUrl,
+        _imageBankUrl = imageBankUrl,
         super(firestoreUtilData);
 
   // "id" field.
@@ -985,6 +1003,69 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
 
   bool hasPercentInstallment() => _percentInstallment != null;
 
+  // "agent_privacy_consent" field.
+  String? _agentPrivacyConsent;
+  String get agentPrivacyConsent => _agentPrivacyConsent ?? '';
+  set agentPrivacyConsent(String? val) => _agentPrivacyConsent = val;
+
+  bool hasAgentPrivacyConsent() => _agentPrivacyConsent != null;
+
+  // "password" field.
+  String? _password;
+  String get password => _password ?? '';
+  set password(String? val) => _password = val;
+
+  bool hasPassword() => _password != null;
+
+  // "latitude" field.
+  String? _latitude;
+  String get latitude => _latitude ?? '';
+  set latitude(String? val) => _latitude = val;
+
+  bool hasLatitude() => _latitude != null;
+
+  // "longitude" field.
+  String? _longitude;
+  String get longitude => _longitude ?? '';
+  set longitude(String? val) => _longitude = val;
+
+  bool hasLongitude() => _longitude != null;
+
+  // "agent_doc_status" field.
+  String? _agentDocStatus;
+  String get agentDocStatus => _agentDocStatus ?? '';
+  set agentDocStatus(String? val) => _agentDocStatus = val;
+
+  bool hasAgentDocStatus() => _agentDocStatus != null;
+
+  // "is_agent_image_idcard" field.
+  String? _isAgentImageIdcard;
+  String get isAgentImageIdcard => _isAgentImageIdcard ?? '';
+  set isAgentImageIdcard(String? val) => _isAgentImageIdcard = val;
+
+  bool hasIsAgentImageIdcard() => _isAgentImageIdcard != null;
+
+  // "is_agent_image_bank" field.
+  String? _isAgentImageBank;
+  String get isAgentImageBank => _isAgentImageBank ?? '';
+  set isAgentImageBank(String? val) => _isAgentImageBank = val;
+
+  bool hasIsAgentImageBank() => _isAgentImageBank != null;
+
+  // "image_idcard_url" field.
+  String? _imageIdcardUrl;
+  String get imageIdcardUrl => _imageIdcardUrl ?? '';
+  set imageIdcardUrl(String? val) => _imageIdcardUrl = val;
+
+  bool hasImageIdcardUrl() => _imageIdcardUrl != null;
+
+  // "image_bank_url" field.
+  String? _imageBankUrl;
+  String get imageBankUrl => _imageBankUrl ?? '';
+  set imageBankUrl(String? val) => _imageBankUrl = val;
+
+  bool hasImageBankUrl() => _imageBankUrl != null;
+
   static AgentProfileModelStruct fromMap(Map<String, dynamic> data) =>
       AgentProfileModelStruct(
         id: castToType<int>(data['id']),
@@ -1095,6 +1176,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         defaultPercent: data['default_percent'] as String?,
         percentOnetime: data['percent_onetime'] as String?,
         percentInstallment: data['percent_installment'] as String?,
+        agentPrivacyConsent: data['agent_privacy_consent'] as String?,
+        password: data['password'] as String?,
+        latitude: data['latitude'] as String?,
+        longitude: data['longitude'] as String?,
+        agentDocStatus: data['agent_doc_status'] as String?,
+        isAgentImageIdcard: data['is_agent_image_idcard'] as String?,
+        isAgentImageBank: data['is_agent_image_bank'] as String?,
+        imageIdcardUrl: data['image_idcard_url'] as String?,
+        imageBankUrl: data['image_bank_url'] as String?,
       );
 
   static AgentProfileModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -1210,6 +1300,15 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         'default_percent': _defaultPercent,
         'percent_onetime': _percentOnetime,
         'percent_installment': _percentInstallment,
+        'agent_privacy_consent': _agentPrivacyConsent,
+        'password': _password,
+        'latitude': _latitude,
+        'longitude': _longitude,
+        'agent_doc_status': _agentDocStatus,
+        'is_agent_image_idcard': _isAgentImageIdcard,
+        'is_agent_image_bank': _isAgentImageBank,
+        'image_idcard_url': _imageIdcardUrl,
+        'image_bank_url': _imageBankUrl,
       }.withoutNulls;
 
   @override
@@ -1644,6 +1743,42 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         ),
         'percent_installment': serializeParam(
           _percentInstallment,
+          ParamType.String,
+        ),
+        'agent_privacy_consent': serializeParam(
+          _agentPrivacyConsent,
+          ParamType.String,
+        ),
+        'password': serializeParam(
+          _password,
+          ParamType.String,
+        ),
+        'latitude': serializeParam(
+          _latitude,
+          ParamType.String,
+        ),
+        'longitude': serializeParam(
+          _longitude,
+          ParamType.String,
+        ),
+        'agent_doc_status': serializeParam(
+          _agentDocStatus,
+          ParamType.String,
+        ),
+        'is_agent_image_idcard': serializeParam(
+          _isAgentImageIdcard,
+          ParamType.String,
+        ),
+        'is_agent_image_bank': serializeParam(
+          _isAgentImageBank,
+          ParamType.String,
+        ),
+        'image_idcard_url': serializeParam(
+          _imageIdcardUrl,
+          ParamType.String,
+        ),
+        'image_bank_url': serializeParam(
+          _imageBankUrl,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -2191,6 +2326,51 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        agentPrivacyConsent: deserializeParam(
+          data['agent_privacy_consent'],
+          ParamType.String,
+          false,
+        ),
+        password: deserializeParam(
+          data['password'],
+          ParamType.String,
+          false,
+        ),
+        latitude: deserializeParam(
+          data['latitude'],
+          ParamType.String,
+          false,
+        ),
+        longitude: deserializeParam(
+          data['longitude'],
+          ParamType.String,
+          false,
+        ),
+        agentDocStatus: deserializeParam(
+          data['agent_doc_status'],
+          ParamType.String,
+          false,
+        ),
+        isAgentImageIdcard: deserializeParam(
+          data['is_agent_image_idcard'],
+          ParamType.String,
+          false,
+        ),
+        isAgentImageBank: deserializeParam(
+          data['is_agent_image_bank'],
+          ParamType.String,
+          false,
+        ),
+        imageIdcardUrl: deserializeParam(
+          data['image_idcard_url'],
+          ParamType.String,
+          false,
+        ),
+        imageBankUrl: deserializeParam(
+          data['image_bank_url'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -2306,7 +2486,16 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         actualPercent == other.actualPercent &&
         defaultPercent == other.defaultPercent &&
         percentOnetime == other.percentOnetime &&
-        percentInstallment == other.percentInstallment;
+        percentInstallment == other.percentInstallment &&
+        agentPrivacyConsent == other.agentPrivacyConsent &&
+        password == other.password &&
+        latitude == other.latitude &&
+        longitude == other.longitude &&
+        agentDocStatus == other.agentDocStatus &&
+        isAgentImageIdcard == other.isAgentImageIdcard &&
+        isAgentImageBank == other.isAgentImageBank &&
+        imageIdcardUrl == other.imageIdcardUrl &&
+        imageBankUrl == other.imageBankUrl;
   }
 
   @override
@@ -2418,7 +2607,16 @@ class AgentProfileModelStruct extends FFFirebaseStruct {
         actualPercent,
         defaultPercent,
         percentOnetime,
-        percentInstallment
+        percentInstallment,
+        agentPrivacyConsent,
+        password,
+        latitude,
+        longitude,
+        agentDocStatus,
+        isAgentImageIdcard,
+        isAgentImageBank,
+        imageIdcardUrl,
+        imageBankUrl
       ]);
 }
 
@@ -2531,6 +2729,15 @@ AgentProfileModelStruct createAgentProfileModelStruct({
   String? defaultPercent,
   String? percentOnetime,
   String? percentInstallment,
+  String? agentPrivacyConsent,
+  String? password,
+  String? latitude,
+  String? longitude,
+  String? agentDocStatus,
+  String? isAgentImageIdcard,
+  String? isAgentImageBank,
+  String? imageIdcardUrl,
+  String? imageBankUrl,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -2645,6 +2852,15 @@ AgentProfileModelStruct createAgentProfileModelStruct({
       defaultPercent: defaultPercent,
       percentOnetime: percentOnetime,
       percentInstallment: percentInstallment,
+      agentPrivacyConsent: agentPrivacyConsent,
+      password: password,
+      latitude: latitude,
+      longitude: longitude,
+      agentDocStatus: agentDocStatus,
+      isAgentImageIdcard: isAgentImageIdcard,
+      isAgentImageBank: isAgentImageBank,
+      imageIdcardUrl: imageIdcardUrl,
+      imageBankUrl: imageBankUrl,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

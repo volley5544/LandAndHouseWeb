@@ -2658,6 +2658,7 @@ class AgentAPIGroup {
   static CheckConsentStatusApiCall checkConsentStatusApiCall =
       CheckConsentStatusApiCall();
   static SearchEmployeeApiCall searchEmployeeApiCall = SearchEmployeeApiCall();
+  static GetBankMasterAPICall getBankMasterAPICall = GetBankMasterAPICall();
   static GetLeadAgentByTypeCall getLeadAgentByTypeCall =
       GetLeadAgentByTypeCall();
   static GetLeadAgentByTypeNewCall getLeadAgentByTypeNewCall =
@@ -2675,6 +2676,17 @@ class AgentAPIGroup {
   static CommissionHistoryCall commissionHistoryCall = CommissionHistoryCall();
   static AgentRateSearchCall agentRateSearchCall = AgentRateSearchCall();
   static AgentCheckRateCall agentCheckRateCall = AgentCheckRateCall();
+  static CheckBlacklistThaiIdCall checkBlacklistThaiIdCall =
+      CheckBlacklistThaiIdCall();
+  static CreateAgentCall createAgentCall = CreateAgentCall();
+  static UpdateAgentCall updateAgentCall = UpdateAgentCall();
+  static LogoutAgentCall logoutAgentCall = LogoutAgentCall();
+  static LoginAgentCall loginAgentCall = LoginAgentCall();
+  static AgentCommissionCall agentCommissionCall = AgentCommissionCall();
+  static PasswordResetAgentCall passwordResetAgentCall =
+      PasswordResetAgentCall();
+  static CheckThaiIdPhonenumberCall checkThaiIdPhonenumberCall =
+      CheckThaiIdPhonenumberCall();
 }
 
 class AgentProfileAPICall {
@@ -2947,6 +2959,45 @@ class SearchEmployeeApiCall {
         response,
         r'''$.results.data.BranchCode''',
       ));
+}
+
+class GetBankMasterAPICall {
+  Future<ApiCallResponse> call({
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetBankMasterAPI',
+      apiUrl: '${baseUrl}/api/mgm/master/get_bank',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {},
+      bodyType: BodyType.NONE,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  List<BankMasterModelStruct>? dataJson(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => BankMasterModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
 }
 
 class GetLeadAgentByTypeCall {
@@ -3869,7 +3920,488 @@ class AgentCheckRateCall {
       ));
 }
 
+class CheckBlacklistThaiIdCall {
+  Future<ApiCallResponse> call({
+    String? thaiId = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'check blacklist thai id',
+      apiUrl: '${baseUrl}/api/mgm/services/blacklist',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'thai_id': thaiId,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class CreateAgentCall {
+  Future<ApiCallResponse> call({
+    String? agentMobilePhone = '',
+    String? agentPrivacyConsent = '',
+    String? password = '',
+    String? agentDob = '',
+    String? latitude = '',
+    String? longitude = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'create agent ',
+      apiUrl: '${baseUrl}/api/mgm/agents/v2/create',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'agent_mobile_phone': agentMobilePhone,
+        'agent_privacy_consent': agentPrivacyConsent,
+        'password': password,
+        'agent_dob': agentDob,
+        'latitude': latitude,
+        'longitude': longitude,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  int? agentId(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.results.data.agent_id''',
+      ));
+  String? agentCode(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.agent_code''',
+      ));
+}
+
+class UpdateAgentCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? agentId = '',
+    String? agentTaxId = '',
+    String? agentTitleTh = '',
+    String? agentNameTh = '',
+    String? agentLastnameTh = '',
+    String? agentDob = '',
+    String? agentAddress = '',
+    String? agentProvinceCode = '',
+    String? agentProvinceName = '',
+    String? agentSubdistrictCode = '',
+    String? agentSubdistrictName = '',
+    String? agentZipcode = '',
+    String? agentBankNo = '',
+    String? agentBankCode = '',
+    String? agentBankName = '',
+    String? latitude = '',
+    String? longitude = '',
+    FFUploadedFile? agentIdImage,
+    FFUploadedFile? agentBankImage,
+    String? agentDistrictCode = '',
+    String? agentDistrictName = '',
+    String? agentBankAccountName = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'update agent',
+      apiUrl: '${baseUrl}/api/mgm/agents/v2/update',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'agent_code': agentCode,
+        'agent_id': agentId,
+        'agent_tax_id': agentTaxId,
+        'agent_title_th': agentTitleTh,
+        'agent_name_th': agentNameTh,
+        'agent_lastname_th': agentLastnameTh,
+        'agent_dob': agentDob,
+        'agent_address': agentAddress,
+        'agent_province_code': agentProvinceCode,
+        'agent_province_name': agentProvinceName,
+        'agent_district_code': agentDistrictCode,
+        'agent_district_name': agentDistrictName,
+        'agent_subdistrict_code': agentSubdistrictCode,
+        'agent_subdistrict_name': agentSubdistrictName,
+        'agent_zipcode': agentZipcode,
+        'agent_bank_no': agentBankNo,
+        'agent_bank_code': agentBankCode,
+        'agent_bank_name': agentBankName,
+        'latitude': latitude,
+        'longitude': longitude,
+        'agent_id_image': agentIdImage,
+        'agent_bank_image': agentBankImage,
+        'agent_bank_account_name': agentBankAccountName,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class LogoutAgentCall {
+  Future<ApiCallResponse> call({
+    String? username = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'logout agent',
+      apiUrl: '${baseUrl}/api/mgm/logout',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'username': username,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class LoginAgentCall {
+  Future<ApiCallResponse> call({
+    String? username = '',
+    String? password = '',
+    String? isLogin = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'login agent',
+      apiUrl: '${baseUrl}/api/mgm/login',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'username': username,
+        'password': password,
+        'is_login': isLogin,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? accesstoken(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.access_token''',
+      ));
+  String? expiresat(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.expires_at''',
+      ));
+}
+
+class AgentCommissionCall {
+  Future<ApiCallResponse> call({
+    String? groupChannelCode = '',
+    String? product = '',
+    String? subProduct = '',
+    String? amount = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'agent commission',
+      apiUrl: '${baseUrl}/api/mgm/commission/calculate',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'group_channel_code': groupChannelCode,
+        'product': product,
+        'sub_product': subProduct,
+        'amount': amount,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  String? commissionamount(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.commission_amount''',
+      ));
+}
+
+class PasswordResetAgentCall {
+  Future<ApiCallResponse> call({
+    String? agentCode = '',
+    String? password = '',
+    String? registerId = '',
+    String? confirmPassword = '',
+    String? phoneNumber = '',
+    String? latitude = '',
+    String? longitude = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'password reset agent',
+      apiUrl: '${baseUrl}/api/mgm/password/reset',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'agent_code': agentCode,
+        'password': password,
+        'register_id': registerId,
+        'confirm_password': confirmPassword,
+        'phone_number': phoneNumber,
+        'latitude': latitude,
+        'longitude': longitude,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  dynamic agentcode(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data.agent_code''',
+      );
+}
+
+class CheckThaiIdPhonenumberCall {
+  Future<ApiCallResponse> call({
+    String? registerId = '',
+    String? phoneNumber = '',
+    String? latitude = '',
+    String? longitude = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'check thai id phonenumber',
+      apiUrl: '${baseUrl}/api/mgm/password/forgot',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'register_id': registerId,
+        'phone_number': phoneNumber,
+        'latitude': latitude,
+        'longitude': longitude,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
 /// End Agent API Group Code
+
+/// Start OcrDataCenter Group Code
+
+class OcrDataCenterGroup {
+  static String getBaseUrl() => 'https://bbdfc55d45b7.ngrok-free.app';
+  static Map<String, String> headers = {
+    'ContentType': 'application/json',
+    'Authorization': 'Bearer JhbGciOiJSUzI1NiIsImtpZ',
+  };
+  static CustomerCreateApiCall customerCreateApiCall = CustomerCreateApiCall();
+}
+
+class CustomerCreateApiCall {
+  Future<ApiCallResponse> call({
+    dynamic checkRateDataJson,
+    String? projectCode = '',
+  }) async {
+    final baseUrl = OcrDataCenterGroup.getBaseUrl();
+
+    final checkRateData = _serializeJson(checkRateDataJson);
+    final ffApiRequestBody = '''
+{
+  "project_code": "${escapeStringForJson(projectCode)}",
+  "data": ${checkRateData}
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'CustomerCreateApi',
+      apiUrl: '${baseUrl}/api/customers-create',
+      callType: ApiCallType.POST,
+      headers: {
+        'ContentType': 'application/json',
+        'Authorization': 'Bearer JhbGciOiJSUzI1NiIsImtpZ',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+/// End OcrDataCenter Group Code
 
 class CheckRateApiCall {
   static Future<ApiCallResponse> call({
@@ -5391,6 +5923,43 @@ class SendOtpSMSApiCall {
         response,
         r'''$.ref''',
       ));
+}
+
+class CheckinStreamingAPICall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'checkinStreamingAPI',
+      apiUrl: 'https://af98cb0383cf.ngrok-free.app/api/v1/stream/checkin',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: true,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class OpenImageCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'OpenImage',
+      apiUrl:
+          'https://is-dev.swpfin.com/ssw_agent/uploads/agents/FGF0000000043/20260219/agent_bank_image_699677b95028f.png',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 class ApiPagingParams {

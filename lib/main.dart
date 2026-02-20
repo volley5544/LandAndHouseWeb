@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'auth/firebase_auth/firebase_user_provider.dart';
-import 'auth/firebase_auth/auth_util.dart';
+
+import 'auth/custom_auth/auth_util.dart';
+import 'auth/custom_auth/custom_auth_user_provider.dart';
 
 import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -24,12 +25,15 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
+  await authManager.initialize();
+
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
   // Start final custom actions code
   await actions.consoleLogActionCheckVersion();
   await actions.consoleLogAction();
+  await actions.setClientPlatformAction();
   // End final custom actions code
 
   runApp(ChangeNotifierProvider(
@@ -73,7 +77,7 @@ class _MyAppState extends State<MyApp> {
       _router.routerDelegate.currentConfiguration.matches
           .map((e) => getRoute(e))
           .toList();
-  late Stream<BaseAuthUser> userStream;
+  late Stream<LandAndHouseWebAuthUser> userStream;
 
   @override
   void initState() {
@@ -81,11 +85,11 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = landAndHouseWebFirebaseUserStream()
+    userStream = landAndHouseWebAuthUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
       });
-    jwtTokenStream.listen((_) {});
+
     Future.delayed(
       Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),

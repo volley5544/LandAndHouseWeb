@@ -51,7 +51,17 @@ class _AgentSaveSuccessWidgetState extends State<AgentSaveSuccessWidget> {
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 0.0),
           child: Container(
-            width: double.infinity,
+            width: () {
+              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                return MediaQuery.sizeOf(context).width;
+              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                return MediaQuery.sizeOf(context).width;
+              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                return MediaQuery.sizeOf(context).width;
+              } else {
+                return 250.0;
+              }
+            }(),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(

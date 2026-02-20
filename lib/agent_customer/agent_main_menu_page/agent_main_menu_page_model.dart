@@ -1,6 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'agent_main_menu_page_widget.dart' show AgentMainMenuPageWidget;
 import 'package:flutter/material.dart';
@@ -14,16 +15,23 @@ class AgentMainMenuPageModel extends FlutterFlowModel<AgentMainMenuPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in AgentMainMenuPage widget.
-  FFUploadedFile? generateFFUploadFile;
+  // Stores action output result for [Backend Call - API (logout agent)] action in AgentMainMenuPage widget.
+  ApiCallResponse? apiResultjxr;
   // Stores action output result for [Backend Call - Read Document] action in AgentMainMenuPage widget.
   ApplicationRecord? queryUrl;
   // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in AgentMainMenuPage widget.
   ApiCallResponse? agentAPIOutput;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
+  }
 
   @override
-  void dispose() {}
+  void dispose() {
+    webAppBarComponentModel.dispose();
+  }
 }

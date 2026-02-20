@@ -69,7 +69,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                   context.goNamed(
                     TopupDetailDataPageWidget.routeName,
                     extra: <String, dynamic>{
-                      kTransitionInfoKey: TransitionInfo(
+                      '__transition_info__': TransitionInfo(
                         hasTransition: true,
                         transitionType: PageTransitionType.leftToRight,
                       ),
@@ -423,7 +423,7 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                     context.goNamed(
                                       TopupDetailDataPageWidget.routeName,
                                       extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
+                                        '__transition_info__': TransitionInfo(
                                           hasTransition: true,
                                           transitionType:
                                               PageTransitionType.leftToRight,

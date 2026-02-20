@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:webviewx_plus/webviewx_plus.dart';
+// import 'package:webviewx_plus/webviewx_plus.dart';
 import 'package:web/web.dart' as web;
 import 'dart:typed_data';
 

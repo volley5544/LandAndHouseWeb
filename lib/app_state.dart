@@ -25,6 +25,20 @@ class FFAppState extends ChangeNotifier {
       _isTextFieldVisible =
           prefs.getBool('ff_isTextFieldVisible') ?? _isTextFieldVisible;
     });
+    _safeInit(() {
+      _agentCode = prefs.getString('ff_agentCode') ?? _agentCode;
+    });
+    _safeInit(() {
+      if (prefs.containsKey('ff_apiUrlDocData')) {
+        try {
+          final serializedData = prefs.getString('ff_apiUrlDocData') ?? '{}';
+          _apiUrlDocData =
+              ApiUrlStruct.fromSerializableMap(jsonDecode(serializedData));
+        } catch (e) {
+          print("Can't decode persisted data type. Error: $e.");
+        }
+      }
+    });
   }
 
   void update(VoidCallback callback) {
@@ -560,7 +574,7 @@ class FFAppState extends ChangeNotifier {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 119;
+  int _webUatVersion = 120;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -595,6 +609,7 @@ class FFAppState extends ChangeNotifier {
   String get agentCode => _agentCode;
   set agentCode(String value) {
     _agentCode = value;
+    prefs.setString('ff_agentCode', value);
   }
 
   AgentProfileModelStruct _agentProfileDataType = AgentProfileModelStruct();
@@ -740,10 +755,12 @@ class FFAppState extends ChangeNotifier {
   ApiUrlStruct get apiUrlDocData => _apiUrlDocData;
   set apiUrlDocData(ApiUrlStruct value) {
     _apiUrlDocData = value;
+    prefs.setString('ff_apiUrlDocData', value.serialize());
   }
 
   void updateApiUrlDocDataStruct(Function(ApiUrlStruct) updateFn) {
     updateFn(_apiUrlDocData);
+    prefs.setString('ff_apiUrlDocData', _apiUrlDocData.serialize());
   }
 
   double _maxCommissionAmountOnetime = 0.0;
@@ -774,6 +791,24 @@ class FFAppState extends ChangeNotifier {
   String get consentText => _consentText;
   set consentText(String value) {
     _consentText = value;
+  }
+
+  String _commissionLHAppState = '';
+  String get commissionLHAppState => _commissionLHAppState;
+  set commissionLHAppState(String value) {
+    _commissionLHAppState = value;
+  }
+
+  bool _registerStepCheck = false;
+  bool get registerStepCheck => _registerStepCheck;
+  set registerStepCheck(bool value) {
+    _registerStepCheck = value;
+  }
+
+  String _clientDevicePlatform = '';
+  String get clientDevicePlatform => _clientDevicePlatform;
+  set clientDevicePlatform(String value) {
+    _clientDevicePlatform = value;
   }
 }
 

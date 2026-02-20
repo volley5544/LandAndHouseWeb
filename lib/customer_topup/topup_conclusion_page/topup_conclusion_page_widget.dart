@@ -3098,7 +3098,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:
@@ -3317,7 +3317,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:
@@ -3536,7 +3536,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                   extra: <String, dynamic>{
-                                                    kTransitionInfoKey:
+                                                    '__transition_info__':
                                                         TransitionInfo(
                                                       hasTransition: true,
                                                       transitionType:
@@ -4983,7 +4983,7 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                 SaveTopupSuccessWidget
                                                     .routeName,
                                                 extra: <String, dynamic>{
-                                                  kTransitionInfoKey:
+                                                  '__transition_info__':
                                                       TransitionInfo(
                                                     hasTransition: true,
                                                     transitionType:

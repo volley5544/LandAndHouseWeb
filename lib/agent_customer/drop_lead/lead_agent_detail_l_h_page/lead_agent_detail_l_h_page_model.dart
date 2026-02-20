@@ -5,6 +5,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'lead_agent_detail_l_h_page_widget.dart'
     show LeadAgentDetailLHPageWidget;
@@ -36,6 +37,8 @@ class LeadAgentDetailLHPageModel
   ApplicationRecord? queryAPIUrl;
   // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailLHPage widget.
   ApiCallResponse? getAssetTypeMaster;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // State field(s) for primaryContainer widget.
   ScrollController? primaryContainerScrollController;
   // Model for progressBarComponent component.
@@ -50,6 +53,8 @@ class LeadAgentDetailLHPageModel
 
   @override
   void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
     primaryContainerScrollController = ScrollController();
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
@@ -61,6 +66,7 @@ class LeadAgentDetailLHPageModel
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     primaryContainerScrollController?.dispose();
     progressBarComponentModel.dispose();
     reviewDetailCustomerComponentModel.dispose();

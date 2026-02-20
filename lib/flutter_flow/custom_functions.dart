@@ -11,7 +11,7 @@ import 'uploaded_file.dart';
 import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '/backend/schema/structs/index.dart';
-import '/auth/firebase_auth/auth_util.dart';
+import '/auth/custom_auth/auth_util.dart';
 
 int? findIndexInList(
   List<String>? dataList,
@@ -1428,4 +1428,42 @@ List<PaymentHistoryMonthDataModelStruct>? returnEmptyPaymentHistoryList() {
 String? removeDoubleCoot(String? inputText) {
   String output = inputText!.replaceAll('"', '');
   return output;
+}
+
+String? substringText(
+  String? input,
+  int? startCharacterIndex,
+  int? endCharacterIndex,
+) {
+  return '${input!.substring(startCharacterIndex!, endCharacterIndex!)}';
+}
+
+int? returnStringLength(String? input) {
+  return input!.length;
+}
+
+bool? validatePassword(String? input) {
+  final hasLowercase = RegExp(r'[a-z]').hasMatch(input!);
+  final hasUppercase = RegExp(r'[A-Z]').hasMatch(input!);
+  final hasSpecial =
+      RegExp(r'[!@#\$%\^&\*\(\)_+\-=\[\]{};:"\\|,.<>\/?]').hasMatch(input!);
+  final sixCharacter = input.length >= 6;
+  return hasLowercase && hasUppercase && hasSpecial && sixCharacter;
+}
+
+String? secondsToMinutes(int? totalSeconds) {
+  final minutes = totalSeconds! ~/ 60;
+  final seconds = totalSeconds! % 60;
+
+  final minutesStr = minutes.toString().padLeft(2, '0');
+  final secondsStr = seconds.toString().padLeft(2, '0');
+
+  return '$minutesStr:$secondsStr';
+}
+
+DateTime? currentDate18YearsAgo(DateTime? currentDate) {
+  DateTime eighteenYearsAgo =
+      DateTime(currentDate!.year - 18, currentDate!.month, currentDate!.day);
+
+  return eighteenYearsAgo;
 }

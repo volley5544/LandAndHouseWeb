@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 Future<String> authenFirebase(String? customToken) async {
   // Add your function code here!
-  await FirebaseAuth.instance.signInWithCustomToken(customToken!);
-  var fireBaseToken = await FirebaseAuth.instance.currentUser!.getIdToken(true);
-  return fireBaseToken!;
+  // await FirebaseAuth.instance.signInWithCustomToken(customToken!);
+  // var fireBaseToken = await FirebaseAuth.instance.currentUser!.getIdToken(true);
+  return 'fireBaseToken'!;
 }

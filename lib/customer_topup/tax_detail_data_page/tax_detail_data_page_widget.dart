@@ -763,6 +763,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -1071,6 +1073,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -1375,6 +1379,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -1679,6 +1685,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -1983,6 +1991,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -2287,6 +2297,8 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                               return FFButtonWidget(
                                                 onPressed: () async {
                                                   var _shouldSetState = false;
+                                                  await actions
+                                                      .clearImageCache();
                                                   if (FFAppState()
                                                       .useNewCameraAction) {
                                                     await actions
@@ -2586,6 +2598,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                             return FFButtonWidget(
                                               onPressed: () async {
                                                 var _shouldSetState = false;
+                                                await actions.clearImageCache();
                                                 if (FFAppState()
                                                     .useNewCameraAction) {
                                                   await actions
@@ -3537,7 +3550,7 @@ class _TaxDetailDataPageWidgetState extends State<TaxDetailDataPageWidget> {
                                           context.pushNamed(
                                             CustomerDataPageWidget.routeName,
                                             extra: <String, dynamic>{
-                                              kTransitionInfoKey:
+                                              '__transition_info__':
                                                   TransitionInfo(
                                                 hasTransition: true,
                                                 transitionType:

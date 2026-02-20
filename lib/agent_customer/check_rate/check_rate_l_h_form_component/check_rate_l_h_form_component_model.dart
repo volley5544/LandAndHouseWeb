@@ -1,4 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'check_rate_l_h_form_component_widget.dart'
     show CheckRateLHFormComponentWidget;
@@ -13,6 +15,13 @@ class CheckRateLHFormComponentModel
   bool isFormState = true;
 
   bool paymentState = false;
+
+  CheckRateDataModelStruct? checkRateData;
+  void updateCheckRateDataStruct(Function(CheckRateDataModelStruct) updateFn) {
+    updateFn(checkRateData ??= CheckRateDataModelStruct());
+  }
+
+  String commissionPageState = '0';
 
   ///  State fields for stateful widgets in this component.
 
@@ -51,9 +60,17 @@ class CheckRateLHFormComponentModel
   FocusNode? textFieldFocusNode;
   TextEditingController? textController6;
   String? Function(BuildContext, String?)? textController6Validator;
+  // Stores action output result for [Backend Call - API (agent commission)] action in TextField widget.
+  ApiCallResponse? apiResulthzdcommissionLH;
   DateTime? datePicked;
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Button widget.
   ApiCallResponse? aPIcheckRateOutput;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorageCheckRate] action in Button widget.
+  String? uploadedChanodeFrontUrl;
+  // Stores action output result for [Custom Action - uploadFileFirebaseStorageCheckRate] action in Button widget.
+  String? uploadedChanodeBackUrl;
+  // Stores action output result for [Backend Call - API (CustomerCreateApi)] action in Button widget.
+  ApiCallResponse? createCustomerOutput;
 
   @override
   void initState(BuildContext context) {}

@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/instant_timer.dart';
+import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'lead_agent_detail_customer_page_widget.dart'
     show LeadAgentDetailCustomerPageWidget;
@@ -46,6 +47,8 @@ class LeadAgentDetailCustomerPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Backend Call - API (logout agent)] action in LeadAgentDetailCustomerPage widget.
+  ApiCallResponse? apiResultjxr;
   // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
   ApplicationRecord? appConfig;
   // Stores action output result for [Backend Call - API (visionThaiId)] action in LeadAgentDetailCustomerPage widget.
@@ -54,6 +57,8 @@ class LeadAgentDetailCustomerPageModel
   String? idCardImageUrlCallback;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCustomerPage widget.
   FFUploadedFile? generateIdCardFile;
+  // Model for WebAppBarComponent component.
+  late WebAppBarComponentModel webAppBarComponentModel;
   // Model for progressBarComponent component.
   late ProgressBarComponentModel progressBarComponentModel;
   // State field(s) for firstName widget.
@@ -115,12 +120,15 @@ class LeadAgentDetailCustomerPageModel
 
   @override
   void initState(BuildContext context) {
+    webAppBarComponentModel =
+        createModel(context, () => WebAppBarComponentModel());
     progressBarComponentModel =
         createModel(context, () => ProgressBarComponentModel());
   }
 
   @override
   void dispose() {
+    webAppBarComponentModel.dispose();
     progressBarComponentModel.dispose();
     firstNameFocusNode?.dispose();
     firstNameTextController?.dispose();

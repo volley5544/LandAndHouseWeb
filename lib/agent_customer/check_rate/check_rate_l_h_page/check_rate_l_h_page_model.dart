@@ -10,10 +10,17 @@ class CheckRateLHPageModel extends FlutterFlowModel<CheckRateLHPageWidget> {
 
   bool isFormState = true;
 
+  CheckRateDataModelStruct? checkRateData;
+  void updateCheckRateDataStruct(Function(CheckRateDataModelStruct) updateFn) {
+    updateFn(checkRateData ??= CheckRateDataModelStruct());
+  }
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in CheckRateLHPage widget.
   ApplicationRecord? queryAPIUrl;
+  // State field(s) for Column widget.
+  ScrollController? columnController;
   // Model for CheckRateLHFormComponent component.
   late CheckRateLHFormComponentModel checkRateLHFormComponentModel;
   // Stores action output result for [Custom Action - requestCameraPermission] action in Text widget.
@@ -21,12 +28,14 @@ class CheckRateLHPageModel extends FlutterFlowModel<CheckRateLHPageWidget> {
 
   @override
   void initState(BuildContext context) {
+    columnController = ScrollController();
     checkRateLHFormComponentModel =
         createModel(context, () => CheckRateLHFormComponentModel());
   }
 
   @override
   void dispose() {
+    columnController?.dispose();
     checkRateLHFormComponentModel.dispose();
   }
 }
