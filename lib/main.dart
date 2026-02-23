@@ -12,6 +12,7 @@ import 'auth/custom_auth/custom_auth_user_provider.dart';
 import 'backend/firebase/firebase_config.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'flutter_flow/internationalization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ void main() async {
   await actions.consoleLogActionCheckVersion();
   await actions.consoleLogAction();
   await actions.setClientPlatformAction();
+  await actions.initialSetApiUrlAction();
   // End final custom actions code
 
   runApp(ChangeNotifierProvider(
@@ -60,6 +62,8 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
 }
 
 class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
   late AppStateNotifier _appStateNotifier;
@@ -96,6 +100,10 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  void setLocale(String language) {
+    safeSetState(() => _locale = createLocale(language));
+  }
+
   void setThemeMode(ThemeMode mode) => safeSetState(() {
         _themeMode = mode;
         FlutterFlowTheme.saveThemeMode(mode);
@@ -108,11 +116,17 @@ class _MyAppState extends State<MyApp> {
       title: 'LandAndHouseWeb',
       scrollBehavior: MyAppScrollBehavior(),
       localizationsDelegates: [
+        FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        FallbackMaterialLocalizationDelegate(),
+        FallbackCupertinoLocalizationDelegate(),
       ],
-      supportedLocales: const [Locale('en', '')],
+      locale: _locale,
+      supportedLocales: const [
+        Locale('th'),
+      ],
       theme: ThemeData(
         brightness: Brightness.light,
       ),

@@ -1211,6 +1211,8 @@ class _AgentConfirmOtpPageWidgetState extends State<AgentConfirmOtpPageWidget>
 
                                           return;
                                         }
+                                        FFAppState().registerStepCheck = true;
+                                        safeSetState(() {});
 
                                         context.pushNamed(
                                           AgentSettingPage03Widget.routeName,

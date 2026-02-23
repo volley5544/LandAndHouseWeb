@@ -3274,7 +3274,9 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                               null
                                                                           ? dateTimeFormat(
                                                                               "Hm",
-                                                                              _model.datePicked)
+                                                                              _model.datePicked,
+                                                                              locale: FFLocalizations.of(context).languageCode,
+                                                                            )
                                                                           : 'ระบุเวลาที่สะดวกให้ติดต่อ',
                                                                       style: FlutterFlowTheme.of(
                                                                               context)

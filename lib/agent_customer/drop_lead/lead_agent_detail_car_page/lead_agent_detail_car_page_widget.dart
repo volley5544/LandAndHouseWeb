@@ -4863,7 +4863,10 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       ? dateTimeFormat(
                                                                           "Hm",
                                                                           _model
-                                                                              .datePicked)
+                                                                              .datePicked,
+                                                                          locale:
+                                                                              FFLocalizations.of(context).languageCode,
+                                                                        )
                                                                       : 'ระบุเวลาที่สะดวกให้ติดต่อ',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)

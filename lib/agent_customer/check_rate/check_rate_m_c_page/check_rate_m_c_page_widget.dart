@@ -4532,8 +4532,13 @@ class _CheckRateMCPageWidgetState extends State<CheckRateMCPageWidget>
                                                           16.0, 0.0, 16.0, 0.0),
                                                   child: Text(
                                                     _model.datePicked != null
-                                                        ? dateTimeFormat("Hm",
-                                                            _model.datePicked)
+                                                        ? dateTimeFormat(
+                                                            "Hm",
+                                                            _model.datePicked,
+                                                            locale: FFLocalizations
+                                                                    .of(context)
+                                                                .languageCode,
+                                                          )
                                                         : 'ระบุเวลาที่สะดวกให้ติดต่อ',
                                                     style: FlutterFlowTheme.of(
                                                             context)

@@ -23,6 +23,38 @@ int? findIndexInList(
   return index;
 }
 
+bool? validatePasswordSeparate(
+  String? input,
+  String? sub,
+) {
+  final hasLowercase = RegExp(r'[a-z]').hasMatch(input!);
+  final hasUppercase = RegExp(r'[A-Z]').hasMatch(input!);
+  final hasNumber = RegExp(r'[0-9]').hasMatch(input!);
+  final hasSpecial =
+      RegExp(r'[!@#\$%\^&\*\(\)_+\-=\[\]{};:"\\|,.<>\/?]').hasMatch(input!);
+  final sixCharacter = input.length >= 6;
+  switch (sub) {
+    case 'lower':
+      return hasLowercase;
+    case 'upper':
+      return hasUppercase;
+    case 'special':
+      return hasSpecial;
+    case 'length':
+      return sixCharacter;
+    case 'number':
+      return hasNumber;
+    case 'all':
+      return hasLowercase &&
+          hasUppercase &&
+          hasSpecial &&
+          sixCharacter &&
+          hasNumber;
+    default:
+      return false;
+  }
+}
+
 List<String>? createUniqueValueListLabel(List<String>? inputList) {
   List<String> outputList = [];
   for (int i = 0; i < inputList!.length; i++) {
@@ -1445,6 +1477,7 @@ int? returnStringLength(String? input) {
 bool? validatePassword(String? input) {
   final hasLowercase = RegExp(r'[a-z]').hasMatch(input!);
   final hasUppercase = RegExp(r'[A-Z]').hasMatch(input!);
+  final hasNumber = RegExp(r'[0-9]').hasMatch(input!);
   final hasSpecial =
       RegExp(r'[!@#\$%\^&\*\(\)_+\-=\[\]{};:"\\|,.<>\/?]').hasMatch(input!);
   final sixCharacter = input.length >= 6;

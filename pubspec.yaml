@@ -72,6 +72,7 @@ dependencies:
   flutter_markdown: 0.7.3+1
   flutter_phone_direct_caller: ^2.1.1
   flutter_plugin_android_lifecycle: 2.0.28
+  flutter_rounded_date_picker: ^3.0.4
   flutter_svg: 2.1.0
   font_awesome_flutter: 10.7.0
   from_css_color: 2.0.0

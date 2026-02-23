@@ -791,7 +791,13 @@ class _CheckRateLHResultComponentWidgetState
                                 ? FFAppState().customerDetailData.phoneNumber
                                 : '',
                             birthDate: FFAppState().customerDetailData.hasDob()
-                                ? '${dateTimeFormat("yyyy-MM-dd", functions.parseStringDateToDateTime(FFAppState().customerDetailData.dob))}'
+                                ? '${dateTimeFormat(
+                                    "yyyy-MM-dd",
+                                    functions.parseStringDateToDateTime(
+                                        FFAppState().customerDetailData.dob),
+                                    locale: FFLocalizations.of(context)
+                                        .languageCode,
+                                  )}'
                                 : '',
                             email: FFAppState().customerDetailData.hasEmail()
                                 ? FFAppState().customerDetailData.email

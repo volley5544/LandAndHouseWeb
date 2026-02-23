@@ -9,6 +9,7 @@ import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -49,7 +50,8 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
-      if (!FFAppState().registerStepCheck) {
+      if (!((FFAppState().registerStepCheck == true) ||
+          (widget.fromPage == 'changePassWord'))) {
         context.goNamed(AgentRegisterPage01Widget.routeName);
 
         return;
@@ -385,6 +387,41 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                                                 ),
                                                           ),
                                                         ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      12.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Builder(
+                                                            builder: (context) {
+                                                              if (functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'all') ??
+                                                                  false) {
+                                                                return Icon(
+                                                                  Icons
+                                                                      .check_circle,
+                                                                  color: Color(
+                                                                      0xFF40B221),
+                                                                  size: 24.0,
+                                                                );
+                                                              } else {
+                                                                return Icon(
+                                                                  Icons.cancel,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .error,
+                                                                  size: 24.0,
+                                                                );
+                                                              }
+                                                            },
+                                                          ),
+                                                        ),
                                                       ],
                                                     ),
                                                     Padding(
@@ -491,6 +528,16 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                                                     focusNode:
                                                                         _model
                                                                             .passwordTextFieldFocusNode,
+                                                                    onChanged: (_) =>
+                                                                        EasyDebounce
+                                                                            .debounce(
+                                                                      '_model.passwordTextFieldTextController',
+                                                                      Duration(
+                                                                          milliseconds:
+                                                                              100),
+                                                                      () => safeSetState(
+                                                                          () {}),
+                                                                    ),
                                                                     autofocus:
                                                                         false,
                                                                     obscureText:
@@ -696,6 +743,46 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                                                       ),
                                                                 ),
                                                               ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Builder(
+                                                                  builder:
+                                                                      (context) {
+                                                                    if ((_model.passwordTextFieldTextController
+                                                                                .text ==
+                                                                            _model
+                                                                                .confirmPasswordTextFieldTextController.text) &&
+                                                                        (_model.passwordTextFieldTextController.text !=
+                                                                            '') &&
+                                                                        (_model.confirmPasswordTextFieldTextController.text !=
+                                                                            '')) {
+                                                                      return Icon(
+                                                                        Icons
+                                                                            .check_circle,
+                                                                        color: Color(
+                                                                            0xFF40B221),
+                                                                        size:
+                                                                            24.0,
+                                                                      );
+                                                                    } else {
+                                                                      return Icon(
+                                                                        Icons
+                                                                            .cancel,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .error,
+                                                                        size:
+                                                                            24.0,
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
                                                           Padding(
@@ -797,6 +884,13 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                                                               _model.confirmPasswordTextFieldTextController,
                                                                           focusNode:
                                                                               _model.confirmPasswordTextFieldFocusNode,
+                                                                          onChanged: (_) =>
+                                                                              EasyDebounce.debounce(
+                                                                            '_model.confirmPasswordTextFieldTextController',
+                                                                            Duration(milliseconds: 100),
+                                                                            () =>
+                                                                                safeSetState(() {}),
+                                                                          ),
                                                                           autofocus:
                                                                               false,
                                                                           obscureText:
@@ -943,19 +1037,355 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                             ),
-                                            Text(
-                                              '• มีความยาวอย่างน้อย 6 ตัวอักษร หรือมากกว่า\n• ประกอบด้วยอักขระต่อไปนี้ \n      • ตัวอักษรพิมพ์เล็ก (a-z) \n      • ตัวอักษรพิมพ์ใหญ่ (A-Z)\n      • ตัวเลข (0-9) \n      • เครื่องหมายหรืออักขระพิเศษ เช่น !@#\$',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    fontSize: 12.0,
-                                                    letterSpacing: 0.0,
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Text(
+                                                  '• มีความยาวอย่างน้อย 6 ตัวอักษร หรือมากกว่า',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color: functions
+                                                                .validatePasswordSeparate(
+                                                                    _model
+                                                                        .passwordTextFieldTextController
+                                                                        .text,
+                                                                    'length')!
+                                                            ? Color(0xFF40B221)
+                                                            : FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                        fontSize: 12.0,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          12.0, 0.0, 0.0, 0.0),
+                                                  child: Builder(
+                                                    builder: (context) {
+                                                      if (functions
+                                                              .validatePasswordSeparate(
+                                                                  _model
+                                                                      .passwordTextFieldTextController
+                                                                      .text,
+                                                                  'length') ??
+                                                          false) {
+                                                        return Icon(
+                                                          Icons.check_circle,
+                                                          color:
+                                                              Color(0xFF40B221),
+                                                          size: 18.0,
+                                                        );
+                                                      } else {
+                                                        return Icon(
+                                                          Icons.cancel,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          size: 18.0,
+                                                        );
+                                                      }
+                                                    },
                                                   ),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '• ประกอบด้วยอักขระต่อไปนี้ ',
+                                                    style:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color: functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'all')!
+                                                                  ? Color(
+                                                                      0xFF40B221)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '      • ตัวอักษรพิมพ์เล็ก (a-z) ',
+                                                    style:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color: functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'lower')!
+                                                                  ? Color(
+                                                                      0xFF40B221)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        if (functions
+                                                                .validatePasswordSeparate(
+                                                                    _model
+                                                                        .passwordTextFieldTextController
+                                                                        .text,
+                                                                    'lower') ??
+                                                            false) {
+                                                          return Icon(
+                                                            Icons.check_circle,
+                                                            color: Color(
+                                                                0xFF40B221),
+                                                            size: 18.0,
+                                                          );
+                                                        } else {
+                                                          return Icon(
+                                                            Icons.cancel,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 18.0,
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '      • ตัวอักษรพิมพ์ใหญ่ (A-Z)',
+                                                    style:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color: functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'upper')!
+                                                                  ? Color(
+                                                                      0xFF40B221)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        if (functions
+                                                                .validatePasswordSeparate(
+                                                                    _model
+                                                                        .passwordTextFieldTextController
+                                                                        .text,
+                                                                    'upper') ??
+                                                            false) {
+                                                          return Icon(
+                                                            Icons.check_circle,
+                                                            color: Color(
+                                                                0xFF40B221),
+                                                            size: 18.0,
+                                                          );
+                                                        } else {
+                                                          return Icon(
+                                                            Icons.cancel,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 18.0,
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '      • ตัวเลข (0-9) ',
+                                                    style:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color: functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'number')!
+                                                                  ? Color(
+                                                                      0xFF40B221)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        if (functions
+                                                                .validatePasswordSeparate(
+                                                                    _model
+                                                                        .passwordTextFieldTextController
+                                                                        .text,
+                                                                    'number') ??
+                                                            false) {
+                                                          return Icon(
+                                                            Icons.check_circle,
+                                                            color: Color(
+                                                                0xFF40B221),
+                                                            size: 18.0,
+                                                          );
+                                                        } else {
+                                                          return Icon(
+                                                            Icons.cancel,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 18.0,
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Text(
+                                                    '      • เครื่องหมายหรืออักขระพิเศษ เช่น !@#\$',
+                                                    style:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color: functions.validatePasswordSeparate(
+                                                                      _model
+                                                                          .passwordTextFieldTextController
+                                                                          .text,
+                                                                      'special')!
+                                                                  ? Color(
+                                                                      0xFF40B221)
+                                                                  : FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                              fontSize: 12.0,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(12.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: Builder(
+                                                      builder: (context) {
+                                                        if (functions.validatePasswordSeparate(
+                                                                _model
+                                                                    .passwordTextFieldTextController
+                                                                    .text,
+                                                                'special') ??
+                                                            false) {
+                                                          return Icon(
+                                                            Icons.check_circle,
+                                                            color: Color(
+                                                                0xFF40B221),
+                                                            size: 18.0,
+                                                          );
+                                                        } else {
+                                                          return Icon(
+                                                            Icons.cancel,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .error,
+                                                            size: 18.0,
+                                                          );
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -1126,7 +1556,7 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                             },
                                             child: ErrorMessageComponentWidget(
                                               textMessage:
-                                                  'password ไม่ถูกต้อง',
+                                                  'กรุณาตั้งรหัสผ่านและยืนยันรหัสผ่านให้เหมือนกัน',
                                             ),
                                           ),
                                         );

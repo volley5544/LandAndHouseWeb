@@ -362,18 +362,103 @@ class _AgentLoginPageWidgetState extends State<AgentLoginPageWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          'เข้าใช้งานโครงการ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .displaySmall
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                fontSize: 24.0,
-                                                letterSpacing: 0.0,
-                                              ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            final _datePickedDate =
+                                                await showDatePicker(
+                                              context: context,
+                                              initialDate: (functions
+                                                      .currentDate18YearsAgo(
+                                                          getCurrentTimestamp) ??
+                                                  DateTime.now()),
+                                              firstDate: DateTime(1900),
+                                              lastDate: (functions
+                                                      .currentDate18YearsAgo(
+                                                          getCurrentTimestamp) ??
+                                                  DateTime.now()),
+                                              builder: (context, child) {
+                                                return wrapInMaterialDatePickerTheme(
+                                                  context,
+                                                  child!,
+                                                  headerBackgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                  headerForegroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .info,
+                                                  headerTextStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            fontSize: 32.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                  pickerBackgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryBackground,
+                                                  pickerForegroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryText,
+                                                  selectedDateTimeBackgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
+                                                  selectedDateTimeForegroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .info,
+                                                  actionButtonForegroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryText,
+                                                  iconSize: 24.0,
+                                                );
+                                              },
+                                            );
+
+                                            if (_datePickedDate != null) {
+                                              safeSetState(() {
+                                                _model.datePicked = DateTime(
+                                                  _datePickedDate.year,
+                                                  _datePickedDate.month,
+                                                  _datePickedDate.day,
+                                                );
+                                              });
+                                            } else if (_model.datePicked !=
+                                                null) {
+                                              safeSetState(() {
+                                                _model.datePicked = functions
+                                                    .currentDate18YearsAgo(
+                                                        getCurrentTimestamp);
+                                              });
+                                            }
+                                          },
+                                          child: Text(
+                                            'เข้าใช้งานโครงการ',
+                                            style: FlutterFlowTheme.of(context)
+                                                .displaySmall
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  fontSize: 24.0,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
                                         ),
                                         Container(
                                           width: () {

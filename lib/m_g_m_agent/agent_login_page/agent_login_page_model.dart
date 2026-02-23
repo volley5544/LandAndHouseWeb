@@ -14,6 +14,7 @@ class AgentLoginPageModel extends FlutterFlowModel<AgentLoginPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  DateTime? datePicked;
   // State field(s) for ChoiceChips widget.
   FormFieldController<List<String>>? choiceChipsValueController;
   String? get choiceChipsValue =>

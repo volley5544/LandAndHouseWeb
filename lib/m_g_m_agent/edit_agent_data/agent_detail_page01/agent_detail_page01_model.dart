@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'agent_detail_page01_widget.dart' show AgentDetailPage01Widget;
@@ -50,10 +51,21 @@ class AgentDetailPage01Model extends FlutterFlowModel<AgentDetailPage01Widget> {
   FocusNode? lastnameFocusNode;
   TextEditingController? lastnameTextController;
   String? Function(BuildContext, String?)? lastnameTextControllerValidator;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
   // State field(s) for bankAccNo widget.
   FocusNode? bankAccNoFocusNode;
   TextEditingController? bankAccNoTextController;
   String? Function(BuildContext, String?)? bankAccNoTextControllerValidator;
+  // State field(s) for promptpayTextField widget.
+  FocusNode? promptpayTextFieldFocusNode;
+  TextEditingController? promptpayTextFieldTextController;
+  String? Function(BuildContext, String?)?
+      promptpayTextFieldTextControllerValidator;
   // State field(s) for bankAccName widget.
   FocusNode? bankAccNameFocusNode;
   TextEditingController? bankAccNameTextController;
@@ -68,6 +80,9 @@ class AgentDetailPage01Model extends FlutterFlowModel<AgentDetailPage01Widget> {
   ApiCallResponse? updateAgentAPIOutput;
   // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in Button widget.
   ApiCallResponse? agentProfileAPIOutput;
+  bool isDataUploading_uploadDataR86 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataR86 =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   @override
   void initState(BuildContext context) {
@@ -86,6 +101,9 @@ class AgentDetailPage01Model extends FlutterFlowModel<AgentDetailPage01Widget> {
 
     bankAccNoFocusNode?.dispose();
     bankAccNoTextController?.dispose();
+
+    promptpayTextFieldFocusNode?.dispose();
+    promptpayTextFieldTextController?.dispose();
 
     bankAccNameFocusNode?.dispose();
     bankAccNameTextController?.dispose();

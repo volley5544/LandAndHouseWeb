@@ -144,8 +144,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
         FFAppState().updateCustomerDetailDataStruct(
           (e) => e
             ..hashThaiId = widget.hashThaiId
-            ..consentDate =
-                '${dateTimeFormat("yyyy-MM-dd", functions.parseStringDateToDateTime(widget.consentDate))}',
+            ..consentDate = '${dateTimeFormat(
+              "yyyy-MM-dd",
+              functions.parseStringDateToDateTime(widget.consentDate),
+              locale: FFLocalizations.of(context).languageCode,
+            )}',
         );
         safeSetState(() {});
       }

@@ -1417,9 +1417,13 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                                                                 .text)
                                                         ..agentDob =
                                                             dateTimeFormat(
-                                                                "y-MM-dd",
-                                                                _model
-                                                                    .datePicked),
+                                                          "y-MM-dd",
+                                                          _model.datePicked,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
+                                                        ),
                                                     );
                                                     safeSetState(() {});
                                                     _model.updateAgentAPIOutput =
