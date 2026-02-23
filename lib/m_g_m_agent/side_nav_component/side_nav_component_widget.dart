@@ -4,7 +4,6 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/pages/loading/loading_widget.dart';
-import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
@@ -656,9 +655,6 @@ class _SideNavComponentWidgetState extends State<SideNavComponentWidget> {
                                   _model.queryUrl!.apiUrl;
                               safeSetState(() {});
                             }
-                            await actions.navigateToRemoveUntil(
-                              context,
-                            );
                             _model.apiResultjxr =
                                 await AgentAPIGroup.logoutAgentCall.call(
                               username: FFAppState().agentCode,
@@ -674,6 +670,10 @@ class _SideNavComponentWidgetState extends State<SideNavComponentWidget> {
                                       .agentWebApiTokenUat,
                             );
 
+                            FFAppState().agentCode = '';
+                            FFAppState().agentProfileDataType =
+                                AgentProfileModelStruct();
+                            safeSetState(() {});
                             Navigator.pop(context);
                             GoRouter.of(context).prepareAuthEvent();
                             await authManager.signOut();
