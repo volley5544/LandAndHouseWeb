@@ -1281,9 +1281,7 @@ class _AgentDetailPage01WidgetState extends State<AgentDetailPage01Widget>
                                                             FlutterFlowChoiceChips(
                                                               options: [
                                                                 ChipData(
-                                                                    'บัญชีธนาคาร'),
-                                                                ChipData(
-                                                                    'พร้อมเพย์')
+                                                                    'บัญชีธนาคาร')
                                                               ],
                                                               onChanged: (val) =>
                                                                   safeSetState(() =>
@@ -1389,7 +1387,7 @@ class _AgentDetailPage01WidgetState extends State<AgentDetailPage01Widget>
                                                                           0.0,
                                                                           0.0),
                                                               child: Text(
-                                                                'เบอร์พร้อมเพย์',
+                                                                'เลขที่บัญชี',
                                                                 textAlign:
                                                                     TextAlign
                                                                         .start,
@@ -3681,8 +3679,10 @@ class _AgentDetailPage01WidgetState extends State<AgentDetailPage01Widget>
                                                         safeSetState(() {});
                                                       return;
                                                     }
-                                                    if (_model.bankSelected ==
-                                                        BankMasterModelStruct()) {
+                                                    if (!(('${_model.bankSelected?.bankNameTh}' !=
+                                                            'null') &&
+                                                        ('${_model.bankSelected?.bankNameTh}' !=
+                                                            ''))) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:

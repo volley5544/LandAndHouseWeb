@@ -17,5 +17,5 @@ Future initialSetApiUrlAction() async {
       await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
 
   FFAppState().apiUrlDocData = queryUrl!.apiUrl;
-  print('Api Url : ${FFAppState().apiUrlDocData.agentWebApiUrlUat}');
+  // print('Api Url : ${FFAppState().apiUrlDocData.agentWebApiUrlUat}');
 }
