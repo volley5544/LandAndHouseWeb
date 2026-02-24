@@ -568,13 +568,13 @@ class FFAppState extends ChangeNotifier {
     _LeadUrlProd = value;
   }
 
-  int _webProdVersion = 38;
+  int _webProdVersion = 39;
   int get webProdVersion => _webProdVersion;
   set webProdVersion(int value) {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 124;
+  int _webUatVersion = 126;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;

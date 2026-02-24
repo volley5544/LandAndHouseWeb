@@ -1364,96 +1364,97 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                             ),
                                           ),
                                         ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // You will have to add an action on this rich text to go to your login page.
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 12.0, 0.0, 12.0),
-                                                child: RichText(
-                                                  textScaler:
-                                                      MediaQuery.of(context)
-                                                          .textScaler,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            'เงื่อนไขโครงการเพื่อนแนะนำเพื่อน ',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
+                                      if (false)
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                // You will have to add an action on this rich text to go to your login page.
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 12.0, 0.0, 12.0),
+                                                  child: RichText(
+                                                    textScaler:
+                                                        MediaQuery.of(context)
+                                                            .textScaler,
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                          text:
+                                                              'เงื่อนไขโครงการเพื่อนแนะนำเพื่อน ',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryText,
+                                                          ),
+                                                        ),
+                                                        TextSpan(
+                                                          text: 'อ่านต่อ',
+                                                          style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .secondaryText,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text: 'อ่านต่อ',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .underline,
-                                                                ),
-                                                      )
-                                                    ],
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Noto San Thai',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                              ),
+                                                        )
+                                                      ],
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
 
-                                              // You will have to add an action on this rich text to go to your login page.
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 12.0),
-                                                child: RichText(
-                                                  textScaler:
-                                                      MediaQuery.of(context)
-                                                          .textScaler,
-                                                  text: TextSpan(
-                                                    children: [
-                                                      TextSpan(
-                                                        text:
-                                                            'ข้อกำหนดและเงื่อนไข ',
-                                                        style: TextStyle(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text: 'อ่านต่อ',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                // You will have to add an action on this rich text to go to your login page.
+                                                if (false)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 12.0),
+                                                    child: RichText(
+                                                      textScaler:
+                                                          MediaQuery.of(context)
+                                                              .textScaler,
+                                                      text: TextSpan(
+                                                        children: [
+                                                          TextSpan(
+                                                            text:
+                                                                'ข้อกำหนดและเงื่อนไข ',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                            ),
+                                                          ),
+                                                          TextSpan(
+                                                            text: 'อ่านต่อ',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .bodyMedium
                                                                 .override(
                                                                   fontFamily:
@@ -1470,23 +1471,25 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                                       TextDecoration
                                                                           .underline,
                                                                 ),
-                                                      )
-                                                    ],
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              'Noto San Thai',
-                                                          letterSpacing: 0.0,
-                                                        ),
+                                                          )
+                                                        ],
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       if (!FFDevEnvironmentValues()
                                           .isProduction)
                                         Text(

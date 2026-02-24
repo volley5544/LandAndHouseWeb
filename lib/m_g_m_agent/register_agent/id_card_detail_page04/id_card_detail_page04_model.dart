@@ -13,6 +13,12 @@ class IdCardDetailPage04Model
 
   FFUploadedFile? emptyFileBytes;
 
+  bool isVerify = false;
+
+  String? refererCode;
+
+  String? refererName;
+
   ///  State fields for stateful widgets in this page.
 
   // Model for WebAppBarComponent component.
@@ -28,6 +34,13 @@ class IdCardDetailPage04Model
   // Stores action output result for [Backend Call - API (visionThaiId)] action in Icon widget.
   ApiCallResponse? visionOutputThaiId;
   DateTime? datePicked;
+  // State field(s) for employeeIdText widget.
+  FocusNode? employeeIdTextFocusNode;
+  TextEditingController? employeeIdTextTextController;
+  String? Function(BuildContext, String?)?
+      employeeIdTextTextControllerValidator;
+  // Stores action output result for [Backend Call - API (SearchEmployeeApi)] action in Container widget.
+  ApiCallResponse? searchEmployeeApiOutput;
   // Stores action output result for [Backend Call - API (check blacklist thai id)] action in Button widget.
   ApiCallResponse? blacklistAPIoutput;
   // Stores action output result for [Backend Call - API (update agent)] action in Button widget.
@@ -47,6 +60,9 @@ class IdCardDetailPage04Model
     webAppBarComponentModel.dispose();
     thaiIdTextFieldFocusNode?.dispose();
     thaiIdTextFieldTextController?.dispose();
+
+    employeeIdTextFocusNode?.dispose();
+    employeeIdTextTextController?.dispose();
   }
 
   /// Action blocks.

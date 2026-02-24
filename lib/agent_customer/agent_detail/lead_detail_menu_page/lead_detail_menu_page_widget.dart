@@ -535,28 +535,24 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
                                   MediaQuery.sizeOf(context).width * 0.075,
                                   0.0,
                                 ),
-                                0.0,
+                                valueOrDefault<double>(
+                                  MediaQuery.sizeOf(context).height * 0.04,
+                                  0.0,
+                                ),
                                 valueOrDefault<double>(
                                   MediaQuery.sizeOf(context).width * 0.075,
                                   0.0,
                                 ),
                                 0.0),
-                            child: GridView(
-                              padding: EdgeInsets.fromLTRB(
-                                0,
-                                MediaQuery.sizeOf(context).height * 0.04,
-                                0,
-                                0,
-                              ),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                crossAxisSpacing:
-                                    MediaQuery.sizeOf(context).width * 0.02,
-                                mainAxisSpacing: 50.0,
-                                childAspectRatio: 1.0,
-                              ),
-                              scrollDirection: Axis.vertical,
+                            child: Wrap(
+                              spacing: 32.0,
+                              runSpacing: 50.0,
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              direction: Axis.horizontal,
+                              runAlignment: WrapAlignment.start,
+                              verticalDirection: VerticalDirection.down,
+                              clipBehavior: Clip.none,
                               children: [
                                 InkWell(
                                   splashColor: Colors.transparent,
@@ -595,7 +591,7 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 24.0, 24.0, 24.0),
+                                          24.0, 12.0, 24.0, 12.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -664,7 +660,7 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 24.0, 24.0, 24.0),
+                                          24.0, 12.0, 24.0, 12.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -733,7 +729,7 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          24.0, 24.0, 24.0, 24.0),
+                                          24.0, 12.0, 24.0, 12.0),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:

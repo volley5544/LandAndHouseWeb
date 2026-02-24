@@ -10,6 +10,7 @@ import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -56,6 +57,9 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
 
     _model.thaiIdTextFieldMask =
         MaskTextInputFormatter(mask: '#-####-#####-##-#');
+    _model.employeeIdTextTextController ??= TextEditingController();
+    _model.employeeIdTextFocusNode ??= FocusNode();
+
     animationsMap.addAll({
       'columnOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
@@ -1020,6 +1024,523 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                                                               'columnOnPageLoadAnimation']!),
                                                     ],
                                                   ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 16.0,
+                                                                0.0, 0.0),
+                                                    child: Container(
+                                                      width: () {
+                                                        if (MediaQuery.sizeOf(
+                                                                    context)
+                                                                .width <
+                                                            kBreakpointSmall) {
+                                                          return MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width;
+                                                        } else if (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width <
+                                                            kBreakpointMedium) {
+                                                          return MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width;
+                                                        } else if (MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width <
+                                                            kBreakpointLarge) {
+                                                          return 600.0;
+                                                        } else {
+                                                          return 600.0;
+                                                        }
+                                                      }(),
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(0.0),
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                'รหัสผู้แนะนำ (ถ้ามี)',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          () {
+                                                                        if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointSmall) {
+                                                                          return 18.0;
+                                                                        } else if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointMedium) {
+                                                                          return 18.0;
+                                                                        } else if (MediaQuery.sizeOf(context).width <
+                                                                            kBreakpointLarge) {
+                                                                          return 18.0;
+                                                                        } else {
+                                                                          return 18.0;
+                                                                        }
+                                                                      }(),
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                    ),
+                                                              ),
+                                                            ].divide(SizedBox(
+                                                                width: 8.0)),
+                                                          ),
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              boxShadow: [
+                                                                BoxShadow(
+                                                                  blurRadius:
+                                                                      4.0,
+                                                                  color: Color(
+                                                                      0x33000000),
+                                                                  offset:
+                                                                      Offset(
+                                                                    0.0,
+                                                                    2.0,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children:
+                                                                          [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children:
+                                                                              [
+                                                                            Text(
+                                                                              'รหัสพนักงานผู้แนะนำ (ไม่ต้องใส่ L นำหน้า)',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: Color(0xB2646464),
+                                                                                    fontSize: 14.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ].divide(SizedBox(width: 5.0)),
+                                                                        ),
+                                                                      ].divide(SizedBox(
+                                                                              width: 12.0)),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          8.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        BoxDecoration(),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.center,
+                                                                            children:
+                                                                                [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: 200.0,
+                                                                                  child: TextFormField(
+                                                                                    controller: _model.employeeIdTextTextController,
+                                                                                    focusNode: _model.employeeIdTextFocusNode,
+                                                                                    onChanged: (_) => EasyDebounce.debounce(
+                                                                                      '_model.employeeIdTextTextController',
+                                                                                      Duration(milliseconds: 100),
+                                                                                      () async {
+                                                                                        _model.isVerify = false;
+                                                                                        _model.refererCode = null;
+                                                                                        _model.refererName = null;
+                                                                                        safeSetState(() {});
+                                                                                      },
+                                                                                    ),
+                                                                                    autofocus: false,
+                                                                                    enabled: true,
+                                                                                    obscureText: false,
+                                                                                    decoration: InputDecoration(
+                                                                                      isDense: true,
+                                                                                      labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                      hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                      enabledBorder: OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: Color(0x00000000),
+                                                                                          width: 1.0,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(8.0),
+                                                                                      ),
+                                                                                      focusedBorder: OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: Color(0x00000000),
+                                                                                          width: 1.0,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(8.0),
+                                                                                      ),
+                                                                                      errorBorder: OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: FlutterFlowTheme.of(context).error,
+                                                                                          width: 1.0,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(8.0),
+                                                                                      ),
+                                                                                      focusedErrorBorder: OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: FlutterFlowTheme.of(context).error,
+                                                                                          width: 1.0,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(8.0),
+                                                                                      ),
+                                                                                      filled: true,
+                                                                                      fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                      suffixIcon: _model.employeeIdTextTextController!.text.isNotEmpty
+                                                                                          ? InkWell(
+                                                                                              onTap: () async {
+                                                                                                _model.employeeIdTextTextController?.clear();
+                                                                                                _model.isVerify = false;
+                                                                                                _model.refererCode = null;
+                                                                                                _model.refererName = null;
+                                                                                                safeSetState(() {});
+                                                                                                safeSetState(() {});
+                                                                                              },
+                                                                                              child: Icon(
+                                                                                                Icons.clear,
+                                                                                                size: 22,
+                                                                                              ),
+                                                                                            )
+                                                                                          : null,
+                                                                                    ),
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: '${_model.refererName}' == 'รหัสผู้แนะนำไม่ถูกต้อง' ? FlutterFlowTheme.of(context).error : Colors.black,
+                                                                                          letterSpacing: 0.0,
+                                                                                        ),
+                                                                                    cursorColor: FlutterFlowTheme.of(context).primaryText,
+                                                                                    enableInteractiveSelection: true,
+                                                                                    validator: _model.employeeIdTextTextControllerValidator.asValidator(context),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Builder(
+                                                                                builder: (context) => InkWell(
+                                                                                  splashColor: Colors.transparent,
+                                                                                  focusColor: Colors.transparent,
+                                                                                  hoverColor: Colors.transparent,
+                                                                                  highlightColor: Colors.transparent,
+                                                                                  onTap: () async {
+                                                                                    var _shouldSetState = false;
+                                                                                    if (!(_model.employeeIdTextTextController.text != '')) {
+                                                                                      if (_shouldSetState) safeSetState(() {});
+                                                                                      return;
+                                                                                    }
+                                                                                    showDialog(
+                                                                                      context: context,
+                                                                                      builder: (dialogContext) {
+                                                                                        return Dialog(
+                                                                                          elevation: 0,
+                                                                                          insetPadding: EdgeInsets.zero,
+                                                                                          backgroundColor: Colors.transparent,
+                                                                                          alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                          child: GestureDetector(
+                                                                                            onTap: () {
+                                                                                              FocusScope.of(dialogContext).unfocus();
+                                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                                            },
+                                                                                            child: Container(
+                                                                                              height: double.infinity,
+                                                                                              width: double.infinity,
+                                                                                              child: LoadingWidget(),
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      },
+                                                                                    );
+
+                                                                                    _model.searchEmployeeApiOutput = await AgentAPIGroup.searchEmployeeApiCall.call(
+                                                                                      keywords: _model.employeeIdTextTextController.text,
+                                                                                      url: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiUrl : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+                                                                                      tokenHeader: FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebApiToken : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+                                                                                    );
+
+                                                                                    _shouldSetState = true;
+                                                                                    if ((_model.searchEmployeeApiOutput?.statusCode ?? 200) != 200) {
+                                                                                      Navigator.pop(context);
+                                                                                      await showDialog(
+                                                                                        context: context,
+                                                                                        builder: (dialogContext) {
+                                                                                          return Dialog(
+                                                                                            elevation: 0,
+                                                                                            insetPadding: EdgeInsets.zero,
+                                                                                            backgroundColor: Colors.transparent,
+                                                                                            alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                            child: GestureDetector(
+                                                                                              onTap: () {
+                                                                                                FocusScope.of(dialogContext).unfocus();
+                                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                                              },
+                                                                                              child: ErrorMessageComponentWidget(
+                                                                                                textMessage: 'พบข้อผิดพลาด Connection(${(_model.searchEmployeeApiOutput?.statusCode ?? 200).toString()})',
+                                                                                              ),
+                                                                                            ),
+                                                                                          );
+                                                                                        },
+                                                                                      );
+
+                                                                                      safeSetState(() {
+                                                                                        _model.employeeIdTextTextController?.clear();
+                                                                                      });
+                                                                                      _model.isVerify = false;
+                                                                                      _model.refererCode = null;
+                                                                                      _model.refererName = null;
+                                                                                      safeSetState(() {});
+                                                                                      if (_shouldSetState) safeSetState(() {});
+                                                                                      return;
+                                                                                    }
+                                                                                    if ('${getJsonField(
+                                                                                          (_model.searchEmployeeApiOutput?.jsonBody ?? ''),
+                                                                                          r'''$.code''',
+                                                                                        ).toString()}' ==
+                                                                                        '200') {
+                                                                                      _model.refererCode = '${AgentAPIGroup.searchEmployeeApiCall.employeeCode(
+                                                                                        (_model.searchEmployeeApiOutput?.jsonBody ?? ''),
+                                                                                      )}';
+                                                                                      _model.refererName = '${AgentAPIGroup.searchEmployeeApiCall.fullname(
+                                                                                        (_model.searchEmployeeApiOutput?.jsonBody ?? ''),
+                                                                                      )}';
+                                                                                      safeSetState(() {});
+                                                                                    } else {
+                                                                                      if ('${getJsonField(
+                                                                                            (_model.searchEmployeeApiOutput?.jsonBody ?? ''),
+                                                                                            r'''$.code''',
+                                                                                          ).toString()}' !=
+                                                                                          '404') {
+                                                                                        Navigator.pop(context);
+                                                                                        await showDialog(
+                                                                                          context: context,
+                                                                                          builder: (dialogContext) {
+                                                                                            return Dialog(
+                                                                                              elevation: 0,
+                                                                                              insetPadding: EdgeInsets.zero,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                              child: GestureDetector(
+                                                                                                onTap: () {
+                                                                                                  FocusScope.of(dialogContext).unfocus();
+                                                                                                  FocusManager.instance.primaryFocus?.unfocus();
+                                                                                                },
+                                                                                                child: ErrorMessageComponentWidget(
+                                                                                                  textMessage: '${getJsonField(
+                                                                                                    (_model.searchEmployeeApiOutput?.jsonBody ?? ''),
+                                                                                                    r'''$.message''',
+                                                                                                  ).toString()}',
+                                                                                                ),
+                                                                                              ),
+                                                                                            );
+                                                                                          },
+                                                                                        );
+
+                                                                                        safeSetState(() {
+                                                                                          _model.employeeIdTextTextController?.clear();
+                                                                                        });
+                                                                                        _model.isVerify = false;
+                                                                                        _model.refererCode = null;
+                                                                                        _model.refererName = null;
+                                                                                        safeSetState(() {});
+                                                                                        if (_shouldSetState) safeSetState(() {});
+                                                                                        return;
+                                                                                      }
+                                                                                      _model.refererCode = _model.employeeIdTextTextController.text;
+                                                                                      _model.refererName = 'รหัสผู้แนะนำไม่ถูกต้อง';
+                                                                                      safeSetState(() {});
+                                                                                    }
+
+                                                                                    _model.isVerify = true;
+                                                                                    safeSetState(() {});
+                                                                                    Navigator.pop(context);
+                                                                                    if (_shouldSetState) safeSetState(() {});
+                                                                                  },
+                                                                                  child: Container(
+                                                                                    height: 40.0,
+                                                                                    decoration: BoxDecoration(),
+                                                                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                    child: Text(
+                                                                                      'ตรวจสอบ',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.w600,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ].divide(SizedBox(width: 12.0)),
+                                                                          ),
+                                                                          Divider(
+                                                                            thickness:
+                                                                                2.0,
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).alternate,
+                                                                          ),
+                                                                          if (_model.refererName ==
+                                                                              'รหัสผู้แนะนำไม่ถูกต้อง')
+                                                                            Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                Text(
+                                                                                  'รหัสผู้แนะนำไม่ถูกต้อง',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).error,
+                                                                                        letterSpacing: 0.0,
+                                                                                        fontWeight: FontWeight.w600,
+                                                                                      ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          if (_model
+                                                                              .isVerify)
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                              child: Row(
+                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    'ชื่อผู้แนะนำ',
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                  Text(
+                                                                                    valueOrDefault<String>(
+                                                                                      _model.refererName == 'รหัสผู้แนะนำไม่ถูกต้อง'
+                                                                                          ? '-'
+                                                                                          : '${functions.censorName('${(String employeeName) {
+                                                                                                return employeeName.split(' ')[0];
+                                                                                              }(_model.refererName!)}', 3)} ${functions.censorName('${(String employeeName) {
+                                                                                                return employeeName.split(' ')[1];
+                                                                                              }(_model.refererName!)}', 3)}',
+                                                                                      '-',
+                                                                                    ),
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: Colors.black,
+                                                                                          letterSpacing: 0.0,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ]
+                                                                  .divide(SizedBox(
+                                                                      height:
+                                                                          8.0))
+                                                                  .addToEnd(SizedBox(
+                                                                      height:
+                                                                          16.0)),
+                                                            ),
+                                                          ),
+                                                        ]
+                                                            .divide(SizedBox(
+                                                                height: 8.0))
+                                                            .addToStart(
+                                                                SizedBox(
+                                                                    height:
+                                                                        8.0))
+                                                            .addToEnd(SizedBox(
+                                                                height: 12.0)),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ].addToEnd(
                                                     SizedBox(height: 24.0)),
                                               ),
@@ -1460,6 +1981,10 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                                                           .uploadedLocalFile_uploadData36j,
                                                       agentBankImage: _model
                                                           .uploadedLocalFile_uploadData36j,
+                                                      referrerCode:
+                                                          _model.refererCode,
+                                                      referrerName:
+                                                          _model.refererName,
                                                     );
 
                                                     _shouldSetState = true;

@@ -4045,6 +4045,8 @@ class UpdateAgentCall {
     String? agentDistrictCode = '',
     String? agentDistrictName = '',
     String? agentBankAccountName = '',
+    String? referrerCode = '',
+    String? referrerName = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -4084,6 +4086,8 @@ class UpdateAgentCall {
         'agent_id_image': agentIdImage,
         'agent_bank_image': agentBankImage,
         'agent_bank_account_name': agentBankAccountName,
+        'referrer_code': referrerCode,
+        'referrer_name': referrerName,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
