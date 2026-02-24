@@ -1,5 +1,6 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
@@ -54,7 +55,13 @@ class _LeadDetailMenuPageWidgetState extends State<LeadDetailMenuPageWidget> {
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
     });

@@ -78,8 +78,14 @@ class _LeadAgentDetailCustomerPageWidgetState
           }
         } else {
           if (!FFAppState().isShareLink) {
+            FFAppState().agentCode = '';
+            FFAppState().agentProfileDataType = AgentProfileModelStruct();
+            safeSetState(() {});
+
             context.goNamedAuth(
                 AgentLoginPageWidget.routeName, context.mounted);
+
+            return;
           }
         }
       }

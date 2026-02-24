@@ -69,7 +69,13 @@ class _MyLeadDashboardNewPageWidgetState
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
       showDialog(

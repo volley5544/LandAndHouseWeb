@@ -69,7 +69,13 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
       if (loggedIn) {

@@ -3,6 +3,7 @@ import '/agent_customer/agent_detail/user_agent_detail_component/user_agent_deta
 import '/agent_customer/select_payment_transfer_component/select_payment_transfer_component_widget.dart';
 import '/auth/custom_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/schema/structs/index.dart';
 import '/components/banner_agent_component_widget.dart';
 import '/components/error_message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -59,7 +60,13 @@ class _VerifyTransferPageWidgetState extends State<VerifyTransferPageWidget> {
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
       _model.paymentMethod = FFAppState().agentProfileDataType.paymentMethod;

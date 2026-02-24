@@ -65,7 +65,13 @@ class _AddressDetailPage02WidgetState extends State<AddressDetailPage02Widget>
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
     });

@@ -80,7 +80,13 @@ class _AgentDetailPage01WidgetState extends State<AgentDetailPage01Widget>
             GoRouter.of(context).clearRedirectLocation();
           }
         } else {
+          FFAppState().agentCode = '';
+          FFAppState().agentProfileDataType = AgentProfileModelStruct();
+          safeSetState(() {});
+
           context.goNamedAuth(AgentLoginPageWidget.routeName, context.mounted);
+
+          return;
         }
       }
       _model.bankSelected = null;
