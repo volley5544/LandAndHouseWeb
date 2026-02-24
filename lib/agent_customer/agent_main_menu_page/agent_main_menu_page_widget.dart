@@ -8,6 +8,7 @@ import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -214,6 +215,80 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
               child: Scaffold(
                 key: scaffoldKey,
                 backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+                floatingActionButton: Visibility(
+                  visible: () {
+                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                      return true;
+                    } else if (MediaQuery.sizeOf(context).width <
+                        kBreakpointMedium) {
+                      return true;
+                    } else if (MediaQuery.sizeOf(context).width <
+                        kBreakpointLarge) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }()
+                      ? (('${FFAppState().agentProfileDataType.agentDocStatus}' !=
+                              'COMPLETED') &&
+                          (loggedIn
+                              ? true
+                              : ('${FFAppState().platform}' == 'mobile')))
+                      : false,
+                  child: Align(
+                    alignment: AlignmentDirectional(1.0, 0.8),
+                    child: FloatingActionButton.extended(
+                      onPressed: () async {
+                        context.pushNamed(AgentDetailPage01Widget.routeName);
+                      },
+                      backgroundColor: FlutterFlowTheme.of(context).primaryText,
+                      elevation: 8.0,
+                      label: badges.Badge(
+                        badgeContent: Text(
+                          '!',
+                          style:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Colors.white,
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                        showBadge: true,
+                        shape: badges.BadgeShape.circle,
+                        badgeColor: FlutterFlowTheme.of(context).primary,
+                        elevation: 4.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                        position: badges.BadgePosition.topEnd(),
+                        animationType: badges.BadgeAnimationType.scale,
+                        toAnimate: false,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(
+                              Icons.edit_square,
+                              color: FlutterFlowTheme.of(context).info,
+                              size: 24.0,
+                            ),
+                            Text(
+                              'กรอกข้อมูล\nเพื่อรับค่าตอบแทน',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
+                                    fontSize: 9.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 appBar: () {
                   if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
                     return true;
@@ -505,6 +580,116 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                                   ),
                                 ),
                               ),
+                              if (FFAppState().mgmUserManualUrl != '')
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 12.0, 0.0),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      if ('${FFAppState().platform}' ==
+                                          'mobile') {
+                                        await actions.launchUrlInApp(
+                                          FFAppState().mgmUserManualUrl,
+                                        );
+                                      } else {
+                                        await actions.urlLauncherAction(
+                                          FFAppState().mgmUserManualUrl,
+                                        );
+                                      }
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 70.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(
+                                              2.0,
+                                              4.0,
+                                            ),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        border: Border.all(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          width: 2.0,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 12.0, 0.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0.0, 0.0),
+                                                      child: FaIcon(
+                                                        FontAwesomeIcons
+                                                            .bookOpen,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        size: 28.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 8,
+                                                    child: Text(
+                                                      'วิธีการใช้งานสำหรับลูกค้าทั่วไป',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Noto San Thai',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ].divide(SizedBox(width: 16.0)),
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.navigate_next_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 30.0,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                             ].divide(SizedBox(height: 16.0)),
                           ),
                         ),
@@ -689,6 +874,82 @@ class _AgentMainMenuPageWidgetState extends State<AgentMainMenuPageWidget> {
                                       ),
                                     ),
                                   ),
+                                  if (FFAppState().mgmUserManualUrl != '')
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        if ('${FFAppState().platform}' ==
+                                            'mobile') {
+                                          await actions.launchUrlInApp(
+                                            FFAppState().mgmUserManualUrl,
+                                          );
+                                        } else {
+                                          await actions.urlLauncherAction(
+                                            FFAppState().mgmUserManualUrl,
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 200.0,
+                                        height: 200.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondary,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              blurRadius: 4.0,
+                                              color: Color(0x33000000),
+                                              offset: Offset(
+                                                0.0,
+                                                2.0,
+                                              ),
+                                            )
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
+                                        ),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  24.0, 24.0, 24.0, 24.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              FaIcon(
+                                                FontAwesomeIcons.bookOpen,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                size: 100.0,
+                                              ),
+                                              Text(
+                                                'วิธีการใช้งานสำหรับลูกค้าทั่วไป',
+                                                textAlign: TextAlign.center,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ].divide(SizedBox(height: 12.0)),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

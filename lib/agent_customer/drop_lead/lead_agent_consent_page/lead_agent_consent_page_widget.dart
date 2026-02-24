@@ -1138,6 +1138,53 @@ class _LeadAgentConsentPageWidgetState
                                                     ),
                                                   );
                                                 },
+                                              ).then((value) => safeSetState(
+                                                  () => _model
+                                                          .confirmOtpOutputData =
+                                                      value));
+
+                                              _shouldSetState = true;
+                                              if (!(('${_model.confirmOtpOutputData?.toString()}' !=
+                                                      'null') &&
+                                                  ('${_model.confirmOtpOutputData?.toString()}' !=
+                                                      ''))) {
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
+                                              if (Navigator.of(context)
+                                                  .canPop()) {
+                                                context.pop();
+                                              }
+                                              context.pushNamed(
+                                                ConsentSuccessPageWidget
+                                                    .routeName,
+                                                queryParameters: {
+                                                  'fromPage': serializeParam(
+                                                    '${getJsonField(
+                                                      _model
+                                                          .confirmOtpOutputData,
+                                                      r'''$.fromPage''',
+                                                    ).toString()}',
+                                                    ParamType.String,
+                                                  ),
+                                                  'product': serializeParam(
+                                                    '${getJsonField(
+                                                      _model
+                                                          .confirmOtpOutputData,
+                                                      r'''$.product''',
+                                                    ).toString()}',
+                                                    ParamType.String,
+                                                  ),
+                                                  'consent': serializeParam(
+                                                    '${getJsonField(
+                                                      _model
+                                                          .confirmOtpOutputData,
+                                                      r'''$.consent''',
+                                                    ).toString()}',
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
                                               );
                                             }
                                             if (_shouldSetState)

@@ -145,7 +145,10 @@ class _ConsentSuccessPageWidgetState extends State<ConsentSuccessPageWidget> {
                                           LeadAgentDetailLHPageWidget
                                               .routeName);
                                     } else {
-                                      context.goNamed(
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed(
                                         LeadAgentDetailCarPageWidget.routeName,
                                         queryParameters: {
                                           'product': serializeParam(

@@ -1,5 +1,6 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
+import '/index.dart';
 import 'name_card_page_widget.dart' show NameCardPageWidget;
 import 'package:flutter/material.dart';
 

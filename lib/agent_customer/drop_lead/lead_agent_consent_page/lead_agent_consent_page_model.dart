@@ -25,6 +25,8 @@ class LeadAgentConsentPageModel
   ApiCallResponse? checkConsentStatusApiOutput;
   // Stores action output result for [Backend Call - API (Send an otp to user)] action in Button widget.
   ApiCallResponse? apiResultc6p;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
+  dynamic confirmOtpOutputData;
 
   @override
   void initState(BuildContext context) {}

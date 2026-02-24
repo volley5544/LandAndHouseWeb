@@ -56,11 +56,12 @@ class CheckRateLHFormComponentModel
   FFUploadedFile uploadedLocalFile_uploadDataSqd2Component =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode;
-  TextEditingController? textController6;
-  String? Function(BuildContext, String?)? textController6Validator;
-  // Stores action output result for [Backend Call - API (agent commission)] action in TextField widget.
+  // State field(s) for TextFieldAmount widget.
+  FocusNode? textFieldAmountFocusNode;
+  TextEditingController? textFieldAmountTextController;
+  String? Function(BuildContext, String?)?
+      textFieldAmountTextControllerValidator;
+  // Stores action output result for [Backend Call - API (agent commission)] action in TextFieldAmount widget.
   ApiCallResponse? apiResulthzdcommissionLH;
   DateTime? datePicked;
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Button widget.
@@ -92,7 +93,7 @@ class CheckRateLHFormComponentModel
     tarangWaTextFieldFocusNode?.dispose();
     tarangWaTextFieldTextController?.dispose();
 
-    textFieldFocusNode?.dispose();
-    textController6?.dispose();
+    textFieldAmountFocusNode?.dispose();
+    textFieldAmountTextController?.dispose();
   }
 }

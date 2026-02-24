@@ -19,7 +19,7 @@ int? findIndexInList(
 ) {
   // Find the index of an item
   int index = dataList!.indexOf(searchInput!);
-  print('');
+
   return index;
 }
 
@@ -163,11 +163,11 @@ bool? containString(
 }
 
 String? removeCommaFromNumText(String? numberText) {
-  // if (double.tryParse(numberText!) == null) {
-  //   return '0.00';
-  // }
-
   String result = numberText!.replaceAll(RegExp('[^A-Za-z0-9.]'), '');
+
+  if (double.tryParse(result!) == null) {
+    return '0.00';
+  }
 
   return result;
 }
@@ -1499,4 +1499,14 @@ DateTime? currentDate18YearsAgo(DateTime? currentDate) {
       DateTime(currentDate!.year - 18, currentDate!.month, currentDate!.day);
 
   return eighteenYearsAgo;
+}
+
+String? returnTextValueInList(List<String>? inputList) {
+  String output = '';
+
+  for (int i = 0; i < inputList!.length; i++) {
+    output = output + inputList![i];
+  }
+
+  return output;
 }

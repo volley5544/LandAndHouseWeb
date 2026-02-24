@@ -33,6 +33,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? agentWebApiToken,
     String? agentWebApiTokenUat,
     String? agentWebLoginPage,
+    String? mgmUserManualUrl,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -59,6 +60,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _agentWebApiToken = agentWebApiToken,
         _agentWebApiTokenUat = agentWebApiTokenUat,
         _agentWebLoginPage = agentWebLoginPage,
+        _mgmUserManualUrl = mgmUserManualUrl,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -237,6 +239,13 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasAgentWebLoginPage() => _agentWebLoginPage != null;
 
+  // "mgm_user_manual_url" field.
+  String? _mgmUserManualUrl;
+  String get mgmUserManualUrl => _mgmUserManualUrl ?? '';
+  set mgmUserManualUrl(String? val) => _mgmUserManualUrl = val;
+
+  bool hasMgmUserManualUrl() => _mgmUserManualUrl != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -264,6 +273,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebApiToken: data['agent_web_api_token'] as String?,
         agentWebApiTokenUat: data['agent_web_api_token_uat'] as String?,
         agentWebLoginPage: data['agent_web_login_page'] as String?,
+        mgmUserManualUrl: data['mgm_user_manual_url'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -295,6 +305,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'agent_web_api_token': _agentWebApiToken,
         'agent_web_api_token_uat': _agentWebApiTokenUat,
         'agent_web_login_page': _agentWebLoginPage,
+        'mgm_user_manual_url': _mgmUserManualUrl,
       }.withoutNulls;
 
   @override
@@ -397,6 +408,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'agent_web_login_page': serializeParam(
           _agentWebLoginPage,
+          ParamType.String,
+        ),
+        'mgm_user_manual_url': serializeParam(
+          _mgmUserManualUrl,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -528,6 +543,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        mgmUserManualUrl: deserializeParam(
+          data['mgm_user_manual_url'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -560,7 +580,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebCustomerConsentUat == other.agentWebCustomerConsentUat &&
         agentWebApiToken == other.agentWebApiToken &&
         agentWebApiTokenUat == other.agentWebApiTokenUat &&
-        agentWebLoginPage == other.agentWebLoginPage;
+        agentWebLoginPage == other.agentWebLoginPage &&
+        mgmUserManualUrl == other.mgmUserManualUrl;
   }
 
   @override
@@ -589,7 +610,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebCustomerConsentUat,
         agentWebApiToken,
         agentWebApiTokenUat,
-        agentWebLoginPage
+        agentWebLoginPage,
+        mgmUserManualUrl
       ]);
 }
 
@@ -619,6 +641,7 @@ ApiUrlStruct createApiUrlStruct({
   String? agentWebApiToken,
   String? agentWebApiTokenUat,
   String? agentWebLoginPage,
+  String? mgmUserManualUrl,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -650,6 +673,7 @@ ApiUrlStruct createApiUrlStruct({
       agentWebApiToken: agentWebApiToken,
       agentWebApiTokenUat: agentWebApiTokenUat,
       agentWebLoginPage: agentWebLoginPage,
+      mgmUserManualUrl: mgmUserManualUrl,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -810,6 +810,18 @@ class FFAppState extends ChangeNotifier {
   set clientDevicePlatform(String value) {
     _clientDevicePlatform = value;
   }
+
+  String _mgmUserManualUrl = '';
+  String get mgmUserManualUrl => _mgmUserManualUrl;
+  set mgmUserManualUrl(String value) {
+    _mgmUserManualUrl = value;
+  }
+
+  bool _isShareLink = false;
+  bool get isShareLink => _isShareLink;
+  set isShareLink(bool value) {
+    _isShareLink = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

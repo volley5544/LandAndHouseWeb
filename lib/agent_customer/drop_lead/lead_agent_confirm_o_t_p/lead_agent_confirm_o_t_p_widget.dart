@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/index.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
@@ -548,26 +547,11 @@ class _LeadAgentConfirmOTPWidgetState extends State<LeadAgentConfirmOTPWidget> {
                                 return;
                               }
                             }
-                            Navigator.pop(context);
-
-                            context.goNamed(
-                              ConsentSuccessPageWidget.routeName,
-                              queryParameters: {
-                                'fromPage': serializeParam(
-                                  widget.fromPage,
-                                  ParamType.String,
-                                ),
-                                'product': serializeParam(
-                                  widget.product,
-                                  ParamType.String,
-                                ),
-                                'consent': serializeParam(
-                                  widget.consent,
-                                  ParamType.String,
-                                ),
-                              }.withoutNulls,
-                            );
-
+                            Navigator.pop(context, <String, String?>{
+                              'fromPage': widget.fromPage,
+                              'consent': widget.consent,
+                              'product': widget.product,
+                            });
                             if (_shouldSetState) safeSetState(() {});
                           },
                           text: 'ยืนยัน',

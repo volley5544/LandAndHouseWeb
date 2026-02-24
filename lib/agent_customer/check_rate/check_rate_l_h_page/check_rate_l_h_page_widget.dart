@@ -7,6 +7,7 @@ import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -131,6 +132,75 @@ class _CheckRateLHPageWidgetState extends State<CheckRateLHPageWidget> {
             child: Scaffold(
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              floatingActionButton: Visibility(
+                visible: () {
+                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                    return true;
+                  } else if (MediaQuery.sizeOf(context).width <
+                      kBreakpointMedium) {
+                    return true;
+                  } else if (MediaQuery.sizeOf(context).width <
+                      kBreakpointLarge) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }()
+                    ? ('${FFAppState().agentProfileDataType.agentDocStatus}' !=
+                        'COMPLETED')
+                    : false,
+                child: Align(
+                  alignment: AlignmentDirectional(1.0, 1.0),
+                  child: FloatingActionButton.extended(
+                    onPressed: () async {
+                      context.pushNamed(AgentDetailPage01Widget.routeName);
+                    },
+                    backgroundColor: FlutterFlowTheme.of(context).primaryText,
+                    elevation: 8.0,
+                    label: badges.Badge(
+                      badgeContent: Text(
+                        '!',
+                        style: FlutterFlowTheme.of(context).titleSmall.override(
+                              fontFamily: 'Noto San Thai',
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      showBadge: true,
+                      shape: badges.BadgeShape.circle,
+                      badgeColor: FlutterFlowTheme.of(context).primary,
+                      elevation: 4.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                      position: badges.BadgePosition.topEnd(),
+                      animationType: badges.BadgeAnimationType.scale,
+                      toAnimate: false,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.edit_square,
+                            color: FlutterFlowTheme.of(context).info,
+                            size: 24.0,
+                          ),
+                          Text(
+                            'กรอกข้อมูล\nเพื่อรับค่าตอบแทน',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  fontSize: 9.0,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               appBar: AppBar(
                 backgroundColor: FlutterFlowTheme.of(context).secondary,
                 automaticallyImplyLeading: false,

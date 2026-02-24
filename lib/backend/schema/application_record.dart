@@ -95,6 +95,11 @@ class ApplicationRecord extends FirestoreRecord {
   String get consentTextCustomer => _consentTextCustomer ?? '';
   bool hasConsentTextCustomer() => _consentTextCustomer != null;
 
+  // "mgm_user_manual_url" field.
+  String? _mgmUserManualUrl;
+  String get mgmUserManualUrl => _mgmUserManualUrl ?? '';
+  bool hasMgmUserManualUrl() => _mgmUserManualUrl != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -120,6 +125,7 @@ class ApplicationRecord extends FirestoreRecord {
         snapshotData['max_commission_text_installment'] as String?;
     _consentTextAgent = snapshotData['consent_text_agent'] as String?;
     _consentTextCustomer = snapshotData['consent_text_customer'] as String?;
+    _mgmUserManualUrl = snapshotData['mgm_user_manual_url'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -170,6 +176,7 @@ Map<String, dynamic> createApplicationRecordData({
   String? maxCommissionTextInstallment,
   String? consentTextAgent,
   String? consentTextCustomer,
+  String? mgmUserManualUrl,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -186,6 +193,7 @@ Map<String, dynamic> createApplicationRecordData({
       'max_commission_text_installment': maxCommissionTextInstallment,
       'consent_text_agent': consentTextAgent,
       'consent_text_customer': consentTextCustomer,
+      'mgm_user_manual_url': mgmUserManualUrl,
     }.withoutNulls,
   );
 
@@ -221,7 +229,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.maxCommissionTextOnetime == e2?.maxCommissionTextOnetime &&
         e1?.maxCommissionTextInstallment == e2?.maxCommissionTextInstallment &&
         e1?.consentTextAgent == e2?.consentTextAgent &&
-        e1?.consentTextCustomer == e2?.consentTextCustomer;
+        e1?.consentTextCustomer == e2?.consentTextCustomer &&
+        e1?.mgmUserManualUrl == e2?.mgmUserManualUrl;
   }
 
   @override
@@ -240,7 +249,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.maxCommissionTextOnetime,
         e?.maxCommissionTextInstallment,
         e?.consentTextAgent,
-        e?.consentTextCustomer
+        e?.consentTextCustomer,
+        e?.mgmUserManualUrl
       ]);
 
   @override
