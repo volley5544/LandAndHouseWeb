@@ -39,8 +39,8 @@ class AgentDetailPage01Model extends FlutterFlowModel<AgentDetailPage01Widget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in AgentDetailPage01 widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in AgentDetailPage01 widget.
+  bool? checkAuthOutput;
   // Model for WebAppBarComponent component.
   late WebAppBarComponentModel webAppBarComponentModel;
   // State field(s) for name widget.

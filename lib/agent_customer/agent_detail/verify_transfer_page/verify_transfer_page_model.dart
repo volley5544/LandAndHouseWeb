@@ -18,8 +18,8 @@ class VerifyTransferPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in VerifyTransferPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in VerifyTransferPage widget.
+  bool? checkAuthOutput;
   // Model for WebAppBarComponent component.
   late WebAppBarComponentModel webAppBarComponentModel;
   // Model for BannerAgentComponent component.

@@ -36,8 +36,8 @@ class MyPayDashboardPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in MyPayDashboardPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in MyPayDashboardPage widget.
+  bool? checkAuthOutput;
   // Stores action output result for [Backend Call - API (GetCommissionLead)] action in MyPayDashboardPage widget.
   ApiCallResponse? getCommissionLeadApiOutput;
   // Model for WebAppBarComponent component.

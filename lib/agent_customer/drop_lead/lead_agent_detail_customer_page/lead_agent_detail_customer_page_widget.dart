@@ -14,6 +14,7 @@ import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/instant_timer.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -58,36 +59,9 @@ class _LeadAgentDetailCustomerPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if ('${FFAppState().platform}' != 'mobile') {
-        if (loggedIn) {
-          if (currentAuthTokenExpiration!.secondsSinceEpoch <
-              getCurrentTimestamp.secondsSinceEpoch) {
-            _model.apiResultjxr = await AgentAPIGroup.logoutAgentCall.call(
-              username: FFAppState().agentCode,
-              url: FFDevEnvironmentValues().isProduction
-                  ? FFAppState().apiUrlDocData.agentWebApiUrl
-                  : FFAppState().apiUrlDocData.agentWebApiUrlUat,
-              tokenHeader: FFDevEnvironmentValues().isProduction
-                  ? FFAppState().apiUrlDocData.agentWebApiToken
-                  : FFAppState().apiUrlDocData.agentWebApiTokenUat,
-            );
-
-            GoRouter.of(context).prepareAuthEvent();
-            await authManager.signOut();
-            GoRouter.of(context).clearRedirectLocation();
-          }
-        } else {
-          if (!FFAppState().isShareLink) {
-            FFAppState().agentCode = '';
-            FFAppState().agentProfileDataType = AgentProfileModelStruct();
-            safeSetState(() {});
-
-            context.goNamedAuth(
-                AgentLoginPageWidget.routeName, context.mounted);
-
-            return;
-          }
-        }
+      _model.checkAuthOutput = await action_blocks.checkAuth(context);
+      if (!_model.checkAuthOutput!) {
+        return;
       }
       showDialog(
         context: context,

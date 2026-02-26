@@ -15,8 +15,8 @@ class AgentMainMenuPageModel extends FlutterFlowModel<AgentMainMenuPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in AgentMainMenuPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in AgentMainMenuPage widget.
+  bool? checkAuthOutput;
   // Stores action output result for [Backend Call - Read Document] action in AgentMainMenuPage widget.
   ApplicationRecord? queryUrl;
   // Stores action output result for [Backend Call - API (AgentProfileAPI)] action in AgentMainMenuPage widget.

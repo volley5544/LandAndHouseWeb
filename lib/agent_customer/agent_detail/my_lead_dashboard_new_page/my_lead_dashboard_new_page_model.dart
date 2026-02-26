@@ -84,8 +84,8 @@ class MyLeadDashboardNewPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in MyLeadDashboardNewPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in MyLeadDashboardNewPage widget.
+  bool? checkAuthOutput;
   // Stores action output result for [Backend Call - API (GetLeadAgentByTypeNew)] action in MyLeadDashboardNewPage widget.
   ApiCallResponse? getLeadAgentApiOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in MyLeadDashboardNewPage widget.

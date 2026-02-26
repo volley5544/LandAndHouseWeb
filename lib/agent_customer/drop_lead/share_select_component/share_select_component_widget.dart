@@ -1,8 +1,11 @@
+import '/auth/custom_auth/auth_util.dart';
+import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'share_select_component_model.dart';
@@ -68,35 +71,61 @@ class _ShareSelectComponentWidgetState
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        await actions.returnTextToAppreturnTextToApp(
-                          'เพื่อนคุณแนะนำ สินเชื่อเงินด่วน วงเงินสูง ได้เงินไว | ประกันรถยนต์ ผ่อนเงินสดได้ที่ศรีสวัสดิ์ เงินสดทันใจ สนใจคลิก ${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
-                          'shareLink',
-                        );
-                        Navigator.pop(context);
-                      },
-                      text: 'แชร์ลิงก์',
-                      icon: FaIcon(
-                        FontAwesomeIcons.link,
-                        size: 30.0,
-                      ),
-                      options: FFButtonOptions(
-                        height: 50.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 70.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondary,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .titleSmall
-                            .override(
-                              fontFamily: 'Noto San Thai',
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              letterSpacing: 0.0,
-                            ),
-                        elevation: 0.0,
-                        borderRadius: BorderRadius.circular(8.0),
+                    child: Builder(
+                      builder: (context) => FFButtonWidget(
+                        onPressed: () async {
+                          if (loggedIn) {
+                            await Clipboard.setData(ClipboardData(
+                                text:
+                                    '${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}'));
+                            await showDialog(
+                              context: context,
+                              builder: (dialogContext) {
+                                return Dialog(
+                                  elevation: 0,
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  alignment: AlignmentDirectional(0.0, 0.0)
+                                      .resolve(Directionality.of(context)),
+                                  child: MessageComponentWidget(
+                                    textMessage:
+                                        'คัดลอกลิงค์สำเร็จ : ${'${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}'}',
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            await actions.returnTextToAppreturnTextToApp(
+                              'เพื่อนคุณแนะนำ สินเชื่อเงินด่วน วงเงินสูง ได้เงินไว | ประกันรถยนต์ ผ่อนเงินสดได้ที่ศรีสวัสดิ์ เงินสดทันใจ สนใจคลิก ${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
+                              'shareLink',
+                            );
+                          }
+
+                          Navigator.pop(context);
+                        },
+                        text: loggedIn ? 'คัดลอกลิงค์' : 'แชร์ลิงก์',
+                        icon: FaIcon(
+                          FontAwesomeIcons.link,
+                          size: 30.0,
+                        ),
+                        options: FFButtonOptions(
+                          height: 50.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              12.0, 0.0, 50.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).secondary,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .override(
+                                fontFamily: 'Noto San Thai',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                letterSpacing: 0.0,
+                              ),
+                          elevation: 0.0,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
                     ),
                   ),
@@ -125,22 +154,45 @@ class _ShareSelectComponentWidgetState
                   Expanded(
                     child: FFButtonWidget(
                       onPressed: () async {
-                        await actions.shareImage(
-                          context,
-                          '${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
-                          'image',
-                        );
+                        if (loggedIn) {
+                          await actions.saveImageRefer(
+                            context,
+                            '${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
+                          );
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                content: Text('บันทึกภาพสำเร็จ'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          await actions.shareImage(
+                            context,
+                            '${FFDevEnvironmentValues().isProduction ? FFAppState().apiUrlDocData.agentWebLeadUrl : FFAppState().apiUrlDocData.agentWebLeadUrlUat}?agentCode=${FFAppState().agentProfileDataType.agentCode}',
+                            'image',
+                          );
+                        }
+
                         Navigator.pop(context);
                       },
-                      text: 'แชร์รูปภาพ QR',
+                      text: loggedIn ? 'บันทึก QR แนะนำ' : 'แชร์รูปภาพ QR',
                       icon: Icon(
                         Icons.image_outlined,
                         size: 30.0,
                       ),
                       options: FFButtonOptions(
                         height: 50.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 35.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).secondary,

@@ -47,8 +47,8 @@ class LeadAgentDetailCustomerPageModel
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in LeadAgentDetailCustomerPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in LeadAgentDetailCustomerPage widget.
+  bool? checkAuthOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
   ApplicationRecord? appConfig;
   // Stores action output result for [Backend Call - API (visionThaiId)] action in LeadAgentDetailCustomerPage widget.

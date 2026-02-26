@@ -17,8 +17,8 @@ class MyWalletPageModel extends FlutterFlowModel<MyWalletPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Backend Call - API (logout agent)] action in MyWalletPage widget.
-  ApiCallResponse? apiResultjxr;
+  // Stores action output result for [Action Block - checkAuth] action in MyWalletPage widget.
+  bool? checkAuthOutput;
   // Stores action output result for [Backend Call - API (CommissionMonthlyApi)] action in MyWalletPage widget.
   ApiCallResponse? commissionMonthlyApiOutput;
   // Model for WebAppBarComponent component.
