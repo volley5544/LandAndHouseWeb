@@ -79,7 +79,17 @@ class _SelectPaymentByLeadWidgetState extends State<SelectPaymentByLeadWidget> {
     context.watch<FFAppState>();
 
     return Container(
-      width: double.infinity,
+      width: () {
+        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else {
+          return (MediaQuery.sizeOf(context).width * 0.25);
+        }
+      }(),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(8.0),

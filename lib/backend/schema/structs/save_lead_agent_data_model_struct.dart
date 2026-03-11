@@ -56,6 +56,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
     String? actualComPercent,
     String? comEstimateVatAmt,
     String? smsCode,
+    int? leadMobileId,
+    String? subProduct,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _estimatePrice = estimatePrice,
         _landDistrict = landDistrict,
@@ -105,6 +107,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         _actualComPercent = actualComPercent,
         _comEstimateVatAmt = comEstimateVatAmt,
         _smsCode = smsCode,
+        _leadMobileId = leadMobileId,
+        _subProduct = subProduct,
         super(firestoreUtilData);
 
   // "estimate_price" field.
@@ -443,6 +447,23 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasSmsCode() => _smsCode != null;
 
+  // "lead_mobile_id" field.
+  int? _leadMobileId;
+  int get leadMobileId => _leadMobileId ?? 0;
+  set leadMobileId(int? val) => _leadMobileId = val;
+
+  void incrementLeadMobileId(int amount) =>
+      leadMobileId = leadMobileId + amount;
+
+  bool hasLeadMobileId() => _leadMobileId != null;
+
+  // "sub_product" field.
+  String? _subProduct;
+  String get subProduct => _subProduct ?? '';
+  set subProduct(String? val) => _subProduct = val;
+
+  bool hasSubProduct() => _subProduct != null;
+
   static SaveLeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveLeadAgentDataModelStruct(
         estimatePrice: data['estimate_price'] as String?,
@@ -493,6 +514,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         actualComPercent: data['actual_com_percent'] as String?,
         comEstimateVatAmt: data['com_estimate_vat_amt'] as String?,
         smsCode: data['sms_code'] as String?,
+        leadMobileId: castToType<int>(data['lead_mobile_id']),
+        subProduct: data['sub_product'] as String?,
       );
 
   static SaveLeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -548,6 +571,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         'actual_com_percent': _actualComPercent,
         'com_estimate_vat_amt': _comEstimateVatAmt,
         'sms_code': _smsCode,
+        'lead_mobile_id': _leadMobileId,
+        'sub_product': _subProduct,
       }.withoutNulls;
 
   @override
@@ -742,6 +767,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'sms_code': serializeParam(
           _smsCode,
+          ParamType.String,
+        ),
+        'lead_mobile_id': serializeParam(
+          _leadMobileId,
+          ParamType.int,
+        ),
+        'sub_product': serializeParam(
+          _subProduct,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -989,6 +1022,16 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        leadMobileId: deserializeParam(
+          data['lead_mobile_id'],
+          ParamType.int,
+          false,
+        ),
+        subProduct: deserializeParam(
+          data['sub_product'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1044,7 +1087,9 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         defaultComPercent == other.defaultComPercent &&
         actualComPercent == other.actualComPercent &&
         comEstimateVatAmt == other.comEstimateVatAmt &&
-        smsCode == other.smsCode;
+        smsCode == other.smsCode &&
+        leadMobileId == other.leadMobileId &&
+        subProduct == other.subProduct;
   }
 
   @override
@@ -1096,7 +1141,9 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         defaultComPercent,
         actualComPercent,
         comEstimateVatAmt,
-        smsCode
+        smsCode,
+        leadMobileId,
+        subProduct
       ]);
 }
 
@@ -1149,6 +1196,8 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
   String? actualComPercent,
   String? comEstimateVatAmt,
   String? smsCode,
+  int? leadMobileId,
+  String? subProduct,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1203,6 +1252,8 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
       actualComPercent: actualComPercent,
       comEstimateVatAmt: comEstimateVatAmt,
       smsCode: smsCode,
+      leadMobileId: leadMobileId,
+      subProduct: subProduct,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

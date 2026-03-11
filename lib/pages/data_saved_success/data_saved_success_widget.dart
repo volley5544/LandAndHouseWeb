@@ -154,7 +154,7 @@ class _DataSavedSuccessWidgetState extends State<DataSavedSuccessWidget> {
                                         ),
                                       }.withoutNulls,
                                     );
-                                  } else {
+                                  } else if (widget.fromPage == 'store') {
                                     context.goNamed(
                                       AssignGrocerystorePageWidget.routeName,
                                       queryParameters: {
@@ -190,11 +190,57 @@ class _DataSavedSuccessWidgetState extends State<DataSavedSuccessWidget> {
                                         ),
                                       }.withoutNulls,
                                     );
+                                  } else if (widget.fromPage == 'LeadMC') {
+                                    context.goNamed(
+                                      AssignMCLeadPageWidget.routeName,
+                                      queryParameters: {
+                                        'employeeId': serializeParam(
+                                          FFAppState()
+                                              .saveBranchDataTemp
+                                              .empCode,
+                                          ParamType.String,
+                                        ),
+                                        'token': serializeParam(
+                                          FFAppState().saveBranchDataTemp.token,
+                                          ParamType.String,
+                                        ),
+                                        'branchCodeSearch': serializeParam(
+                                          FFAppState()
+                                              .saveBranchDataTemp
+                                              .regionCode,
+                                          ParamType.String,
+                                        ),
+                                        'mode': serializeParam(
+                                          FFAppState().saveBranchDataTemp.level,
+                                          ParamType.String,
+                                        ),
+                                        'fromPage': serializeParam(
+                                          'หน้าส่งไปสาขา',
+                                          ParamType.String,
+                                        ),
+                                        'level': serializeParam(
+                                          FFAppState()
+                                              .saveBranchDataTemp
+                                              .level2,
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  } else {
+                                    Navigator.pop(context);
                                   }
                                 },
-                                text: widget.fromPage == 'LH'
-                                    ? 'กลับหน้ารายการโฉนดที่ดิน'
-                                    : 'กลับหน้ารายการโชว์ห่วย',
+                                text: () {
+                                  if (widget.fromPage == 'LH') {
+                                    return 'กลับหน้ารายการโฉนดที่ดิน';
+                                  } else if (widget.fromPage == 'store') {
+                                    return 'กลับหน้ารายการโชว์ห่วย';
+                                  } else if (widget.fromPage == 'LeadMC') {
+                                    return 'กลับหน้ารายการสินเชื่อรถ';
+                                  } else {
+                                    return '';
+                                  }
+                                }(),
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 40.0,

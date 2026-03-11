@@ -153,7 +153,8 @@ class _RegisterResultPage05WidgetState extends State<RegisterResultPage05Widget>
                 }
               }()
                   ? AppBar(
-                      backgroundColor: Color(0xFF2438D0),
+                      backgroundColor:
+                          FlutterFlowTheme.of(context).backgroundColor,
                       automaticallyImplyLeading: false,
                       leading: InkWell(
                         splashColor: Colors.transparent,
@@ -804,7 +805,9 @@ class _RegisterResultPage05WidgetState extends State<RegisterResultPage05Widget>
                                                 }
                                               }(),
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFEDF8FF),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .softBGColor,
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
@@ -1104,7 +1107,8 @@ class _RegisterResultPage05WidgetState extends State<RegisterResultPage05Widget>
                                           iconPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 0.0),
-                                          color: Color(0xFFF46503),
+                                          color: FlutterFlowTheme.of(context)
+                                              .bGColor2,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .titleSmall

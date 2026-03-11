@@ -144,7 +144,8 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                 }
               }()
                   ? AppBar(
-                      backgroundColor: Color(0xFF2438D0),
+                      backgroundColor:
+                          FlutterFlowTheme.of(context).backgroundColor,
                       automaticallyImplyLeading: false,
                       leading: InkWell(
                         splashColor: Colors.transparent,
@@ -660,8 +661,9 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                                                                             .call(
                                                                           file:
                                                                               _model.idCardFile,
-                                                                          apiUrl:
-                                                                              'https://dev.swpfin.com:7076',
+                                                                          apiUrl: FFDevEnvironmentValues().isProduction
+                                                                              ? FFAppState().topupUrlProd
+                                                                              : FFAppState().topupUrlDev,
                                                                         );
 
                                                                         _shouldSetState =
@@ -2158,7 +2160,9 @@ class _IdCardDetailPage04WidgetState extends State<IdCardDetailPage04Widget>
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(0.0, 0.0,
                                                                 0.0, 0.0),
-                                                    color: Color(0xFFF46503),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bGColor2,
                                                     textStyle: FlutterFlowTheme
                                                             .of(context)
                                                         .titleSmall

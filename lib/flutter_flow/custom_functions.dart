@@ -396,6 +396,18 @@ List<ChanodData3Struct> reversedList(List<ChanodData3Struct> list1) {
   return reversedList;
 }
 
+List<AssignLeadMCDataModelStruct> reversedListLeadMC(
+    List<AssignLeadMCDataModelStruct> list1) {
+  // Reverse the list
+  List<AssignLeadMCDataModelStruct> reversedList = list1.reversed.toList();
+
+  // Print the reversed list (optional, for debugging)
+  print('Reversed List: $reversedList');
+
+  // Return the reversed list
+  return reversedList;
+}
+
 String? returnNumberWithComma2Decimal(String? number) {
   if (number! == '' ||
       number! == null ||
@@ -450,9 +462,15 @@ String? getUtmParamFromUrl(String? inputParam) {
   print(uri);
 
   // Extract query parameters
-  utmSource = '${uri.queryParameters['utm_source']}';
-  utmMedium = '${uri.queryParameters['utm_medium']}';
-  utmCampaign = '${uri.queryParameters['utm_campaign']}';
+  utmSource = '${uri.queryParameters['utm_source']}' != 'null'
+      ? '${uri.queryParameters['utm_source']}'
+      : '${uri.queryParameters['utmSource']}';
+  utmMedium = '${uri.queryParameters['utm_medium']}' != 'null'
+      ? '${uri.queryParameters['utm_medium']}'
+      : '${uri.queryParameters['utmMedium']}';
+  utmCampaign = '${uri.queryParameters['utm_campaign']}' != 'null'
+      ? '${uri.queryParameters['utm_campaign']}'
+      : '${uri.queryParameters['utmCampaign']}';
   if ('${inputParam!}' == 'utm_source') {
     return '${utmSource!}';
   } else if ('${inputParam!}' == 'utm_medium') {

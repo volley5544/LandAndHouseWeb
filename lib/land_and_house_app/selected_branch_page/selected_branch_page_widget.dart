@@ -607,6 +607,7 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                               );
 
                               if (!_model.selectList.contains(true)) {
+                                Navigator.pop(context);
                                 await showDialog(
                                   context: context,
                                   builder: (alertDialogContext) {
@@ -622,7 +623,6 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                                     );
                                   },
                                 );
-                                Navigator.pop(context);
                                 if (_shouldSetState) safeSetState(() {});
                                 return;
                               }
@@ -638,82 +638,251 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                                       : '',
                               );
                               safeSetState(() {});
-                              _model.saveAssignGroceryApi =
-                                  await SaveAssignGroceryApiCall.call(
-                                empCode:
-                                    FFAppState().saveBranchDataTemp.empCode,
-                                mode: FFAppState().saveBranchDataTemp.mode,
-                                regionCode:
-                                    FFAppState().saveBranchDataTemp.regionCode,
-                                assignType:
-                                    FFAppState().saveBranchDataTemp.assignType,
-                                remark: FFAppState().saveBranchDataTemp.remark,
-                                leadId: FFAppState().saveBranchDataTemp.leadId,
-                                branchCode:
-                                    FFAppState().saveBranchDataTemp.branchCode,
-                                apiUrl: FFAppState().landAndHouseAssignApiUrl,
-                                areaCode:
-                                    FFAppState().saveBranchDataTemp.regionCode,
-                              );
+                              if ('${widget.fromPage}' == 'LH') {
+                                _model.saveAssignBranchApi2 =
+                                    await SaveAssignBranchApiCall.call(
+                                  empCode:
+                                      FFAppState().saveBranchDataTemp.empCode,
+                                  mode: FFAppState().saveBranchDataTemp.mode,
+                                  regionCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
+                                  leadId:
+                                      FFAppState().saveBranchDataTemp.leadId,
+                                  branchCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .branchCode,
+                                  assignType: FFAppState()
+                                      .saveBranchDataTemp
+                                      .assignType,
+                                  remark:
+                                      FFAppState().saveBranchDataTemp.remark,
+                                  apiUrl: FFAppState().landAndHouseAssignApiUrl,
+                                  areaCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
+                                );
 
-                              _shouldSetState = true;
-                              if ((_model.saveAssignGroceryApi?.statusCode ??
-                                      200) !=
-                                  200) {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      content: Text(
-                                          'พบข้อผิพลาด Connection (${(_model.saveAssignGroceryApi?.statusCode ?? 200).toString()})'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+                                _shouldSetState = true;
+                                if ((_model.saveAssignBranchApi2?.statusCode ??
+                                        200) !=
+                                    200) {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            'พบข้อผิพลาด Connection (${(_model.saveAssignBranchApi2?.statusCode ?? 200).toString()})'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if ('${getJsonField(
+                                      (_model.saveAssignBranchApi2?.jsonBody ??
+                                          ''),
+                                      r'''$.code''',
+                                    ).toString()}' !=
+                                    '200') {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(getJsonField(
+                                          (_model.saveAssignBranchApi2
+                                                  ?.jsonBody ??
+                                              ''),
+                                          r'''$.message''',
+                                        ).toString()),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                              } else if ('${widget.fromPage}' == 'store') {
+                                _model.saveAssignGroceryApi =
+                                    await SaveAssignGroceryApiCall.call(
+                                  empCode:
+                                      FFAppState().saveBranchDataTemp.empCode,
+                                  mode: FFAppState().saveBranchDataTemp.mode,
+                                  regionCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
+                                  assignType: FFAppState()
+                                      .saveBranchDataTemp
+                                      .assignType,
+                                  remark:
+                                      FFAppState().saveBranchDataTemp.remark,
+                                  leadId:
+                                      FFAppState().saveBranchDataTemp.leadId,
+                                  branchCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .branchCode,
+                                  apiUrl: FFAppState().landAndHouseAssignApiUrl,
+                                  areaCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
                                 );
-                                Navigator.pop(context);
-                                if (_shouldSetState) safeSetState(() {});
-                                return;
-                              }
-                              if ('${getJsonField(
-                                    (_model.saveAssignGroceryApi?.jsonBody ??
-                                        ''),
-                                    r'''$.code''',
-                                  ).toString()}' !=
-                                  '200') {
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      content: Text(getJsonField(
-                                        (_model.saveAssignGroceryApi
-                                                ?.jsonBody ??
-                                            ''),
-                                        r'''$.message''',
-                                      ).toString()),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
+
+                                _shouldSetState = true;
+                                if ((_model.saveAssignGroceryApi?.statusCode ??
+                                        200) !=
+                                    200) {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            'พบข้อผิพลาด Connection (${(_model.saveAssignGroceryApi?.statusCode ?? 200).toString()})'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if ('${getJsonField(
+                                      (_model.saveAssignGroceryApi?.jsonBody ??
+                                          ''),
+                                      r'''$.code''',
+                                    ).toString()}' !=
+                                    '200') {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(getJsonField(
+                                          (_model.saveAssignGroceryApi
+                                                  ?.jsonBody ??
+                                              ''),
+                                          r'''$.message''',
+                                        ).toString()),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                              } else if ('${widget.fromPage}' == 'LeadMC') {
+                                _model.saveAssignLeadMCApi =
+                                    await SaveAssignLeadMCApiCall.call(
+                                  empCode:
+                                      FFAppState().saveBranchDataTemp.empCode,
+                                  mode: FFAppState().saveBranchDataTemp.mode,
+                                  regionCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
+                                  leadId:
+                                      FFAppState().saveBranchDataTemp.leadId,
+                                  branchCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .branchCode,
+                                  apiUrl: FFAppState().landAndHouseAssignApiUrl,
+                                  areaCode: FFAppState()
+                                      .saveBranchDataTemp
+                                      .regionCode,
+                                  assignType: FFAppState()
+                                      .saveBranchDataTemp
+                                      .assignType,
+                                  remark:
+                                      FFAppState().saveBranchDataTemp.remark,
                                 );
-                                Navigator.pop(context);
-                                if (_shouldSetState) safeSetState(() {});
-                                return;
+
+                                _shouldSetState = true;
+                                if ((_model.saveAssignLeadMCApi?.statusCode ??
+                                        200) !=
+                                    200) {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(
+                                            'พบข้อผิพลาด Connection (${(_model.saveAssignLeadMCApi?.statusCode ?? 200).toString()})'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
+                                if ('${getJsonField(
+                                      (_model.saveAssignLeadMCApi?.jsonBody ??
+                                          ''),
+                                      r'''$.code''',
+                                    ).toString()}' !=
+                                    '200') {
+                                  Navigator.pop(context);
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(getJsonField(
+                                          (_model.saveAssignLeadMCApi
+                                                  ?.jsonBody ??
+                                              ''),
+                                          r'''$.message''',
+                                        ).toString()),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  if (_shouldSetState) safeSetState(() {});
+                                  return;
+                                }
                               }
+
+                              Navigator.pop(context);
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
                                 barrierColor: Color(0xC0000000),
+                                isDismissible: false,
                                 enableDrag: false,
                                 context: context,
                                 builder: (context) {

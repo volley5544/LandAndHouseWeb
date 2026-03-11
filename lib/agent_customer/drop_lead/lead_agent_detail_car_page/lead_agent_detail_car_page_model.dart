@@ -9,7 +9,6 @@ import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/index.dart';
 import 'lead_agent_detail_car_page_widget.dart'
     show LeadAgentDetailCarPageWidget;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LeadAgentDetailCarPageModel

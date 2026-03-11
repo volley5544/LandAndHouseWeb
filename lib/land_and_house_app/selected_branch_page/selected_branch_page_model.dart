@@ -42,8 +42,12 @@ class SelectedBranchPageModel
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;
+  // Stores action output result for [Backend Call - API (SaveAssignBranchApi)] action in Button widget.
+  ApiCallResponse? saveAssignBranchApi2;
   // Stores action output result for [Backend Call - API (SaveAssignGroceryApi)] action in Button widget.
   ApiCallResponse? saveAssignGroceryApi;
+  // Stores action output result for [Backend Call - API (SaveAssignLeadMCApi)] action in Button widget.
+  ApiCallResponse? saveAssignLeadMCApi;
 
   @override
   void initState(BuildContext context) {}

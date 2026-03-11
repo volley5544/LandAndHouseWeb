@@ -810,10 +810,16 @@ class _ReviewDetailCustomerComponentWidgetState
                       child: Container(
                         decoration: BoxDecoration(),
                         child: Text(
-                          valueOrDefault<String>(
-                            widget.time,
-                            'time',
-                          ),
+                          ('${widget.time}' != 'null') &&
+                                  ('${widget.time}' != '')
+                              ? dateTimeFormat(
+                                  "Hm",
+                                  functions
+                                      .parseStringDateToDateTime(widget.time),
+                                  locale:
+                                      FFLocalizations.of(context).languageCode,
+                                )
+                              : 'ไม่ระบุเวลา',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Noto San Thai',

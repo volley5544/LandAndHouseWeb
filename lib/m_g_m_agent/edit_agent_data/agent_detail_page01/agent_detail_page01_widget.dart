@@ -4374,7 +4374,9 @@ class _AgentDetailPage01WidgetState extends State<AgentDetailPage01Widget>
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(0.0, 0.0,
                                                               0.0, 0.0),
-                                                  color: Color(0xFFF46503),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bGColor2,
                                                   textStyle:
                                                       FlutterFlowTheme.of(
                                                               context)

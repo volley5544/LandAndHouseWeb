@@ -410,7 +410,7 @@ class _AgentRegisterConsentPage02WidgetState
                                       16.0, 0.0, 16.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFFF46503),
+                                  color: FlutterFlowTheme.of(context).bGColor2,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(

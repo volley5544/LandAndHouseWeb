@@ -2671,6 +2671,7 @@ class AgentAPIGroup {
       AgentLeadSaveByLeadCall();
   static AgentLeadSaveCall agentLeadSaveCall = AgentLeadSaveCall();
   static MgmLeadsSaveCall mgmLeadsSaveCall = MgmLeadsSaveCall();
+  static LeadsSaveGuestCall leadsSaveGuestCall = LeadsSaveGuestCall();
   static RateGetVehicleCall rateGetVehicleCall = RateGetVehicleCall();
   static ConsentsConfirmCall consentsConfirmCall = ConsentsConfirmCall();
   static CommissionHistoryCall commissionHistoryCall = CommissionHistoryCall();
@@ -3484,6 +3485,8 @@ class MgmLeadsSaveCall {
     String? comEstimateVatAmt = '',
     String? smsCode = '',
     String? isAgent = '',
+    String? carRegistration = '',
+    String? carProvince = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -3551,6 +3554,162 @@ class MgmLeadsSaveCall {
         'com_estimate_vat_amt': comEstimateVatAmt,
         'sms_code': smsCode,
         'is_agent': isAgent,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class LeadsSaveGuestCall {
+  Future<ApiCallResponse> call({
+    String? id = '',
+    String? agentId = '',
+    String? agentCode = '',
+    String? firstName = '',
+    String? lastName = '',
+    String? registerId = '',
+    String? mobilePhoneNumber = '',
+    String? contactTime = '',
+    String? loanAmount = '',
+    String? loanTypeId = '',
+    String? loanTypeCode = '',
+    String? loanTypeName = '',
+    String? carGear = '',
+    String? brandName = '',
+    String? carYear = '',
+    String? carModel = '',
+    String? carCc = '',
+    String? productDetail = '',
+    String? estimatePrice = '',
+    String? landDistrict = '',
+    String? landSubdistrict = '',
+    String? landProvince = '',
+    String? landPostcode = '',
+    String? landAreaRai = '',
+    String? landAreaNgan = '',
+    String? landAreaWa = '',
+    String? landNo = '',
+    String? utmmap = '',
+    String? surveyNo = '',
+    String? ltv1Amount = '',
+    String? ltv2Amount = '',
+    String? agentGroupId = '',
+    String? privacyConsentFlag = '',
+    String? privacyConsentDate = '',
+    String? paymentMethod = '',
+    String? deductionPercent = '',
+    String? paymentNumber = '',
+    String? paymentChannel = '',
+    String? accountNumber = '',
+    String? promptpayNumber = '',
+    FFUploadedFile? imageCarBook,
+    FFUploadedFile? imageChanodFront,
+    FFUploadedFile? imageChanodBack,
+    String? comEstimateAmt = '',
+    String? comEstimateVat = '',
+    String? comEstimateNetAmt = '',
+    String? defaultComPercent = '',
+    String? actualComPercent = '',
+    String? comEstimateVatAmt = '',
+    String? smsCode = '',
+    String? isAgent = '',
+    String? utmSource = '',
+    String? utmMedium = '',
+    String? utmCampaign = '',
+    String? step = '',
+    String? latitude = '',
+    String? longitude = '',
+    FFUploadedFile? imageCar,
+    String? carRegistration = '',
+    String? carProvince = '',
+    String? product = '',
+    String? leadMobileId = '',
+    String? subProduct = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'LeadsSave Guest',
+      apiUrl: '${baseUrl}/api/leads/v1/save',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'id': id,
+        'agent_id': agentId,
+        'agent_code': agentCode,
+        'first_name': firstName,
+        'last_name': lastName,
+        'register_id': registerId,
+        'mobile_phone_number': mobilePhoneNumber,
+        'contact_time': contactTime,
+        'loan_amount': loanAmount,
+        'loan_type_id': loanTypeId,
+        'loan_type_code': loanTypeCode,
+        'loan_type_name': loanTypeName,
+        'car_gear': carGear,
+        'brand_name': brandName,
+        'car_year': carYear,
+        'car_model': carModel,
+        'car_cc': carCc,
+        'product_detail': productDetail,
+        'estimate_price': estimatePrice,
+        'land_district': landDistrict,
+        'land_subdistrict': landSubdistrict,
+        'land_province': landProvince,
+        'land_postcode': landPostcode,
+        'land_area_rai': landAreaRai,
+        'land_area_ngan': landAreaNgan,
+        'land_area_wa': landAreaWa,
+        'land_no': landNo,
+        'utmmap': utmmap,
+        'survey_no': surveyNo,
+        'ltv1_amount': ltv1Amount,
+        'ltv2_amount': ltv2Amount,
+        'agent_group_id': agentGroupId,
+        'privacy_consent_flag': privacyConsentFlag,
+        'privacy_consent_date': privacyConsentDate,
+        'payment_method': paymentMethod,
+        'deduction_percent': deductionPercent,
+        'payment_number': paymentNumber,
+        'payment_channel': paymentChannel,
+        'account_number': accountNumber,
+        'pronptpay_number': promptpayNumber,
+        'image_car_back': imageCarBook,
+        'image_chanod_front': imageChanodFront,
+        'image_chanod_back': imageChanodBack,
+        'com_estimate_amt': comEstimateAmt,
+        'com_estimate_vat': comEstimateVat,
+        'com_estimate_net_amt': comEstimateNetAmt,
+        'default_com_percent': defaultComPercent,
+        'actual_com_percent': actualComPercent,
+        'com_estimate_vat_amt': comEstimateVatAmt,
+        'sms_code': smsCode,
+        'is_agent': isAgent,
+        'utm_source': utmSource,
+        'utm_medium': utmMedium,
+        'utm_campaign': utmCampaign,
+        'step': step,
+        'latitude': latitude,
+        'longitude': longitude,
+        'image_car': imageCar,
+        'car_registration': carRegistration,
+        'car_province': carProvince,
+        'product': product,
+        'lead_mobile_id': leadMobileId,
+        'sub_product': subProduct,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -3864,6 +4023,7 @@ class AgentCheckRateCall {
     String? tenor = '',
     String? interest = '',
     String? thaiId = '',
+    String? projectCode = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -3873,19 +4033,18 @@ class AgentCheckRateCall {
     );
 
     final ffApiRequestBody = '''
-
 {
-  "car_vehicle_code":"${escapeStringForJson(carVehicleCode)}" ,
+  "car_vehicle_code": "${escapeStringForJson(carVehicleCode)}",
   "car_gear": "${escapeStringForJson(carGear)}",
   "car_brand": "${escapeStringForJson(carBrand)}",
-  "car_year":"${escapeStringForJson(carYear)}" ,
-  "car_model":"${escapeStringForJson(carModel)}" ,
+  "car_year": "${escapeStringForJson(carYear)}",
+  "car_model": "${escapeStringForJson(carModel)}",
   "car_cc": "${escapeStringForJson(carCc)}",
-  "tenor":"${escapeStringForJson(tenor)}" ,
+  "tenor": "${escapeStringForJson(tenor)}",
   "interest": "${escapeStringForJson(interest)}",
-  "thai_id": "${escapeStringForJson(thaiId)}"
-}
-''';
+  "thai_id": "${escapeStringForJson(thaiId)}",
+  "project_code": "${escapeStringForJson(projectCode)}"
+}''';
     return ApiManager.instance.makeApiCall(
       callName: 'AgentCheckRate',
       apiUrl: '${baseUrl}/api/mgm/rate/check_rate',
@@ -3917,6 +4076,10 @@ class AgentCheckRateCall {
       AgentCarRateDataModelStruct.maybeFromMap(getJsonField(
         response,
         r'''$.results.data[*]''',
+      ));
+  String? ratemarkup(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data_markup[:].rate_markup''',
       ));
 }
 
@@ -5106,6 +5269,75 @@ class GetListChanodCall {
           .toList();
 }
 
+class GetListMCAssignCall {
+  static Future<ApiCallResponse> call({
+    String? empCode = '',
+    String? mode = '',
+    String? regionCode = '',
+    String? apiUrl = '',
+    String? areaCode = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "emp_code": "${escapeStringForJson(empCode)}",
+  "mode": "${escapeStringForJson(mode)}",
+  "region_code": "${escapeStringForJson(regionCode)}",
+  "area_code": "${escapeStringForJson(areaCode)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'GetListMCAssign',
+      apiUrl: '${apiUrl}/api/mc/region/all',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? statuslayer1(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  static List<ChanodDataListStruct>? data(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => ChanodDataListStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<AssignLeadMCDataModelStruct>? assignTodData(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.assign_to''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => AssignLeadMCDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static List<AssignLeadMCDataModelStruct>? assignForData(dynamic response) =>
+      (getJsonField(
+        response,
+        r'''$.results.data.assign_for''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => AssignLeadMCDataModelStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+}
+
 class GetListGroceryCall {
   static Future<ApiCallResponse> call({
     String? empCode = '',
@@ -5201,6 +5433,72 @@ class SaveAssignBranchApiCall {
     return ApiManager.instance.makeApiCall(
       callName: 'SaveAssignBranchApi',
       apiUrl: '${apiUrl}/api/rate/region/save-assign',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  static int? statuslayer1(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  static List<ChanodDataListStruct>? data(dynamic response) => (getJsonField(
+        response,
+        r'''$.results.data''',
+        true,
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => ChanodDataListStruct.maybeFromMap(x))
+          .withoutNulls
+          .toList();
+  static dynamic assignTodData(dynamic response) => getJsonField(
+        response,
+        r'''$.results.data.leads''',
+      );
+  static String? messagelayer1(dynamic response) =>
+      castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class SaveAssignLeadMCApiCall {
+  static Future<ApiCallResponse> call({
+    String? empCode = '',
+    String? mode = '',
+    String? regionCode = '',
+    String? leadId = '',
+    String? branchCode = '',
+    String? assignType = '',
+    String? remark = '',
+    String? apiUrl = '',
+    String? areaCode = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "emp_code": "${escapeStringForJson(empCode)}",
+  "mode": "${escapeStringForJson(mode)}",
+  "region_code": "${escapeStringForJson(regionCode)}",
+  "lead_id": "${escapeStringForJson(leadId)}",
+  "branch_code": "${escapeStringForJson(branchCode)}",
+  "assign_type": "${escapeStringForJson(assignType)}",
+  "remark": "${escapeStringForJson(remark)}",
+  "area_code": "${escapeStringForJson(areaCode)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'SaveAssignLeadMCApi',
+      apiUrl: '${apiUrl}/api/mc/region/save-assign',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',

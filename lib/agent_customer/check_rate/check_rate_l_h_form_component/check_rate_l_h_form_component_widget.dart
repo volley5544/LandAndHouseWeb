@@ -5967,10 +5967,7 @@ class _CheckRateLHFormComponentWidgetState
                           ),
                         ),
                       ),
-                    if ((!widget.isOnlyCheckRate
-                            ? true
-                            : _model.isFormState) ||
-                        true)
+                    if (!widget.isOnlyCheckRate ? true : _model.isFormState)
                       Expanded(
                         child: Builder(
                           builder: (context) => FFButtonWidget(

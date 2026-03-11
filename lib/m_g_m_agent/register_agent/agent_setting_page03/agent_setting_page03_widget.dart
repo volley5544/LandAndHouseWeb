@@ -164,7 +164,8 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                   }
                 }()
                     ? AppBar(
-                        backgroundColor: Color(0xFF2438D0),
+                        backgroundColor:
+                            FlutterFlowTheme.of(context).backgroundColor,
                         automaticallyImplyLeading: false,
                         leading: InkWell(
                           splashColor: Colors.transparent,
@@ -1015,7 +1016,8 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                         }
                                       }(),
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFEDF8FF),
+                                        color: FlutterFlowTheme.of(context)
+                                            .softBGColor,
                                       ),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -1898,7 +1900,7 @@ class _AgentSettingPage03WidgetState extends State<AgentSettingPage03Widget>
                                       16.0, 0.0, 16.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFFF46503),
+                                  color: FlutterFlowTheme.of(context).bGColor2,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(

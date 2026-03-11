@@ -568,13 +568,13 @@ class FFAppState extends ChangeNotifier {
     _LeadUrlProd = value;
   }
 
-  int _webProdVersion = 40;
+  int _webProdVersion = 41;
   int get webProdVersion => _webProdVersion;
   set webProdVersion(int value) {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 126;
+  int _webUatVersion = 131;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -821,6 +821,12 @@ class FFAppState extends ChangeNotifier {
   bool get isShareLink => _isShareLink;
   set isShareLink(bool value) {
     _isShareLink = value;
+  }
+
+  bool _isGuest = false;
+  bool get isGuest => _isGuest;
+  set isGuest(bool value) {
+    _isGuest = value;
   }
 }
 

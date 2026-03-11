@@ -16,14 +16,12 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -95,9 +93,6 @@ class _LeadAgentDetailCarPageWidgetState
             },
           );
 
-          safeSetState(() {
-            _model.loanAmountTextController?.text = '0';
-          });
           _model.canNextButton = false;
           safeSetState(() {});
           await actions.listenWebviewEventCamera(
@@ -205,6 +200,9 @@ class _LeadAgentDetailCarPageWidgetState
           Navigator.pop(context);
         }),
       ]);
+      if (FFAppState().isGuest) {
+        return;
+      }
       if ((FFAppState().saveLeadAgentData.agentCode == '') &&
           (FFAppState().platform != 'mobile')) {
         context.goNamed(
@@ -235,10 +233,19 @@ class _LeadAgentDetailCarPageWidgetState
       () async {
         var _shouldSetState = false;
         if ((_model.loanAmountFocusNode?.hasFocus ?? false)) {
-          safeSetState(() {
-            _model.loanAmountTextController?.text = functions
-                .removeCommaFromNumText(_model.loanAmountTextController.text)!;
-          });
+          if ((_model.loanAmountTextController.text == '') ||
+              (_model.loanAmountTextController.text == '0') ||
+              (_model.loanAmountTextController.text == '0.00')) {
+            safeSetState(() {
+              _model.loanAmountTextController?.text = '';
+            });
+          } else {
+            safeSetState(() {
+              _model.loanAmountTextController?.text =
+                  functions.removeCommaFromNumText(
+                      _model.loanAmountTextController.text)!;
+            });
+          }
         } else {
           if ((_model.loanAmountTextController.text != '0') &&
               (double.parse(_model.loanAmountTextController.text) <
@@ -787,9 +794,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                     carregister: FFAppState()
                                                         .saveLeadAgentData
                                                         .carRegistration,
-                                                    time: FFAppState()
-                                                        .saveLeadAgentData
-                                                        .contactTime,
+                                                    time:
+                                                        '${FFAppState().saveLeadAgentData.contactTime}',
                                                   ),
                                                 ),
                                                 Padding(
@@ -1113,6 +1119,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     [];
                                                                 _model.stateNumber =
                                                                     1;
+                                                                _model.carRateData =
+                                                                    null;
                                                                 safeSetState(
                                                                     () {});
                                                                 FFAppState()
@@ -1607,6 +1615,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       () {});
                                                                   _model.stateNumber =
                                                                       2;
+                                                                  _model.carRateData =
+                                                                      null;
                                                                   safeSetState(
                                                                       () {});
                                                                   if (!(_model
@@ -1850,6 +1860,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 });
                                                                 _model.stateNumber =
                                                                     3;
+                                                                _model.carRateData =
+                                                                    null;
                                                                 safeSetState(
                                                                     () {});
                                                               },
@@ -2240,6 +2252,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                   }
                                                                   _model.stateNumber =
                                                                       4;
+                                                                  _model.carRateData =
+                                                                      null;
                                                                   safeSetState(
                                                                       () {});
                                                                   await _model
@@ -2655,6 +2669,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                   }
                                                                   _model.stateNumber =
                                                                       5;
+                                                                  _model.carRateData =
+                                                                      null;
                                                                   safeSetState(
                                                                       () {});
                                                                   await _model
@@ -2879,6 +2895,10 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 });
                                                                 _model.stateNumber =
                                                                     6;
+                                                                _model.carRateData =
+                                                                    null;
+                                                                _model.canNextButton =
+                                                                    false;
                                                                 safeSetState(
                                                                     () {});
                                                                 await _model
@@ -3443,6 +3463,10 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         : FFAppState()
                                                                             .apiUrlDocData
                                                                             .agentWebApiTokenUat,
+                                                                    projectCode:
+                                                                        FFAppState().isGuest
+                                                                            ? 'MOBILE'
+                                                                            : '',
                                                                   );
 
                                                                   _shouldSetState =
@@ -3544,6 +3568,21 @@ class _LeadAgentDetailCarPageWidgetState
                                                                   );
                                                                   safeSetState(
                                                                       () {});
+                                                                  if (FFAppState()
+                                                                      .isGuest) {
+                                                                    _model
+                                                                        .updateCarRateDataStruct(
+                                                                      (e) => e
+                                                                        ..rate =
+                                                                            getJsonField(
+                                                                          (_model.apiResultCheckRate?.jsonBody ??
+                                                                              ''),
+                                                                          r'''$.results.data_markup[:].rate_markup''',
+                                                                        ).toString(),
+                                                                    );
+                                                                    safeSetState(
+                                                                        () {});
+                                                                  }
                                                                   if (_model
                                                                           .carRateData !=
                                                                       null) {
@@ -3907,6 +3946,23 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     ),
                                                               ),
                                                             ),
+                                                            if (FFAppState()
+                                                                .isGuest)
+                                                              Text(
+                                                                ' *',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
                                                           ],
                                                         ),
                                                         Row(
@@ -4847,80 +4903,88 @@ class _LeadAgentDetailCarPageWidgetState
                                                           highlightColor: Colors
                                                               .transparent,
                                                           onTap: () async {
-                                                            await showModalBottomSheet<
-                                                                    bool>(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) {
-                                                                  final _datePickedCupertinoTheme =
-                                                                      CupertinoTheme.of(
-                                                                          context);
-                                                                  return ScrollConfiguration(
-                                                                    behavior:
-                                                                        const MaterialScrollBehavior()
-                                                                            .copyWith(
-                                                                      dragDevices: {
-                                                                        PointerDeviceKind
-                                                                            .mouse,
-                                                                        PointerDeviceKind
-                                                                            .touch,
-                                                                        PointerDeviceKind
-                                                                            .stylus,
-                                                                        PointerDeviceKind
-                                                                            .unknown
-                                                                      },
-                                                                    ),
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          MediaQuery.of(context).size.height /
-                                                                              3,
-                                                                      width: MediaQuery.of(
+                                                            final _datePickedTime =
+                                                                await showTimePicker(
+                                                              context: context,
+                                                              initialTime: TimeOfDay
+                                                                  .fromDateTime(
+                                                                      getCurrentTimestamp),
+                                                              builder: (context,
+                                                                  child) {
+                                                                return wrapInMaterialTimePickerTheme(
+                                                                  context,
+                                                                  child!,
+                                                                  headerBackgroundColor:
+                                                                      FlutterFlowTheme.of(
                                                                               context)
-                                                                          .size
-                                                                          .width,
-                                                                      color: FlutterFlowTheme.of(
+                                                                          .primary,
+                                                                  headerForegroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .info,
+                                                                  headerTextStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .headlineLarge
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            32.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                  pickerBackgroundColor:
+                                                                      FlutterFlowTheme.of(
                                                                               context)
                                                                           .secondaryBackground,
-                                                                      child:
-                                                                          CupertinoTheme(
-                                                                        data: _datePickedCupertinoTheme
-                                                                            .copyWith(
-                                                                          textTheme: _datePickedCupertinoTheme
-                                                                              .textTheme
-                                                                              .copyWith(
-                                                                            dateTimePickerTextStyle: FlutterFlowTheme.of(context).headlineMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                        child:
-                                                                            CupertinoDatePicker(
-                                                                          mode:
-                                                                              CupertinoDatePickerMode.time,
-                                                                          minimumDate:
-                                                                              DateTime(1900),
-                                                                          initialDateTime:
-                                                                              getCurrentTimestamp,
-                                                                          maximumDate:
-                                                                              DateTime(2050),
-                                                                          backgroundColor:
-                                                                              FlutterFlowTheme.of(context).secondaryBackground,
-                                                                          use24hFormat:
-                                                                              false,
-                                                                          onDateTimeChanged: (newDateTime) =>
-                                                                              safeSetState(() {
-                                                                            _model.datePicked =
-                                                                                newDateTime;
-                                                                          }),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                });
+                                                                  pickerForegroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                  selectedDateTimeBackgroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                  selectedDateTimeForegroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .info,
+                                                                  actionButtonForegroundColor:
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                  iconSize:
+                                                                      24.0,
+                                                                );
+                                                              },
+                                                            );
+                                                            if (_datePickedTime !=
+                                                                null) {
+                                                              safeSetState(() {
+                                                                _model.datePicked =
+                                                                    DateTime(
+                                                                  getCurrentTimestamp
+                                                                      .year,
+                                                                  getCurrentTimestamp
+                                                                      .month,
+                                                                  getCurrentTimestamp
+                                                                      .day,
+                                                                  _datePickedTime
+                                                                      .hour,
+                                                                  _datePickedTime
+                                                                      .minute,
+                                                                );
+                                                              });
+                                                            } else if (_model
+                                                                    .datePicked !=
+                                                                null) {
+                                                              safeSetState(() {
+                                                                _model.datePicked =
+                                                                    getCurrentTimestamp;
+                                                              });
+                                                            }
                                                           },
                                                           child: Container(
                                                             width:
@@ -5719,6 +5783,38 @@ class _LeadAgentDetailCarPageWidgetState
 
                                                                         return;
                                                                       }
+                                                                      if (FFAppState()
+                                                                          .isGuest) {
+                                                                        if (!(_model.dropDownProvinceValue !=
+                                                                                null &&
+                                                                            _model.dropDownProvinceValue !=
+                                                                                '')) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (dialogContext) {
+                                                                              return Dialog(
+                                                                                elevation: 0,
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(dialogContext).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: ErrorMessageComponentWidget(
+                                                                                    textMessage: 'กรุณาเลือกจังหวัดทะเบียนรถ',
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          return;
+                                                                        }
+                                                                      }
                                                                       if ((FFAppState().agentProfileDataType.agentGroupId ==
                                                                               '7') &&
                                                                           (loggedIn ||
@@ -5802,7 +5898,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                                             ..carRegistration =
                                                                                 _model.carregisTextController.text
                                                                             ..contactTime =
-                                                                                _model.datePicked?.toString()
+                                                                                '${_model.datePicked?.toString()}'
                                                                             ..loanAmount =
                                                                                 functions.removeCommaFromNumText(_model.loanAmountTextController.text)
                                                                             ..carProvince =

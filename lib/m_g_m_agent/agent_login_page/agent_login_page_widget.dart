@@ -228,7 +228,8 @@ class _AgentLoginPageWidgetState extends State<AgentLoginPageWidget> {
                                     0.0),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF2438D0),
+                                    color: FlutterFlowTheme.of(context)
+                                        .backgroundColor,
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 4.0,

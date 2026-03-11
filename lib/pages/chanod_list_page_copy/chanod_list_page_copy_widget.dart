@@ -1,5 +1,4 @@
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -81,14 +80,40 @@ class _ChanodListPageCopyWidgetState extends State<ChanodListPageCopyWidget> {
                   context.pop();
                 },
               ),
-              title: Text(
-                'ค้นหาสาขา',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily: 'Noto San Thai',
-                      color: Color(0xFF003063),
-                      fontSize: 18.0,
-                      letterSpacing: 0.0,
-                    ),
+              title: StreamBuilder<List<ApplicationRecord>>(
+                stream: queryApplicationRecord(
+                  queryBuilder: (applicationRecord) => applicationRecord
+                      .orderBy('consent_text_agent')
+                      .orderBy('topup_text_title', descending: true),
+                ),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50.0,
+                        height: 50.0,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            FlutterFlowTheme.of(context).primary,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  List<ApplicationRecord> textApplicationRecordList =
+                      snapshot.data!;
+
+                  return Text(
+                    'ค้นหาสาขา',
+                    style: FlutterFlowTheme.of(context).headlineMedium.override(
+                          fontFamily: 'Noto San Thai',
+                          color: Color(0xFF003063),
+                          fontSize: 18.0,
+                          letterSpacing: 0.0,
+                        ),
+                  );
+                },
               ),
               actions: [],
               centerTitle: true,

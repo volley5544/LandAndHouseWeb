@@ -1204,7 +1204,9 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                               width: 377.0,
                                               height: 44.0,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFF46503),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bGColor2,
                                                 borderRadius:
                                                     BorderRadius.circular(12.0),
                                               ),

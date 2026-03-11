@@ -14,7 +14,8 @@ class ReviewDetailCarComponentWidget extends StatefulWidget {
     required this.year,
     required this.productDetail,
     required this.rateAmount,
-    required this.carProvince,
+    required this.carRegis,
+    this.carProvince,
   });
 
   final String? gear;
@@ -23,6 +24,7 @@ class ReviewDetailCarComponentWidget extends StatefulWidget {
   final String? year;
   final String? productDetail;
   final String? rateAmount;
+  final String? carRegis;
   final String? carProvince;
 
   @override
@@ -577,8 +579,8 @@ class _ReviewDetailCarComponentWidgetState
                       decoration: BoxDecoration(),
                       child: Text(
                         valueOrDefault<String>(
-                          widget.carProvince,
-                          'carProvince',
+                          widget.carRegis,
+                          'carRegis',
                         ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Noto San Thai',
@@ -593,6 +595,67 @@ class _ReviewDetailCarComponentWidgetState
                 ].divide(SizedBox(width: 12.0)),
               ),
             ),
+            if (widget.carProvince != null && widget.carProvince != '')
+              Container(
+                decoration: BoxDecoration(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'จังหวัดทะเบียนรถ',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: 14.0,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    Text(
+                      ':',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: () {
+                              if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointSmall) {
+                                return 16.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointMedium) {
+                                return 22.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointLarge) {
+                                return 22.0;
+                              } else {
+                                return 22.0;
+                              }
+                            }(),
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Text(
+                          valueOrDefault<String>(
+                            widget.carProvince,
+                            'carProvince',
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xFF003063),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ].divide(SizedBox(width: 12.0)),
+                ),
+              ),
           ]
               .divide(SizedBox(height: 8.0))
               .addToStart(SizedBox(height: 8.0))

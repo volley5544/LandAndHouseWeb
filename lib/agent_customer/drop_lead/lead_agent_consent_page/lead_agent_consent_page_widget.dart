@@ -56,6 +56,13 @@ class _LeadAgentConsentPageWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
+      if (FFAppState().isGuest) {
+        FFAppState().readConsent = false;
+        safeSetState(() {});
+        _model.linkidPageState = '${widget.linkId}';
+        safeSetState(() {});
+        return;
+      }
       _model.queryUrl =
           await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
       FFAppState().apiUrlDocData = _model.queryUrl!.apiUrl;
@@ -300,25 +307,75 @@ class _LeadAgentConsentPageWidgetState
                   children: [
                     Expanded(
                       child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
                         decoration: BoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            height: double.infinity,
-                            child: custom_widgets.MarkdownViewerWidget(
-                              width: double.infinity,
-                              height: double.infinity,
-                              rebuildPage: (isBottom) async {
-                                FFAppState().readConsent = isBottom!;
-                                safeSetState(() {});
-                                safeSetState(() {});
-                              },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            if (responsiveVisibility(
+                              context: context,
+                              phone: false,
+                              tablet: false,
+                              tabletLandscape: false,
+                            ))
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [],
+                                ),
+                              ),
+                            Expanded(
+                              flex: () {
+                                if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointSmall) {
+                                  return 5;
+                                } else if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointMedium) {
+                                  return 5;
+                                } else if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointLarge) {
+                                  return 4;
+                                } else {
+                                  return 3;
+                                }
+                              }(),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    child: custom_widgets.MarkdownViewerWidget(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      rebuildPage: (isBottom) async {
+                                        FFAppState().readConsent = isBottom!;
+                                        safeSetState(() {});
+                                        safeSetState(() {});
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            if (responsiveVisibility(
+                              context: context,
+                              phone: false,
+                              tablet: false,
+                              tabletLandscape: false,
+                            ))
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [],
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
@@ -343,6 +400,12 @@ class _LeadAgentConsentPageWidgetState
                                   builder: (context) => FFButtonWidget(
                                     onPressed: () async {
                                       var _shouldSetState = false;
+                                      if (FFAppState().isGuest) {
+                                        context.safePop();
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
+                                      }
                                       var confirmDialogResponse =
                                           await showDialog<bool>(
                                                 context: context,
@@ -1152,40 +1215,57 @@ class _LeadAgentConsentPageWidgetState
                                                   safeSetState(() {});
                                                 return;
                                               }
-                                              if (Navigator.of(context)
-                                                  .canPop()) {
-                                                context.pop();
+                                              if (FFAppState().isGuest) {
+                                                if (Navigator.of(context)
+                                                    .canPop()) {
+                                                  context.pop();
+                                                }
+                                                context.pushNamed(
+                                                  LeadAgentDetailCarPageWidget
+                                                      .routeName,
+                                                  queryParameters: {
+                                                    'product': serializeParam(
+                                                      widget.product,
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              } else {
+                                                if (Navigator.of(context)
+                                                    .canPop()) {
+                                                  context.pop();
+                                                }
+                                                context.pushNamed(
+                                                  ConsentSuccessPageWidget
+                                                      .routeName,
+                                                  queryParameters: {
+                                                    'fromPage': serializeParam(
+                                                      '${getJsonField(
+                                                        _model
+                                                            .confirmOtpOutputData,
+                                                        r'''$.fromPage''',
+                                                      ).toString()}',
+                                                      ParamType.String,
+                                                    ),
+                                                    'product': serializeParam(
+                                                      '${getJsonField(
+                                                        _model
+                                                            .confirmOtpOutputData,
+                                                        r'''$.product''',
+                                                      ).toString()}',
+                                                      ParamType.String,
+                                                    ),
+                                                    'consent': serializeParam(
+                                                      '${getJsonField(
+                                                        _model
+                                                            .confirmOtpOutputData,
+                                                        r'''$.consent''',
+                                                      ).toString()}',
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
                                               }
-                                              context.pushNamed(
-                                                ConsentSuccessPageWidget
-                                                    .routeName,
-                                                queryParameters: {
-                                                  'fromPage': serializeParam(
-                                                    '${getJsonField(
-                                                      _model
-                                                          .confirmOtpOutputData,
-                                                      r'''$.fromPage''',
-                                                    ).toString()}',
-                                                    ParamType.String,
-                                                  ),
-                                                  'product': serializeParam(
-                                                    '${getJsonField(
-                                                      _model
-                                                          .confirmOtpOutputData,
-                                                      r'''$.product''',
-                                                    ).toString()}',
-                                                    ParamType.String,
-                                                  ),
-                                                  'consent': serializeParam(
-                                                    '${getJsonField(
-                                                      _model
-                                                          .confirmOtpOutputData,
-                                                      r'''$.consent''',
-                                                    ).toString()}',
-                                                    ParamType.String,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
                                             }
                                             if (_shouldSetState)
                                               safeSetState(() {});

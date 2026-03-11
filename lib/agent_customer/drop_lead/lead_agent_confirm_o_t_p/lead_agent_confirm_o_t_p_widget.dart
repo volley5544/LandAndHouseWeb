@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,17 @@ class _LeadAgentConfirmOTPWidgetState extends State<LeadAgentConfirmOTPWidget> {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
       child: Container(
-        width: double.infinity,
+        width: () {
+          if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+            return (MediaQuery.sizeOf(context).width * 0.95);
+          } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+            return (MediaQuery.sizeOf(context).width * 0.95);
+          } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+            return (MediaQuery.sizeOf(context).width * 0.95);
+          } else {
+            return (MediaQuery.sizeOf(context).width * 0.25);
+          }
+        }(),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           borderRadius: BorderRadius.circular(12.0),
@@ -269,6 +280,9 @@ class _LeadAgentConfirmOTPWidgetState extends State<LeadAgentConfirmOTPWidget> {
                         obscureText: false,
                         hintCharacter: '*',
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         pinTheme: PinTheme(
                           fieldHeight: 44.0,
                           fieldWidth: 44.0,

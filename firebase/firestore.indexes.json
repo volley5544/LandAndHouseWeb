@@ -1,3 +1,18 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "application",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "consent_text_agent",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "topup_text_title",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
 }

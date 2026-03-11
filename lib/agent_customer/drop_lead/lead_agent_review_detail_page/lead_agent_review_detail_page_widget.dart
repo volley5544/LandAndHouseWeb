@@ -46,6 +46,7 @@ class _LeadAgentReviewDetailPageWidgetState
   late LeadAgentReviewDetailPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  LatLng? currentUserLocationValue;
 
   final animationsMap = <String, AnimationInfo>{};
 
@@ -56,6 +57,9 @@ class _LeadAgentReviewDetailPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().isGuest) {
+        return;
+      }
       if ((FFAppState().saveLeadAgentData.agentCode == '') &&
           (FFAppState().platform != 'mobile')) {
         context.goNamed(
@@ -274,7 +278,7 @@ class _LeadAgentReviewDetailPageWidgetState
                                                   carregister:
                                                       '${(FFAppState().saveLeadAgentData.loanTypeCode == 'LH') || (FFAppState().saveLeadAgentData.loanTypeCode == 'LA') ? (FFAppState().isSearchByChanodNo ? FFAppState().saveLeadAgentData.carRegistration : FFAppState().saveLeadAgentData.landNo) : (FFAppState().saveLeadAgentData.carRegistration != '' ? FFAppState().saveLeadAgentData.carRegistration : 'ไม่ระบุทะเบียนรถ')}',
                                                   time:
-                                                      '${FFAppState().saveLeadAgentData.contactTime != '' ? FFAppState().saveLeadAgentData.contactTime : 'ไม่ระบุเวลา'}',
+                                                      '${FFAppState().saveLeadAgentData.contactTime}',
                                                   commission:
                                                       '${FFAppState().saveLeadAgentData.comEstimateAmt}',
                                                 ),
@@ -311,8 +315,10 @@ class _LeadAgentReviewDetailPageWidgetState
                                                         '${FFAppState().saveLeadAgentData.productDetail != '' ? FFAppState().saveLeadAgentData.productDetail : 'ไม่ระบุรายละเอียดสินค้า'}',
                                                     rateAmount:
                                                         '${FFAppState().saveLeadAgentData.estimatePrice}',
-                                                    carProvince:
+                                                    carRegis:
                                                         '${FFAppState().saveLeadAgentData.carRegistration != '' ? FFAppState().saveLeadAgentData.carRegistration : 'ไม่ระบุทะเบียนรถ'}',
+                                                    carProvince:
+                                                        '${FFAppState().saveLeadAgentData.carProvince != '' ? FFAppState().saveLeadAgentData.carProvince : 'ไม่ระบุจังหวัดทะเบียนรถ'}',
                                                   ),
                                                 ),
                                               ),
@@ -814,10 +820,14 @@ class _LeadAgentReviewDetailPageWidgetState
                                                   ),
                                                 ),
                                               ),
-                                            if (FFAppState()
-                                                    .agentProfileDataType
-                                                    .agentDocStatus !=
-                                                'COMPLETED')
+                                            if ((FFAppState()
+                                                        .agentProfileDataType
+                                                        .agentDocStatus !=
+                                                    'COMPLETED') &&
+                                                (loggedIn
+                                                    ? true
+                                                    : ('${FFAppState().platform}' ==
+                                                        'mobile')))
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
@@ -826,7 +836,9 @@ class _LeadAgentReviewDetailPageWidgetState
                                                   width: double.infinity,
                                                   height: 130.0,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0xFFEDF8FF),
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .softBGColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             16.0),
@@ -1000,6 +1012,12 @@ class _LeadAgentReviewDetailPageWidgetState
                                                         builder: (context) =>
                                                             FFButtonWidget(
                                                           onPressed: () async {
+                                                            currentUserLocationValue =
+                                                                await getCurrentUserLocation(
+                                                                    defaultLocation:
+                                                                        LatLng(
+                                                                            0.0,
+                                                                            0.0));
                                                             var _shouldSetState =
                                                                 false;
                                                             var confirmDialogResponse =
@@ -1068,289 +1086,125 @@ class _LeadAgentReviewDetailPageWidgetState
                                                               },
                                                             );
 
-                                                            _model.apiResulthto =
-                                                                await AgentAPIGroup
-                                                                    .mgmLeadsSaveCall
-                                                                    .call(
-                                                              agentId: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .agentId,
-                                                              agentCode: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .agentCode,
-                                                              firstName: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .firstName,
-                                                              lastName: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .lastName,
-                                                              registerId: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .registerId,
-                                                              mobilePhoneNumber:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .mobilePhoneNumber,
-                                                              contactTime: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .contactTime,
-                                                              loanAmount: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .loanAmount,
-                                                              loanTypeId: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .loanTypeId,
-                                                              loanTypeCode: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .loanTypeCode,
-                                                              loanTypeName: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .loanTypeName,
-                                                              carGear: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .carGear,
-                                                              brandName: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .brandName,
-                                                              carYear: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .carYear,
-                                                              carModel: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .carModel,
-                                                              carCc: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .carCc,
-                                                              productDetail:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .productDetail,
-                                                              estimatePrice:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .estimatePrice,
-                                                              landDistrict: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landDistrict,
-                                                              landSubdistrict:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .landSubdistrict,
-                                                              landProvince: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landProvince,
-                                                              landPostcode: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landPostcode,
-                                                              landAreaRai: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landAreaRai,
-                                                              landAreaNgan: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landAreaNgan,
-                                                              landAreaWa: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landAreaWa,
-                                                              landNo: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .landNo,
-                                                              utmmap: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .utmmap,
-                                                              surveyNo: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .surveyNo,
-                                                              ltv1Amount: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .ltv1Amount,
-                                                              ltv2Amount: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .ltv2Amount,
-                                                              agentGroupId: FFAppState()
-                                                                  .agentProfileDataType
-                                                                  .agentGroupId,
-                                                              privacyConsentFlag:
-                                                                  'Y',
-                                                              privacyConsentDate:
-                                                                  getCurrentTimestamp
-                                                                      .toString(),
-                                                              paymentMethod:
-                                                                  FFAppState()
-                                                                      .agentProfileDataType
-                                                                      .paymentMethod,
-                                                              deductionPercent:
-                                                                  FFAppState()
-                                                                      .agentProfileDataType
-                                                                      .deductionPercent,
-                                                              paymentChannel:
-                                                                  FFAppState()
-                                                                      .agentProfileDataType
-                                                                      .paymentChannel,
-                                                              accountNumber:
-                                                                  FFAppState()
-                                                                      .agentProfileDataType
-                                                                      .accountNumber,
-                                                              promptpayNumber:
-                                                                  FFAppState()
-                                                                      .agentProfileDataType
-                                                                      .promptpayNumber,
-                                                              imageCarBook: widget
-                                                                  .imageCarBack,
-                                                              imageChanodFront:
-                                                                  widget
-                                                                      .chanodFrontFile,
-                                                              imageChanodBack:
-                                                                  widget
-                                                                      .chanodBackFile,
-                                                              comEstimateAmt:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .comEstimateAmt,
-                                                              comEstimateVat:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .comEstimateVat,
-                                                              comEstimateNetAmt:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .comEstimateNetAmt,
-                                                              defaultComPercent:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .defaultComPercent,
-                                                              actualComPercent:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .actualComPercent,
-                                                              comEstimateVatAmt:
-                                                                  FFAppState()
-                                                                      .saveLeadAgentData
-                                                                      .comEstimateVatAmt,
-                                                              url: FFDevEnvironmentValues()
-                                                                      .isProduction
-                                                                  ? FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiUrl
-                                                                  : FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiUrlUat,
-                                                              smsCode: FFAppState()
-                                                                  .saveLeadAgentData
-                                                                  .smsCode,
-                                                              tokenHeader: FFDevEnvironmentValues()
-                                                                      .isProduction
-                                                                  ? FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiToken
-                                                                  : FFAppState()
-                                                                      .apiUrlDocData
-                                                                      .agentWebApiTokenUat,
-                                                              isAgent: FFAppState()
-                                                                          .platform ==
-                                                                      'mobile'
-                                                                  ? 'Y'
-                                                                  : 'N',
-                                                            );
-
-                                                            _shouldSetState =
-                                                                true;
-                                                            if ((_model.apiResulthto
-                                                                        ?.statusCode ??
-                                                                    200) !=
-                                                                200) {
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (dialogContext) {
-                                                                  return Dialog(
-                                                                    elevation:
-                                                                        0,
-                                                                    insetPadding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    alignment: AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0)
-                                                                        .resolve(
-                                                                            Directionality.of(context)),
-                                                                    child:
-                                                                        GestureDetector(
-                                                                      onTap:
-                                                                          () {
-                                                                        FocusScope.of(dialogContext)
-                                                                            .unfocus();
-                                                                        FocusManager
-                                                                            .instance
-                                                                            .primaryFocus
-                                                                            ?.unfocus();
-                                                                      },
-                                                                      child:
-                                                                          ErrorMessageComponentWidget(
-                                                                        textMessage:
-                                                                            'พบข้อผิดพลาด connection(${(_model.apiResulthto?.statusCode ?? 200).toString()})',
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
+                                                            if (FFAppState()
+                                                                .isGuest) {
+                                                              _model.apiResulthtoSaveGuestStep2 =
+                                                                  await AgentAPIGroup
+                                                                      .leadsSaveGuestCall
+                                                                      .call(
+                                                                url: FFDevEnvironmentValues()
+                                                                        .isProduction
+                                                                    ? FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiUrl
+                                                                    : FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiUrlUat,
+                                                                tokenHeader: FFDevEnvironmentValues()
+                                                                        .isProduction
+                                                                    ? FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiToken
+                                                                    : FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiTokenUat,
+                                                                step: '2',
+                                                                utmSource:
+                                                                    FFAppState()
+                                                                        .utmSourceAppState,
+                                                                utmMedium:
+                                                                    FFAppState()
+                                                                        .utmMediumAppState,
+                                                                utmCampaign:
+                                                                    FFAppState()
+                                                                        .utmCampaignAppState,
+                                                                brandName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .brandName,
+                                                                carModel: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carModel,
+                                                                carCc: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carCc,
+                                                                carGear: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carGear,
+                                                                carYear: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carYear,
+                                                                carRegistration:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .carRegistration,
+                                                                carProvince:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .carProvince,
+                                                                loanTypeId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .loanTypeId,
+                                                                loanTypeName:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .loanTypeName,
+                                                                loanTypeCode:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .loanTypeCode,
+                                                                estimatePrice:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .estimatePrice,
+                                                                loanAmount: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .loanAmount,
+                                                                product: 'loan',
+                                                                latitude: functions
+                                                                    .getLatLngStringFromDevice(
+                                                                        currentUserLocationValue,
+                                                                        'lat'),
+                                                                longitude: functions
+                                                                    .getLatLngStringFromDevice(
+                                                                        currentUserLocationValue,
+                                                                        'lng'),
+                                                                imageCar: widget
+                                                                    .imageCarBack,
+                                                                leadMobileId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .leadMobileId
+                                                                    .toString(),
+                                                                firstName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .firstName,
+                                                                lastName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .lastName,
+                                                                registerId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .registerId,
+                                                                mobilePhoneNumber:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .mobilePhoneNumber,
+                                                                privacyConsentFlag:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .privacyConsentFlag,
+                                                                privacyConsentDate:
+                                                                    getCurrentTimestamp
+                                                                        .toString(),
+                                                                subProduct: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .subProduct,
                                                               );
 
-                                                              Navigator.pop(
-                                                                  context);
-                                                              if (_shouldSetState)
-                                                                safeSetState(
-                                                                    () {});
-                                                              return;
-                                                            }
-                                                            if ('${getJsonField(
-                                                                  (_model.apiResulthto
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                  r'''$.code''',
-                                                                ).toString()}' ==
-                                                                '200') {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            } else {
-                                                              if ('${getJsonField(
-                                                                    (_model.apiResulthto
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.code''',
-                                                                  ).toString()}' ==
-                                                                  '201') {
-                                                                Navigator.pop(
-                                                                    context);
-                                                                if (FFAppState()
-                                                                        .platform ==
-                                                                    'mobile') {
-                                                                  context
-                                                                      .goNamed(
-                                                                    LeadDupePageWidget
-                                                                        .routeName,
-                                                                    extra: <String,
-                                                                        dynamic>{
-                                                                      '__transition_info__':
-                                                                          TransitionInfo(
-                                                                        hasTransition:
-                                                                            true,
-                                                                        transitionType:
-                                                                            PageTransitionType.rightToLeft,
-                                                                      ),
-                                                                    },
-                                                                  );
-
-                                                                  if (_shouldSetState)
-                                                                    safeSetState(
-                                                                        () {});
-                                                                  return;
-                                                                }
-                                                              } else {
-                                                                Navigator.pop(
-                                                                    context);
+                                                              _shouldSetState =
+                                                                  true;
+                                                              if ((_model.apiResulthtoSaveGuestStep2
+                                                                          ?.statusCode ??
+                                                                      200) !=
+                                                                  200) {
                                                                 await showDialog(
                                                                   context:
                                                                       context,
@@ -1384,39 +1238,481 @@ class _LeadAgentReviewDetailPageWidgetState
                                                                         child:
                                                                             ErrorMessageComponentWidget(
                                                                           textMessage:
-                                                                              '${getJsonField(
-                                                                            (_model.apiResulthto?.jsonBody ??
-                                                                                ''),
-                                                                            r'''$.message''',
-                                                                          ).toString()}',
+                                                                              'พบข้อผิดพลาด connection(${(_model.apiResulthtoSaveGuestStep2?.statusCode ?? 200).toString()})',
                                                                         ),
                                                                       ),
                                                                     );
                                                                   },
                                                                 );
 
+                                                                Navigator.pop(
+                                                                    context);
                                                                 if (_shouldSetState)
                                                                   safeSetState(
                                                                       () {});
                                                                 return;
                                                               }
-                                                            }
+                                                              if ('${getJsonField(
+                                                                    (_model.apiResulthtoSaveGuestStep2
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.code''',
+                                                                  ).toString()}' ==
+                                                                  '200') {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              } else {
+                                                                if ('${getJsonField(
+                                                                      (_model.apiResulthtoSaveGuestStep2
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$.code''',
+                                                                    ).toString()}' ==
+                                                                    '201') {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  if (FFAppState()
+                                                                          .platform ==
+                                                                      'mobile') {
+                                                                    context
+                                                                        .goNamed(
+                                                                      LeadDupePageWidget
+                                                                          .routeName,
+                                                                      extra: <String,
+                                                                          dynamic>{
+                                                                        '__transition_info__':
+                                                                            TransitionInfo(
+                                                                          hasTransition:
+                                                                              true,
+                                                                          transitionType:
+                                                                              PageTransitionType.rightToLeft,
+                                                                        ),
+                                                                      },
+                                                                    );
 
-                                                            context.goNamed(
-                                                              LeadSuccesPageWidget
-                                                                  .routeName,
-                                                              extra: <String,
-                                                                  dynamic>{
-                                                                '__transition_info__':
-                                                                    TransitionInfo(
-                                                                  hasTransition:
-                                                                      true,
-                                                                  transitionType:
-                                                                      PageTransitionType
-                                                                          .rightToLeft,
-                                                                ),
-                                                              },
-                                                            );
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                } else {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  await showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (dialogContext) {
+                                                                      return Dialog(
+                                                                        elevation:
+                                                                            0,
+                                                                        insetPadding:
+                                                                            EdgeInsets.zero,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        alignment:
+                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              ErrorMessageComponentWidget(
+                                                                            textMessage:
+                                                                                '${getJsonField(
+                                                                              (_model.apiResulthtoSaveGuestStep2?.jsonBody ?? ''),
+                                                                              r'''$.message''',
+                                                                            ).toString()}',
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+
+                                                                  if (_shouldSetState)
+                                                                    safeSetState(
+                                                                        () {});
+                                                                  return;
+                                                                }
+                                                              }
+
+                                                              context.goNamed(
+                                                                LeadSuccesPageWidget
+                                                                    .routeName,
+                                                                extra: <String,
+                                                                    dynamic>{
+                                                                  '__transition_info__':
+                                                                      TransitionInfo(
+                                                                    hasTransition:
+                                                                        true,
+                                                                    transitionType:
+                                                                        PageTransitionType
+                                                                            .rightToLeft,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            } else {
+                                                              _model.apiResulthto =
+                                                                  await AgentAPIGroup
+                                                                      .mgmLeadsSaveCall
+                                                                      .call(
+                                                                agentId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .agentId,
+                                                                agentCode: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .agentCode,
+                                                                firstName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .firstName,
+                                                                lastName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .lastName,
+                                                                registerId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .registerId,
+                                                                mobilePhoneNumber:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .mobilePhoneNumber,
+                                                                contactTime:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .contactTime,
+                                                                loanAmount: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .loanAmount,
+                                                                loanTypeId: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .loanTypeId,
+                                                                loanTypeCode:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .loanTypeCode,
+                                                                loanTypeName:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .loanTypeName,
+                                                                carGear: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carGear,
+                                                                brandName: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .brandName,
+                                                                carYear: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carYear,
+                                                                carModel: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carModel,
+                                                                carCc: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .carCc,
+                                                                productDetail:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .productDetail,
+                                                                estimatePrice:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .estimatePrice,
+                                                                landDistrict:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landDistrict,
+                                                                landSubdistrict:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landSubdistrict,
+                                                                landProvince:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landProvince,
+                                                                landPostcode:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landPostcode,
+                                                                landAreaRai:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landAreaRai,
+                                                                landAreaNgan:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .landAreaNgan,
+                                                                landAreaWa: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .landAreaWa,
+                                                                landNo: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .landNo,
+                                                                utmmap: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .utmmap,
+                                                                surveyNo: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .surveyNo,
+                                                                ltv1Amount: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .ltv1Amount,
+                                                                ltv2Amount: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .ltv2Amount,
+                                                                agentGroupId:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .agentGroupId,
+                                                                privacyConsentFlag:
+                                                                    'Y',
+                                                                privacyConsentDate:
+                                                                    getCurrentTimestamp
+                                                                        .toString(),
+                                                                paymentMethod:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .paymentMethod,
+                                                                deductionPercent:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .deductionPercent,
+                                                                paymentChannel:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .paymentChannel,
+                                                                accountNumber:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .accountNumber,
+                                                                promptpayNumber:
+                                                                    FFAppState()
+                                                                        .agentProfileDataType
+                                                                        .promptpayNumber,
+                                                                imageCarBook:
+                                                                    widget
+                                                                        .imageCarBack,
+                                                                imageChanodFront:
+                                                                    widget
+                                                                        .chanodFrontFile,
+                                                                imageChanodBack:
+                                                                    widget
+                                                                        .chanodBackFile,
+                                                                comEstimateAmt:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .comEstimateAmt,
+                                                                comEstimateVat:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .comEstimateVat,
+                                                                comEstimateNetAmt:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .comEstimateNetAmt,
+                                                                defaultComPercent:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .defaultComPercent,
+                                                                actualComPercent:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .actualComPercent,
+                                                                comEstimateVatAmt:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .comEstimateVatAmt,
+                                                                url: FFDevEnvironmentValues()
+                                                                        .isProduction
+                                                                    ? FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiUrl
+                                                                    : FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiUrlUat,
+                                                                smsCode: FFAppState()
+                                                                    .saveLeadAgentData
+                                                                    .smsCode,
+                                                                tokenHeader: FFDevEnvironmentValues()
+                                                                        .isProduction
+                                                                    ? FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiToken
+                                                                    : FFAppState()
+                                                                        .apiUrlDocData
+                                                                        .agentWebApiTokenUat,
+                                                                isAgent: FFAppState()
+                                                                            .platform ==
+                                                                        'mobile'
+                                                                    ? 'Y'
+                                                                    : 'N',
+                                                                carProvince:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .carProvince,
+                                                                carRegistration:
+                                                                    FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .carRegistration,
+                                                              );
+
+                                                              _shouldSetState =
+                                                                  true;
+                                                              if ((_model.apiResulthto
+                                                                          ?.statusCode ??
+                                                                      200) !=
+                                                                  200) {
+                                                                await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (dialogContext) {
+                                                                    return Dialog(
+                                                                      elevation:
+                                                                          0,
+                                                                      insetPadding:
+                                                                          EdgeInsets
+                                                                              .zero,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      alignment: AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0)
+                                                                          .resolve(
+                                                                              Directionality.of(context)),
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          FocusScope.of(dialogContext)
+                                                                              .unfocus();
+                                                                          FocusManager
+                                                                              .instance
+                                                                              .primaryFocus
+                                                                              ?.unfocus();
+                                                                        },
+                                                                        child:
+                                                                            ErrorMessageComponentWidget(
+                                                                          textMessage:
+                                                                              'พบข้อผิดพลาด connection(${(_model.apiResulthto?.statusCode ?? 200).toString()})',
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                );
+
+                                                                Navigator.pop(
+                                                                    context);
+                                                                if (_shouldSetState)
+                                                                  safeSetState(
+                                                                      () {});
+                                                                return;
+                                                              }
+                                                              if ('${getJsonField(
+                                                                    (_model.apiResulthto
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.code''',
+                                                                  ).toString()}' ==
+                                                                  '200') {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              } else {
+                                                                if ('${getJsonField(
+                                                                      (_model.apiResulthto
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$.code''',
+                                                                    ).toString()}' ==
+                                                                    '201') {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  if (FFAppState()
+                                                                          .platform ==
+                                                                      'mobile') {
+                                                                    context
+                                                                        .goNamed(
+                                                                      LeadDupePageWidget
+                                                                          .routeName,
+                                                                      extra: <String,
+                                                                          dynamic>{
+                                                                        '__transition_info__':
+                                                                            TransitionInfo(
+                                                                          hasTransition:
+                                                                              true,
+                                                                          transitionType:
+                                                                              PageTransitionType.rightToLeft,
+                                                                        ),
+                                                                      },
+                                                                    );
+
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                } else {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  await showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (dialogContext) {
+                                                                      return Dialog(
+                                                                        elevation:
+                                                                            0,
+                                                                        insetPadding:
+                                                                            EdgeInsets.zero,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        alignment:
+                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              ErrorMessageComponentWidget(
+                                                                            textMessage:
+                                                                                '${getJsonField(
+                                                                              (_model.apiResulthto?.jsonBody ?? ''),
+                                                                              r'''$.message''',
+                                                                            ).toString()}',
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+
+                                                                  if (_shouldSetState)
+                                                                    safeSetState(
+                                                                        () {});
+                                                                  return;
+                                                                }
+                                                              }
+
+                                                              context.goNamed(
+                                                                LeadSuccesPageWidget
+                                                                    .routeName,
+                                                                extra: <String,
+                                                                    dynamic>{
+                                                                  '__transition_info__':
+                                                                      TransitionInfo(
+                                                                    hasTransition:
+                                                                        true,
+                                                                    transitionType:
+                                                                        PageTransitionType
+                                                                            .rightToLeft,
+                                                                  ),
+                                                                },
+                                                              );
+                                                            }
 
                                                             if (_shouldSetState)
                                                               safeSetState(

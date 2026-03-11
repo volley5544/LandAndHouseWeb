@@ -647,7 +647,9 @@ class _ShareAgentReferPageWidgetState extends State<ShareAgentReferPageWidget> {
                                               width: double.infinity,
                                               height: 130.0,
                                               decoration: BoxDecoration(
-                                                color: Color(0xFFEDF8FF),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .softBGColor,
                                                 borderRadius:
                                                     BorderRadius.circular(16.0),
                                               ),

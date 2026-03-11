@@ -7,6 +7,7 @@ export 'agent_commission_data_model_struct.dart';
 export 'agent_commission_lead_data_model_struct.dart';
 export 'agent_commission_summary_data_model_struct.dart';
 export 'agent_profile_model_struct.dart';
+export 'assign_lead_m_c_data_model_struct.dart';
 export 'authentication_data_model_struct.dart';
 export 'bank_master_model_struct.dart';
 export 'barcode_details_data_model_struct.dart';

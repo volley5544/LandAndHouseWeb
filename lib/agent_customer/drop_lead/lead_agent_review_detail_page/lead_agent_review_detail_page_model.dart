@@ -24,6 +24,8 @@ class LeadAgentReviewDetailPageModel
   late ReviewDetailCarComponentModel reviewDetailCarComponentModel;
   // Model for ReviewDetailLHComponent component.
   late ReviewDetailLHComponentModel reviewDetailLHComponentModel;
+  // Stores action output result for [Backend Call - API (LeadsSave Guest)] action in Button widget.
+  ApiCallResponse? apiResulthtoSaveGuestStep2;
   // Stores action output result for [Backend Call - API (MgmLeadsSave)] action in Button widget.
   ApiCallResponse? apiResulthto;
 

@@ -889,6 +889,58 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: AgentConfirmOtpPageWidget.routeName,
           path: AgentConfirmOtpPageWidget.routePath,
           builder: (context, params) => AgentConfirmOtpPageWidget(),
+        ),
+        FFRoute(
+          name: ProductMenuPageGuestWidget.routeName,
+          path: ProductMenuPageGuestWidget.routePath,
+          builder: (context, params) => ProductMenuPageGuestWidget(
+            utmSource: params.getParam(
+              'utmSource',
+              ParamType.String,
+            ),
+            utmMedium: params.getParam(
+              'utmMedium',
+              ParamType.String,
+            ),
+            utmCampaign: params.getParam(
+              'utmCampaign',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: AssignMCLeadPageWidget.routeName,
+          path: AssignMCLeadPageWidget.routePath,
+          builder: (context, params) => AssignMCLeadPageWidget(
+            employeeId: params.getParam(
+              'employeeId',
+              ParamType.String,
+            ),
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            branchCodeSearch: params.getParam(
+              'branchCodeSearch',
+              ParamType.String,
+            ),
+            mode: params.getParam(
+              'mode',
+              ParamType.String,
+            ),
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+            level: params.getParam(
+              'level',
+              ParamType.String,
+            ),
+            product: params.getParam(
+              'product',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

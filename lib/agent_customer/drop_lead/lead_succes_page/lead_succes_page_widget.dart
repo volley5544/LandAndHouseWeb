@@ -1,3 +1,4 @@
+import '/auth/custom_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -167,40 +168,44 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                     Align(
                       alignment: AlignmentDirectional(0.0, 0.0),
                       child: Container(
+                        width: MediaQuery.sizeOf(context).width * 0.8,
                         decoration: BoxDecoration(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'บันทึกข้อมูลเรียบร้อยแล้ว',
+                              '   ขอบคุณที่ให้ความสนใจ เจ้าหน้าที่จะติดต่อท่านกลับเพื่อให้ข้อมูลเพิ่มเติม ในวันและเวลาทำการ',
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
                                     fontFamily: 'Noto San Thai',
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryText,
-                                    fontSize: 16.0,
+                                    fontSize: 14.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.normal,
                                   ),
                             ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
-                              child: Text(
-                                'สามารถตรวจสอบสถานะคำขอสินเชื่อ จากตัวแทน',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      fontSize: 14.0,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                            if (!FFAppState().isGuest &&
+                                ((FFAppState().platform != 'mobile') &&
+                                    !loggedIn))
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
+                                child: Text(
+                                  'สามารถตรวจสอบสถานะคำขอสินเชื่อ จากตัวแทน',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -216,6 +221,12 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                                 16.0, 20.0, 16.0, 5.0),
                             child: FFButtonWidget(
                               onPressed: () async {
+                                if (FFAppState().isGuest) {
+                                  context.goNamed(
+                                      ProductMenuPageGuestWidget.routeName);
+
+                                  return;
+                                }
                                 if (FFAppState().doOwnLead) {
                                   context.goNamed(
                                     AgentMainMenuPageWidget.routeName,

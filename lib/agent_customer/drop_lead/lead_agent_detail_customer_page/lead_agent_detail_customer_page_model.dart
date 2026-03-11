@@ -47,6 +47,8 @@ class LeadAgentDetailCustomerPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
+  ApplicationRecord? appConfig2;
   // Stores action output result for [Action Block - checkAuth] action in LeadAgentDetailCustomerPage widget.
   bool? checkAuthOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
@@ -67,6 +69,8 @@ class LeadAgentDetailCustomerPageModel
   String? Function(BuildContext, String?)? firstNameTextControllerValidator;
   // Stores action output result for [Bottom Sheet - CapturePictureComponent] action in Icon widget.
   FFUploadedFile? cameraTriggerComponentReturn;
+  // Stores action output result for [Alert Dialog - Custom Dialog] action in Icon widget.
+  FFUploadedFile? imageSourceComponentReturn;
   // Stores action output result for [Backend Call - API (visionThaiId)] action in Icon widget.
   ApiCallResponse? visionOutputThaiId;
   // State field(s) for lastName widget.
@@ -94,6 +98,12 @@ class LeadAgentDetailCustomerPageModel
   FlutterFlowTimerController timerController =
       FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
 
+  // State field(s) for consentFlagY widget.
+  bool? consentFlagYValue;
+  // State field(s) for consentFlagN widget.
+  bool? consentFlagNValue;
+  // Stores action output result for [Backend Call - API (LeadsSave Guest)] action in Button widget.
+  ApiCallResponse? apiResultSaveGuestStep1;
   // Stores action output result for [Backend Call - API (SendConsentSmsApi)] action in Button widget.
   ApiCallResponse? sendConsentSmsApiOutput;
   InstantTimer? checkConsentStatusTimer;
@@ -111,12 +121,11 @@ class LeadAgentDetailCustomerPageModel
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController6;
   String? Function(BuildContext, String?)? textController6Validator;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue1;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue2;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   bool? confirmOutput;
+  bool isDataUploading_uploadDataOqf = false;
+  FFUploadedFile uploadedLocalFile_uploadDataOqf =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   @override
   void initState(BuildContext context) {

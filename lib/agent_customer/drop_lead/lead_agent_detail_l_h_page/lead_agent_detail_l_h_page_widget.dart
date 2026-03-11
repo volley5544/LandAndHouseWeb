@@ -157,6 +157,9 @@ class _LeadAgentDetailLHPageWidgetState
       safeSetState(() {});
       safeSetState(() {});
       Navigator.pop(context);
+      if (FFAppState().isGuest) {
+        return;
+      }
       if ((FFAppState().saveLeadAgentData.agentCode == '') &&
           (FFAppState().platform != 'mobile')) {
         context.goNamed(

@@ -159,7 +159,17 @@ class _SavedLeadCalledStatusWidgetState
                                     0.0, 4.0, 0.0, 0.0),
                                 child: Text(
                                   valueOrDefault<String>(
-                                    '${widget.fromPage == 'LH' ? 'กรุณากรอกสถานะการโทรลีดบ้าน-ที่ดิน ลูกค้า ' : 'กรุณากรอกสถานะการโทรลีดโชว์ห่วย ลูกค้า '}${widget.customerName}',
+                                    '${() {
+                                      if (widget.fromPage == 'LH') {
+                                        return 'กรุณากรอกสถานะการโทรลีดบ้าน-ที่ดิน ลูกค้า ';
+                                      } else if (widget.fromPage == 'store') {
+                                        return 'กรุณากรอกสถานะการโทรลีดโชว์ห่วย ลูกค้า ';
+                                      } else if (widget.fromPage == 'LeadMC') {
+                                        return 'กรุณากรอกสถานะการโทรลีดรถ ลูกค้า ';
+                                      } else {
+                                        return 'กรุณากรอกสถานะการโทรลีดสินเชื่อ ลูกค้า ';
+                                      }
+                                    }()}${widget.customerName}',
                                     'กรุณากรอกสถานะการโทรของ',
                                   ),
                                   style: FlutterFlowTheme.of(context)

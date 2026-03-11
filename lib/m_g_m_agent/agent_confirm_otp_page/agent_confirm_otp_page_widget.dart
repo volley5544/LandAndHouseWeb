@@ -183,7 +183,8 @@ class _AgentConfirmOtpPageWidgetState extends State<AgentConfirmOtpPageWidget>
                   }
                 }()
                     ? AppBar(
-                        backgroundColor: Color(0xFF2438D0),
+                        backgroundColor:
+                            FlutterFlowTheme.of(context).backgroundColor,
                         automaticallyImplyLeading: false,
                         leading: InkWell(
                           splashColor: Colors.transparent,

@@ -51,7 +51,17 @@ class _MyCommissionAdvanceSearchComponentWidgetState
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.95,
+      width: () {
+        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+          return (MediaQuery.sizeOf(context).width * 0.95);
+        } else {
+          return (MediaQuery.sizeOf(context).width * 0.25);
+        }
+      }(),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(20.0),
