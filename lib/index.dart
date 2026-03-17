@@ -98,7 +98,7 @@ export '/agent_customer/drop_lead/lead_agent_consent_page/lead_agent_consent_pag
 export '/agent_customer/drop_lead/verify_agent/verify_agent_widget.dart'
     show VerifyAgentWidget;
 export '/test_page_copy2/test_page_copy2_widget.dart' show TestPageCopy2Widget;
-export '/agent_customer/agent_confirm_succes_page/agent_confirm_succes_page_widget.dart'
+export '/agent_customer/drop_lead/agent_confirm_succes_page/agent_confirm_succes_page_widget.dart'
     show AgentConfirmSuccesPageWidget;
 export '/agent_customer/agent_detail/my_wallet_page/my_wallet_page_widget.dart'
     show MyWalletPageWidget;

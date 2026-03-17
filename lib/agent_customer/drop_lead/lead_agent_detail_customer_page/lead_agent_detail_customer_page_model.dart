@@ -49,6 +49,8 @@ class LeadAgentDetailCustomerPageModel
 
   // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.
   ApplicationRecord? appConfig2;
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentDetailCustomerPage widget.
+  bool? dropLeadStepCheckOutput;
   // Stores action output result for [Action Block - checkAuth] action in LeadAgentDetailCustomerPage widget.
   bool? checkAuthOutput;
   // Stores action output result for [Firestore Query - Query a collection] action in LeadAgentDetailCustomerPage widget.

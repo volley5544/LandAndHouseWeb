@@ -37,9 +37,11 @@ class LeadAgentDetailCustomerPageWidget extends StatefulWidget {
   const LeadAgentDetailCustomerPageWidget({
     super.key,
     this.product,
+    this.func,
   });
 
   final String? product;
+  final String? func;
 
   static String routeName = 'LeadAgentDetailCustomerPage';
   static String routePath = '/leadAgentDetailCustomerPage';
@@ -63,6 +65,38 @@ class _LeadAgentDetailCustomerPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (('${widget.func}' == 'lead') && !FFAppState().isGuest) {
+        FFAppState().isGuest = true;
+        safeSetState(() {});
+      }
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content: Text(FFAppState().isGuest.toString()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content: Text(FFAppState().func),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
       if (FFAppState().isGuest) {
         _model.appConfig2 = await queryApplicationRecordOnce(
           singleRecord: true,
@@ -71,6 +105,11 @@ class _LeadAgentDetailCustomerPageWidgetState
             ? _model.appConfig2!.consentTextAgent
             : _model.appConfig2!.consentTextCustomer;
         safeSetState(() {});
+        return;
+      }
+      _model.dropLeadStepCheckOutput =
+          await action_blocks.dropLeadStepCheck(context);
+      if (!_model.dropLeadStepCheckOutput!) {
         return;
       }
       _model.checkAuthOutput = await action_blocks.checkAuth(context);
@@ -2748,6 +2787,8 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                               ..mobilePhoneNumber = functions.removeDash(_model.textController4.text)
                                                                               ..subProduct = widget.product,
                                                                           );
+                                                                          FFAppState().dropLeadStepCheck =
+                                                                              true;
                                                                           safeSetState(
                                                                               () {});
 
@@ -2797,6 +2838,7 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                               FFAppState().updateSaveLeadAgentDataStruct(
                                                                                 (e) => e..smsCode = _model.smsCode,
                                                                               );
+                                                                              FFAppState().dropLeadStepCheck = true;
                                                                               safeSetState(() {});
                                                                               if (widget.product == 'L') {
                                                                                 context.pushNamed(LeadAgentDetailLHPageWidget.routeName);
@@ -3025,6 +3067,9 @@ class _LeadAgentDetailCustomerPageWidgetState
                                                                         } else {
                                                                           if ((FFAppState().platform == 'mobile') ||
                                                                               loggedIn) {
+                                                                            FFAppState().dropLeadStepCheck =
+                                                                                true;
+                                                                            safeSetState(() {});
                                                                             if (widget.product ==
                                                                                 'L') {
                                                                               context.pushNamed(LeadAgentDetailLHPageWidget.routeName);

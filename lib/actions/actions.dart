@@ -40,3 +40,62 @@ Future<bool?> checkAuth(BuildContext context) async {
   }
   return true;
 }
+
+Future<bool> dropLeadStepCheck(BuildContext context) async {
+  if (!FFAppState().isGuest) {
+    if (!FFAppState().isShareLink) {
+      context.goNamed(
+        LeadAgentDetailCustomerPageWidget.routeName,
+        queryParameters: {
+          'product': serializeParam(
+            FFAppState().initialProduct,
+            ParamType.String,
+          ),
+          'func': serializeParam(
+            FFAppState().func,
+            ParamType.String,
+          ),
+        }.withoutNulls,
+      );
+
+      return false;
+    }
+  }
+  if (!FFAppState().dropLeadStepCheck) {
+    if (loggedIn || (FFAppState().platform == 'mobile')) {
+      FFAppState().saveLeadAgentData = SaveLeadAgentDataModelStruct();
+
+      context.goNamed(
+        ProductMenuPageWidget.routeName,
+        queryParameters: {
+          'agentCode': serializeParam(
+            currentUserUid,
+            ParamType.String,
+          ),
+        }.withoutNulls,
+      );
+
+      return false;
+    }
+    FFAppState().saveLeadAgentData = SaveLeadAgentDataModelStruct();
+    FFAppState().agentCode = '';
+    FFAppState().agentProfileDataType = AgentProfileModelStruct();
+
+    context.goNamed(
+      TimeoutPageWidget.routeName,
+      queryParameters: {
+        'text': serializeParam(
+          'ลิงค์หมดอายุ กรุณาเปิดลิงค์จากเพื่อนของคุณเพื่อทำรายการอีกครั้ง',
+          ParamType.String,
+        ),
+        'code': serializeParam(
+          '504',
+          ParamType.String,
+        ),
+      }.withoutNulls,
+    );
+
+    return false;
+  }
+  return true;
+}

@@ -16,6 +16,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -61,6 +62,25 @@ class _LeadAgentDetailCarPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content: Text(FFAppState().func),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      _model.dropLeadStepCheckOutput =
+          await action_blocks.dropLeadStepCheck(context);
+      if (!_model.dropLeadStepCheckOutput!) {
+        return;
+      }
       await Future.wait([
         Future(() async {
           while (true) {
@@ -3465,7 +3485,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                                             .agentWebApiTokenUat,
                                                                     projectCode:
                                                                         FFAppState().isGuest
-                                                                            ? 'MOBILE'
+                                                                            ? 'MGM_GUEST'
                                                                             : '',
                                                                   );
 
@@ -5923,6 +5943,12 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         safeSetState(
                                                                             () {});
                                                                       }
+
+                                                                      FFAppState()
+                                                                              .dropLeadStepCheck =
+                                                                          true;
+                                                                      safeSetState(
+                                                                          () {});
 
                                                                       context
                                                                           .pushNamed(

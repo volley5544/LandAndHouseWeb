@@ -45,6 +45,8 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
+      FFAppState().dropLeadStepCheck = false;
+      safeSetState(() {});
       _model.queryUrl =
           await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
       FFAppState().apiUrlDocData = _model.queryUrl!.apiUrl;
@@ -57,23 +59,21 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
         FFAppState().isShareLink = true;
         safeSetState(() {});
       }
-      if (FFAppState().agentProfileDataType == AgentProfileModelStruct()) {
-        _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
-          agentCode: FFAppState().agentCode,
-          url: FFDevEnvironmentValues().isProduction
-              ? FFAppState().apiUrlDocData.agentWebApiUrl
-              : FFAppState().apiUrlDocData.agentWebApiUrlUat,
-          tokenHeader: FFDevEnvironmentValues().isProduction
-              ? FFAppState().apiUrlDocData.agentWebApiToken
-              : FFAppState().apiUrlDocData.agentWebApiTokenUat,
-        );
+      _model.agentAPIOutput = await AgentAPIGroup.agentProfileAPICall.call(
+        agentCode: FFAppState().agentCode,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiUrl
+            : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+        tokenHeader: FFDevEnvironmentValues().isProduction
+            ? FFAppState().apiUrlDocData.agentWebApiToken
+            : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+      );
 
-        FFAppState().agentProfileDataType =
-            AgentAPIGroup.agentProfileAPICall.data(
-          (_model.agentAPIOutput?.jsonBody ?? ''),
-        )!;
-        safeSetState(() {});
-      }
+      FFAppState().agentProfileDataType =
+          AgentAPIGroup.agentProfileAPICall.data(
+        (_model.agentAPIOutput?.jsonBody ?? ''),
+      )!;
+      safeSetState(() {});
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -359,6 +359,10 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   LeadAgentDetailCustomerPageWidget
                                                       .routeName,
@@ -556,6 +560,10 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   LeadAgentDetailCustomerPageWidget
                                                       .routeName,
@@ -754,6 +762,10 @@ class _ProductMenuPageWidgetState extends State<ProductMenuPageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   LeadAgentDetailCustomerPageWidget
                                                       .routeName,

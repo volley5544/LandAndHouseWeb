@@ -1,119 +1,102 @@
 {
   "project_info": {
-    "project_number": "194304903534",
-    "firebase_url": "https://srisawad-mobile-app-prd-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "srisawad-mobile-app-prd",
-    "storage_bucket": "srisawad-mobile-app-prd.appspot.com"
+    "project_number": "999302187733",
+    "project_id": "srisawad-mobile-app-qa-360402",
+    "storage_bucket": "srisawad-mobile-app-qa-360402.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194304903534:android:838b88fdbdd2608da3997f",
+        "mobilesdk_app_id": "1:999302187733:android:1b57104781f8625967305c",
+        "android_client_info": {
+          "package_name": "com.example.mobile_application_srisawad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgXT3ovD0LivVa6Zjc2BEf2lYse-JwUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999302187733:android:d820edaf7789875567305c",
+        "android_client_info": {
+          "package_name": "com.mycompany.customerpaymentweb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgXT3ovD0LivVa6Zjc2BEf2lYse-JwUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999302187733:android:71926387dac8923f67305c",
+        "android_client_info": {
+          "package_name": "com.mycompany.pocbeacon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPgXT3ovD0LivVa6Zjc2BEf2lYse-JwUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999302187733:android:2fa063ded970776f67305c",
         "android_client_info": {
           "package_name": "com.srisawad.landandhouseweb"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDc5v6F92KfCzUj6Xq7RXlaPQci-__Xq4c"
+          "current_key": "AIzaSyAPgXT3ovD0LivVa6Zjc2BEf2lYse-JwUU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "194304903534-fbcfjlmqfj1su28jh4o0hv8nndkklnag.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.srisawad.mobileApplications",
-                "app_store_id": "6464282089"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:194304903534:android:b14a9ec73ac0b094a3997f",
+        "mobilesdk_app_id": "1:999302187733:android:ff8dec57a196405d67305c",
         "android_client_info": {
           "package_name": "com.srisawad.mobileApplications"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDc5v6F92KfCzUj6Xq7RXlaPQci-__Xq4c"
+          "current_key": "AIzaSyAPgXT3ovD0LivVa6Zjc2BEf2lYse-JwUU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "194304903534-fbcfjlmqfj1su28jh4o0hv8nndkklnag.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.srisawad.mobileApplications",
-                "app_store_id": "6464282089"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:194304903534:android:e34cfd08c1e88f9ea3997f",
-        "android_client_info": {
-          "package_name": "com.srisawad.srisawadappuserdashboard"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDc5v6F92KfCzUj6Xq7RXlaPQci-__Xq4c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "194304903534-ge4o1n4rkr8f1oicr70n7gfnpk941mgd.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "194304903534-fbcfjlmqfj1su28jh4o0hv8nndkklnag.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.srisawad.mobileApplications",
-                "app_store_id": "6464282089"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

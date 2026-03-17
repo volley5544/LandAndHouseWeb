@@ -39,6 +39,12 @@ class FFAppState extends ChangeNotifier {
         }
       }
     });
+    _safeInit(() {
+      _func = prefs.getString('ff_func') ?? _func;
+    });
+    _safeInit(() {
+      _initialProduct = prefs.getString('ff_initialProduct') ?? _initialProduct;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -827,6 +833,32 @@ class FFAppState extends ChangeNotifier {
   bool get isGuest => _isGuest;
   set isGuest(bool value) {
     _isGuest = value;
+  }
+
+  bool _dropLeadStepCheck = false;
+  bool get dropLeadStepCheck => _dropLeadStepCheck;
+  set dropLeadStepCheck(bool value) {
+    _dropLeadStepCheck = value;
+  }
+
+  String _func = '';
+  String get func => _func;
+  set func(String value) {
+    _func = value;
+    prefs.setString('ff_func', value);
+  }
+
+  String _initialProduct = '';
+  String get initialProduct => _initialProduct;
+  set initialProduct(String value) {
+    _initialProduct = value;
+    prefs.setString('ff_initialProduct', value);
+  }
+
+  dynamic _fileBytesJson;
+  dynamic get fileBytesJson => _fileBytesJson;
+  set fileBytesJson(dynamic value) {
+    _fileBytesJson = value;
   }
 }
 

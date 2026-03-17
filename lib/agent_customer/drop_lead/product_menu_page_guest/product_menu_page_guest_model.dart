@@ -10,6 +10,9 @@ class ProductMenuPageGuestModel
 
   // Model for WebAppBarComponent component.
   late WebAppBarComponentModel webAppBarComponentModel;
+  bool isDataUploading_uploadDataIxl = false;
+  FFUploadedFile uploadedLocalFile_uploadDataIxl =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   @override
   void initState(BuildContext context) {

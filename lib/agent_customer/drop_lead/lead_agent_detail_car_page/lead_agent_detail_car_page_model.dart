@@ -105,6 +105,8 @@ class LeadAgentDetailCarPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentDetailCarPage widget.
+  bool? dropLeadStepCheckOutput;
   // Stores action output result for [Custom Action - convertBase64ToFFFiles] action in LeadAgentDetailCarPage widget.
   FFUploadedFile? generateBluebookFile;
   // Stores action output result for [Backend Call - API (get Province)] action in LeadAgentDetailCarPage widget.

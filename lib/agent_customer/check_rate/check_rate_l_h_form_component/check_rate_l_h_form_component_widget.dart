@@ -6922,6 +6922,9 @@ class _CheckRateLHFormComponentWidgetState
                                         safeSetState(() {});
                                       }
 
+                                      FFAppState().dropLeadStepCheck = true;
+                                      safeSetState(() {});
+
                                       context.pushNamed(
                                         LeadAgentReviewDetailPageWidget
                                             .routeName,

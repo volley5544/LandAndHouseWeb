@@ -11,6 +11,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,11 @@ class _LeadAgentReviewDetailPageWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (FFAppState().isGuest) {
+        return;
+      }
+      _model.dropLeadStepCheckOutput =
+          await action_blocks.dropLeadStepCheck(context);
+      if (!_model.dropLeadStepCheckOutput!) {
         return;
       }
       if ((FFAppState().saveLeadAgentData.agentCode == '') &&
@@ -1050,6 +1056,19 @@ class _LeadAgentReviewDetailPageWidgetState
                                                                     () {});
                                                               return;
                                                             }
+                                                            _model.dropLeadStepCheckOutputButton =
+                                                                await action_blocks
+                                                                    .dropLeadStepCheck(
+                                                                        context);
+                                                            _shouldSetState =
+                                                                true;
+                                                            if (!_model
+                                                                .dropLeadStepCheckOutputButton!) {
+                                                              if (_shouldSetState)
+                                                                safeSetState(
+                                                                    () {});
+                                                              return;
+                                                            }
                                                             showDialog(
                                                               context: context,
                                                               builder:
@@ -1542,9 +1561,9 @@ class _LeadAgentReviewDetailPageWidgetState
                                                                     : FFAppState()
                                                                         .apiUrlDocData
                                                                         .agentWebApiTokenUat,
-                                                                isAgent: FFAppState()
-                                                                            .platform ==
-                                                                        'mobile'
+                                                                isAgent: (FFAppState().platform ==
+                                                                            'mobile') ||
+                                                                        loggedIn
                                                                     ? 'Y'
                                                                     : 'N',
                                                                 carProvince:

@@ -14,6 +14,8 @@ class LeadAgentReviewDetailPageModel
     extends FlutterFlowModel<LeadAgentReviewDetailPageWidget> {
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentReviewDetailPage widget.
+  bool? dropLeadStepCheckOutput;
   // Model for WebAppBarComponent component.
   late WebAppBarComponentModel webAppBarComponentModel;
   // Model for progressBarComponent component.
@@ -24,6 +26,8 @@ class LeadAgentReviewDetailPageModel
   late ReviewDetailCarComponentModel reviewDetailCarComponentModel;
   // Model for ReviewDetailLHComponent component.
   late ReviewDetailLHComponentModel reviewDetailLHComponentModel;
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in Button widget.
+  bool? dropLeadStepCheckOutputButton;
   // Stores action output result for [Backend Call - API (LeadsSave Guest)] action in Button widget.
   ApiCallResponse? apiResulthtoSaveGuestStep2;
   // Stores action output result for [Backend Call - API (MgmLeadsSave)] action in Button widget.

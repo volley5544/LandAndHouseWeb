@@ -525,6 +525,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'product',
               ParamType.String,
             ),
+            func: params.getParam(
+              'func',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(

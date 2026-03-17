@@ -770,6 +770,48 @@ class _LeadAgentConsentPageWidgetState
                                             ),
                                           );
                                         },
+                                      ).then((value) => safeSetState(() =>
+                                          _model.confirmOtpNOutput = value));
+
+                                      _shouldSetState = true;
+                                      if (!(('${_model.confirmOtpNOutput?.toString()}' !=
+                                              'null') &&
+                                          ('${_model.confirmOtpNOutput?.toString()}' !=
+                                              ''))) {
+                                        if (_shouldSetState)
+                                          safeSetState(() {});
+                                        return;
+                                      }
+                                      FFAppState().dropLeadStepCheck = true;
+                                      safeSetState(() {});
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed(
+                                        ConsentSuccessPageWidget.routeName,
+                                        queryParameters: {
+                                          'fromPage': serializeParam(
+                                            '${getJsonField(
+                                              _model.confirmOtpNOutput,
+                                              r'''$.fromPage''',
+                                            ).toString()}',
+                                            ParamType.String,
+                                          ),
+                                          'product': serializeParam(
+                                            '${getJsonField(
+                                              _model.confirmOtpNOutput,
+                                              r'''$.product''',
+                                            ).toString()}',
+                                            ParamType.String,
+                                          ),
+                                          'consent': serializeParam(
+                                            '${getJsonField(
+                                              _model.confirmOtpNOutput,
+                                              r'''$.consent''',
+                                            ).toString()}',
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
                                       );
 
                                       if (_shouldSetState) safeSetState(() {});
@@ -1215,6 +1257,9 @@ class _LeadAgentConsentPageWidgetState
                                                   safeSetState(() {});
                                                 return;
                                               }
+                                              FFAppState().dropLeadStepCheck =
+                                                  true;
+                                              safeSetState(() {});
                                               if (FFAppState().isGuest) {
                                                 if (Navigator.of(context)
                                                     .canPop()) {

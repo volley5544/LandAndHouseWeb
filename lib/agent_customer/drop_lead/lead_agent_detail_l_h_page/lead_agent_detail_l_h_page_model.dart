@@ -33,6 +33,8 @@ class LeadAgentDetailLHPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentDetailLHPage widget.
+  bool? dropLeadStepCheckOutput;
   // Stores action output result for [Backend Call - Read Document] action in LeadAgentDetailLHPage widget.
   ApplicationRecord? queryAPIUrl;
   // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailLHPage widget.

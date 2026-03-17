@@ -36,6 +36,7 @@ void main() async {
   await actions.consoleLogAction();
   await actions.setClientPlatformAction();
   await actions.initialSetApiUrlAction();
+  await actions.initialSetUrlParamAction();
   // End final custom actions code
 
   runApp(ChangeNotifierProvider(

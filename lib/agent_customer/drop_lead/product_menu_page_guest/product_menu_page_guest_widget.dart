@@ -1,10 +1,10 @@
 import '/auth/custom_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/upload_data.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
-import '/flutter_flow/permissions_util.dart';
 import '/index.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
@@ -38,7 +38,6 @@ class _ProductMenuPageGuestWidgetState
   late ProductMenuPageGuestModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
@@ -48,6 +47,8 @@ class _ProductMenuPageGuestWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setDarkModeSetting(context, ThemeMode.light);
+      FFAppState().dropLeadStepCheck = false;
+      safeSetState(() {});
       FFAppState().isGuest = true;
       safeSetState(() {});
       if (!((FFAppState().utmSourceAppState != '') ||
@@ -200,45 +201,46 @@ class _ProductMenuPageGuestWidgetState
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          currentUserLocationValue =
-                              await getCurrentUserLocation(
-                                  defaultLocation: LatLng(0.0, 0.0));
-                          await requestPermission(locationPermission);
-                          if (!(await getPermissionStatus(
-                              locationPermission))) {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  content: Text('location permission failed'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                            return;
-                          }
-                          await showDialog(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                content:
-                                    Text(currentUserLocationValue!.toString()),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(alertDialogContext),
-                                    child: Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
+                          final selectedMedia = await selectMedia(
+                            imageQuality: 30,
+                            mediaSource: MediaSource.photoGallery,
+                            multiImage: false,
                           );
+                          if (selectedMedia != null &&
+                              selectedMedia.every((m) =>
+                                  validateFileFormat(m.storagePath, context))) {
+                            safeSetState(() =>
+                                _model.isDataUploading_uploadDataIxl = true);
+                            var selectedUploadedFiles = <FFUploadedFile>[];
+
+                            try {
+                              selectedUploadedFiles = selectedMedia
+                                  .map((m) => FFUploadedFile(
+                                        name: m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                        blurHash: m.blurHash,
+                                        originalFilename: m.originalFilename,
+                                      ))
+                                  .toList();
+                            } finally {
+                              _model.isDataUploading_uploadDataIxl = false;
+                            }
+                            if (selectedUploadedFiles.length ==
+                                selectedMedia.length) {
+                              safeSetState(() {
+                                _model.uploadedLocalFile_uploadDataIxl =
+                                    selectedUploadedFiles.first;
+                              });
+                            } else {
+                              safeSetState(() {});
+                              return;
+                            }
+                          }
+
+                          FFAppState().fileBytesJson = <String, dynamic>{};
+                          safeSetState(() {});
                         },
                         child: Text(
                           'กรุณาเลือกสินเชื่อ/ประกันภัย ที่ท่านสนใจ${FFDevEnvironmentValues().isProduction ? '' : ' (UAT V.${FFAppState().webUatVersion.toString()})'}',
@@ -347,6 +349,10 @@ class _ProductMenuPageGuestWidgetState
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   LeadAgentDetailCustomerPageWidget
                                                       .routeName,
@@ -544,6 +550,10 @@ class _ProductMenuPageGuestWidgetState
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   LeadAgentDetailCustomerPageWidget
                                                       .routeName,
@@ -742,6 +752,10 @@ class _ProductMenuPageGuestWidgetState
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                FFAppState().dropLeadStepCheck =
+                                                    true;
+                                                safeSetState(() {});
+
                                                 context.pushNamed(
                                                   AddCustomerLeadWidget
                                                       .routeName,

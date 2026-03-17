@@ -1641,60 +1641,6 @@ class _AddCustomerLeadWidgetState extends State<AddCustomerLeadWidget> {
                                                 functions.getUtmParamFromUrl(
                                                     'utm_campaign')!;
                                             safeSetState(() {});
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('source'),
-                                                  content: Text(FFAppState()
-                                                      .utmSourceAppState),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('medium'),
-                                                  content: Text(FFAppState()
-                                                      .utmMediumAppState),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('campaign'),
-                                                  content: Text(FFAppState()
-                                                      .utmCampaignAppState),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
                                             _model.saveLeadStep1 =
                                                 await SaveRateApiWebCall.call(
                                               firstName: FFAppState()
