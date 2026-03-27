@@ -126,18 +126,8 @@ class _ConsentSuccessPageWidgetState extends State<ConsentSuccessPageWidget> {
                                 onPressed: () async {
                                   if (widget.fromPage == 'customer') {
                                     if (widget.consent != 'Y') {
-                                      context.goNamed(
-                                        ProductMenuPageWidget.routeName,
-                                        queryParameters: {
-                                          'agentCode': serializeParam(
-                                            FFAppState()
-                                                .saveLeadAgentData
-                                                .agentCode,
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-
+                                      context.safePop();
+                                      context.safePop();
                                       return;
                                     }
                                     if (widget.product == 'L') {

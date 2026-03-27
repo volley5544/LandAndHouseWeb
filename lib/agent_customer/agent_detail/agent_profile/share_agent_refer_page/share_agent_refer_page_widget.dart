@@ -55,8 +55,11 @@ class _ShareAgentReferPageWidgetState extends State<ShareAgentReferPageWidget> {
         FFAppState().agentCode = widget.agentCode!;
         safeSetState(() {});
       }
-      FFAppState().platform = '${widget.platform}';
-      safeSetState(() {});
+      if (!(('${FFAppState().platform}' != 'null') &&
+          ('${FFAppState().platform}' != ''))) {
+        FFAppState().platform = '${widget.platform}';
+        safeSetState(() {});
+      }
       if (loggedIn) {
         FFAppState().agentCode = currentUserUid;
         safeSetState(() {});
