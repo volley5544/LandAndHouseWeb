@@ -13,6 +13,8 @@ class LeadAgentConsentPageModel
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentConsentPage widget.
+  bool? dropLeadStepCheckOutput;
   // Stores action output result for [Backend Call - Read Document] action in LeadAgentConsentPage widget.
   ApplicationRecord? queryUrl;
   // Stores action output result for [Backend Call - API (CheckConsentStatusApi)] action in LeadAgentConsentPage widget.

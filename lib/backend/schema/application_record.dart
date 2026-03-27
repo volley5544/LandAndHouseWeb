@@ -100,6 +100,11 @@ class ApplicationRecord extends FirestoreRecord {
   String get mgmUserManualUrl => _mgmUserManualUrl ?? '';
   bool hasMgmUserManualUrl() => _mgmUserManualUrl != null;
 
+  // "is_use_otp_consent" field.
+  bool? _isUseOtpConsent;
+  bool get isUseOtpConsent => _isUseOtpConsent ?? false;
+  bool hasIsUseOtpConsent() => _isUseOtpConsent != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -126,6 +131,7 @@ class ApplicationRecord extends FirestoreRecord {
     _consentTextAgent = snapshotData['consent_text_agent'] as String?;
     _consentTextCustomer = snapshotData['consent_text_customer'] as String?;
     _mgmUserManualUrl = snapshotData['mgm_user_manual_url'] as String?;
+    _isUseOtpConsent = snapshotData['is_use_otp_consent'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -177,6 +183,7 @@ Map<String, dynamic> createApplicationRecordData({
   String? consentTextAgent,
   String? consentTextCustomer,
   String? mgmUserManualUrl,
+  bool? isUseOtpConsent,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -194,6 +201,7 @@ Map<String, dynamic> createApplicationRecordData({
       'consent_text_agent': consentTextAgent,
       'consent_text_customer': consentTextCustomer,
       'mgm_user_manual_url': mgmUserManualUrl,
+      'is_use_otp_consent': isUseOtpConsent,
     }.withoutNulls,
   );
 
@@ -230,7 +238,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.maxCommissionTextInstallment == e2?.maxCommissionTextInstallment &&
         e1?.consentTextAgent == e2?.consentTextAgent &&
         e1?.consentTextCustomer == e2?.consentTextCustomer &&
-        e1?.mgmUserManualUrl == e2?.mgmUserManualUrl;
+        e1?.mgmUserManualUrl == e2?.mgmUserManualUrl &&
+        e1?.isUseOtpConsent == e2?.isUseOtpConsent;
   }
 
   @override
@@ -250,7 +259,8 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.maxCommissionTextInstallment,
         e?.consentTextAgent,
         e?.consentTextCustomer,
-        e?.mgmUserManualUrl
+        e?.mgmUserManualUrl,
+        e?.isUseOtpConsent
       ]);
 
   @override

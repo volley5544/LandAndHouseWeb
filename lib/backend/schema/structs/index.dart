@@ -65,6 +65,7 @@ export 'barcode_details_struct.dart';
 export 'car_details_struct.dart';
 export 'commision_calculate_data_model_struct.dart';
 export 'contract_details_struct.dart';
+export 'installment_calculate_data_model_struct.dart';
 export 'installments_struct.dart';
 export 'insurances_struct.dart';
 export 'loan_type_code_struct.dart';

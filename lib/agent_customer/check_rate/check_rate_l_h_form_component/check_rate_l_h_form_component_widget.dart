@@ -6924,22 +6924,18 @@ class _CheckRateLHFormComponentWidgetState
 
                                       FFAppState().dropLeadStepCheck = true;
                                       safeSetState(() {});
+                                      FFAppState().fileBytesJson = null;
+                                      FFAppState().fileBytesJsonChanodFront =
+                                          functions.saveFileBytesToJson(_model
+                                              .uploadedLocalFile_uploadDataSqdComponent)!;
+                                      FFAppState().fileBytesJsonChanodBack =
+                                          functions.saveFileBytesToJson(_model
+                                              .uploadedLocalFile_uploadDataSqd2Component)!;
+                                      safeSetState(() {});
 
                                       context.pushNamed(
                                         LeadAgentReviewDetailPageWidget
                                             .routeName,
-                                        queryParameters: {
-                                          'chanodFrontFile': serializeParam(
-                                            _model
-                                                .uploadedLocalFile_uploadDataSqdComponent,
-                                            ParamType.FFUploadedFile,
-                                          ),
-                                          'chanodBackFile': serializeParam(
-                                            _model
-                                                .uploadedLocalFile_uploadDataSqd2Component,
-                                            ParamType.FFUploadedFile,
-                                          ),
-                                        }.withoutNulls,
                                         extra: <String, dynamic>{
                                           '__transition_info__': TransitionInfo(
                                             hasTransition: true,

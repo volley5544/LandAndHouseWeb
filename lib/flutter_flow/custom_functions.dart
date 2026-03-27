@@ -1528,3 +1528,26 @@ String? returnTextValueInList(List<String>? inputList) {
 
   return output;
 }
+
+dynamic saveFileBytesToJson(FFUploadedFile? uploadFile) {
+  dynamic jsonOutput = <String, dynamic>{
+    'name': '${uploadFile!.name}',
+    'bytes': uploadFile!.bytes,
+    'height': uploadFile!.height,
+    'width': uploadFile!.width,
+    'blurHash': '${uploadFile!.blurHash}',
+    'originalFilename': '${uploadFile!.originalFilename}'
+  };
+  return jsonOutput;
+}
+
+FFUploadedFile? createFileBytesFromJson(dynamic jsonFile) {
+  FFUploadedFile genNewFileBytes = FFUploadedFile(
+      name: '${jsonFile['name']}',
+      bytes: jsonFile['bytes'],
+      height: jsonFile['height'],
+      width: jsonFile['width'],
+      blurHash: '${jsonFile['blurHash']}',
+      originalFilename: '${jsonFile['originalFilename']}');
+  return genNewFileBytes;
+}

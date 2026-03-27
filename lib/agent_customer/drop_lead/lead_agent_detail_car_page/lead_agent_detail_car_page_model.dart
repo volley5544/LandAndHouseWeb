@@ -10,6 +10,7 @@ import '/index.dart';
 import 'lead_agent_detail_car_page_widget.dart'
     show LeadAgentDetailCarPageWidget;
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class LeadAgentDetailCarPageModel
     extends FlutterFlowModel<LeadAgentDetailCarPageWidget> {
@@ -103,6 +104,8 @@ class LeadAgentDetailCarPageModel
 
   String commissionPageState = '0';
 
+  String? loanAmountTemp;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentDetailCarPage widget.
@@ -121,6 +124,11 @@ class LeadAgentDetailCarPageModel
   late ProgressBarComponentModel progressBarComponentModel;
   // Model for ReviewDetailCustomerComponent component.
   late ReviewDetailCustomerComponentModel reviewDetailCustomerComponentModel;
+  // State field(s) for idcard widget.
+  FocusNode? idcardFocusNode;
+  TextEditingController? idcardTextController;
+  late MaskTextInputFormatter idcardMask;
+  String? Function(BuildContext, String?)? idcardTextControllerValidator;
   // State field(s) for DropDownVehicle widget.
   String? dropDownVehicleValue;
   FormFieldController<String>? dropDownVehicleValueController;
@@ -166,6 +174,8 @@ class LeadAgentDetailCarPageModel
   String? Function(BuildContext, String?)? loanAmountTextControllerValidator;
   // Stores action output result for [Backend Call - API (agent commission)] action in loanAmount widget.
   ApiCallResponse? apiResulthzdcommission;
+  // Stores action output result for [Backend Call - API (installment calculate)] action in ConditionalBuilder widget.
+  ApiCallResponse? installmentCalOutput;
   DateTime? datePicked;
   // Stores action output result for [Alert Dialog - Custom Dialog] action in Button widget.
   FFUploadedFile? bluebookFileOutput;
@@ -187,6 +197,9 @@ class LeadAgentDetailCarPageModel
     columnController?.dispose();
     progressBarComponentModel.dispose();
     reviewDetailCustomerComponentModel.dispose();
+    idcardFocusNode?.dispose();
+    idcardTextController?.dispose();
+
     rateFromApiFocusNode?.dispose();
     rateFromApiTextController?.dispose();
 

@@ -15,6 +15,8 @@ class InstallmentsStruct extends FFFirebaseStruct {
     double? totalAmt,
     double? intAmt,
     double? lastPeriodPromo,
+    String? term,
+    String? amount,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _tenor = tenor,
         _firstPeriodAmt = firstPeriodAmt,
@@ -23,6 +25,8 @@ class InstallmentsStruct extends FFFirebaseStruct {
         _totalAmt = totalAmt,
         _intAmt = intAmt,
         _lastPeriodPromo = lastPeriodPromo,
+        _term = term,
+        _amount = amount,
         super(firestoreUtilData);
 
   // "tenor" field.
@@ -92,6 +96,20 @@ class InstallmentsStruct extends FFFirebaseStruct {
 
   bool hasLastPeriodPromo() => _lastPeriodPromo != null;
 
+  // "term" field.
+  String? _term;
+  String get term => _term ?? '';
+  set term(String? val) => _term = val;
+
+  bool hasTerm() => _term != null;
+
+  // "amount" field.
+  String? _amount;
+  String get amount => _amount ?? '';
+  set amount(String? val) => _amount = val;
+
+  bool hasAmount() => _amount != null;
+
   static InstallmentsStruct fromMap(Map<String, dynamic> data) =>
       InstallmentsStruct(
         tenor: castToType<int>(data['tenor']),
@@ -101,6 +119,8 @@ class InstallmentsStruct extends FFFirebaseStruct {
         totalAmt: castToType<double>(data['totalAmt']),
         intAmt: castToType<double>(data['intAmt']),
         lastPeriodPromo: castToType<double>(data['lastPeriodPromo']),
+        term: data['term'] as String?,
+        amount: data['amount'] as String?,
       );
 
   static InstallmentsStruct? maybeFromMap(dynamic data) => data is Map
@@ -115,6 +135,8 @@ class InstallmentsStruct extends FFFirebaseStruct {
         'totalAmt': _totalAmt,
         'intAmt': _intAmt,
         'lastPeriodPromo': _lastPeriodPromo,
+        'term': _term,
+        'amount': _amount,
       }.withoutNulls;
 
   @override
@@ -146,6 +168,14 @@ class InstallmentsStruct extends FFFirebaseStruct {
         'lastPeriodPromo': serializeParam(
           _lastPeriodPromo,
           ParamType.double,
+        ),
+        'term': serializeParam(
+          _term,
+          ParamType.String,
+        ),
+        'amount': serializeParam(
+          _amount,
+          ParamType.String,
         ),
       }.withoutNulls;
 
@@ -186,6 +216,16 @@ class InstallmentsStruct extends FFFirebaseStruct {
           ParamType.double,
           false,
         ),
+        term: deserializeParam(
+          data['term'],
+          ParamType.String,
+          false,
+        ),
+        amount: deserializeParam(
+          data['amount'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -200,7 +240,9 @@ class InstallmentsStruct extends FFFirebaseStruct {
         lastPeriodAmt == other.lastPeriodAmt &&
         totalAmt == other.totalAmt &&
         intAmt == other.intAmt &&
-        lastPeriodPromo == other.lastPeriodPromo;
+        lastPeriodPromo == other.lastPeriodPromo &&
+        term == other.term &&
+        amount == other.amount;
   }
 
   @override
@@ -211,7 +253,9 @@ class InstallmentsStruct extends FFFirebaseStruct {
         lastPeriodAmt,
         totalAmt,
         intAmt,
-        lastPeriodPromo
+        lastPeriodPromo,
+        term,
+        amount
       ]);
 }
 
@@ -223,6 +267,8 @@ InstallmentsStruct createInstallmentsStruct({
   double? totalAmt,
   double? intAmt,
   double? lastPeriodPromo,
+  String? term,
+  String? amount,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -236,6 +282,8 @@ InstallmentsStruct createInstallmentsStruct({
       totalAmt: totalAmt,
       intAmt: intAmt,
       lastPeriodPromo: lastPeriodPromo,
+      term: term,
+      amount: amount,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

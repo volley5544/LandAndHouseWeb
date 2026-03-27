@@ -574,13 +574,13 @@ class FFAppState extends ChangeNotifier {
     _LeadUrlProd = value;
   }
 
-  int _webProdVersion = 41;
+  int _webProdVersion = 42;
   int get webProdVersion => _webProdVersion;
   set webProdVersion(int value) {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 131;
+  int _webUatVersion = 137;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -859,6 +859,37 @@ class FFAppState extends ChangeNotifier {
   dynamic get fileBytesJson => _fileBytesJson;
   set fileBytesJson(dynamic value) {
     _fileBytesJson = value;
+  }
+
+  dynamic _fileBytesJsonChanodFront;
+  dynamic get fileBytesJsonChanodFront => _fileBytesJsonChanodFront;
+  set fileBytesJsonChanodFront(dynamic value) {
+    _fileBytesJsonChanodFront = value;
+  }
+
+  dynamic _fileBytesJsonChanodBack;
+  dynamic get fileBytesJsonChanodBack => _fileBytesJsonChanodBack;
+  set fileBytesJsonChanodBack(dynamic value) {
+    _fileBytesJsonChanodBack = value;
+  }
+
+  bool _isUseOtpConsentAppstate = false;
+  bool get isUseOtpConsentAppstate => _isUseOtpConsentAppstate;
+  set isUseOtpConsentAppstate(bool value) {
+    _isUseOtpConsentAppstate = value;
+  }
+
+  InstallmentCalculateDataModelStruct _installmentsCalculateDataType =
+      InstallmentCalculateDataModelStruct();
+  InstallmentCalculateDataModelStruct get installmentsCalculateDataType =>
+      _installmentsCalculateDataType;
+  set installmentsCalculateDataType(InstallmentCalculateDataModelStruct value) {
+    _installmentsCalculateDataType = value;
+  }
+
+  void updateInstallmentsCalculateDataTypeStruct(
+      Function(InstallmentCalculateDataModelStruct) updateFn) {
+    updateFn(_installmentsCalculateDataType);
   }
 }
 

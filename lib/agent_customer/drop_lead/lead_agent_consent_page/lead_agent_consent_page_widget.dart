@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/pages/loading/loading_widget.dart';
+import '/actions/actions.dart' as action_blocks;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -61,6 +62,11 @@ class _LeadAgentConsentPageWidgetState
         safeSetState(() {});
         _model.linkidPageState = '${widget.linkId}';
         safeSetState(() {});
+        return;
+      }
+      _model.dropLeadStepCheckOutput =
+          await action_blocks.dropLeadStepCheck(context);
+      if (!_model.dropLeadStepCheckOutput!) {
         return;
       }
       _model.queryUrl =

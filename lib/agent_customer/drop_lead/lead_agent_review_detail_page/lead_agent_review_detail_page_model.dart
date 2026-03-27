@@ -12,6 +12,14 @@ import 'package:flutter/material.dart';
 
 class LeadAgentReviewDetailPageModel
     extends FlutterFlowModel<LeadAgentReviewDetailPageWidget> {
+  ///  Local state fields for this page.
+
+  FFUploadedFile? imgCarBack;
+
+  FFUploadedFile? chanodFrontFile;
+
+  FFUploadedFile? chanodBackFile;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentReviewDetailPage widget.

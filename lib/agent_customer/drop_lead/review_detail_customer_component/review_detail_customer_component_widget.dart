@@ -21,6 +21,8 @@ class ReviewDetailCustomerComponentWidget extends StatefulWidget {
     required this.time,
     String? fromPage,
     this.commission,
+    this.term,
+    this.installmentAmount,
   }) : this.fromPage = fromPage ?? 'from_page';
 
   final String? name;
@@ -33,6 +35,8 @@ class ReviewDetailCustomerComponentWidget extends StatefulWidget {
   final String? time;
   final String fromPage;
   final String? commission;
+  final String? term;
+  final String? installmentAmount;
 
   @override
   State<ReviewDetailCustomerComponentWidget> createState() =>
@@ -288,109 +292,113 @@ class _ReviewDetailCustomerComponentWidgetState
                 ].divide(SizedBox(width: 12.0)),
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
-              child: Container(
-                decoration: BoxDecoration(),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'เลขบัตรประชาชน',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Color(0xB2646464),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                            Text(
-                              '*',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 5.0)),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              '(ใช้สำหรับตรวจสอบข้อมูลซ้ำ)',
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 12.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                            ),
-                          ].divide(SizedBox(width: 5.0)),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      ':',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Noto San Thai',
-                            color: Color(0xB2646464),
-                            fontSize: () {
-                              if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointSmall) {
-                                return 16.0;
-                              } else if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointMedium) {
-                                return 22.0;
-                              } else if (MediaQuery.sizeOf(context).width <
-                                  kBreakpointLarge) {
-                                return 22.0;
-                              } else {
-                                return 22.0;
-                              }
-                            }(),
-                            letterSpacing: 0.0,
+            if (widget.idcard != null && widget.idcard != '')
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                'เลขบัตรประชาชน',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: Color(0xB2646464),
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                              Text(
+                                '*',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color: FlutterFlowTheme.of(context).error,
+                                      letterSpacing: 0.0,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
                           ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: Text(
-                          valueOrDefault<String>(
-                            functions.showThaiIdNumberForm('${widget.idcard}'),
-                            'idcard',
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                '(ใช้สำหรับตรวจสอบข้อมูลซ้ำ)',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Noto San Thai',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      fontSize: 12.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                              ),
+                            ].divide(SizedBox(width: 5.0)),
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Color(0xFF003063),
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                        ],
+                      ),
+                      Text(
+                        ':',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Noto San Thai',
+                              color: Color(0xB2646464),
+                              fontSize: () {
+                                if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointSmall) {
+                                  return 16.0;
+                                } else if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointMedium) {
+                                  return 22.0;
+                                } else if (MediaQuery.sizeOf(context).width <
+                                    kBreakpointLarge) {
+                                  return 22.0;
+                                } else {
+                                  return 22.0;
+                                }
+                              }(),
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          child: Text(
+                            valueOrDefault<String>(
+                              functions
+                                  .showThaiIdNumberForm('${widget.idcard}'),
+                              'idcard',
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xFF003063),
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
                       ),
-                    ),
-                  ].divide(SizedBox(width: 12.0)),
+                    ].divide(SizedBox(width: 12.0)),
+                  ),
                 ),
               ),
-            ),
             Container(
               decoration: BoxDecoration(),
               child: Row(
@@ -530,6 +538,153 @@ class _ReviewDetailCustomerComponentWidgetState
                             widget.amount,
                             'amount',
                           ))} บาท',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xFF003063),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ].divide(SizedBox(width: 12.0)),
+                ),
+              ),
+            if (widget.term != null && widget.term != '')
+              Container(
+                decoration: BoxDecoration(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'จำนวนงวดที่สนใจ',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xB2646464),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        Text(
+                          '*',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context).error,
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ].divide(SizedBox(width: 5.0)),
+                    ),
+                    Text(
+                      ':',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: () {
+                              if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointSmall) {
+                                return 16.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointMedium) {
+                                return 22.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointLarge) {
+                                return 22.0;
+                              } else {
+                                return 22.0;
+                              }
+                            }(),
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Text(
+                          '${widget.term} งวด',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xFF003063),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ].divide(SizedBox(width: 12.0)),
+                ),
+              ),
+            if (widget.installmentAmount != null &&
+                widget.installmentAmount != '')
+              Container(
+                decoration: BoxDecoration(),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          'ค่างวดโดยประมาณ',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xB2646464),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        Text(
+                          '*',
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: FlutterFlowTheme.of(context).error,
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ].divide(SizedBox(width: 5.0)),
+                    ),
+                    Text(
+                      ':',
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Noto San Thai',
+                            color: Color(0xB2646464),
+                            fontSize: () {
+                              if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointSmall) {
+                                return 16.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointMedium) {
+                                return 22.0;
+                              } else if (MediaQuery.sizeOf(context).width <
+                                  kBreakpointLarge) {
+                                return 22.0;
+                              } else {
+                                return 22.0;
+                              }
+                            }(),
+                            letterSpacing: 0.0,
+                          ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: Text(
+                          '${functions.returnNumberWithComma2Decimal(widget.installmentAmount)} บาท',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Noto San Thai',

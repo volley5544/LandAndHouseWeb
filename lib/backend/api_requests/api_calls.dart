@@ -2688,6 +2688,8 @@ class AgentAPIGroup {
       PasswordResetAgentCall();
   static CheckThaiIdPhonenumberCall checkThaiIdPhonenumberCall =
       CheckThaiIdPhonenumberCall();
+  static InstallmentCalculateCall installmentCalculateCall =
+      InstallmentCalculateCall();
 }
 
 class AgentProfileAPICall {
@@ -3631,6 +3633,8 @@ class LeadsSaveGuestCall {
     String? product = '',
     String? leadMobileId = '',
     String? subProduct = '',
+    String? requestInstallmentTerm = '',
+    String? requestInstallmentAmount = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -3710,6 +3714,8 @@ class LeadsSaveGuestCall {
         'product': product,
         'lead_mobile_id': leadMobileId,
         'sub_product': subProduct,
+        'request_installment_term': requestInstallmentTerm,
+        'request_installment_amount': requestInstallmentAmount,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -4518,6 +4524,56 @@ class CheckThaiIdPhonenumberCall {
   String? message(dynamic response) => castToType<String>(getJsonField(
         response,
         r'''$.message''',
+      ));
+}
+
+class InstallmentCalculateCall {
+  Future<ApiCallResponse> call({
+    String? estimatePrice = '',
+    String? requestAmount = '',
+    String? subProduct = '',
+    String? url = '',
+    String? tokenHeader = '',
+  }) async {
+    final baseUrl = AgentAPIGroup.getBaseUrl(
+      url: url,
+      tokenHeader: tokenHeader,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'installment calculate',
+      apiUrl: '${baseUrl}/api/services/v1/installment/calculate',
+      callType: ApiCallType.POST,
+      headers: {
+        'X-API-KEY': '${tokenHeader}',
+      },
+      params: {
+        'estimate_price': estimatePrice,
+        'request_amount': requestAmount,
+        'sub_product': subProduct,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+  InstallmentCalculateDataModelStruct? data(dynamic response) =>
+      InstallmentCalculateDataModelStruct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
       ));
 }
 

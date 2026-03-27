@@ -58,6 +58,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
     String? smsCode,
     int? leadMobileId,
     String? subProduct,
+    String? requestInstallmentTerm,
+    String? requestInstallmentAmount,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _estimatePrice = estimatePrice,
         _landDistrict = landDistrict,
@@ -109,6 +111,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         _smsCode = smsCode,
         _leadMobileId = leadMobileId,
         _subProduct = subProduct,
+        _requestInstallmentTerm = requestInstallmentTerm,
+        _requestInstallmentAmount = requestInstallmentAmount,
         super(firestoreUtilData);
 
   // "estimate_price" field.
@@ -464,6 +468,20 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasSubProduct() => _subProduct != null;
 
+  // "request_installment_term" field.
+  String? _requestInstallmentTerm;
+  String get requestInstallmentTerm => _requestInstallmentTerm ?? '';
+  set requestInstallmentTerm(String? val) => _requestInstallmentTerm = val;
+
+  bool hasRequestInstallmentTerm() => _requestInstallmentTerm != null;
+
+  // "request_installment_amount" field.
+  String? _requestInstallmentAmount;
+  String get requestInstallmentAmount => _requestInstallmentAmount ?? '';
+  set requestInstallmentAmount(String? val) => _requestInstallmentAmount = val;
+
+  bool hasRequestInstallmentAmount() => _requestInstallmentAmount != null;
+
   static SaveLeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveLeadAgentDataModelStruct(
         estimatePrice: data['estimate_price'] as String?,
@@ -516,6 +534,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         smsCode: data['sms_code'] as String?,
         leadMobileId: castToType<int>(data['lead_mobile_id']),
         subProduct: data['sub_product'] as String?,
+        requestInstallmentTerm: data['request_installment_term'] as String?,
+        requestInstallmentAmount: data['request_installment_amount'] as String?,
       );
 
   static SaveLeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -573,6 +593,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         'sms_code': _smsCode,
         'lead_mobile_id': _leadMobileId,
         'sub_product': _subProduct,
+        'request_installment_term': _requestInstallmentTerm,
+        'request_installment_amount': _requestInstallmentAmount,
       }.withoutNulls;
 
   @override
@@ -775,6 +797,14 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'sub_product': serializeParam(
           _subProduct,
+          ParamType.String,
+        ),
+        'request_installment_term': serializeParam(
+          _requestInstallmentTerm,
+          ParamType.String,
+        ),
+        'request_installment_amount': serializeParam(
+          _requestInstallmentAmount,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -1032,6 +1062,16 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        requestInstallmentTerm: deserializeParam(
+          data['request_installment_term'],
+          ParamType.String,
+          false,
+        ),
+        requestInstallmentAmount: deserializeParam(
+          data['request_installment_amount'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1089,7 +1129,9 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateVatAmt == other.comEstimateVatAmt &&
         smsCode == other.smsCode &&
         leadMobileId == other.leadMobileId &&
-        subProduct == other.subProduct;
+        subProduct == other.subProduct &&
+        requestInstallmentTerm == other.requestInstallmentTerm &&
+        requestInstallmentAmount == other.requestInstallmentAmount;
   }
 
   @override
@@ -1143,7 +1185,9 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         comEstimateVatAmt,
         smsCode,
         leadMobileId,
-        subProduct
+        subProduct,
+        requestInstallmentTerm,
+        requestInstallmentAmount
       ]);
 }
 
@@ -1198,6 +1242,8 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
   String? smsCode,
   int? leadMobileId,
   String? subProduct,
+  String? requestInstallmentTerm,
+  String? requestInstallmentAmount,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1254,6 +1300,8 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
       smsCode: smsCode,
       leadMobileId: leadMobileId,
       subProduct: subProduct,
+      requestInstallmentTerm: requestInstallmentTerm,
+      requestInstallmentAmount: requestInstallmentAmount,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -141,3 +141,5 @@ export '/agent_customer/drop_lead/product_menu_page_guest/product_menu_page_gues
     show ProductMenuPageGuestWidget;
 export '/assign_lead/assign_m_c_lead_page/assign_m_c_lead_page_widget.dart'
     show AssignMCLeadPageWidget;
+export '/agent_customer/drop_lead/select_installment_f_g_f_page/select_installment_f_g_f_page_widget.dart'
+    show SelectInstallmentFGFPageWidget;

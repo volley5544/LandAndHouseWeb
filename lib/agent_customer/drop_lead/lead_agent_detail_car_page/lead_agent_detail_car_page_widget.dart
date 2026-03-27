@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'lead_agent_detail_car_page_model.dart';
 export 'lead_agent_detail_car_page_model.dart';
@@ -62,20 +63,6 @@ class _LeadAgentDetailCarPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content: Text(FFAppState().func),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
       _model.dropLeadStepCheckOutput =
           await action_blocks.dropLeadStepCheck(context);
       if (!_model.dropLeadStepCheckOutput!) {
@@ -241,6 +228,10 @@ class _LeadAgentDetailCarPageWidgetState
       }
     });
 
+    _model.idcardTextController ??= TextEditingController();
+    _model.idcardFocusNode ??= FocusNode();
+
+    _model.idcardMask = MaskTextInputFormatter(mask: '#-####-#####-##-#');
     _model.rateFromApiTextController ??= TextEditingController();
     _model.rateFromApiFocusNode ??= FocusNode();
 
@@ -390,6 +381,27 @@ class _LeadAgentDetailCarPageWidgetState
           )!;
           safeSetState(() {});
         }
+        if (FFAppState().isGuest) {
+          if (_model.loanAmountTemp !=
+              functions.removeCommaFromNumText(
+                  _model.loanAmountTextController.text)) {
+            FFAppState().updateSaveLeadAgentDataStruct(
+              (e) => e
+                ..requestInstallmentTerm = ''
+                ..requestInstallmentAmount = '',
+            );
+            safeSetState(() {});
+          }
+          _model.loanAmountTemp = functions
+              .removeCommaFromNumText(_model.loanAmountTextController.text);
+          safeSetState(() {});
+          FFAppState().updateSaveLeadAgentDataStruct(
+            (e) => e
+              ..loanAmount = functions
+                  .removeCommaFromNumText(_model.loanAmountTextController.text),
+          );
+          safeSetState(() {});
+        }
         if (_shouldSetState) safeSetState(() {});
       },
     );
@@ -526,6 +538,18 @@ class _LeadAgentDetailCarPageWidgetState
           ),
         ],
       ),
+      'columnOnPageLoadAnimation12': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -20.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
       'imageOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -545,7 +569,7 @@ class _LeadAgentDetailCarPageWidgetState
           ),
         ],
       ),
-      'columnOnPageLoadAnimation12': AnimationInfo(
+      'columnOnPageLoadAnimation13': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           MoveEffect(
@@ -816,6 +840,12 @@ class _LeadAgentDetailCarPageWidgetState
                                                         .carRegistration,
                                                     time:
                                                         '${FFAppState().saveLeadAgentData.contactTime}',
+                                                    term: FFAppState()
+                                                        .saveLeadAgentData
+                                                        .requestInstallmentTerm,
+                                                    installmentAmount: FFAppState()
+                                                        .saveLeadAgentData
+                                                        .requestInstallmentAmount,
                                                   ),
                                                 ),
                                                 Padding(
@@ -857,6 +887,248 @@ class _LeadAgentDetailCarPageWidgetState
                                                         SizedBox(width: 12.0)),
                                                   ),
                                                 ),
+                                                if (FFAppState().isGuest)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 16.0,
+                                                                0.0, 0.0),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          16.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                'เลขบัตรประชาชน',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .start,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                              child: Text(
+                                                                '*',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .error,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 50.0,
+                                                          decoration:
+                                                              BoxDecoration(),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
+                                                            child:
+                                                                TextFormField(
+                                                              controller: _model
+                                                                  .idcardTextController,
+                                                              focusNode: _model
+                                                                  .idcardFocusNode,
+                                                              autofocus: false,
+                                                              textCapitalization:
+                                                                  TextCapitalization
+                                                                      .words,
+                                                              obscureText:
+                                                                  false,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                labelStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                                hintText:
+                                                                    'ระบุเลขบัตรประชาชน',
+                                                                hintStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Noto San Thai',
+                                                                      fontSize:
+                                                                          12.0,
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
+                                                                enabledBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                    width: 2.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                  ),
+                                                                ),
+                                                                focusedBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    width: 2.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                  ),
+                                                                ),
+                                                                errorBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .error,
+                                                                    width: 2.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                  ),
+                                                                ),
+                                                                focusedErrorBorder:
+                                                                    UnderlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .error,
+                                                                    width: 2.0,
+                                                                  ),
+                                                                  borderRadius:
+                                                                      const BorderRadius
+                                                                          .only(
+                                                                    topLeft: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                    topRight: Radius
+                                                                        .circular(
+                                                                            4.0),
+                                                                  ),
+                                                                ),
+                                                                contentPadding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            16.0,
+                                                                            16.0,
+                                                                            8.0),
+                                                              ),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyLarge
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Noto San Thai',
+                                                                    fontSize:
+                                                                        14.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    lineHeight:
+                                                                        1.0,
+                                                                  ),
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
+                                                              validator: _model
+                                                                  .idcardTextControllerValidator
+                                                                  .asValidator(
+                                                                      context),
+                                                              inputFormatters: [
+                                                                _model
+                                                                    .idcardMask
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -894,6 +1166,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .secondaryText,
+                                                                    fontSize:
+                                                                        12.0,
                                                                     letterSpacing:
                                                                         0.0,
                                                                   ),
@@ -1141,6 +1415,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     1;
                                                                 _model.carRateData =
                                                                     null;
+                                                                _model.loanAmountTemp =
+                                                                    null;
                                                                 safeSetState(
                                                                     () {});
                                                                 FFAppState()
@@ -1164,6 +1440,25 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 );
                                                                 safeSetState(
                                                                     () {});
+                                                                FFAppState()
+                                                                    .updateSaveLeadAgentDataStruct(
+                                                                  (e) => e
+                                                                    ..requestInstallmentTerm =
+                                                                        ''
+                                                                    ..requestInstallmentAmount =
+                                                                        '',
+                                                                );
+                                                                safeSetState(
+                                                                    () {});
+                                                                safeSetState(
+                                                                    () {
+                                                                  _model
+                                                                      .rateFromApiTextController
+                                                                      ?.clear();
+                                                                  _model
+                                                                      .loanAmountTextController
+                                                                      ?.clear();
+                                                                });
                                                                 safeSetState(
                                                                     () {
                                                                   _model
@@ -1412,6 +1707,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       [];
                                                                   _model.ccMasterPageState =
                                                                       [];
+                                                                  _model.loanAmountTemp =
+                                                                      null;
                                                                   safeSetState(
                                                                       () {});
                                                                   if (!(_model.dropDownGearValue !=
@@ -1617,6 +1914,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     _model
                                                                         .rateFromApiTextController
                                                                         ?.clear();
+                                                                    _model
+                                                                        .loanAmountTextController
+                                                                        ?.clear();
                                                                   });
                                                                   _model.brandMasterPageState = AgentAPIGroup
                                                                       .agentRateSearchCall
@@ -1637,6 +1937,16 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       2;
                                                                   _model.carRateData =
                                                                       null;
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  FFAppState()
+                                                                      .updateSaveLeadAgentDataStruct(
+                                                                    (e) => e
+                                                                      ..requestInstallmentTerm =
+                                                                          ''
+                                                                      ..requestInstallmentAmount =
+                                                                          '',
+                                                                  );
                                                                   safeSetState(
                                                                       () {});
                                                                   if (!(_model
@@ -1877,11 +2187,26 @@ class _LeadAgentDetailCarPageWidgetState
                                                                   _model
                                                                       .rateFromApiTextController
                                                                       ?.clear();
+                                                                  _model
+                                                                      .loanAmountTextController
+                                                                      ?.clear();
                                                                 });
                                                                 _model.stateNumber =
                                                                     3;
                                                                 _model.carRateData =
                                                                     null;
+                                                                _model.loanAmountTemp =
+                                                                    null;
+                                                                safeSetState(
+                                                                    () {});
+                                                                FFAppState()
+                                                                    .updateSaveLeadAgentDataStruct(
+                                                                  (e) => e
+                                                                    ..requestInstallmentTerm =
+                                                                        ''
+                                                                    ..requestInstallmentAmount =
+                                                                        '',
+                                                                );
                                                                 safeSetState(
                                                                     () {});
                                                               },
@@ -2248,6 +2573,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     _model
                                                                         .rateFromApiTextController
                                                                         ?.clear();
+                                                                    _model
+                                                                        .loanAmountTextController
+                                                                        ?.clear();
                                                                   });
                                                                   _model.modelMasterPageState = AgentAPIGroup
                                                                       .agentRateSearchCall
@@ -2260,6 +2588,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                           MasterAgentModelModelStruct>();
                                                                   _model.ccMasterPageState =
                                                                       [];
+                                                                  _model.loanAmountTemp =
+                                                                      null;
                                                                   safeSetState(
                                                                       () {});
                                                                   if (!(_model
@@ -2274,6 +2604,16 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       4;
                                                                   _model.carRateData =
                                                                       null;
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  FFAppState()
+                                                                      .updateSaveLeadAgentDataStruct(
+                                                                    (e) => e
+                                                                      ..requestInstallmentTerm =
+                                                                          ''
+                                                                      ..requestInstallmentAmount =
+                                                                          '',
+                                                                  );
                                                                   safeSetState(
                                                                       () {});
                                                                   await _model
@@ -2667,6 +3007,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     _model
                                                                         .rateFromApiTextController
                                                                         ?.clear();
+                                                                    _model
+                                                                        .loanAmountTextController
+                                                                        ?.clear();
                                                                   });
                                                                   _model.ccMasterPageState = AgentAPIGroup
                                                                       .agentRateSearchCall
@@ -2691,6 +3034,18 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       5;
                                                                   _model.carRateData =
                                                                       null;
+                                                                  _model.loanAmountTemp =
+                                                                      null;
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  FFAppState()
+                                                                      .updateSaveLeadAgentDataStruct(
+                                                                    (e) => e
+                                                                      ..requestInstallmentTerm =
+                                                                          ''
+                                                                      ..requestInstallmentAmount =
+                                                                          '',
+                                                                  );
                                                                   safeSetState(
                                                                       () {});
                                                                   await _model
@@ -2912,6 +3267,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                   _model
                                                                       .rateFromApiTextController
                                                                       ?.clear();
+                                                                  _model
+                                                                      .loanAmountTextController
+                                                                      ?.clear();
                                                                 });
                                                                 _model.stateNumber =
                                                                     6;
@@ -2919,6 +3277,18 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     null;
                                                                 _model.canNextButton =
                                                                     false;
+                                                                _model.loanAmountTemp =
+                                                                    null;
+                                                                safeSetState(
+                                                                    () {});
+                                                                FFAppState()
+                                                                    .updateSaveLeadAgentDataStruct(
+                                                                  (e) => e
+                                                                    ..requestInstallmentTerm =
+                                                                        ''
+                                                                    ..requestInstallmentAmount =
+                                                                        '',
+                                                                );
                                                                 safeSetState(
                                                                     () {});
                                                                 await _model
@@ -4863,6 +5233,408 @@ class _LeadAgentDetailCarPageWidgetState
                                                     }
                                                   },
                                                 ),
+                                                if ((_model.loanAmountTextController
+                                                                .text !=
+                                                            '') &&
+                                                    (double.parse((functions
+                                                            .removeCommaFromNumText(_model
+                                                                        .loanAmountTextController
+                                                                        .text !=
+                                                                    ''
+                                                                ? _model
+                                                                    .loanAmountTextController
+                                                                    .text
+                                                                : '0.0')!)) >
+                                                        0) &&
+                                                    FFAppState().isGuest)
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    16.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Builder(
+                                                              builder:
+                                                                  (context) =>
+                                                                      InkWell(
+                                                                splashColor: Colors
+                                                                    .transparent,
+                                                                focusColor: Colors
+                                                                    .transparent,
+                                                                hoverColor: Colors
+                                                                    .transparent,
+                                                                highlightColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                onTap:
+                                                                    () async {
+                                                                  var _shouldSetState =
+                                                                      false;
+                                                                  showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (dialogContext) {
+                                                                      return Dialog(
+                                                                        elevation:
+                                                                            0,
+                                                                        insetPadding:
+                                                                            EdgeInsets.zero,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        alignment:
+                                                                            AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                        child:
+                                                                            GestureDetector(
+                                                                          onTap:
+                                                                              () {
+                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                          },
+                                                                          child:
+                                                                              LoadingWidget(),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                  );
+
+                                                                  _model.installmentCalOutput =
+                                                                      await AgentAPIGroup
+                                                                          .installmentCalculateCall
+                                                                          .call(
+                                                                    estimatePrice: _model.carRateData !=
+                                                                            null
+                                                                        ? _model
+                                                                            .carRateData
+                                                                            ?.rate
+                                                                        : '0',
+                                                                    requestAmount:
+                                                                        functions.removeCommaFromNumText(_model
+                                                                            .loanAmountTextController
+                                                                            .text),
+                                                                    subProduct: FFAppState()
+                                                                        .saveLeadAgentData
+                                                                        .subProduct,
+                                                                    url: FFDevEnvironmentValues()
+                                                                            .isProduction
+                                                                        ? FFAppState()
+                                                                            .apiUrlDocData
+                                                                            .agentWebApiUrl
+                                                                        : FFAppState()
+                                                                            .apiUrlDocData
+                                                                            .agentWebApiUrlUat,
+                                                                    tokenHeader: FFDevEnvironmentValues()
+                                                                            .isProduction
+                                                                        ? FFAppState()
+                                                                            .apiUrlDocData
+                                                                            .agentWebApiToken
+                                                                        : FFAppState()
+                                                                            .apiUrlDocData
+                                                                            .agentWebApiTokenUat,
+                                                                  );
+
+                                                                  _shouldSetState =
+                                                                      true;
+                                                                  if ((_model.installmentCalOutput
+                                                                              ?.statusCode ??
+                                                                          200) !=
+                                                                      200) {
+                                                                    await showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (dialogContext) {
+                                                                        return Dialog(
+                                                                          elevation:
+                                                                              0,
+                                                                          insetPadding:
+                                                                              EdgeInsets.zero,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          alignment:
+                                                                              AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                          child:
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              FocusScope.of(dialogContext).unfocus();
+                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                            },
+                                                                            child:
+                                                                                ErrorMessageComponentWidget(
+                                                                              textMessage: 'พบข้อผิดพลาด connection (${(_model.installmentCalOutput?.statusCode ?? 200).toString()})',
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    );
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                  if ('${getJsonField(
+                                                                        (_model.installmentCalOutput?.jsonBody ??
+                                                                            ''),
+                                                                        r'''$.code''',
+                                                                      ).toString()}' !=
+                                                                      '200') {
+                                                                    await showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder:
+                                                                          (dialogContext) {
+                                                                        return Dialog(
+                                                                          elevation:
+                                                                              0,
+                                                                          insetPadding:
+                                                                              EdgeInsets.zero,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          alignment:
+                                                                              AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                          child:
+                                                                              GestureDetector(
+                                                                            onTap:
+                                                                                () {
+                                                                              FocusScope.of(dialogContext).unfocus();
+                                                                              FocusManager.instance.primaryFocus?.unfocus();
+                                                                            },
+                                                                            child:
+                                                                                ErrorMessageComponentWidget(
+                                                                              textMessage: '${getJsonField(
+                                                                                (_model.installmentCalOutput?.jsonBody ?? ''),
+                                                                                r'''$.message''',
+                                                                              ).toString()}',
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    );
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    if (_shouldSetState)
+                                                                      safeSetState(
+                                                                          () {});
+                                                                    return;
+                                                                  }
+                                                                  FFAppState()
+                                                                          .installmentsCalculateDataType =
+                                                                      AgentAPIGroup
+                                                                          .installmentCalculateCall
+                                                                          .data(
+                                                                    (_model.installmentCalOutput
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                  )!;
+                                                                  safeSetState(
+                                                                      () {});
+                                                                  Navigator.pop(
+                                                                      context);
+
+                                                                  context.pushNamed(
+                                                                      SelectInstallmentFGFPageWidget
+                                                                          .routeName);
+
+                                                                  if (_shouldSetState)
+                                                                    safeSetState(
+                                                                        () {});
+                                                                },
+                                                                child: Builder(
+                                                                  builder:
+                                                                      (context) {
+                                                                    if ((FFAppState().saveLeadAgentData.requestInstallmentTerm !=
+                                                                                '') ||
+                                                                        (FFAppState().saveLeadAgentData.requestInstallmentAmount !=
+                                                                                '')) {
+                                                                      return Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  'จำนวนงวดที่สนใจ',
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            children: [
+                                                                              Flexible(
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+                                                                                  child: Container(
+                                                                                    height: 50.0,
+                                                                                    decoration: BoxDecoration(),
+                                                                                    child: Text(
+                                                                                      '${FFAppState().saveLeadAgentData.requestInstallmentTerm} งวด',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: FlutterFlowTheme.of(context).primary,
+                                                                                            fontSize: 24.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                child: Icon(
+                                                                                  Icons.arrow_forward_ios,
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  size: 24.0,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  'ค่างวดโดยประมาณ',
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Flexible(
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+                                                                                  child: Container(
+                                                                                    height: 50.0,
+                                                                                    decoration: BoxDecoration(),
+                                                                                    child: Text(
+                                                                                      '${functions.returnNumberWithCommaFullNumber('${FFAppState().saveLeadAgentData.requestInstallmentAmount}', '')} บาท / เดือน',
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: FlutterFlowTheme.of(context).primary,
+                                                                                            fontSize: 24.0,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    } else {
+                                                                      return Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  'คำนวนค่างวดโดยประมาณ',
+                                                                                  textAlign: TextAlign.start,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        fontSize: 12.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                16.0,
+                                                                                16.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              children: [
+                                                                                Text(
+                                                                                  'ระบุจำนวนงวดที่ต้องการ',
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).primary,
+                                                                                        fontSize: 16.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                  child: Icon(
+                                                                                    Icons.arrow_forward_ios,
+                                                                                    color: FlutterFlowTheme.of(context).primary,
+                                                                                    size: 24.0,
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ).animateOnPageLoad(
+                                                            animationsMap[
+                                                                'columnOnPageLoadAnimation12']!),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 if ((_model.stateNumber! >=
                                                         7) ||
                                                     _model.canNextButton)
@@ -5660,7 +6432,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                             ],
                                                           ).animateOnPageLoad(
                                                               animationsMap[
-                                                                  'columnOnPageLoadAnimation12']!),
+                                                                  'columnOnPageLoadAnimation13']!),
                                                         ),
                                                       ],
                                                     ),
@@ -5834,6 +6606,61 @@ class _LeadAgentDetailCarPageWidgetState
 
                                                                           return;
                                                                         }
+                                                                        if (!(_model.idcardTextController.text !=
+                                                                                '')) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (dialogContext) {
+                                                                              return Dialog(
+                                                                                elevation: 0,
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(dialogContext).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: ErrorMessageComponentWidget(
+                                                                                    textMessage: 'กรุณาระบุเลขบัตรประชาชน',
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          return;
+                                                                        }
+                                                                        if (!functions.checkIdCard(functions.removeDash(_model
+                                                                            .idcardTextController
+                                                                            .text))!) {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (dialogContext) {
+                                                                              return Dialog(
+                                                                                elevation: 0,
+                                                                                insetPadding: EdgeInsets.zero,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                child: GestureDetector(
+                                                                                  onTap: () {
+                                                                                    FocusScope.of(dialogContext).unfocus();
+                                                                                    FocusManager.instance.primaryFocus?.unfocus();
+                                                                                  },
+                                                                                  child: ErrorMessageComponentWidget(
+                                                                                    textMessage: 'เลขบัตรประชาชนไม่ถูกต้อง',
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            },
+                                                                          );
+
+                                                                          return;
+                                                                        }
                                                                       }
                                                                       if ((FFAppState().agentProfileDataType.agentGroupId ==
                                                                               '7') &&
@@ -5866,7 +6693,7 @@ class _LeadAgentDetailCarPageWidgetState
                                                                             ..carRegistration =
                                                                                 _model.carregisTextController.text
                                                                             ..contactTime =
-                                                                                _model.datePicked?.toString()
+                                                                                '${_model.datePicked?.toString()}'
                                                                             ..loanAmount =
                                                                                 functions.removeCommaFromNumText(_model.loanAmountTextController.text)
                                                                             ..carProvince =
@@ -5938,7 +6765,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                                 FFAppState().agentProfileDataType.actualPercent
                                                                             ..comEstimateVatAmt =
                                                                                 '${((double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100)).toString()}'
-                                                                            ..agentCode = FFAppState().agentCode,
+                                                                            ..agentCode =
+                                                                                FFAppState().agentCode
+                                                                            ..registerId = FFAppState().isUseOtpConsentAppstate ? FFAppState().saveLeadAgentData.registerId : functions.removeDash(_model.idcardTextController.text),
                                                                         );
                                                                         safeSetState(
                                                                             () {});
@@ -5949,19 +6778,17 @@ class _LeadAgentDetailCarPageWidgetState
                                                                           true;
                                                                       safeSetState(
                                                                           () {});
+                                                                      FFAppState()
+                                                                              .fileBytesJson =
+                                                                          functions
+                                                                              .saveFileBytesToJson(_model.bluebookFile)!;
+                                                                      safeSetState(
+                                                                          () {});
 
                                                                       context
                                                                           .pushNamed(
                                                                         LeadAgentReviewDetailPageWidget
                                                                             .routeName,
-                                                                        queryParameters:
-                                                                            {
-                                                                          'imageCarBack':
-                                                                              serializeParam(
-                                                                            _model.bluebookFile,
-                                                                            ParamType.FFUploadedFile,
-                                                                          ),
-                                                                        }.withoutNulls,
                                                                         extra: <String,
                                                                             dynamic>{
                                                                           '__transition_info__':

@@ -29,6 +29,19 @@ Future initialSetUrlParamAction() async {
       '${uri.queryParameters['func']}' != 'null') {
     if ('${uri.queryParameters['func']}' == 'lead') {
       FFAppState().isGuest = true;
+
+      FFAppState().utmSourceAppState =
+          '${uri.queryParameters['utm_source']}' != 'null'
+              ? '${uri.queryParameters['utm_source']}'
+              : '${uri.queryParameters['utmSource']}';
+      FFAppState().utmMediumAppState =
+          '${uri.queryParameters['utm_medium']}' != 'null'
+              ? '${uri.queryParameters['utm_medium']}'
+              : '${uri.queryParameters['utmMedium']}';
+      FFAppState().utmCampaignAppState =
+          '${uri.queryParameters['utm_campaign']}' != 'null'
+              ? '${uri.queryParameters['utm_campaign']}'
+              : '${uri.queryParameters['utmCampaign']}';
     } else {
       FFAppState().isGuest = false;
     }
