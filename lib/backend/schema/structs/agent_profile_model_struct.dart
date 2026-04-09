@@ -2919,7 +2919,7 @@ Map<String, dynamic> getAgentProfileModelFirestoreData(
   final firestoreData = mapToFirestore(agentProfileModel.toMap());
 
   // Add any Firestore field values
-  agentProfileModel.firestoreUtilData.fieldValues
+  mapToFirestore(agentProfileModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

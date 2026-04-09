@@ -34,6 +34,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
     String? agentWebApiTokenUat,
     String? agentWebLoginPage,
     String? mgmUserManualUrl,
+    String? solarLeadApiUrl,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _landHouseUrl = landHouseUrl,
         _landAndHouseAssign = landAndHouseAssign,
@@ -61,6 +62,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         _agentWebApiTokenUat = agentWebApiTokenUat,
         _agentWebLoginPage = agentWebLoginPage,
         _mgmUserManualUrl = mgmUserManualUrl,
+        _solarLeadApiUrl = solarLeadApiUrl,
         super(firestoreUtilData);
 
   // "land_house_url" field.
@@ -246,6 +248,13 @@ class ApiUrlStruct extends FFFirebaseStruct {
 
   bool hasMgmUserManualUrl() => _mgmUserManualUrl != null;
 
+  // "solar_lead_api_url" field.
+  String? _solarLeadApiUrl;
+  String get solarLeadApiUrl => _solarLeadApiUrl ?? '';
+  set solarLeadApiUrl(String? val) => _solarLeadApiUrl = val;
+
+  bool hasSolarLeadApiUrl() => _solarLeadApiUrl != null;
+
   static ApiUrlStruct fromMap(Map<String, dynamic> data) => ApiUrlStruct(
         landHouseUrl: data['land_house_url'] as String?,
         landAndHouseAssign: data['land_and_house_assign'] as String?,
@@ -274,6 +283,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebApiTokenUat: data['agent_web_api_token_uat'] as String?,
         agentWebLoginPage: data['agent_web_login_page'] as String?,
         mgmUserManualUrl: data['mgm_user_manual_url'] as String?,
+        solarLeadApiUrl: data['solar_lead_api_url'] as String?,
       );
 
   static ApiUrlStruct? maybeFromMap(dynamic data) =>
@@ -306,6 +316,7 @@ class ApiUrlStruct extends FFFirebaseStruct {
         'agent_web_api_token_uat': _agentWebApiTokenUat,
         'agent_web_login_page': _agentWebLoginPage,
         'mgm_user_manual_url': _mgmUserManualUrl,
+        'solar_lead_api_url': _solarLeadApiUrl,
       }.withoutNulls;
 
   @override
@@ -412,6 +423,10 @@ class ApiUrlStruct extends FFFirebaseStruct {
         ),
         'mgm_user_manual_url': serializeParam(
           _mgmUserManualUrl,
+          ParamType.String,
+        ),
+        'solar_lead_api_url': serializeParam(
+          _solarLeadApiUrl,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -548,6 +563,11 @@ class ApiUrlStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        solarLeadApiUrl: deserializeParam(
+          data['solar_lead_api_url'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -581,7 +601,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebApiToken == other.agentWebApiToken &&
         agentWebApiTokenUat == other.agentWebApiTokenUat &&
         agentWebLoginPage == other.agentWebLoginPage &&
-        mgmUserManualUrl == other.mgmUserManualUrl;
+        mgmUserManualUrl == other.mgmUserManualUrl &&
+        solarLeadApiUrl == other.solarLeadApiUrl;
   }
 
   @override
@@ -611,7 +632,8 @@ class ApiUrlStruct extends FFFirebaseStruct {
         agentWebApiToken,
         agentWebApiTokenUat,
         agentWebLoginPage,
-        mgmUserManualUrl
+        mgmUserManualUrl,
+        solarLeadApiUrl
       ]);
 }
 
@@ -642,6 +664,7 @@ ApiUrlStruct createApiUrlStruct({
   String? agentWebApiTokenUat,
   String? agentWebLoginPage,
   String? mgmUserManualUrl,
+  String? solarLeadApiUrl,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -674,6 +697,7 @@ ApiUrlStruct createApiUrlStruct({
       agentWebApiTokenUat: agentWebApiTokenUat,
       agentWebLoginPage: agentWebLoginPage,
       mgmUserManualUrl: mgmUserManualUrl,
+      solarLeadApiUrl: solarLeadApiUrl,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
@@ -730,7 +754,8 @@ Map<String, dynamic> getApiUrlFirestoreData(
   final firestoreData = mapToFirestore(apiUrl.toMap());
 
   // Add any Firestore field values
-  apiUrl.firestoreUtilData.fieldValues.forEach((k, v) => firestoreData[k] = v);
+  mapToFirestore(apiUrl.firestoreUtilData.fieldValues)
+      .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
 }

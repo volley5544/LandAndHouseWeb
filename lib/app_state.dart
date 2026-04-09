@@ -891,6 +891,12 @@ class FFAppState extends ChangeNotifier {
       Function(InstallmentCalculateDataModelStruct) updateFn) {
     updateFn(_installmentsCalculateDataType);
   }
+
+  String _solarToken = '';
+  String get solarToken => _solarToken;
+  set solarToken(String value) {
+    _solarToken = value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

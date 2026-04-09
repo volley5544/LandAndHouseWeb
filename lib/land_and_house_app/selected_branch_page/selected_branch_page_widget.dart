@@ -267,10 +267,10 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
                                     topLeft: Radius.circular(10.0),
                                     topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
                                   ),
                                   border: Border.all(
                                     color: FlutterFlowTheme.of(context).primary,
@@ -403,11 +403,11 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                                           elevation: 10.0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.0),
+                                              topRight: Radius.circular(10.0),
                                               bottomLeft: Radius.circular(10.0),
                                               bottomRight:
                                                   Radius.circular(10.0),
-                                              topLeft: Radius.circular(10.0),
-                                              topRight: Radius.circular(10.0),
                                             ),
                                           ),
                                           child: Container(
@@ -418,12 +418,12 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .secondaryBackground,
                                               borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(10.0),
+                                                topRight: Radius.circular(10.0),
                                                 bottomLeft:
                                                     Radius.circular(10.0),
                                                 bottomRight:
                                                     Radius.circular(10.0),
-                                                topLeft: Radius.circular(10.0),
-                                                topRight: Radius.circular(10.0),
                                               ),
                                             ),
                                             child: Row(
@@ -496,10 +496,10 @@ class _SelectedBranchPageWidgetState extends State<SelectedBranchPageWidget> {
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0),
                               topLeft: Radius.circular(10.0),
                               topRight: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0),
                             ),
                             border: Border.all(
                               color: FlutterFlowTheme.of(context).primary,

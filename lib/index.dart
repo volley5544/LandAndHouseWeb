@@ -143,3 +143,9 @@ export '/assign_lead/assign_m_c_lead_page/assign_m_c_lead_page_widget.dart'
     show AssignMCLeadPageWidget;
 export '/agent_customer/drop_lead/select_installment_f_g_f_page/select_installment_f_g_f_page_widget.dart'
     show SelectInstallmentFGFPageWidget;
+export '/lead_solar_cell_web/add_customer_solar_lead/add_customer_solar_lead_widget.dart'
+    show AddCustomerSolarLeadWidget;
+export '/lead_solar_cell_web/solar_info_page/solar_info_page_widget.dart'
+    show SolarInfoPageWidget;
+export '/lead_solar_cell_web/solar_result_page/solar_result_page_widget.dart'
+    show SolarResultPageWidget;

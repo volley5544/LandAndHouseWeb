@@ -505,10 +505,8 @@ class _CheckRateLHFormComponentWidgetState
                                             : FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
                                         borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(12.0),
-                                          bottomRight: Radius.circular(0.0),
                                           topLeft: Radius.circular(12.0),
-                                          topRight: Radius.circular(0.0),
+                                          bottomLeft: Radius.circular(12.0),
                                         ),
                                         border: Border.all(
                                           color: _model.isSearchByChanod
@@ -627,10 +625,8 @@ class _CheckRateLHFormComponentWidgetState
                                             : FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
                                         borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(0.0),
-                                          bottomRight: Radius.circular(12.0),
-                                          topLeft: Radius.circular(0.0),
                                           topRight: Radius.circular(12.0),
+                                          bottomRight: Radius.circular(12.0),
                                         ),
                                         border: Border.all(
                                           color: !_model.isSearchByChanod
@@ -3979,17 +3975,17 @@ class _CheckRateLHFormComponentWidgetState
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .only(
-                                                                    bottomLeft:
-                                                                        Radius.circular(
-                                                                            40.0),
-                                                                    bottomRight:
-                                                                        Radius.circular(
-                                                                            40.0),
                                                                     topLeft: Radius
                                                                         .circular(
                                                                             40.0),
                                                                     topRight: Radius
                                                                         .circular(
+                                                                            40.0),
+                                                                    bottomLeft:
+                                                                        Radius.circular(
+                                                                            40.0),
+                                                                    bottomRight:
+                                                                        Radius.circular(
                                                                             40.0),
                                                                   ),
                                                                 ),
@@ -4044,16 +4040,16 @@ class _CheckRateLHFormComponentWidgetState
                                                                     borderRadius:
                                                                         BorderRadius
                                                                             .only(
-                                                                      bottomLeft:
-                                                                          Radius.circular(
-                                                                              40.0),
-                                                                      bottomRight:
-                                                                          Radius.circular(
-                                                                              40.0),
                                                                       topLeft: Radius
                                                                           .circular(
                                                                               40.0),
                                                                       topRight:
+                                                                          Radius.circular(
+                                                                              40.0),
+                                                                      bottomLeft:
+                                                                          Radius.circular(
+                                                                              40.0),
+                                                                      bottomRight:
                                                                           Radius.circular(
                                                                               40.0),
                                                                     ),

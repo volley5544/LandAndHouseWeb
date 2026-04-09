@@ -4626,6 +4626,218 @@ class CustomerCreateApiCall {
 
 /// End OcrDataCenter Group Code
 
+/// Start Solar System Group Code
+
+class SolarSystemGroup {
+  static String getBaseUrl({
+    String? url = '',
+  }) =>
+      '${url}';
+  static Map<String, String> headers = {};
+  static SolarGetTokenCall solarGetTokenCall = SolarGetTokenCall();
+  static LeadSaveStepOneCall leadSaveStepOneCall = LeadSaveStepOneCall();
+  static LeadSaveStepTwoCall leadSaveStepTwoCall = LeadSaveStepTwoCall();
+}
+
+class SolarGetTokenCall {
+  Future<ApiCallResponse> call({
+    String? nameTh = 'droplead_solar',
+    String? password = 'a123456*',
+    String? url = '',
+  }) async {
+    final baseUrl = SolarSystemGroup.getBaseUrl(
+      url: url,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'solar get token',
+      apiUrl: '${baseUrl}/api/auth/get-token',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {
+        'name_th': nameTh,
+        'password': password,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  int? code(dynamic response) => castToType<int>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? accesstoken(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.results.data.access_token''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class LeadSaveStepOneCall {
+  Future<ApiCallResponse> call({
+    String? step = '',
+    String? product = '',
+    String? leadGroup = '',
+    String? sourceBy = '',
+    String? channel = '',
+    String? subProduct = '',
+    String? firstName = '',
+    String? lastName = '',
+    String? phoneNumber = '',
+    String? consentFlag = '',
+    String? token = '',
+    String? utmSource = '',
+    String? utmCampaign = '',
+    String? utmMedium = '',
+    String? url = '',
+  }) async {
+    final baseUrl = SolarSystemGroup.getBaseUrl(
+      url: url,
+    );
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'lead save step one ',
+      apiUrl: '${baseUrl}/api/v1/leads/save',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {
+        'step': step,
+        'product': product,
+        'lead_group': leadGroup,
+        'source_by': sourceBy,
+        'first_name': firstName,
+        'last_name': lastName,
+        'phone_number': phoneNumber,
+        'consent_flag': consentFlag,
+        'channel': channel,
+        'sub_product': subProduct,
+        'utm_source': utmSource,
+        'utm_campaign': utmCampaign,
+        'utm_medium': utmMedium,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+class LeadSaveStepTwoCall {
+  Future<ApiCallResponse> call({
+    String? step = '',
+    String? product = '',
+    String? leadGroup = '',
+    String? tempLeadId = '',
+    String? channel = '',
+    String? subProduct = '',
+    String? phoneNumber = '',
+    String? sourceBy = '',
+    String? thaiId = '',
+    String? token = '',
+    String? deedNo = '',
+    String? rai = '',
+    String? subdistrict = '',
+    String? squareWah = '',
+    String? ngan = '',
+    String? district = '',
+    String? province = '',
+    String? remark = '',
+    List<FFUploadedFile>? attachIdCardList,
+    List<FFUploadedFile>? attachHouseRegistrationList,
+    List<FFUploadedFile>? attachIncomeList,
+    List<FFUploadedFile>? attachLandOrAppraisalList,
+    List<FFUploadedFile>? attachQuotationList,
+    List<FFUploadedFile>? attachElectricityList,
+    String? url = '',
+  }) async {
+    final baseUrl = SolarSystemGroup.getBaseUrl(
+      url: url,
+    );
+    final attachIdCard = attachIdCardList ?? [];
+    final attachHouseRegistration = attachHouseRegistrationList ?? [];
+    final attachIncome = attachIncomeList ?? [];
+    final attachLandOrAppraisal = attachLandOrAppraisalList ?? [];
+    final attachQuotation = attachQuotationList ?? [];
+    final attachElectricity = attachElectricityList ?? [];
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'lead save step two',
+      apiUrl: '${baseUrl}/api/v1/leads/save',
+      callType: ApiCallType.POST,
+      headers: {
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {
+        'step': step,
+        'temp_lead_id': tempLeadId,
+        'lead_group': leadGroup,
+        'product': product,
+        'sub_product': subProduct,
+        'phone_number': phoneNumber,
+        'source_by': sourceBy,
+        'channel': channel,
+        'thai_id': thaiId,
+        'deed_no': deedNo,
+        'rai': rai,
+        'subdistrict': subdistrict,
+        'square_wah': squareWah,
+        'ngan': ngan,
+        'district': district,
+        'province': province,
+        'remark': remark,
+        'attach_id_card[]': attachIdCard,
+        'attach_house_registration[]': attachHouseRegistration,
+        'attach_income[]': attachIncome,
+        'attach_land_or_appraisal[]': attachLandOrAppraisal,
+        'attach_quotation[]': attachQuotation,
+        'attach_electricity[]': attachElectricity,
+      },
+      bodyType: BodyType.MULTIPART,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+
+  String? code(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.code''',
+      ));
+  String? message(dynamic response) => castToType<String>(getJsonField(
+        response,
+        r'''$.message''',
+      ));
+}
+
+/// End Solar System Group Code
+
 class CheckRateApiCall {
   static Future<ApiCallResponse> call({
     String? chanodNo = '',

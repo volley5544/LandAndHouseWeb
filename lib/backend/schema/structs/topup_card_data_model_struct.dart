@@ -778,7 +778,7 @@ Map<String, dynamic> getTopupCardDataModelFirestoreData(
   );
 
   // Add any Firestore field values
-  topupCardDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(topupCardDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

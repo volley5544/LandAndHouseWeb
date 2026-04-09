@@ -231,7 +231,7 @@ Map<String, dynamic> getOCRResultsModelFirestoreData(
   final firestoreData = mapToFirestore(oCRResultsModel.toMap());
 
   // Add any Firestore field values
-  oCRResultsModel.firestoreUtilData.fieldValues
+  mapToFirestore(oCRResultsModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

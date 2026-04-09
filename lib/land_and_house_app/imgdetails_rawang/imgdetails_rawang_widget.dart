@@ -47,10 +47,10 @@ class _ImgdetailsRawangWidgetState extends State<ImgdetailsRawangWidget> {
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(15.0),
-              bottomRight: Radius.circular(15.0),
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
+              bottomLeft: Radius.circular(15.0),
+              bottomRight: Radius.circular(15.0),
             ),
           ),
           child: Stack(

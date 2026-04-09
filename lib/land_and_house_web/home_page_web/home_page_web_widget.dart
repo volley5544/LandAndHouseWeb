@@ -3939,7 +3939,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                 ],
                                                               ),
                                                               if ((_model
-                                                                          .uploadedLocalFile_uploadDataSqdWebMobile
+                                                                          .uploadedLocalFile_uploadDataSqdWebMobile1
                                                                           .bytes
                                                                           ?.isNotEmpty ??
                                                                       false))
@@ -3995,7 +3995,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             child:
                                                                                 FlutterFlowExpandedImageView(
                                                                               image: Image.memory(
-                                                                                _model.uploadedLocalFile_uploadDataSqdWebMobile.bytes ?? Uint8List.fromList([]),
+                                                                                _model.uploadedLocalFile_uploadDataSqdWebMobile1.bytes ?? Uint8List.fromList([]),
                                                                                 fit: BoxFit.contain,
                                                                               ),
                                                                               allowRotation: false,
@@ -4017,7 +4017,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               BorderRadius.circular(8.0),
                                                                           child:
                                                                               Image.memory(
-                                                                            _model.uploadedLocalFile_uploadDataSqdWebMobile.bytes ??
+                                                                            _model.uploadedLocalFile_uploadDataSqdWebMobile1.bytes ??
                                                                                 Uint8List.fromList([]),
                                                                             width:
                                                                                 () {
@@ -4080,7 +4080,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             m.storagePath,
                                                                             context))) {
                                                                       safeSetState(() =>
-                                                                          _model.isDataUploading_uploadDataSqdWebMobile =
+                                                                          _model.isDataUploading_uploadDataSqdWebMobile1 =
                                                                               true);
                                                                       var selectedUploadedFiles =
                                                                           <FFUploadedFile>[];
@@ -4097,7 +4097,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                                 ))
                                                                             .toList();
                                                                       } finally {
-                                                                        _model.isDataUploading_uploadDataSqdWebMobile =
+                                                                        _model.isDataUploading_uploadDataSqdWebMobile1 =
                                                                             false;
                                                                       }
                                                                       if (selectedUploadedFiles
@@ -4106,7 +4106,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               .length) {
                                                                         safeSetState(
                                                                             () {
-                                                                          _model.uploadedLocalFile_uploadDataSqdWebMobile =
+                                                                          _model.uploadedLocalFile_uploadDataSqdWebMobile1 =
                                                                               selectedUploadedFiles.first;
                                                                         });
                                                                       } else {
@@ -4116,7 +4116,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                       }
                                                                     }
 
-                                                                    if ((_model.uploadedLocalFile_uploadDataSqdWebMobile.bytes?.isNotEmpty ??
+                                                                    if ((_model.uploadedLocalFile_uploadDataSqdWebMobile1.bytes?.isNotEmpty ??
                                                                             false)) {
                                                                       ScaffoldMessenger.of(
                                                                               context)
@@ -4365,7 +4365,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                 ],
                                                               ),
                                                               if ((_model
-                                                                          .uploadedLocalFile_uploadDataSqd2Web
+                                                                          .uploadedLocalFile_uploadDataSqd2Web2
                                                                           .bytes
                                                                           ?.isNotEmpty ??
                                                                       false))
@@ -4421,7 +4421,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             child:
                                                                                 FlutterFlowExpandedImageView(
                                                                               image: Image.memory(
-                                                                                _model.uploadedLocalFile_uploadDataSqd2Web.bytes ?? Uint8List.fromList([]),
+                                                                                _model.uploadedLocalFile_uploadDataSqd2Web2.bytes ?? Uint8List.fromList([]),
                                                                                 fit: BoxFit.contain,
                                                                               ),
                                                                               allowRotation: false,
@@ -4443,7 +4443,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               BorderRadius.circular(8.0),
                                                                           child:
                                                                               Image.memory(
-                                                                            _model.uploadedLocalFile_uploadDataSqd2Web.bytes ??
+                                                                            _model.uploadedLocalFile_uploadDataSqd2Web2.bytes ??
                                                                                 Uint8List.fromList([]),
                                                                             width:
                                                                                 () {
@@ -4506,7 +4506,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             m.storagePath,
                                                                             context))) {
                                                                       safeSetState(() =>
-                                                                          _model.isDataUploading_uploadDataSqd2Web =
+                                                                          _model.isDataUploading_uploadDataSqd2Web2 =
                                                                               true);
                                                                       var selectedUploadedFiles =
                                                                           <FFUploadedFile>[];
@@ -4523,7 +4523,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                                 ))
                                                                             .toList();
                                                                       } finally {
-                                                                        _model.isDataUploading_uploadDataSqd2Web =
+                                                                        _model.isDataUploading_uploadDataSqd2Web2 =
                                                                             false;
                                                                       }
                                                                       if (selectedUploadedFiles
@@ -4532,7 +4532,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               .length) {
                                                                         safeSetState(
                                                                             () {
-                                                                          _model.uploadedLocalFile_uploadDataSqd2Web =
+                                                                          _model.uploadedLocalFile_uploadDataSqd2Web2 =
                                                                               selectedUploadedFiles.first;
                                                                         });
                                                                       } else {
@@ -4542,7 +4542,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                       }
                                                                     }
 
-                                                                    if ((_model.uploadedLocalFile_uploadDataSqd2Web.bytes?.isNotEmpty ??
+                                                                    if ((_model.uploadedLocalFile_uploadDataSqd2Web2.bytes?.isNotEmpty ??
                                                                             false)) {
                                                                       ScaffoldMessenger.of(
                                                                               context)
@@ -4721,10 +4721,10 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                     ),
                                   ),
                                 ),
-                                if (((_model.uploadedLocalFile_uploadDataSqdWebMobile
+                                if (((_model.uploadedLocalFile_uploadDataSqdWebMobile1
                                                 .bytes?.isNotEmpty ??
                                             false)) &&
-                                    ((_model.uploadedLocalFile_uploadDataSqd2Web
+                                    ((_model.uploadedLocalFile_uploadDataSqd2Web2
                                                 .bytes?.isNotEmpty ??
                                             false)))
                                   Divider(
@@ -5315,7 +5315,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                           return;
                                         }
 
-                                        if (!((_model.uploadedLocalFile_uploadDataSqdWebMobile
+                                        if (!((_model.uploadedLocalFile_uploadDataSqdWebMobile1
                                                     .bytes?.isNotEmpty ??
                                                 false))) {
                                           await showDialog(
@@ -5352,7 +5352,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                             safeSetState(() {});
                                           return;
                                         }
-                                        if (!((_model.uploadedLocalFile_uploadDataSqd2Web
+                                        if (!((_model.uploadedLocalFile_uploadDataSqd2Web2
                                                     .bytes?.isNotEmpty ??
                                                 false))) {
                                           await showDialog(
@@ -5676,9 +5676,9 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                   .text)
                                               : '',
                                           imageChanodFront: _model
-                                              .uploadedLocalFile_uploadDataSqdWebMobile,
+                                              .uploadedLocalFile_uploadDataSqdWebMobile1,
                                           imageChanodBack: _model
-                                              .uploadedLocalFile_uploadDataSqd2Web,
+                                              .uploadedLocalFile_uploadDataSqd2Web2,
                                           ratesDataJson:
                                               FFAppState().chanodOutput.toMap(),
                                           apiUrl:
@@ -5825,12 +5825,12 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                         decoration: BoxDecoration(
                                           color: valueOrDefault<Color>(
                                             ((_model
-                                                                .uploadedLocalFile_uploadDataSqdWebMobile
+                                                                .uploadedLocalFile_uploadDataSqdWebMobile1
                                                                 .bytes
                                                                 ?.isNotEmpty ??
                                                             false)) &&
                                                     ((_model
-                                                                .uploadedLocalFile_uploadDataSqd2Web
+                                                                .uploadedLocalFile_uploadDataSqd2Web2
                                                                 .bytes
                                                                 ?.isNotEmpty ??
                                                             false))
@@ -8175,7 +8175,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                 ],
                                                               ),
                                                               if ((_model
-                                                                          .uploadedLocalFile_uploadDataSqdWebPC
+                                                                          .uploadedLocalFile_uploadDataSqdWebPC3
                                                                           .bytes
                                                                           ?.isNotEmpty ??
                                                                       false))
@@ -8231,7 +8231,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             child:
                                                                                 FlutterFlowExpandedImageView(
                                                                               image: Image.memory(
-                                                                                _model.uploadedLocalFile_uploadDataSqdWebPC.bytes ?? Uint8List.fromList([]),
+                                                                                _model.uploadedLocalFile_uploadDataSqdWebPC3.bytes ?? Uint8List.fromList([]),
                                                                                 fit: BoxFit.contain,
                                                                               ),
                                                                               allowRotation: false,
@@ -8253,7 +8253,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               BorderRadius.circular(8.0),
                                                                           child:
                                                                               Image.memory(
-                                                                            _model.uploadedLocalFile_uploadDataSqdWebPC.bytes ??
+                                                                            _model.uploadedLocalFile_uploadDataSqdWebPC3.bytes ??
                                                                                 Uint8List.fromList([]),
                                                                             width:
                                                                                 () {
@@ -8327,7 +8327,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               m.storagePath,
                                                                               context))) {
                                                                         safeSetState(() =>
-                                                                            _model.isDataUploading_uploadDataSqdWebPC =
+                                                                            _model.isDataUploading_uploadDataSqdWebPC3 =
                                                                                 true);
                                                                         var selectedUploadedFiles =
                                                                             <FFUploadedFile>[];
@@ -8344,14 +8344,14 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                                   ))
                                                                               .toList();
                                                                         } finally {
-                                                                          _model.isDataUploading_uploadDataSqdWebPC =
+                                                                          _model.isDataUploading_uploadDataSqdWebPC3 =
                                                                               false;
                                                                         }
                                                                         if (selectedUploadedFiles.length ==
                                                                             selectedMedia.length) {
                                                                           safeSetState(
                                                                               () {
-                                                                            _model.uploadedLocalFile_uploadDataSqdWebPC =
+                                                                            _model.uploadedLocalFile_uploadDataSqdWebPC3 =
                                                                                 selectedUploadedFiles.first;
                                                                           });
                                                                         } else {
@@ -8361,7 +8361,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                         }
                                                                       }
 
-                                                                      if ((_model.uploadedLocalFile_uploadDataSqdWebPC.bytes?.isNotEmpty ??
+                                                                      if ((_model.uploadedLocalFile_uploadDataSqdWebPC3.bytes?.isNotEmpty ??
                                                                               false)) {
                                                                         ScaffoldMessenger.of(context)
                                                                             .clearSnackBars();
@@ -8528,7 +8528,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                 ],
                                                               ),
                                                               if ((_model
-                                                                          .uploadedLocalFile_uploadDataSqd2WebPC
+                                                                          .uploadedLocalFile_uploadDataSqd2WebPC4
                                                                           .bytes
                                                                           ?.isNotEmpty ??
                                                                       false))
@@ -8584,7 +8584,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                             child:
                                                                                 FlutterFlowExpandedImageView(
                                                                               image: Image.memory(
-                                                                                _model.uploadedLocalFile_uploadDataSqd2WebPC.bytes ?? Uint8List.fromList([]),
+                                                                                _model.uploadedLocalFile_uploadDataSqd2WebPC4.bytes ?? Uint8List.fromList([]),
                                                                                 fit: BoxFit.contain,
                                                                               ),
                                                                               allowRotation: false,
@@ -8606,7 +8606,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               BorderRadius.circular(8.0),
                                                                           child:
                                                                               Image.memory(
-                                                                            _model.uploadedLocalFile_uploadDataSqd2WebPC.bytes ??
+                                                                            _model.uploadedLocalFile_uploadDataSqd2WebPC4.bytes ??
                                                                                 Uint8List.fromList([]),
                                                                             width:
                                                                                 () {
@@ -8680,7 +8680,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                               m.storagePath,
                                                                               context))) {
                                                                         safeSetState(() =>
-                                                                            _model.isDataUploading_uploadDataSqd2WebPC =
+                                                                            _model.isDataUploading_uploadDataSqd2WebPC4 =
                                                                                 true);
                                                                         var selectedUploadedFiles =
                                                                             <FFUploadedFile>[];
@@ -8697,14 +8697,14 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                                   ))
                                                                               .toList();
                                                                         } finally {
-                                                                          _model.isDataUploading_uploadDataSqd2WebPC =
+                                                                          _model.isDataUploading_uploadDataSqd2WebPC4 =
                                                                               false;
                                                                         }
                                                                         if (selectedUploadedFiles.length ==
                                                                             selectedMedia.length) {
                                                                           safeSetState(
                                                                               () {
-                                                                            _model.uploadedLocalFile_uploadDataSqd2WebPC =
+                                                                            _model.uploadedLocalFile_uploadDataSqd2WebPC4 =
                                                                                 selectedUploadedFiles.first;
                                                                           });
                                                                         } else {
@@ -8714,7 +8714,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                                         }
                                                                       }
 
-                                                                      if ((_model.uploadedLocalFile_uploadDataSqd2WebPC.bytes?.isNotEmpty ??
+                                                                      if ((_model.uploadedLocalFile_uploadDataSqd2WebPC4.bytes?.isNotEmpty ??
                                                                               false)) {
                                                                         ScaffoldMessenger.of(context)
                                                                             .clearSnackBars();
@@ -8870,10 +8870,10 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      if (((_model.uploadedLocalFile_uploadDataSqdWebPC
+                                      if (((_model.uploadedLocalFile_uploadDataSqdWebPC3
                                                       .bytes?.isNotEmpty ??
                                                   false)) &&
-                                          ((_model.uploadedLocalFile_uploadDataSqd2WebPC
+                                          ((_model.uploadedLocalFile_uploadDataSqd2WebPC4
                                                       .bytes?.isNotEmpty ??
                                                   false)))
                                         Divider(
@@ -9501,7 +9501,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                 return;
                                               }
 
-                                              if (!((_model.uploadedLocalFile_uploadDataSqdWebPC
+                                              if (!((_model.uploadedLocalFile_uploadDataSqdWebPC3
                                                           .bytes?.isNotEmpty ??
                                                       false))) {
                                                 await showDialog(
@@ -9542,7 +9542,7 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                   safeSetState(() {});
                                                 return;
                                               }
-                                              if (!((_model.uploadedLocalFile_uploadDataSqd2WebPC
+                                              if (!((_model.uploadedLocalFile_uploadDataSqd2WebPC4
                                                           .bytes?.isNotEmpty ??
                                                       false))) {
                                                 await showDialog(
@@ -9892,9 +9892,9 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                                         .text)
                                                     : '',
                                                 imageChanodFront: _model
-                                                    .uploadedLocalFile_uploadDataSqdWebPC,
+                                                    .uploadedLocalFile_uploadDataSqdWebPC3,
                                                 imageChanodBack: _model
-                                                    .uploadedLocalFile_uploadDataSqd2WebPC,
+                                                    .uploadedLocalFile_uploadDataSqd2WebPC4,
                                                 ratesDataJson: FFAppState()
                                                     .chanodOutput
                                                     .toMap(),
@@ -10054,12 +10054,12 @@ class _HomePageWebWidgetState extends State<HomePageWebWidget>
                                               decoration: BoxDecoration(
                                                 color: valueOrDefault<Color>(
                                                   ((_model
-                                                                      .uploadedLocalFile_uploadDataSqdWebPC
+                                                                      .uploadedLocalFile_uploadDataSqdWebPC3
                                                                       .bytes
                                                                       ?.isNotEmpty ??
                                                                   false)) &&
                                                           ((_model
-                                                                      .uploadedLocalFile_uploadDataSqd2WebPC
+                                                                      .uploadedLocalFile_uploadDataSqd2WebPC4
                                                                       .bytes
                                                                       ?.isNotEmpty ??
                                                                   false))

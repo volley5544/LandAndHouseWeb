@@ -481,7 +481,7 @@ Map<String, dynamic> getSavePdfDataModelFirestoreData(
   final firestoreData = mapToFirestore(savePdfDataModel.toMap());
 
   // Add any Firestore field values
-  savePdfDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(savePdfDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

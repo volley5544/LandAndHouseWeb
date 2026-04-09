@@ -1308,7 +1308,7 @@ Map<String, dynamic> getChanodDataListFirestoreData(
   final firestoreData = mapToFirestore(chanodDataList.toMap());
 
   // Add any Firestore field values
-  chanodDataList.firestoreUtilData.fieldValues
+  mapToFirestore(chanodDataList.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

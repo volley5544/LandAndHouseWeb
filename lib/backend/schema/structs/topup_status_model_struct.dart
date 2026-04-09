@@ -654,7 +654,7 @@ Map<String, dynamic> getTopupStatusModelFirestoreData(
   final firestoreData = mapToFirestore(topupStatusModel.toMap());
 
   // Add any Firestore field values
-  topupStatusModel.firestoreUtilData.fieldValues
+  mapToFirestore(topupStatusModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

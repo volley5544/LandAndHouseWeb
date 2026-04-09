@@ -284,16 +284,16 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                       color: Colors.white,
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                10.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                10.0),
                                                         topLeft:
                                                             Radius.circular(
                                                                 10.0),
                                                         topRight:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomRight:
                                                             Radius.circular(
                                                                 10.0),
                                                       ),
@@ -500,6 +500,12 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      15.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      15.0),
                                                               bottomLeft: Radius
                                                                   .circular(
                                                                       15.0),
@@ -507,12 +513,6 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                                   Radius
                                                                       .circular(
                                                                           15.0),
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      15.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      15.0),
                                                             ),
                                                           ),
                                                           child: Container(
@@ -527,16 +527,16 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        15.0),
                                                                 topLeft: Radius
                                                                     .circular(
                                                                         15.0),
                                                                 topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
                                                                     .circular(
                                                                         15.0),
                                                               ),
@@ -1146,16 +1146,16 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                       color: Colors.white,
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                10.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                10.0),
                                                         topLeft:
                                                             Radius.circular(
                                                                 10.0),
                                                         topRight:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomRight:
                                                             Radius.circular(
                                                                 10.0),
                                                       ),
@@ -1355,13 +1355,13 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                     elevation: 0.0,
                                                     borderRadius:
                                                         BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(20.0),
-                                                      bottomRight:
-                                                          Radius.circular(20.0),
                                                       topLeft:
                                                           Radius.circular(20.0),
                                                       topRight:
+                                                          Radius.circular(20.0),
+                                                      bottomLeft:
+                                                          Radius.circular(20.0),
+                                                      bottomRight:
                                                           Radius.circular(20.0),
                                                     ),
                                                   ),
@@ -1403,13 +1403,13 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                     elevation: 0.0,
                                                     borderRadius:
                                                         BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(20.0),
-                                                      bottomRight:
-                                                          Radius.circular(20.0),
                                                       topLeft:
                                                           Radius.circular(20.0),
                                                       topRight:
+                                                          Radius.circular(20.0),
+                                                      bottomLeft:
+                                                          Radius.circular(20.0),
+                                                      bottomRight:
                                                           Radius.circular(20.0),
                                                     ),
                                                   ),
@@ -1477,6 +1477,12 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      15.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      15.0),
                                                               bottomLeft: Radius
                                                                   .circular(
                                                                       15.0),
@@ -1484,12 +1490,6 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                                   Radius
                                                                       .circular(
                                                                           15.0),
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      15.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      15.0),
                                                             ),
                                                           ),
                                                           child: Container(
@@ -1504,16 +1504,16 @@ class _ApproveInsurancePageWidgetState extends State<ApproveInsurancePageWidget>
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        15.0),
                                                                 topLeft: Radius
                                                                     .circular(
                                                                         15.0),
                                                                 topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
                                                                     .circular(
                                                                         15.0),
                                                               ),

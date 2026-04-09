@@ -205,7 +205,7 @@ Map<String, dynamic> getLeadAgentSubCategoryDataModelFirestoreData(
   final firestoreData = mapToFirestore(leadAgentSubCategoryDataModel.toMap());
 
   // Add any Firestore field values
-  leadAgentSubCategoryDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(leadAgentSubCategoryDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

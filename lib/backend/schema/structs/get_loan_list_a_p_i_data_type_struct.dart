@@ -799,7 +799,7 @@ Map<String, dynamic> getGetLoanListAPIDataTypeFirestoreData(
   );
 
   // Add any Firestore field values
-  getLoanListAPIDataType.firestoreUtilData.fieldValues
+  mapToFirestore(getLoanListAPIDataType.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

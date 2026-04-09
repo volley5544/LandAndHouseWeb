@@ -263,7 +263,7 @@ Map<String, dynamic> getTenorListDataModelFirestoreData(
   final firestoreData = mapToFirestore(tenorListDataModel.toMap());
 
   // Add any Firestore field values
-  tenorListDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(tenorListDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

@@ -326,7 +326,7 @@ Map<String, dynamic> getBankMasterModelFirestoreData(
   final firestoreData = mapToFirestore(bankMasterModel.toMap());
 
   // Add any Firestore field values
-  bankMasterModel.firestoreUtilData.fieldValues
+  mapToFirestore(bankMasterModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

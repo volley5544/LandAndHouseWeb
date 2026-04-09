@@ -213,7 +213,7 @@ Map<String, dynamic> getPaymentHistoryMonthDataModelFirestoreData(
   final firestoreData = mapToFirestore(paymentHistoryMonthDataModel.toMap());
 
   // Add any Firestore field values
-  paymentHistoryMonthDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(paymentHistoryMonthDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

@@ -69,10 +69,10 @@ class _InterestButtonWidgetState extends State<InterestButtonWidget> {
           )
         ],
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(16.0),
-          bottomRight: Radius.circular(16.0),
           topLeft: Radius.circular(16.0),
           topRight: Radius.circular(16.0),
+          bottomLeft: Radius.circular(16.0),
+          bottomRight: Radius.circular(16.0),
         ),
       ),
       child: Padding(
@@ -293,10 +293,10 @@ class _InterestButtonWidgetState extends State<InterestButtonWidget> {
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(14.0),
-                      bottomRight: Radius.circular(14.0),
                       topLeft: Radius.circular(14.0),
                       topRight: Radius.circular(14.0),
+                      bottomLeft: Radius.circular(14.0),
+                      bottomRight: Radius.circular(14.0),
                     ),
                   ),
                 ),

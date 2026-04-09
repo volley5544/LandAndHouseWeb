@@ -398,7 +398,7 @@ Map<String, dynamic> getModelCarMasterModelFirestoreData(
   final firestoreData = mapToFirestore(modelCarMasterModel.toMap());
 
   // Add any Firestore field values
-  modelCarMasterModel.firestoreUtilData.fieldValues
+  mapToFirestore(modelCarMasterModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

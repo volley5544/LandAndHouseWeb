@@ -156,7 +156,7 @@ Map<String, dynamic> getCheckinDataModelFirestoreData(
   final firestoreData = mapToFirestore(checkinDataModel.toMap());
 
   // Add any Firestore field values
-  checkinDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(checkinDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

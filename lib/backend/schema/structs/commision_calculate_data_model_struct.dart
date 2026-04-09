@@ -479,7 +479,7 @@ Map<String, dynamic> getCommisionCalculateDataModelFirestoreData(
   final firestoreData = mapToFirestore(commisionCalculateDataModel.toMap());
 
   // Add any Firestore field values
-  commisionCalculateDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(commisionCalculateDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

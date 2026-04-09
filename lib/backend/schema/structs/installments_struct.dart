@@ -342,7 +342,7 @@ Map<String, dynamic> getInstallmentsFirestoreData(
   final firestoreData = mapToFirestore(installments.toMap());
 
   // Add any Firestore field values
-  installments.firestoreUtilData.fieldValues
+  mapToFirestore(installments.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

@@ -180,7 +180,7 @@ Map<String, dynamic> getAuthenticationDataModelFirestoreData(
   final firestoreData = mapToFirestore(authenticationDataModel.toMap());
 
   // Add any Firestore field values
-  authenticationDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(authenticationDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

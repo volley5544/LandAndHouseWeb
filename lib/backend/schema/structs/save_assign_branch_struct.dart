@@ -349,7 +349,7 @@ Map<String, dynamic> getSaveAssignBranchFirestoreData(
   final firestoreData = mapToFirestore(saveAssignBranch.toMap());
 
   // Add any Firestore field values
-  saveAssignBranch.firestoreUtilData.fieldValues
+  mapToFirestore(saveAssignBranch.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

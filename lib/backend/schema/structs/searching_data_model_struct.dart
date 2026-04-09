@@ -155,7 +155,7 @@ Map<String, dynamic> getSearchingDataModelFirestoreData(
   final firestoreData = mapToFirestore(searchingDataModel.toMap());
 
   // Add any Firestore field values
-  searchingDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(searchingDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

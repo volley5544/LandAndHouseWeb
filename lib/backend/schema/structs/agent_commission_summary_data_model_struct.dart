@@ -335,7 +335,7 @@ Map<String, dynamic> getAgentCommissionSummaryDataModelFirestoreData(
   final firestoreData = mapToFirestore(agentCommissionSummaryDataModel.toMap());
 
   // Add any Firestore field values
-  agentCommissionSummaryDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(agentCommissionSummaryDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

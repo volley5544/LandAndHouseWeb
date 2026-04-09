@@ -267,7 +267,7 @@ Map<String, dynamic> getInstallmentCalculateDataModelFirestoreData(
   final firestoreData = mapToFirestore(installmentCalculateDataModel.toMap());
 
   // Add any Firestore field values
-  installmentCalculateDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(installmentCalculateDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

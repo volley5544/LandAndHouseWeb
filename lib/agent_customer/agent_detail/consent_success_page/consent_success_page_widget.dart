@@ -174,10 +174,10 @@ class _ConsentSuccessPageWidgetState extends State<ConsentSuccessPageWidget> {
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(14.0),
-                                    bottomRight: Radius.circular(14.0),
                                     topLeft: Radius.circular(14.0),
                                     topRight: Radius.circular(14.0),
+                                    bottomLeft: Radius.circular(14.0),
+                                    bottomRight: Radius.circular(14.0),
                                   ),
                                 ),
                               ),

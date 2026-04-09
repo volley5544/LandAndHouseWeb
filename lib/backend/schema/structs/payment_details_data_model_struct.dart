@@ -474,7 +474,7 @@ Map<String, dynamic> getPaymentDetailsDataModelFirestoreData(
   final firestoreData = mapToFirestore(paymentDetailsDataModel.toMap());
 
   // Add any Firestore field values
-  paymentDetailsDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(paymentDetailsDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

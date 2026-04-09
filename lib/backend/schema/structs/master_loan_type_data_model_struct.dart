@@ -180,7 +180,7 @@ Map<String, dynamic> getMasterLoanTypeDataModelFirestoreData(
   final firestoreData = mapToFirestore(masterLoanTypeDataModel.toMap());
 
   // Add any Firestore field values
-  masterLoanTypeDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(masterLoanTypeDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

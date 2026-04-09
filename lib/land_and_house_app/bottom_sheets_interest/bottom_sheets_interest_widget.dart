@@ -47,8 +47,6 @@ class _BottomSheetsInterestWidgetState
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0.0),
-          bottomRight: Radius.circular(0.0),
           topLeft: Radius.circular(16.0),
           topRight: Radius.circular(16.0),
         ),
@@ -136,10 +134,10 @@ class _BottomSheetsInterestWidgetState
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(14.0),
-                          bottomRight: Radius.circular(14.0),
                           topLeft: Radius.circular(14.0),
                           topRight: Radius.circular(14.0),
+                          bottomLeft: Radius.circular(14.0),
+                          bottomRight: Radius.circular(14.0),
                         ),
                       ),
                     ),

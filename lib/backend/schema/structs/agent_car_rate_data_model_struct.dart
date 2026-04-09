@@ -350,7 +350,7 @@ Map<String, dynamic> getAgentCarRateDataModelFirestoreData(
   final firestoreData = mapToFirestore(agentCarRateDataModel.toMap());
 
   // Add any Firestore field values
-  agentCarRateDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(agentCarRateDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

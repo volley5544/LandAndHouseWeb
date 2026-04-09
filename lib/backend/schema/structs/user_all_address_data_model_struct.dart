@@ -312,7 +312,7 @@ Map<String, dynamic> getUserAllAddressDataModelFirestoreData(
   );
 
   // Add any Firestore field values
-  userAllAddressDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(userAllAddressDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

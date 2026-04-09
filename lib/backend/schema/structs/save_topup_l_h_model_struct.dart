@@ -493,7 +493,7 @@ Map<String, dynamic> getSaveTopupLHModelFirestoreData(
   final firestoreData = mapToFirestore(saveTopupLHModel.toMap());
 
   // Add any Firestore field values
-  saveTopupLHModel.firestoreUtilData.fieldValues
+  mapToFirestore(saveTopupLHModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

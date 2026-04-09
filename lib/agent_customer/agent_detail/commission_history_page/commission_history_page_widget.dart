@@ -228,8 +228,6 @@ class _CommissionHistoryPageWidgetState
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(30.0),
                                   bottomRight: Radius.circular(30.0),
-                                  topLeft: Radius.circular(0.0),
-                                  topRight: Radius.circular(0.0),
                                 ),
                               ),
                               child: Padding(
@@ -357,18 +355,12 @@ class _CommissionHistoryPageWidgetState
                                                               .info,
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                16.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                0.0),
                                                         topLeft:
                                                             Radius.circular(
                                                                 16.0),
-                                                        topRight:
+                                                        bottomLeft:
                                                             Radius.circular(
-                                                                0.0),
+                                                                16.0),
                                                       ),
                                                     ),
                                                     child: Column(
@@ -564,16 +556,10 @@ class _CommissionHistoryPageWidgetState
                                                               .info,
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        bottomRight:
+                                                        topRight:
                                                             Radius.circular(
                                                                 16.0),
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                0.0),
-                                                        topRight:
+                                                        bottomRight:
                                                             Radius.circular(
                                                                 16.0),
                                                       ),

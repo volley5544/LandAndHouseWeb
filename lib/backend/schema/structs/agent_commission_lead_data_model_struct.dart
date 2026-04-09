@@ -1363,7 +1363,7 @@ Map<String, dynamic> getAgentCommissionLeadDataModelFirestoreData(
   final firestoreData = mapToFirestore(agentCommissionLeadDataModel.toMap());
 
   // Add any Firestore field values
-  agentCommissionLeadDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(agentCommissionLeadDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

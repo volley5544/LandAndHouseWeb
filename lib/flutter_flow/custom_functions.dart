@@ -1551,3 +1551,18 @@ FFUploadedFile? createFileBytesFromJson(dynamic jsonFile) {
       originalFilename: '${jsonFile['originalFilename']}');
   return genNewFileBytes;
 }
+
+double? checkFileSize(FFUploadedFile? upLoadFile) {
+  if (upLoadFile! == null) {
+    print("No files provided.");
+    return 0; // Return 0 MB
+  }
+
+  int totalSize = upLoadFile!.bytes!.length;
+
+  // Convert total size to MB
+  double totalSizeInMB = totalSize / (1024 * 1024); // Get size in MB
+  double formattedSize = double.parse(totalSizeInMB.toStringAsFixed(2));
+
+  return formattedSize;
+}

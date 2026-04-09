@@ -950,7 +950,7 @@ Map<String, dynamic> getCheckRateDataModelFirestoreData(
   final firestoreData = mapToFirestore(checkRateDataModel.toMap());
 
   // Add any Firestore field values
-  checkRateDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(checkRateDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

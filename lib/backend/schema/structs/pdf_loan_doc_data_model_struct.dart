@@ -178,7 +178,7 @@ Map<String, dynamic> getPdfLoanDocDataModelFirestoreData(
   final firestoreData = mapToFirestore(pdfLoanDocDataModel.toMap());
 
   // Add any Firestore field values
-  pdfLoanDocDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(pdfLoanDocDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

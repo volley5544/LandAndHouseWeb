@@ -383,6 +383,12 @@ class _AssignGrocerystorePageWidgetState
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
+                                                              topLeft: Radius
+                                                                  .circular(
+                                                                      15.0),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      15.0),
                                                               bottomLeft: Radius
                                                                   .circular(
                                                                       15.0),
@@ -390,12 +396,6 @@ class _AssignGrocerystorePageWidgetState
                                                                   Radius
                                                                       .circular(
                                                                           15.0),
-                                                              topLeft: Radius
-                                                                  .circular(
-                                                                      15.0),
-                                                              topRight: Radius
-                                                                  .circular(
-                                                                      15.0),
                                                             ),
                                                           ),
                                                           child: Container(
@@ -418,16 +418,16 @@ class _AssignGrocerystorePageWidgetState
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        15.0),
                                                                 topLeft: Radius
                                                                     .circular(
                                                                         15.0),
                                                                 topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
                                                                     .circular(
                                                                         15.0),
                                                               ),
@@ -1161,16 +1161,16 @@ class _AssignGrocerystorePageWidgetState
                                                       color: Colors.white,
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                10.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                10.0),
                                                         topLeft:
                                                             Radius.circular(
                                                                 10.0),
                                                         topRight:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                10.0),
+                                                        bottomRight:
                                                             Radius.circular(
                                                                 10.0),
                                                       ),
@@ -1368,13 +1368,13 @@ class _AssignGrocerystorePageWidgetState
                                                   elevation: 0.0,
                                                   borderRadius:
                                                       BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(20.0),
-                                                    bottomRight:
-                                                        Radius.circular(20.0),
                                                     topLeft:
                                                         Radius.circular(20.0),
                                                     topRight:
+                                                        Radius.circular(20.0),
+                                                    bottomLeft:
+                                                        Radius.circular(20.0),
+                                                    bottomRight:
                                                         Radius.circular(20.0),
                                                   ),
                                                 ),
@@ -1415,13 +1415,13 @@ class _AssignGrocerystorePageWidgetState
                                                   elevation: 0.0,
                                                   borderRadius:
                                                       BorderRadius.only(
-                                                    bottomLeft:
-                                                        Radius.circular(20.0),
-                                                    bottomRight:
-                                                        Radius.circular(20.0),
                                                     topLeft:
                                                         Radius.circular(20.0),
                                                     topRight:
+                                                        Radius.circular(20.0),
+                                                    bottomLeft:
+                                                        Radius.circular(20.0),
+                                                    bottomRight:
                                                         Radius.circular(20.0),
                                                   ),
                                                 ),
@@ -1508,16 +1508,16 @@ class _AssignGrocerystorePageWidgetState
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        15.0),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        15.0),
                                                                 topLeft: Radius
                                                                     .circular(
                                                                         15.0),
                                                                 topRight: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15.0),
+                                                                bottomRight: Radius
                                                                     .circular(
                                                                         15.0),
                                                               ),
@@ -1542,16 +1542,16 @@ class _AssignGrocerystorePageWidgetState
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          15.0),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          15.0),
                                                                   topLeft: Radius
                                                                       .circular(
                                                                           15.0),
                                                                   topRight: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          15.0),
+                                                                  bottomRight: Radius
                                                                       .circular(
                                                                           15.0),
                                                                 ),

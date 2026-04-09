@@ -403,7 +403,7 @@ Map<String, dynamic> getQrCodeDataTypeFirestoreData(
   final firestoreData = mapToFirestore(qrCodeDataType.toMap());
 
   // Add any Firestore field values
-  qrCodeDataType.firestoreUtilData.fieldValues
+  mapToFirestore(qrCodeDataType.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

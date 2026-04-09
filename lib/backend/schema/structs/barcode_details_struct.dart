@@ -269,7 +269,7 @@ Map<String, dynamic> getBarcodeDetailsFirestoreData(
   final firestoreData = mapToFirestore(barcodeDetails.toMap());
 
   // Add any Firestore field values
-  barcodeDetails.firestoreUtilData.fieldValues
+  mapToFirestore(barcodeDetails.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

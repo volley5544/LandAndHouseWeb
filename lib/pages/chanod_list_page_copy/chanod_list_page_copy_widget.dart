@@ -134,10 +134,10 @@ class _ChanodListPageCopyWidgetState extends State<ChanodListPageCopyWidget> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0),
                                 topLeft: Radius.circular(10.0),
                                 topRight: Radius.circular(10.0),
+                                bottomLeft: Radius.circular(10.0),
+                                bottomRight: Radius.circular(10.0),
                               ),
                               border: Border.all(
                                 color: FlutterFlowTheme.of(context).primary,
@@ -248,10 +248,10 @@ class _ChanodListPageCopyWidgetState extends State<ChanodListPageCopyWidget> {
                               elevation: 10.0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0),
                                   topLeft: Radius.circular(10.0),
                                   topRight: Radius.circular(10.0),
+                                  bottomLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0),
                                 ),
                               ),
                               child: Container(
@@ -261,10 +261,10 @@ class _ChanodListPageCopyWidgetState extends State<ChanodListPageCopyWidget> {
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
                                   borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10.0),
-                                    bottomRight: Radius.circular(10.0),
                                     topLeft: Radius.circular(10.0),
                                     topRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0),
+                                    bottomRight: Radius.circular(10.0),
                                   ),
                                 ),
                                 child: Align(

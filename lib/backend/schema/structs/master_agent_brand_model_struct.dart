@@ -155,7 +155,7 @@ Map<String, dynamic> getMasterAgentBrandModelFirestoreData(
   final firestoreData = mapToFirestore(masterAgentBrandModel.toMap());
 
   // Add any Firestore field values
-  masterAgentBrandModel.firestoreUtilData.fieldValues
+  mapToFirestore(masterAgentBrandModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

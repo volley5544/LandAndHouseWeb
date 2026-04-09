@@ -1361,7 +1361,7 @@ Map<String, dynamic> getSaveLeadAgentDataModelFirestoreData(
   final firestoreData = mapToFirestore(saveLeadAgentDataModel.toMap());
 
   // Add any Firestore field values
-  saveLeadAgentDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(saveLeadAgentDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

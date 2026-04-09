@@ -963,7 +963,7 @@ Map<String, dynamic> getGetTopupDataAPIDataTypeFirestoreData(
   );
 
   // Add any Firestore field values
-  getTopupDataAPIDataType.firestoreUtilData.fieldValues
+  mapToFirestore(getTopupDataAPIDataType.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

@@ -431,8 +431,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(4.0),
                             bottomRight: Radius.circular(4.0),
-                            topLeft: Radius.circular(0.0),
-                            topRight: Radius.circular(0.0),
                           ),
                         ),
                         child: wrapWithModel(

@@ -937,6 +937,59 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: SelectInstallmentFGFPageWidget.routeName,
           path: SelectInstallmentFGFPageWidget.routePath,
           builder: (context, params) => SelectInstallmentFGFPageWidget(),
+        ),
+        FFRoute(
+          name: AddCustomerSolarLeadWidget.routeName,
+          path: AddCustomerSolarLeadWidget.routePath,
+          builder: (context, params) => AddCustomerSolarLeadWidget(
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            consentDate: params.getParam(
+              'consentDate',
+              ParamType.String,
+            ),
+            projectName: params.getParam(
+              'projectName',
+              ParamType.String,
+            ),
+            utmSource: params.getParam(
+              'utmSource',
+              ParamType.String,
+            ),
+            utmMedium: params.getParam(
+              'utmMedium',
+              ParamType.String,
+            ),
+            utmCampaign: params.getParam(
+              'utmCampaign',
+              ParamType.String,
+            ),
+            step: params.getParam(
+              'step',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: SolarInfoPageWidget.routeName,
+          path: SolarInfoPageWidget.routePath,
+          builder: (context, params) => SolarInfoPageWidget(),
+        ),
+        FFRoute(
+          name: SolarResultPageWidget.routeName,
+          path: SolarResultPageWidget.routePath,
+          builder: (context, params) => SolarResultPageWidget(
+            ltv1Amount: params.getParam(
+              'ltv1Amount',
+              ParamType.String,
+            ),
+            ltv2Amount: params.getParam(
+              'ltv2Amount',
+              ParamType.String,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

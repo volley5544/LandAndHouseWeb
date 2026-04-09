@@ -411,13 +411,13 @@ class _CheckRateLHResultComponentWidgetState
                                                     color: Color(0xFFFF0000),
                                                     borderRadius:
                                                         BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(40.0),
-                                                      bottomRight:
-                                                          Radius.circular(40.0),
                                                       topLeft:
                                                           Radius.circular(40.0),
                                                       topRight:
+                                                          Radius.circular(40.0),
+                                                      bottomLeft:
+                                                          Radius.circular(40.0),
+                                                      bottomRight:
                                                           Radius.circular(40.0),
                                                     ),
                                                   ),
@@ -474,16 +474,16 @@ class _CheckRateLHResultComponentWidgetState
                                                     decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.only(
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                40.0),
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                40.0),
                                                         topLeft:
                                                             Radius.circular(
                                                                 40.0),
                                                         topRight:
+                                                            Radius.circular(
+                                                                40.0),
+                                                        bottomLeft:
+                                                            Radius.circular(
+                                                                40.0),
+                                                        bottomRight:
                                                             Radius.circular(
                                                                 40.0),
                                                       ),

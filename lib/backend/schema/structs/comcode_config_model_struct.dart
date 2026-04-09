@@ -345,7 +345,7 @@ Map<String, dynamic> getComcodeConfigModelFirestoreData(
   );
 
   // Add any Firestore field values
-  comcodeConfigModel.firestoreUtilData.fieldValues
+  mapToFirestore(comcodeConfigModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

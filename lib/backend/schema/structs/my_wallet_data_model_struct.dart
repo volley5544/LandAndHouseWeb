@@ -187,7 +187,7 @@ Map<String, dynamic> getMyWalletDataModelFirestoreData(
   final firestoreData = mapToFirestore(myWalletDataModel.toMap());
 
   // Add any Firestore field values
-  myWalletDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(myWalletDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

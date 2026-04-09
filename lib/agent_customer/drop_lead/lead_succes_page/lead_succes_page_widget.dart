@@ -76,8 +76,6 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(16.0),
                             bottomRight: Radius.circular(16.0),
-                            topLeft: Radius.circular(0.0),
-                            topRight: Radius.circular(0.0),
                           ),
                         ),
                         child: Row(
@@ -298,10 +296,10 @@ class _LeadSuccesPageWidgetState extends State<LeadSuccesPageWidget> {
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(14.0),
-                                  bottomRight: Radius.circular(14.0),
                                   topLeft: Radius.circular(14.0),
                                   topRight: Radius.circular(14.0),
+                                  bottomLeft: Radius.circular(14.0),
+                                  bottomRight: Radius.circular(14.0),
                                 ),
                               ),
                             ),

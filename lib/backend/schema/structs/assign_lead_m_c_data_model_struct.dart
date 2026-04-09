@@ -1070,7 +1070,7 @@ Map<String, dynamic> getAssignLeadMCDataModelFirestoreData(
   final firestoreData = mapToFirestore(assignLeadMCDataModel.toMap());
 
   // Add any Firestore field values
-  assignLeadMCDataModel.firestoreUtilData.fieldValues
+  mapToFirestore(assignLeadMCDataModel.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

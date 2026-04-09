@@ -162,7 +162,7 @@ Map<String, dynamic> getLoanTypeCodeFirestoreData(
   final firestoreData = mapToFirestore(loanTypeCode.toMap());
 
   // Add any Firestore field values
-  loanTypeCode.firestoreUtilData.fieldValues
+  mapToFirestore(loanTypeCode.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

@@ -324,7 +324,7 @@ Map<String, dynamic> getCustomerDetailFirestoreData(
   final firestoreData = mapToFirestore(customerDetail.toMap());
 
   // Add any Firestore field values
-  customerDetail.firestoreUtilData.fieldValues
+  mapToFirestore(customerDetail.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

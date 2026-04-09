@@ -55,12 +55,12 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   TextEditingController? tarangWaTextFieldTextController;
   String? Function(BuildContext, String?)?
       tarangWaTextFieldTextControllerValidator;
-  bool isDataUploading_uploadDataSqdWebMobile = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqdWebMobile =
+  bool isDataUploading_uploadDataSqdWebMobile1 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqdWebMobile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  bool isDataUploading_uploadDataSqd2Web = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqd2Web =
+  bool isDataUploading_uploadDataSqd2Web2 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqd2Web2 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.
@@ -104,12 +104,12 @@ class HomePageWebModel extends FlutterFlowModel<HomePageWebWidget> {
   TextEditingController? tarangWaTextFieldPCTextController;
   String? Function(BuildContext, String?)?
       tarangWaTextFieldPCTextControllerValidator;
-  bool isDataUploading_uploadDataSqdWebPC = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqdWebPC =
+  bool isDataUploading_uploadDataSqdWebPC3 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqdWebPC3 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  bool isDataUploading_uploadDataSqd2WebPC = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqd2WebPC =
+  bool isDataUploading_uploadDataSqd2WebPC4 = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqd2WebPC4 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.

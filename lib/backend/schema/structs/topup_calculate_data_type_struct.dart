@@ -395,7 +395,7 @@ Map<String, dynamic> getTopupCalculateDataTypeFirestoreData(
   final firestoreData = mapToFirestore(topupCalculateDataType.toMap());
 
   // Add any Firestore field values
-  topupCalculateDataType.firestoreUtilData.fieldValues
+  mapToFirestore(topupCalculateDataType.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;

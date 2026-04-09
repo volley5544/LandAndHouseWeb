@@ -244,7 +244,7 @@ Map<String, dynamic> getInsurancesFirestoreData(
   final firestoreData = mapToFirestore(insurances.toMap());
 
   // Add any Firestore field values
-  insurances.firestoreUtilData.fieldValues
+  mapToFirestore(insurances.firestoreUtilData.fieldValues)
       .forEach((k, v) => firestoreData[k] = v);
 
   return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
