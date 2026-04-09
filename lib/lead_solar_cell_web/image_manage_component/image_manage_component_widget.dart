@@ -273,17 +273,8 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                             type: PageTransitionType.fade,
                                             child: FlutterFlowExpandedImageView(
                                               image: Image.memory(
-                                                _model.chanodFrontFileTemp !=
-                                                            null &&
-                                                        (_model
-                                                                .chanodFrontFileTemp
-                                                                ?.bytes
-                                                                ?.isNotEmpty ??
-                                                            false)
-                                                    ? _model.chanodFrontFileTemp
-                                                    : _model.chanodFrontFile
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
+                                                _model.chanodFrontFile?.bytes ??
+                                                    Uint8List.fromList([]),
                                                 fit: BoxFit.contain,
                                               ),
                                               allowRotation: false,
@@ -300,17 +291,8 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: Image.memory(
-                                            _model.chanodFrontFileTemp !=
-                                                        null &&
-                                                    (_model
-                                                            .chanodFrontFileTemp
-                                                            ?.bytes
-                                                            ?.isNotEmpty ??
-                                                        false)
-                                                ? _model.chanodFrontFileTemp
-                                                : _model.chanodFrontFile
-                                                        ?.bytes ??
-                                                    Uint8List.fromList([]),
+                                            _model.chanodFrontFile?.bytes ??
+                                                Uint8List.fromList([]),
                                             width: () {
                                               if (MediaQuery.sizeOf(context)
                                                       .width <
@@ -587,17 +569,8 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                             type: PageTransitionType.fade,
                                             child: FlutterFlowExpandedImageView(
                                               image: Image.memory(
-                                                _model.chanodBackFileTemp !=
-                                                            null &&
-                                                        (_model
-                                                                .chanodBackFileTemp
-                                                                ?.bytes
-                                                                ?.isNotEmpty ??
-                                                            false)
-                                                    ? _model.chanodBackFileTemp
-                                                    : _model.chanodBackFile
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
+                                                _model.chanodBackFile?.bytes ??
+                                                    Uint8List.fromList([]),
                                                 fit: BoxFit.contain,
                                               ),
                                               allowRotation: false,
@@ -614,16 +587,8 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: Image.memory(
-                                            _model.chanodBackFileTemp != null &&
-                                                    (_model
-                                                            .chanodBackFileTemp
-                                                            ?.bytes
-                                                            ?.isNotEmpty ??
-                                                        false)
-                                                ? _model.chanodBackFileTemp
-                                                : _model.chanodBackFile
-                                                        ?.bytes ??
-                                                    Uint8List.fromList([]),
+                                            _model.chanodBackFile?.bytes ??
+                                                Uint8List.fromList([]),
                                             width: () {
                                               if (MediaQuery.sizeOf(context)
                                                       .width <
