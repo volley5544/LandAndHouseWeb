@@ -1566,3 +1566,15 @@ double? checkFileSize(FFUploadedFile? upLoadFile) {
 
   return formattedSize;
 }
+
+List<FFUploadedFile>? createListUploadFile(FFUploadedFile? input) {
+  if (input == null) return [];
+  return [input];
+}
+
+List<FFUploadedFile>? generate2FileList(
+  FFUploadedFile? file1,
+  FFUploadedFile? file2,
+) {
+  return [file1!, file2!];
+}

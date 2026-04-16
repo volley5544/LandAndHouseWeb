@@ -12,7 +12,9 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/land_and_house_app/imgdetails_rawang/imgdetails_rawang_widget.dart';
+import '/lead_solar_cell_web/image_house_reg_manage_component/image_house_reg_manage_component_widget.dart';
 import '/lead_solar_cell_web/image_manage_component/image_manage_component_widget.dart';
+import '/lead_solar_cell_web/image_transaction_manage_component/image_transaction_manage_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -458,25 +460,6 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
           ),
         ],
       ),
-      'imageOnPageLoadAnimation6': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: Offset(0.0, -30.0),
-            end: Offset(0.0, 0.0),
-          ),
-        ],
-      ),
       'dividerOnPageLoadAnimation1': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -617,6 +600,25 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
           ),
         ],
       ),
+      'imageOnPageLoadAnimation6': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: Offset(0.0, -30.0),
+            end: Offset(0.0, 0.0),
+          ),
+        ],
+      ),
       'imageOnPageLoadAnimation7': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
@@ -694,25 +696,6 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
         ],
       ),
       'imageOnPageLoadAnimation11': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: Offset(0.0, -30.0),
-            end: Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'imageOnPageLoadAnimation12': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           FadeEffect(
@@ -1233,199 +1216,200 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                     ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 12.0, 0.0, 0.0),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        Colors.transparent,
-                                                    focusColor:
-                                                        Colors.transparent,
-                                                    hoverColor:
-                                                        Colors.transparent,
-                                                    highlightColor:
-                                                        Colors.transparent,
-                                                    onTap: () async {
-                                                      _model.isSearchByChanod =
-                                                          false;
-                                                      _model.chanodTypeIsSelected =
-                                                          true;
-                                                      safeSetState(() {});
-                                                    },
-                                                    child: Container(
-                                                      width: () {
-                                                        if (MediaQuery.sizeOf(
-                                                                    context)
-                                                                .width <
-                                                            kBreakpointSmall) {
-                                                          return MediaQuery
-                                                                  .sizeOf(
+                                                if (false)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 12.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        _model.isSearchByChanod =
+                                                            false;
+                                                        _model.chanodTypeIsSelected =
+                                                            true;
+                                                        safeSetState(() {});
+                                                      },
+                                                      child: Container(
+                                                        width: () {
+                                                          if (MediaQuery.sizeOf(
                                                                       context)
-                                                              .width;
-                                                        } else if (MediaQuery
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return MediaQuery
                                                                     .sizeOf(
                                                                         context)
-                                                                .width <
-                                                            kBreakpointMedium) {
-                                                          return MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width;
-                                                        } else if (MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width <
-                                                            kBreakpointLarge) {
-                                                          return 600.0;
-                                                        } else {
-                                                          return 600.0;
-                                                        }
-                                                      }(),
-                                                      height: () {
-                                                        if (MediaQuery.sizeOf(
-                                                                    context)
-                                                                .width <
-                                                            kBreakpointSmall) {
-                                                          return 70.0;
-                                                        } else if (MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width <
-                                                            kBreakpointMedium) {
-                                                          return 90.0;
-                                                        } else if (MediaQuery
-                                                                    .sizeOf(
-                                                                        context)
-                                                                .width <
-                                                            kBreakpointLarge) {
-                                                          return 90.0;
-                                                        } else {
-                                                          return 90.0;
-                                                        }
-                                                      }(),
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16.0),
-                                                        border: Border.all(
-                                                          color: !_model
-                                                                      .isSearchByChanod &&
-                                                                  _model
-                                                                      .chanodTypeIsSelected
-                                                              ? FlutterFlowTheme
-                                                                      .of(
+                                                                .width;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
                                                                           context)
-                                                                  .primary
-                                                              : FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .alternate,
-                                                          width: 2.0,
-                                                        ),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    0.0,
-                                                                    16.0,
-                                                                    0.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Builder(
-                                                              builder:
-                                                                  (context) {
-                                                                if (!_model
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return MediaQuery
+                                                                    .sizeOf(
+                                                                        context)
+                                                                .width;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 600.0;
+                                                          } else {
+                                                            return 600.0;
+                                                          }
+                                                        }(),
+                                                        height: () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return 70.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return 90.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 90.0;
+                                                          } else {
+                                                            return 90.0;
+                                                          }
+                                                        }(),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryBackground,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      16.0),
+                                                          border: Border.all(
+                                                            color: !_model
                                                                         .isSearchByChanod &&
                                                                     _model
-                                                                        .chanodTypeIsSelected) {
-                                                                  return Icon(
-                                                                    Icons
-                                                                        .check_circle,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primary,
-                                                                    size: 24.0,
-                                                                  );
-                                                                } else {
-                                                                  return Icon(
-                                                                    Icons
-                                                                        .radio_button_off_outlined,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    size: () {
-                                                                      if (MediaQuery.sizeOf(context)
-                                                                              .width <
-                                                                          kBreakpointSmall) {
-                                                                        return 24.0;
-                                                                      } else if (MediaQuery.sizeOf(context)
-                                                                              .width <
-                                                                          kBreakpointMedium) {
-                                                                        return 28.0;
-                                                                      } else if (MediaQuery.sizeOf(context)
-                                                                              .width <
-                                                                          kBreakpointLarge) {
-                                                                        return 28.0;
-                                                                      } else {
-                                                                        return 28.0;
-                                                                      }
-                                                                    }(),
-                                                                  );
-                                                                }
-                                                              },
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          12.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                'ค้นหาโดยเลขที่ดิน',
-                                                                style: FlutterFlowTheme.of(
+                                                                        .chanodTypeIsSelected
+                                                                ? FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Noto San Thai',
-                                                                      fontSize:
-                                                                          () {
+                                                                    .primary
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                            width: 2.0,
+                                                          ),
+                                                        ),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      0.0,
+                                                                      16.0,
+                                                                      0.0),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Builder(
+                                                                builder:
+                                                                    (context) {
+                                                                  if (!_model
+                                                                          .isSearchByChanod &&
+                                                                      _model
+                                                                          .chanodTypeIsSelected) {
+                                                                    return Icon(
+                                                                      Icons
+                                                                          .check_circle,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                      size:
+                                                                          24.0,
+                                                                    );
+                                                                  } else {
+                                                                    return Icon(
+                                                                      Icons
+                                                                          .radio_button_off_outlined,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .alternate,
+                                                                      size: () {
                                                                         if (MediaQuery.sizeOf(context).width <
                                                                             kBreakpointSmall) {
-                                                                          return 14.0;
+                                                                          return 24.0;
                                                                         } else if (MediaQuery.sizeOf(context).width <
                                                                             kBreakpointMedium) {
-                                                                          return 20.0;
+                                                                          return 28.0;
                                                                         } else if (MediaQuery.sizeOf(context).width <
                                                                             kBreakpointLarge) {
-                                                                          return 20.0;
+                                                                          return 28.0;
                                                                         } else {
-                                                                          return 20.0;
+                                                                          return 28.0;
                                                                         }
                                                                       }(),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                    ),
+                                                                    );
+                                                                  }
+                                                                },
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            12.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  'ค้นหาโดยเลขที่ดิน',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        fontSize:
+                                                                            () {
+                                                                          if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointSmall) {
+                                                                            return 14.0;
+                                                                          } else if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointMedium) {
+                                                                            return 20.0;
+                                                                          } else if (MediaQuery.sizeOf(context).width <
+                                                                              kBreakpointLarge) {
+                                                                            return 20.0;
+                                                                          } else {
+                                                                            return 20.0;
+                                                                          }
+                                                                        }(),
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
@@ -3755,25 +3739,144 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                         MainAxisSize
                                                                             .max,
                                                                     children: [
-                                                                      Text(
-                                                                        'รูปภาพโฉนดที่ดิน / ใบประเมินที่ดิน',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .override(
-                                                                              fontFamily: 'Noto San Thai',
-                                                                              fontSize: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 14.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 20.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 20.0;
-                                                                                } else {
-                                                                                  return 20.0;
-                                                                                }
-                                                                              }(),
-                                                                              letterSpacing: 0.0,
-                                                                            ),
+                                                                      InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                content: Text((() {
+                                                                                          if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) && (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))) {
+                                                                                            return functions.generate2FileList(_model.chanodFrontFile, _model.chanodBackFile)!;
+                                                                                          } else if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                            return functions.createListUploadFile(_model.chanodFrontFile)!;
+                                                                                          } else if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                            return functions.createListUploadFile(_model.chanodBackFile)!;
+                                                                                          } else {
+                                                                                            return functions.createListUploadFile(_model.uploadedLocalFile_uploadNullValueAction)!;
+                                                                                          }
+                                                                                        }()
+                                                                                            .length >
+                                                                                        0)
+                                                                                    .toString()),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                content: Text(() {
+                                                                                  if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) && (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))) {
+                                                                                    return functions.generate2FileList(_model.chanodFrontFile, _model.chanodBackFile)!;
+                                                                                  } else if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                    return functions.createListUploadFile(_model.chanodFrontFile)!;
+                                                                                  } else if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                    return functions.createListUploadFile(_model.chanodBackFile)!;
+                                                                                  } else {
+                                                                                    return functions.createListUploadFile(_model.uploadedLocalFile_uploadNullValueAction)!;
+                                                                                  }
+                                                                                }()
+                                                                                    .length
+                                                                                    .toString()),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                content: Text(((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) && (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))).toString()),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                content: Text((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)).toString()),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                          await showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (alertDialogContext) {
+                                                                              return AlertDialog(
+                                                                                content: Text((_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)).toString()),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                    child: Text('Ok'),
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            },
+                                                                          );
+                                                                        },
+                                                                        child:
+                                                                            Text(
+                                                                          'รูปภาพโฉนดที่ดิน / ใบประเมินที่ดิน',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                fontSize: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 14.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 20.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 20.0;
+                                                                                  } else {
+                                                                                    return 20.0;
+                                                                                  }
+                                                                                }(),
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
                                                                       ),
                                                                       Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -3806,126 +3909,154 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  Container(
-                                                                    width: double
-                                                                        .infinity,
-                                                                    height:
-                                                                        200.0,
-                                                                    child:
-                                                                        CarouselSlider(
-                                                                      items: [
-                                                                        Visibility(
-                                                                          visible:
-                                                                              (_model.uploadedLocalFile_uploadDataSqdWebMobile.bytes?.isNotEmpty ?? false),
-                                                                          child:
-                                                                              Align(
-                                                                            alignment: AlignmentDirectional(
-                                                                                valueOrDefault<double>(
-                                                                                  () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 0.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 0.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return -1.0;
+                                                                  if (() {
+                                                                        if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) &&
+                                                                            (_model.chanodBackFile != null &&
+                                                                                (_model.chanodBackFile?.bytes?.isNotEmpty ??
+                                                                                    false))) {
+                                                                          return functions.generate2FileList(
+                                                                              _model.chanodFrontFile,
+                                                                              _model.chanodBackFile)!;
+                                                                        } else if (_model.chanodFrontFile !=
+                                                                                null &&
+                                                                            (_model.chanodFrontFile?.bytes?.isNotEmpty ??
+                                                                                false)) {
+                                                                          return functions
+                                                                              .createListUploadFile(_model.chanodFrontFile)!;
+                                                                        } else if (_model.chanodBackFile !=
+                                                                                null &&
+                                                                            (_model.chanodBackFile?.bytes?.isNotEmpty ??
+                                                                                false)) {
+                                                                          return functions
+                                                                              .createListUploadFile(_model.chanodBackFile)!;
+                                                                        } else {
+                                                                          return functions
+                                                                              .createListUploadFile(_model.uploadedLocalFile_uploadNullValueAction)!;
+                                                                        }
+                                                                      }()
+                                                                          .length >
+                                                                      0)
+                                                                    Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      height:
+                                                                          200.0,
+                                                                      decoration:
+                                                                          BoxDecoration(),
+                                                                      child:
+                                                                          Builder(
+                                                                        builder:
+                                                                            (context) {
+                                                                          final chanodImageListItem = (() {
+                                                                                    if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) && (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))) {
+                                                                                      return functions.generate2FileList(_model.chanodFrontFile, _model.chanodBackFile);
+                                                                                    } else if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                      return functions.createListUploadFile(_model.chanodFrontFile);
+                                                                                    } else if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                      return functions.createListUploadFile(_model.chanodBackFile);
                                                                                     } else {
-                                                                                      return -1.0;
+                                                                                      return functions.createListUploadFile(_model.uploadedLocalFile_uploadNullValueAction);
                                                                                     }
-                                                                                  }(),
-                                                                                  0.0,
-                                                                                ),
-                                                                                0.0),
+                                                                                  }()
+                                                                                      ?.toList() ??
+                                                                                  [])
+                                                                              .take(2)
+                                                                              .toList();
+
+                                                                          return Container(
+                                                                            width:
+                                                                                double.infinity,
+                                                                            height:
+                                                                                200.0,
                                                                             child:
-                                                                                Padding(
-                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                                                                              child: InkWell(
-                                                                                splashColor: Colors.transparent,
-                                                                                focusColor: Colors.transparent,
-                                                                                hoverColor: Colors.transparent,
-                                                                                highlightColor: Colors.transparent,
-                                                                                onTap: () async {
-                                                                                  await Navigator.push(
-                                                                                    context,
-                                                                                    PageTransition(
-                                                                                      type: PageTransitionType.fade,
-                                                                                      child: FlutterFlowExpandedImageView(
-                                                                                        image: Image.memory(
-                                                                                          _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
-                                                                                          fit: BoxFit.contain,
-                                                                                        ),
-                                                                                        allowRotation: false,
+                                                                                CarouselSlider.builder(
+                                                                              itemCount: chanodImageListItem.length,
+                                                                              itemBuilder: (context, chanodImageListItemIndex, _) {
+                                                                                final chanodImageListItemItem = chanodImageListItem[chanodImageListItemIndex];
+                                                                                return Align(
+                                                                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                    child: InkWell(
+                                                                                      splashColor: Colors.transparent,
+                                                                                      focusColor: Colors.transparent,
+                                                                                      hoverColor: Colors.transparent,
+                                                                                      highlightColor: Colors.transparent,
+                                                                                      onTap: () async {
+                                                                                        await Navigator.push(
+                                                                                          context,
+                                                                                          PageTransition(
+                                                                                            type: PageTransitionType.fade,
+                                                                                            child: FlutterFlowExpandedImageView(
+                                                                                              image: Image.memory(
+                                                                                                chanodImageListItemItem.bytes ?? Uint8List.fromList([]),
+                                                                                                fit: BoxFit.contain,
+                                                                                              ),
+                                                                                              allowRotation: false,
+                                                                                              tag: 'imageTag1',
+                                                                                              useHeroAnimation: true,
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      },
+                                                                                      child: Hero(
                                                                                         tag: 'imageTag1',
-                                                                                        useHeroAnimation: true,
+                                                                                        transitionOnUserGestures: true,
+                                                                                        child: ClipRRect(
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                          child: Image.memory(
+                                                                                            chanodImageListItemItem.bytes ?? Uint8List.fromList([]),
+                                                                                            width: () {
+                                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                return 200.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                return 300.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                return 300.0;
+                                                                                              } else {
+                                                                                                return 300.0;
+                                                                                              }
+                                                                                            }(),
+                                                                                            height: () {
+                                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                return 200.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                return 300.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                return 300.0;
+                                                                                              } else {
+                                                                                                return 300.0;
+                                                                                              }
+                                                                                            }(),
+                                                                                            fit: BoxFit.cover,
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                                child: Hero(
-                                                                                  tag: 'imageTag1',
-                                                                                  transitionOnUserGestures: true,
-                                                                                  child: ClipRRect(
-                                                                                    borderRadius: BorderRadius.circular(8.0),
-                                                                                    child: Image.memory(
-                                                                                      _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
-                                                                                      width: () {
-                                                                                        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                          return 200.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                          return 300.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                          return 300.0;
-                                                                                        } else {
-                                                                                          return 300.0;
-                                                                                        }
-                                                                                      }(),
-                                                                                      height: () {
-                                                                                        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                          return 200.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                          return 300.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                          return 300.0;
-                                                                                        } else {
-                                                                                          return 300.0;
-                                                                                        }
-                                                                                      }(),
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
+                                                                                    ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation1']!),
                                                                                   ),
-                                                                                ),
-                                                                              ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation1']!),
+                                                                                );
+                                                                              },
+                                                                              carouselController: _model.carouselController1 ??= CarouselSliderController(),
+                                                                              options: CarouselOptions(
+                                                                                initialPage: max(0, min(0, chanodImageListItem.length - 1)),
+                                                                                viewportFraction: 0.6,
+                                                                                disableCenter: true,
+                                                                                enlargeCenterPage: true,
+                                                                                enlargeFactor: 0.3,
+                                                                                enableInfiniteScroll: true,
+                                                                                scrollDirection: Axis.horizontal,
+                                                                                autoPlay: true,
+                                                                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                                                                autoPlayInterval: Duration(milliseconds: (800 + 3000)),
+                                                                                autoPlayCurve: Curves.linear,
+                                                                                pauseAutoPlayInFiniteScroll: true,
+                                                                                onPageChanged: (index, _) => _model.carouselCurrentIndex1 = index,
+                                                                              ),
                                                                             ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                      carouselController:
-                                                                          _model.carouselController1 ??=
-                                                                              CarouselSliderController(),
-                                                                      options:
-                                                                          CarouselOptions(
-                                                                        initialPage:
-                                                                            0,
-                                                                        viewportFraction:
-                                                                            1.0,
-                                                                        disableCenter:
-                                                                            true,
-                                                                        enlargeCenterPage:
-                                                                            true,
-                                                                        enlargeFactor:
-                                                                            0.25,
-                                                                        enableInfiniteScroll:
-                                                                            true,
-                                                                        scrollDirection:
-                                                                            Axis.horizontal,
-                                                                        autoPlay:
-                                                                            false,
-                                                                        onPageChanged: (index,
-                                                                                _) =>
-                                                                            _model.carouselCurrentIndex1 =
-                                                                                index,
+                                                                          );
+                                                                        },
                                                                       ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -3937,92 +4068,66 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                         FFButtonWidget(
                                                                       onPressed:
                                                                           () async {
-                                                                        final selectedMedia =
-                                                                            await selectMedia(
-                                                                          imageQuality:
-                                                                              30,
-                                                                          mediaSource:
-                                                                              MediaSource.photoGallery,
-                                                                          multiImage:
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled:
+                                                                              true,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          barrierColor:
+                                                                              Color(0xC0000000),
+                                                                          enableDrag:
                                                                               false,
-                                                                        );
-                                                                        if (selectedMedia !=
-                                                                                null &&
-                                                                            selectedMedia.every((m) =>
-                                                                                validateFileFormat(m.storagePath, context))) {
-                                                                          safeSetState(() =>
-                                                                              _model.isDataUploading_uploadDataSqdWebMobile = true);
-                                                                          var selectedUploadedFiles =
-                                                                              <FFUploadedFile>[];
-
-                                                                          try {
-                                                                            selectedUploadedFiles = selectedMedia
-                                                                                .map((m) => FFUploadedFile(
-                                                                                      name: m.storagePath.split('/').last,
-                                                                                      bytes: m.bytes,
-                                                                                      height: m.dimensions?.height,
-                                                                                      width: m.dimensions?.width,
-                                                                                      blurHash: m.blurHash,
-                                                                                      originalFilename: m.originalFilename,
-                                                                                    ))
-                                                                                .toList();
-                                                                          } finally {
-                                                                            _model.isDataUploading_uploadDataSqdWebMobile =
-                                                                                false;
-                                                                          }
-                                                                          if (selectedUploadedFiles.length ==
-                                                                              selectedMedia.length) {
-                                                                            safeSetState(() {
-                                                                              _model.uploadedLocalFile_uploadDataSqdWebMobile = selectedUploadedFiles.first;
-                                                                            });
-                                                                          } else {
-                                                                            safeSetState(() {});
-                                                                            return;
-                                                                          }
-                                                                        }
-
-                                                                        if ((_model.uploadedLocalFile_uploadDataSqdWebMobile.bytes?.isNotEmpty ??
-                                                                                false)) {
-                                                                          ScaffoldMessenger.of(context)
-                                                                              .clearSnackBars();
-                                                                          ScaffoldMessenger.of(context)
-                                                                              .showSnackBar(
-                                                                            SnackBar(
-                                                                              content: Text(
-                                                                                'อัพโหลดรูปภาพสำเร็จ!',
-                                                                                style: TextStyle(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).secondary,
-                                                                                  fontWeight: FontWeight.w600,
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 0.8,
+                                                                                  child: ImageManageComponentWidget(
+                                                                                    chanodFrontFileParam: _model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false) ? _model.chanodFrontFile! : _model.uploadedLocalFile_uploadNullValueAction,
+                                                                                    chanodBackFileParam: _model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false) ? _model.chanodBackFile! : _model.uploadedLocalFile_uploadNullValueAction,
+                                                                                    setImageValueChanodFront: (chanodFrontFile) async {
+                                                                                      _model.chanodFrontFile = chanodFrontFile;
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                    setImageValueChanodBack: (chanodBackFile) async {
+                                                                                      _model.chanodBackFile = chanodBackFile;
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                  ),
                                                                                 ),
                                                                               ),
-                                                                              duration: Duration(milliseconds: 3000),
-                                                                              backgroundColor: Color(0xBE000000),
-                                                                            ),
-                                                                          );
-                                                                        } else {
-                                                                          ScaffoldMessenger.of(context)
-                                                                              .clearSnackBars();
-                                                                          ScaffoldMessenger.of(context)
-                                                                              .showSnackBar(
-                                                                            SnackBar(
-                                                                              content: Text(
-                                                                                'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                                                                style: TextStyle(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).secondary,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                              duration: Duration(milliseconds: 3000),
-                                                                              backgroundColor: Color(0xBE000000),
-                                                                            ),
-                                                                          );
-                                                                          return;
-                                                                        }
+                                                                            );
+                                                                          },
+                                                                        ).then((value) =>
+                                                                            safeSetState(() {}));
                                                                       },
-                                                                      text:
-                                                                          'อัปโหลดรูปภาพ',
+                                                                      text: valueOrDefault<
+                                                                          String>(
+                                                                        () {
+                                                                                  if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) && (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))) {
+                                                                                    return functions.generate2FileList(_model.chanodFrontFile, _model.chanodBackFile)!;
+                                                                                  } else if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                    return functions.createListUploadFile(_model.chanodFrontFile)!;
+                                                                                  } else if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)) {
+                                                                                    return functions.createListUploadFile(_model.chanodBackFile)!;
+                                                                                  } else {
+                                                                                    return functions.createListUploadFile(_model.uploadedLocalFile_uploadNullValueAction)!;
+                                                                                  }
+                                                                                }()
+                                                                                    .length >
+                                                                                0
+                                                                            ? 'จัดการรูปภาพ'
+                                                                            : 'อัปโหลดรูปภาพ',
+                                                                        'อัปโหลดรูปภาพ',
+                                                                      ),
                                                                       icon:
                                                                           Icon(
                                                                         Icons
@@ -4186,9 +4291,11 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  if ((_model
-                                                                              .uploadedLocalFile_uploadDataSqd2Web5
-                                                                              .bytes
+                                                                  if (_model.quotation !=
+                                                                          null &&
+                                                                      (_model
+                                                                              .quotation
+                                                                              ?.bytes
                                                                               ?.isNotEmpty ??
                                                                           false))
                                                                     Align(
@@ -4233,7 +4340,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                                 type: PageTransitionType.fade,
                                                                                 child: FlutterFlowExpandedImageView(
                                                                                   image: Image.memory(
-                                                                                    _model.uploadedLocalFile_uploadDataSqd2Web5.bytes ?? Uint8List.fromList([]),
+                                                                                    _model.quotation?.bytes ?? Uint8List.fromList([]),
                                                                                     fit: BoxFit.contain,
                                                                                   ),
                                                                                   allowRotation: false,
@@ -4253,7 +4360,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                                 ClipRRect(
                                                                               borderRadius: BorderRadius.circular(8.0),
                                                                               child: Image.memory(
-                                                                                _model.uploadedLocalFile_uploadDataSqd2Web5.bytes ?? Uint8List.fromList([]),
+                                                                                _model.quotation?.bytes ?? Uint8List.fromList([]),
                                                                                 width: () {
                                                                                   if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
                                                                                     return 200.0;
@@ -4296,8 +4403,12 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                           () async {
                                                                         final selectedMedia =
                                                                             await selectMedia(
+                                                                          maxWidth:
+                                                                              1920.00,
+                                                                          maxHeight:
+                                                                              1920.00,
                                                                           imageQuality:
-                                                                              30,
+                                                                              50,
                                                                           mediaSource:
                                                                               MediaSource.photoGallery,
                                                                           multiImage:
@@ -4308,7 +4419,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                             selectedMedia.every((m) =>
                                                                                 validateFileFormat(m.storagePath, context))) {
                                                                           safeSetState(() =>
-                                                                              _model.isDataUploading_uploadDataSqd2Web5 = true);
+                                                                              _model.isDataUploading_uploadDataQuotationMobile = true);
                                                                           var selectedUploadedFiles =
                                                                               <FFUploadedFile>[];
 
@@ -4324,13 +4435,13 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                                     ))
                                                                                 .toList();
                                                                           } finally {
-                                                                            _model.isDataUploading_uploadDataSqd2Web5 =
+                                                                            _model.isDataUploading_uploadDataQuotationMobile =
                                                                                 false;
                                                                           }
                                                                           if (selectedUploadedFiles.length ==
                                                                               selectedMedia.length) {
                                                                             safeSetState(() {
-                                                                              _model.uploadedLocalFile_uploadDataSqd2Web5 = selectedUploadedFiles.first;
+                                                                              _model.uploadedLocalFile_uploadDataQuotationMobile = selectedUploadedFiles.first;
                                                                             });
                                                                           } else {
                                                                             safeSetState(() {});
@@ -4338,7 +4449,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                           }
                                                                         }
 
-                                                                        if ((_model.uploadedLocalFile_uploadDataSqd2Web5.bytes?.isNotEmpty ??
+                                                                        if ((_model.uploadedLocalFile_uploadDataQuotationMobile.bytes?.isNotEmpty ??
                                                                                 false)) {
                                                                           ScaffoldMessenger.of(context)
                                                                               .clearSnackBars();
@@ -4377,6 +4488,11 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                           );
                                                                           return;
                                                                         }
+
+                                                                        _model.quotation =
+                                                                            _model.uploadedLocalFile_uploadDataQuotationMobile;
+                                                                        safeSetState(
+                                                                            () {});
                                                                       },
                                                                       text:
                                                                           'อัปโหลดรูปภาพ',
@@ -4543,103 +4659,105 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            valueOrDefault<double>(
-                                                                              () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return -1.0;
-                                                                                } else {
-                                                                                  return -1.0;
-                                                                                }
-                                                                              }(),
-                                                                              0.0,
-                                                                            ),
-                                                                            0.0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0,
+                                                                  if (_model.idCardFile !=
+                                                                          null &&
+                                                                      (_model
+                                                                              .idCardFile
+                                                                              ?.bytes
+                                                                              ?.isNotEmpty ??
+                                                                          false))
+                                                                    Align(
+                                                                      alignment: AlignmentDirectional(
+                                                                          valueOrDefault<double>(
+                                                                            () {
+                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                return 0.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                return 0.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                return -1.0;
+                                                                              } else {
+                                                                                return -1.0;
+                                                                              }
+                                                                            }(),
+                                                                            0.0,
+                                                                          ),
                                                                           0.0),
                                                                       child:
-                                                                          InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            PageTransition(
-                                                                              type: PageTransitionType.fade,
-                                                                              child: FlutterFlowExpandedImageView(
-                                                                                image: Image.memory(
-                                                                                  _model.idCardFile?.bytes ?? Uint8List.fromList([]),
-                                                                                  fit: BoxFit.contain,
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            await Navigator.push(
+                                                                              context,
+                                                                              PageTransition(
+                                                                                type: PageTransitionType.fade,
+                                                                                child: FlutterFlowExpandedImageView(
+                                                                                  image: Image.memory(
+                                                                                    _model.idCardFile?.bytes ?? Uint8List.fromList([]),
+                                                                                    fit: BoxFit.contain,
+                                                                                  ),
+                                                                                  allowRotation: false,
+                                                                                  tag: 'imageTag3',
+                                                                                  useHeroAnimation: true,
                                                                                 ),
-                                                                                allowRotation: false,
-                                                                                tag: 'imageTag3',
-                                                                                useHeroAnimation: true,
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                          child:
+                                                                              Hero(
+                                                                            tag:
+                                                                                'imageTag3',
+                                                                            transitionOnUserGestures:
+                                                                                true,
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                              child: Image.memory(
+                                                                                _model.idCardFile?.bytes ?? Uint8List.fromList([]),
+                                                                                width: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 200.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 300.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 300.0;
+                                                                                  } else {
+                                                                                    return 300.0;
+                                                                                  }
+                                                                                }(),
+                                                                                height: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 200.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 300.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 300.0;
+                                                                                  } else {
+                                                                                    return 300.0;
+                                                                                  }
+                                                                                }(),
+                                                                                fit: BoxFit.cover,
                                                                               ),
                                                                             ),
-                                                                          );
-                                                                        },
-                                                                        child:
-                                                                            Hero(
-                                                                          tag:
-                                                                              'imageTag3',
-                                                                          transitionOnUserGestures:
-                                                                              true,
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                            child:
-                                                                                Image.memory(
-                                                                              _model.idCardFile?.bytes ?? Uint8List.fromList([]),
-                                                                              width: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              height: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              fit: BoxFit.cover,
-                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      ).animateOnPageLoad(
-                                                                              animationsMap['imageOnPageLoadAnimation3']!),
+                                                                        ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation3']!),
+                                                                      ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -4650,9 +4768,95 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                     child:
                                                                         FFButtonWidget(
                                                                       onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Button pressed ...');
+                                                                          () async {
+                                                                        final selectedMedia =
+                                                                            await selectMedia(
+                                                                          imageQuality:
+                                                                              30,
+                                                                          mediaSource:
+                                                                              MediaSource.photoGallery,
+                                                                          multiImage:
+                                                                              false,
+                                                                        );
+                                                                        if (selectedMedia !=
+                                                                                null &&
+                                                                            selectedMedia.every((m) =>
+                                                                                validateFileFormat(m.storagePath, context))) {
+                                                                          safeSetState(() =>
+                                                                              _model.isDataUploading_uploadDataIdCardMobile = true);
+                                                                          var selectedUploadedFiles =
+                                                                              <FFUploadedFile>[];
+
+                                                                          try {
+                                                                            selectedUploadedFiles = selectedMedia
+                                                                                .map((m) => FFUploadedFile(
+                                                                                      name: m.storagePath.split('/').last,
+                                                                                      bytes: m.bytes,
+                                                                                      height: m.dimensions?.height,
+                                                                                      width: m.dimensions?.width,
+                                                                                      blurHash: m.blurHash,
+                                                                                      originalFilename: m.originalFilename,
+                                                                                    ))
+                                                                                .toList();
+                                                                          } finally {
+                                                                            _model.isDataUploading_uploadDataIdCardMobile =
+                                                                                false;
+                                                                          }
+                                                                          if (selectedUploadedFiles.length ==
+                                                                              selectedMedia.length) {
+                                                                            safeSetState(() {
+                                                                              _model.uploadedLocalFile_uploadDataIdCardMobile = selectedUploadedFiles.first;
+                                                                            });
+                                                                          } else {
+                                                                            safeSetState(() {});
+                                                                            return;
+                                                                          }
+                                                                        }
+
+                                                                        if ((_model.uploadedLocalFile_uploadDataIdCardMobile.bytes?.isNotEmpty ??
+                                                                                false)) {
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .clearSnackBars();
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .showSnackBar(
+                                                                            SnackBar(
+                                                                              content: Text(
+                                                                                'อัพโหลดรูปภาพสำเร็จ!',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              duration: Duration(milliseconds: 3000),
+                                                                              backgroundColor: Color(0xBE000000),
+                                                                            ),
+                                                                          );
+                                                                        } else {
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .clearSnackBars();
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .showSnackBar(
+                                                                            SnackBar(
+                                                                              content: Text(
+                                                                                'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              duration: Duration(milliseconds: 3000),
+                                                                              backgroundColor: Color(0xBE000000),
+                                                                            ),
+                                                                          );
+                                                                          return;
+                                                                        }
+
+                                                                        _model.idCardFile =
+                                                                            _model.uploadedLocalFile_uploadDataIdCardMobile;
+                                                                        safeSetState(
+                                                                            () {});
                                                                       },
                                                                       text:
                                                                           'อัปโหลดรูปภาพ',
@@ -4819,103 +5023,119 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            valueOrDefault<double>(
-                                                                              () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return -1.0;
-                                                                                } else {
-                                                                                  return -1.0;
-                                                                                }
-                                                                              }(),
-                                                                              0.0,
-                                                                            ),
-                                                                            0.0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                  if (_model
+                                                                          .houseRegFile
+                                                                          .length >
+                                                                      0)
+                                                                    Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      height:
+                                                                          200.0,
+                                                                      decoration:
+                                                                          BoxDecoration(),
                                                                       child:
-                                                                          InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            PageTransition(
-                                                                              type: PageTransitionType.fade,
-                                                                              child: FlutterFlowExpandedImageView(
-                                                                                image: Image.memory(
-                                                                                  _model.houseRegFile?.bytes ?? Uint8List.fromList([]),
-                                                                                  fit: BoxFit.contain,
-                                                                                ),
-                                                                                allowRotation: false,
-                                                                                tag: 'imageTag4',
-                                                                                useHeroAnimation: true,
+                                                                          Builder(
+                                                                        builder:
+                                                                            (context) {
+                                                                          final houseRegListItem2 = _model
+                                                                              .houseRegFile
+                                                                              .toList();
+
+                                                                          return Container(
+                                                                            width:
+                                                                                double.infinity,
+                                                                            height:
+                                                                                200.0,
+                                                                            child:
+                                                                                CarouselSlider.builder(
+                                                                              itemCount: houseRegListItem2.length,
+                                                                              itemBuilder: (context, houseRegListItem2Index, _) {
+                                                                                final houseRegListItem2Item = houseRegListItem2[houseRegListItem2Index];
+                                                                                return Align(
+                                                                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                                    child: InkWell(
+                                                                                      splashColor: Colors.transparent,
+                                                                                      focusColor: Colors.transparent,
+                                                                                      hoverColor: Colors.transparent,
+                                                                                      highlightColor: Colors.transparent,
+                                                                                      onTap: () async {
+                                                                                        await Navigator.push(
+                                                                                          context,
+                                                                                          PageTransition(
+                                                                                            type: PageTransitionType.fade,
+                                                                                            child: FlutterFlowExpandedImageView(
+                                                                                              image: Image.memory(
+                                                                                                houseRegListItem2Item.bytes ?? Uint8List.fromList([]),
+                                                                                                fit: BoxFit.contain,
+                                                                                              ),
+                                                                                              allowRotation: false,
+                                                                                              tag: 'imageTag4',
+                                                                                              useHeroAnimation: true,
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      },
+                                                                                      child: Hero(
+                                                                                        tag: 'imageTag4',
+                                                                                        transitionOnUserGestures: true,
+                                                                                        child: ClipRRect(
+                                                                                          borderRadius: BorderRadius.circular(8.0),
+                                                                                          child: Image.memory(
+                                                                                            houseRegListItem2Item.bytes ?? Uint8List.fromList([]),
+                                                                                            width: () {
+                                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                return 200.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                return 300.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                return 300.0;
+                                                                                              } else {
+                                                                                                return 300.0;
+                                                                                              }
+                                                                                            }(),
+                                                                                            height: () {
+                                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                return 200.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                return 300.0;
+                                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                return 300.0;
+                                                                                              } else {
+                                                                                                return 300.0;
+                                                                                              }
+                                                                                            }(),
+                                                                                            fit: BoxFit.cover,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation4']!),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              carouselController: _model.carouselController2 ??= CarouselSliderController(),
+                                                                              options: CarouselOptions(
+                                                                                initialPage: max(0, min(0, houseRegListItem2.length - 1)),
+                                                                                viewportFraction: 0.6,
+                                                                                disableCenter: true,
+                                                                                enlargeCenterPage: true,
+                                                                                enlargeFactor: 0.3,
+                                                                                enableInfiniteScroll: true,
+                                                                                scrollDirection: Axis.horizontal,
+                                                                                autoPlay: true,
+                                                                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                                                                autoPlayInterval: Duration(milliseconds: (800 + 3000)),
+                                                                                autoPlayCurve: Curves.linear,
+                                                                                pauseAutoPlayInFiniteScroll: true,
+                                                                                onPageChanged: (index, _) => _model.carouselCurrentIndex2 = index,
                                                                               ),
                                                                             ),
                                                                           );
                                                                         },
-                                                                        child:
-                                                                            Hero(
-                                                                          tag:
-                                                                              'imageTag4',
-                                                                          transitionOnUserGestures:
-                                                                              true,
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                            child:
-                                                                                Image.memory(
-                                                                              _model.houseRegFile?.bytes ?? Uint8List.fromList([]),
-                                                                              width: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              height: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              fit: BoxFit.cover,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ).animateOnPageLoad(
-                                                                              animationsMap['imageOnPageLoadAnimation4']!),
+                                                                      ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -4926,12 +5146,51 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                     child:
                                                                         FFButtonWidget(
                                                                       onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Button pressed ...');
+                                                                          () async {
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled:
+                                                                              true,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          barrierColor:
+                                                                              Color(0xBE000000),
+                                                                          enableDrag:
+                                                                              false,
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 0.8,
+                                                                                  child: ImageHouseRegManageComponentWidget(
+                                                                                    houseRegImageList: _model.houseRegFile,
+                                                                                    updateHouseRegAction: (imageList) async {
+                                                                                      _model.houseRegFile = imageList.toList().cast<FFUploadedFile>();
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        ).then((value) =>
+                                                                            safeSetState(() {}));
                                                                       },
-                                                                      text:
-                                                                          'อัปโหลดรูปภาพ',
+                                                                      text: valueOrDefault<
+                                                                          String>(
+                                                                        _model.houseRegFile.length >
+                                                                                0
+                                                                            ? 'จัดการรูปภาพ'
+                                                                            : 'อัปโหลดรูปภาพ',
+                                                                        'อัปโหลดรูปภาพ',
+                                                                      ),
                                                                       icon:
                                                                           Icon(
                                                                         Icons
@@ -5095,135 +5354,145 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  Builder(
-                                                                    builder:
-                                                                        (context) {
-                                                                      final bookBankFileListItem = _model
+                                                                  if (_model
                                                                           .bookBankFile
-                                                                          .toList();
-
-                                                                      return Container(
+                                                                          .length >
+                                                                      0)
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          Container(
                                                                         width: double
                                                                             .infinity,
-                                                                        height:
-                                                                            200.0,
-                                                                        child: CarouselSlider
-                                                                            .builder(
-                                                                          itemCount:
-                                                                              bookBankFileListItem.length,
-                                                                          itemBuilder: (context,
-                                                                              bookBankFileListItemIndex,
-                                                                              _) {
-                                                                            final bookBankFileListItemItem =
-                                                                                bookBankFileListItem[bookBankFileListItemIndex];
-                                                                            return Visibility(
-                                                                              visible: (_model.uploadedLocalFile_uploadDataSqdWebMobile.bytes?.isNotEmpty ?? false),
-                                                                              child: Align(
-                                                                                alignment: AlignmentDirectional(
-                                                                                    valueOrDefault<double>(
-                                                                                      () {
-                                                                                        if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                          return 0.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                          return 0.0;
-                                                                                        } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                          return -1.0;
-                                                                                        } else {
-                                                                                          return -1.0;
-                                                                                        }
-                                                                                      }(),
-                                                                                      0.0,
-                                                                                    ),
-                                                                                    0.0),
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                                                        decoration:
+                                                                            BoxDecoration(),
+                                                                        child:
+                                                                            Builder(
+                                                                          builder:
+                                                                              (context) {
+                                                                            final uploadedFileListItem =
+                                                                                _model.bookBankFile.toList().take(10).toList();
+
+                                                                            return ListView.builder(
+                                                                              padding: EdgeInsets.zero,
+                                                                              shrinkWrap: true,
+                                                                              scrollDirection: Axis.vertical,
+                                                                              itemCount: uploadedFileListItem.length,
+                                                                              itemBuilder: (context, uploadedFileListItemIndex) {
+                                                                                final uploadedFileListItemItem = uploadedFileListItem[uploadedFileListItemIndex];
+                                                                                return Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
                                                                                   child: InkWell(
                                                                                     splashColor: Colors.transparent,
                                                                                     focusColor: Colors.transparent,
                                                                                     hoverColor: Colors.transparent,
                                                                                     highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          child: FlutterFlowExpandedImageView(
-                                                                                            image: Image.memory(
-                                                                                              bookBankFileListItemItem.bytes ?? Uint8List.fromList([]),
-                                                                                              fit: BoxFit.contain,
+                                                                                    onTap: () async {},
+                                                                                    child: Container(
+                                                                                      width: double.infinity,
+                                                                                      decoration: BoxDecoration(),
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                        child: Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                          children: [
+                                                                                            Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                                                              child: InkWell(
+                                                                                                splashColor: Colors.transparent,
+                                                                                                focusColor: Colors.transparent,
+                                                                                                hoverColor: Colors.transparent,
+                                                                                                highlightColor: Colors.transparent,
+                                                                                                onTap: () async {
+                                                                                                  var confirmDialogResponse = await showDialog<bool>(
+                                                                                                        context: context,
+                                                                                                        builder: (alertDialogContext) {
+                                                                                                          return AlertDialog(
+                                                                                                            content: Text('คุณต้องการลบไฟล์ ${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename == 'image' ? 'รูปภาพ' : 'ไฟล์ PDF'} หรือไม่?'),
+                                                                                                            actions: [
+                                                                                                              TextButton(
+                                                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                                child: Text('ยกเลิก'),
+                                                                                                              ),
+                                                                                                              TextButton(
+                                                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                                child: Text('ลบ'),
+                                                                                                              ),
+                                                                                                            ],
+                                                                                                          );
+                                                                                                        },
+                                                                                                      ) ??
+                                                                                                      false;
+                                                                                                  if (!confirmDialogResponse) {
+                                                                                                    return;
+                                                                                                  }
+                                                                                                  _model.removeAtIndexFromBookBankFile(uploadedFileListItemIndex);
+                                                                                                  safeSetState(() {});
+                                                                                                },
+                                                                                                child: Icon(
+                                                                                                  Icons.close_outlined,
+                                                                                                  color: Color(0xFFFF0000),
+                                                                                                  size: 30.0,
+                                                                                                ),
+                                                                                              ),
                                                                                             ),
-                                                                                            allowRotation: false,
-                                                                                            tag: 'imageTag5',
-                                                                                            useHeroAnimation: true,
-                                                                                          ),
-                                                                                        ),
-                                                                                      );
-                                                                                    },
-                                                                                    child: Hero(
-                                                                                      tag: 'imageTag5',
-                                                                                      transitionOnUserGestures: true,
-                                                                                      child: ClipRRect(
-                                                                                        borderRadius: BorderRadius.circular(8.0),
-                                                                                        child: Image.memory(
-                                                                                          bookBankFileListItemItem.bytes ?? Uint8List.fromList([]),
-                                                                                          width: () {
-                                                                                            if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                              return 200.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                              return 300.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                              return 300.0;
-                                                                                            } else {
-                                                                                              return 300.0;
-                                                                                            }
-                                                                                          }(),
-                                                                                          height: () {
-                                                                                            if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                              return 200.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                              return 300.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                              return 300.0;
-                                                                                            } else {
-                                                                                              return 300.0;
-                                                                                            }
-                                                                                          }(),
-                                                                                          fit: BoxFit.cover,
+                                                                                            Flexible(
+                                                                                              flex: 3,
+                                                                                              child: Align(
+                                                                                                alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                                child: Row(
+                                                                                                  mainAxisSize: MainAxisSize.max,
+                                                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                  children: [
+                                                                                                    Flexible(
+                                                                                                      child: RichText(
+                                                                                                        textScaler: MediaQuery.of(context).textScaler,
+                                                                                                        text: TextSpan(
+                                                                                                          children: [
+                                                                                                            TextSpan(
+                                                                                                              text: '${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename}',
+                                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                                    letterSpacing: 0.0,
+                                                                                                                  ),
+                                                                                                            ),
+                                                                                                            TextSpan(
+                                                                                                              text: '  (${functions.checkFileSize(uploadedFileListItemItem)?.toString()} MB)',
+                                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                                    color: FlutterFlowTheme.of(context).error,
+                                                                                                                    letterSpacing: 0.0,
+                                                                                                                  ),
+                                                                                                            )
+                                                                                                          ],
+                                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                                letterSpacing: 0.0,
+                                                                                                              ),
+                                                                                                        ),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ],
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ],
                                                                                         ),
                                                                                       ),
                                                                                     ),
-                                                                                  ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation5']!),
-                                                                                ),
-                                                                              ),
+                                                                                  ),
+                                                                                );
+                                                                              },
                                                                             );
                                                                           },
-                                                                          carouselController: _model.carouselController2 ??=
-                                                                              CarouselSliderController(),
-                                                                          options:
-                                                                              CarouselOptions(
-                                                                            initialPage:
-                                                                                max(0, min(1, bookBankFileListItem.length - 1)),
-                                                                            viewportFraction:
-                                                                                1.0,
-                                                                            disableCenter:
-                                                                                true,
-                                                                            enlargeCenterPage:
-                                                                                true,
-                                                                            enlargeFactor:
-                                                                                0.25,
-                                                                            enableInfiniteScroll:
-                                                                                true,
-                                                                            scrollDirection:
-                                                                                Axis.horizontal,
-                                                                            autoPlay:
-                                                                                false,
-                                                                            onPageChanged: (index, _) =>
-                                                                                _model.carouselCurrentIndex2 = index,
-                                                                          ),
                                                                         ),
-                                                                      );
-                                                                    },
-                                                                  ),
+                                                                      ),
+                                                                    ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -5234,12 +5503,62 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                     child:
                                                                         FFButtonWidget(
                                                                       onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Button pressed ...');
+                                                                          () async {
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled:
+                                                                              true,
+                                                                          backgroundColor:
+                                                                              Colors.transparent,
+                                                                          barrierColor:
+                                                                              Color(0xBF000000),
+                                                                          enableDrag:
+                                                                              false,
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (context) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: Container(
+                                                                                  height: MediaQuery.sizeOf(context).height * 0.8,
+                                                                                  child: ImageTransactionManageComponentWidget(
+                                                                                    initialFileType: _model.transactionFileType,
+                                                                                    transactionFileList: _model.bookBankFile,
+                                                                                    updatePdfTransactionAction: (pdfFile) async {
+                                                                                      _model.bookBankFile = [];
+                                                                                      safeSetState(() {});
+                                                                                      _model.addToBookBankFile(pdfFile);
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                    updateTransactionFileTypeAction: (fileType) async {
+                                                                                      _model.transactionFileType = fileType;
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                    updateImageTransactionAction: (imageList) async {
+                                                                                      _model.bookBankFile = imageList!.toList().cast<FFUploadedFile>();
+                                                                                      safeSetState(() {});
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        ).then((value) =>
+                                                                            safeSetState(() {}));
                                                                       },
-                                                                      text:
-                                                                          'อัปโหลดรูปภาพ',
+                                                                      text: valueOrDefault<
+                                                                          String>(
+                                                                        _model.bookBankFile.length >
+                                                                                0
+                                                                            ? 'จัดการเอกสาร'
+                                                                            : 'อัปโหลดเอกสาร',
+                                                                        'อัปโหลดเอกสาร',
+                                                                      ),
                                                                       icon:
                                                                           Icon(
                                                                         Icons
@@ -5403,103 +5722,105 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                       ),
                                                                     ],
                                                                   ),
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            valueOrDefault<double>(
-                                                                              () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 0.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return -1.0;
-                                                                                } else {
-                                                                                  return -1.0;
-                                                                                }
-                                                                              }(),
-                                                                              0.0,
-                                                                            ),
-                                                                            0.0),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          8.0,
-                                                                          0.0,
+                                                                  if (_model.electricBill !=
+                                                                          null &&
+                                                                      (_model
+                                                                              .electricBill
+                                                                              ?.bytes
+                                                                              ?.isNotEmpty ??
+                                                                          false))
+                                                                    Align(
+                                                                      alignment: AlignmentDirectional(
+                                                                          valueOrDefault<double>(
+                                                                            () {
+                                                                              if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                return 0.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                return 0.0;
+                                                                              } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                return -1.0;
+                                                                              } else {
+                                                                                return -1.0;
+                                                                              }
+                                                                            }(),
+                                                                            0.0,
+                                                                          ),
                                                                           0.0),
                                                                       child:
-                                                                          InkWell(
-                                                                        splashColor:
-                                                                            Colors.transparent,
-                                                                        focusColor:
-                                                                            Colors.transparent,
-                                                                        hoverColor:
-                                                                            Colors.transparent,
-                                                                        highlightColor:
-                                                                            Colors.transparent,
-                                                                        onTap:
-                                                                            () async {
-                                                                          await Navigator
-                                                                              .push(
-                                                                            context,
-                                                                            PageTransition(
-                                                                              type: PageTransitionType.fade,
-                                                                              child: FlutterFlowExpandedImageView(
-                                                                                image: Image.memory(
-                                                                                  _model.electricBill?.bytes ?? Uint8List.fromList([]),
-                                                                                  fit: BoxFit.contain,
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            await Navigator.push(
+                                                                              context,
+                                                                              PageTransition(
+                                                                                type: PageTransitionType.fade,
+                                                                                child: FlutterFlowExpandedImageView(
+                                                                                  image: Image.memory(
+                                                                                    _model.electricBill?.bytes ?? Uint8List.fromList([]),
+                                                                                    fit: BoxFit.contain,
+                                                                                  ),
+                                                                                  allowRotation: false,
+                                                                                  tag: 'imageTag5',
+                                                                                  useHeroAnimation: true,
                                                                                 ),
-                                                                                allowRotation: false,
-                                                                                tag: 'imageTag6',
-                                                                                useHeroAnimation: true,
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                          child:
+                                                                              Hero(
+                                                                            tag:
+                                                                                'imageTag5',
+                                                                            transitionOnUserGestures:
+                                                                                true,
+                                                                            child:
+                                                                                ClipRRect(
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                              child: Image.memory(
+                                                                                _model.electricBill?.bytes ?? Uint8List.fromList([]),
+                                                                                width: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 200.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 300.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 300.0;
+                                                                                  } else {
+                                                                                    return 300.0;
+                                                                                  }
+                                                                                }(),
+                                                                                height: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 200.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 300.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 300.0;
+                                                                                  } else {
+                                                                                    return 300.0;
+                                                                                  }
+                                                                                }(),
+                                                                                fit: BoxFit.cover,
                                                                               ),
                                                                             ),
-                                                                          );
-                                                                        },
-                                                                        child:
-                                                                            Hero(
-                                                                          tag:
-                                                                              'imageTag6',
-                                                                          transitionOnUserGestures:
-                                                                              true,
-                                                                          child:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(8.0),
-                                                                            child:
-                                                                                Image.memory(
-                                                                              _model.electricBill?.bytes ?? Uint8List.fromList([]),
-                                                                              width: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              height: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 200.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 300.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 300.0;
-                                                                                } else {
-                                                                                  return 300.0;
-                                                                                }
-                                                                              }(),
-                                                                              fit: BoxFit.cover,
-                                                                            ),
                                                                           ),
-                                                                        ),
-                                                                      ).animateOnPageLoad(
-                                                                              animationsMap['imageOnPageLoadAnimation6']!),
+                                                                        ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation5']!),
+                                                                      ),
                                                                     ),
-                                                                  ),
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional
                                                                         .fromSTEB(
@@ -5510,9 +5831,95 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                     child:
                                                                         FFButtonWidget(
                                                                       onPressed:
-                                                                          () {
-                                                                        print(
-                                                                            'Button pressed ...');
+                                                                          () async {
+                                                                        final selectedMedia =
+                                                                            await selectMedia(
+                                                                          imageQuality:
+                                                                              30,
+                                                                          mediaSource:
+                                                                              MediaSource.photoGallery,
+                                                                          multiImage:
+                                                                              false,
+                                                                        );
+                                                                        if (selectedMedia !=
+                                                                                null &&
+                                                                            selectedMedia.every((m) =>
+                                                                                validateFileFormat(m.storagePath, context))) {
+                                                                          safeSetState(() =>
+                                                                              _model.isDataUploading_uploadDataElectricBillMobile = true);
+                                                                          var selectedUploadedFiles =
+                                                                              <FFUploadedFile>[];
+
+                                                                          try {
+                                                                            selectedUploadedFiles = selectedMedia
+                                                                                .map((m) => FFUploadedFile(
+                                                                                      name: m.storagePath.split('/').last,
+                                                                                      bytes: m.bytes,
+                                                                                      height: m.dimensions?.height,
+                                                                                      width: m.dimensions?.width,
+                                                                                      blurHash: m.blurHash,
+                                                                                      originalFilename: m.originalFilename,
+                                                                                    ))
+                                                                                .toList();
+                                                                          } finally {
+                                                                            _model.isDataUploading_uploadDataElectricBillMobile =
+                                                                                false;
+                                                                          }
+                                                                          if (selectedUploadedFiles.length ==
+                                                                              selectedMedia.length) {
+                                                                            safeSetState(() {
+                                                                              _model.uploadedLocalFile_uploadDataElectricBillMobile = selectedUploadedFiles.first;
+                                                                            });
+                                                                          } else {
+                                                                            safeSetState(() {});
+                                                                            return;
+                                                                          }
+                                                                        }
+
+                                                                        if ((_model.uploadedLocalFile_uploadDataElectricBillMobile.bytes?.isNotEmpty ??
+                                                                                false)) {
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .clearSnackBars();
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .showSnackBar(
+                                                                            SnackBar(
+                                                                              content: Text(
+                                                                                'อัพโหลดรูปภาพสำเร็จ!',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              duration: Duration(milliseconds: 3000),
+                                                                              backgroundColor: Color(0xBE000000),
+                                                                            ),
+                                                                          );
+                                                                        } else {
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .clearSnackBars();
+                                                                          ScaffoldMessenger.of(context)
+                                                                              .showSnackBar(
+                                                                            SnackBar(
+                                                                              content: Text(
+                                                                                'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                                                style: TextStyle(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: FlutterFlowTheme.of(context).secondary,
+                                                                                  fontWeight: FontWeight.w600,
+                                                                                ),
+                                                                              ),
+                                                                              duration: Duration(milliseconds: 3000),
+                                                                              backgroundColor: Color(0xBE000000),
+                                                                            ),
+                                                                          );
+                                                                          return;
+                                                                        }
+
+                                                                        _model.electricBill =
+                                                                            _model.uploadedLocalFile_uploadDataElectricBillMobile;
+                                                                        safeSetState(
+                                                                            () {});
                                                                       },
                                                                       text:
                                                                           'อัปโหลดรูปภาพ',
@@ -5623,18 +6030,12 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                         ),
                                       ),
                                     ),
-                                    if (((_model.uploadedLocalFile_uploadDataSqdWebMobile
-                                                    .bytes?.isNotEmpty ??
-                                                false)) &&
-                                        ((_model.uploadedLocalFile_uploadDataSqd2Web5
-                                                    .bytes?.isNotEmpty ??
-                                                false)))
-                                      Divider(
-                                        thickness: 2.0,
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ).animateOnPageLoad(animationsMap[
-                                          'dividerOnPageLoadAnimation1']!),
+                                    Divider(
+                                      thickness: 2.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                    ).animateOnPageLoad(animationsMap[
+                                        'dividerOnPageLoadAnimation1']!),
                                     Builder(
                                       builder: (context) => Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -6238,9 +6639,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                               return;
                                             }
 
-                                            if (!((_model.uploadedLocalFile_uploadDataSqdWebMobile
-                                                        .bytes?.isNotEmpty ??
-                                                    false))) {
+                                            if (!true) {
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -6279,9 +6678,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                 safeSetState(() {});
                                               return;
                                             }
-                                            if (!((_model.uploadedLocalFile_uploadDataSqd2Web5
-                                                        .bytes?.isNotEmpty ??
-                                                    false))) {
+                                            if (!true) {
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -6389,8 +6786,6 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                     .tarangWaTextFieldTextController
                                                     .text)!;
                                             safeSetState(() {});
-
-                                            safeSetState(() {});
                                             showDialog(
                                               context: context,
                                               builder: (dialogContext) {
@@ -6424,231 +6819,136 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                               },
                                             );
 
-                                            _model.aPIcheckRateOutputMobile =
-                                                await CheckRateApiCall.call(
-                                              chanodNo: FFAppState()
-                                                          .chanodOutput
-                                                          .chanodNo !=
-                                                      ''
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .chanodNo
-                                                  : '',
-                                              changwatName: FFAppState()
-                                                  .addressOutput
-                                                  .provinceName,
-                                              amphurName: FFAppState()
-                                                  .addressOutput
-                                                  .districtName,
-                                              landAreaRai: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaRai()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaRai
-                                                  : '',
-                                              landAreaNgan: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaNgan()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaNgan
-                                                  : '',
-                                              landAreaWa: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaWa()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaWa
-                                                  : '',
-                                              utmmap: FFAppState()
-                                                          .chanodOutput
-                                                          .utmmap !=
-                                                      ''
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .utmmap
-                                                  : '',
-                                              landNo: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandNo()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landNo
-                                                  : '',
-                                              surveyNo: '',
-                                              apiUrl: FFAppState()
-                                                  .landAndHouseAPIUrl,
-                                            );
-
-                                            _shouldSetState = true;
-                                            if ((_model.aPIcheckRateOutputMobile
-                                                        ?.statusCode ??
-                                                    200) ==
-                                                200) {
-                                            } else {
-                                              await showDialog(
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        FocusScope.of(
-                                                                dialogContext)
-                                                            .unfocus();
-                                                        FocusManager.instance
-                                                            .primaryFocus
-                                                            ?.unfocus();
-                                                      },
-                                                      child:
-                                                          ErrorMessageComponentWidget(
-                                                        textMessage:
-                                                            'พบข้อผิดพลาด Connection (${(_model.aPIcheckRateOutputMobile?.statusCode ?? 200).toString()})',
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-
-                                              Navigator.pop(context);
-                                              if (_shouldSetState)
-                                                safeSetState(() {});
-                                              return;
-                                            }
-
-                                            if ('${getJsonField(
-                                                  (_model.aPIcheckRateOutputMobile
-                                                          ?.jsonBody ??
-                                                      ''),
-                                                  r'''$.code''',
-                                                ).toString()}' ==
-                                                '200') {
-                                              FFAppState().chanodOutput =
-                                                  CheckRateApiCall.results(
-                                                (_model.aPIcheckRateOutputMobile
-                                                        ?.jsonBody ??
-                                                    ''),
-                                              )!;
-                                              safeSetState(() {});
-                                              FFAppState()
-                                                  .updateChanodOutputStruct(
-                                                (e) => e
-                                                  ..landAreaRai = FFAppState()
-                                                      .AppStateAREARAI
-                                                  ..landAreaNgan = FFAppState()
-                                                      .AppStateAREANGAN
-                                                  ..landAreaWa = FFAppState()
-                                                      .AppStateAREAWA,
-                                              );
-                                              safeSetState(() {});
-                                            }
-                                            _model.saveAPIOutputMobile =
-                                                await SaveRateApiWebCall.call(
-                                              chanodNo: FFAppState()
-                                                      .chanodOutput
-                                                      .hasChanodNo()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .chanodNo
-                                                  : '',
-                                              changwatName: FFAppState()
-                                                  .addressOutput
-                                                  .provinceName,
-                                              amphurName: FFAppState()
-                                                  .addressOutput
-                                                  .districtName,
-                                              landAreaRai: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaRai()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaRai
-                                                  : '',
-                                              landAreaNgan: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaNgan()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaNgan
-                                                  : '',
-                                              landAreaWa: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandAreaWa()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landAreaWa
-                                                  : '',
-                                              utmmap: FFAppState()
-                                                      .chanodOutput
-                                                      .hasUtmmap()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .utmmap
-                                                  : '',
-                                              landNo: FFAppState()
-                                                      .chanodOutput
-                                                      .hasLandNo()
-                                                  ? FFAppState()
-                                                      .chanodOutput
-                                                      .landNo
-                                                  : '',
-                                              surveyNo: '',
-                                              firstName: '${getJsonField(
-                                                FFAppState().customerDetailJson,
-                                                r'''$.first_name''',
-                                              ).toString()}',
-                                              lastName: '${getJsonField(
-                                                FFAppState().customerDetailJson,
-                                                r'''$.last_name''',
-                                              ).toString()}',
-                                              phoneNumber: '${getJsonField(
-                                                FFAppState().customerDetailJson,
-                                                r'''$.phone_number''',
-                                              ).toString()}',
-                                              birthDate: '',
-                                              email: '',
-                                              titleName: '',
-                                              hashId: '',
-                                              idNumber: true
-                                                  ? functions.removeDash(_model
-                                                      .thaiIdTextFieldTextController
-                                                      .text)
-                                                  : '',
-                                              imageChanodFront: _model
-                                                  .uploadedLocalFile_uploadDataSqdWebMobile,
-                                              imageChanodBack: _model
-                                                  .uploadedLocalFile_uploadDataSqd2Web5,
-                                              ratesDataJson: FFAppState()
-                                                  .chanodOutput
-                                                  .toMap(),
-                                              apiUrl: FFAppState()
-                                                  .landAndHouseAPIUrl,
-                                              consentDate: '',
-                                              leadSource: 'WEB',
-                                              consentFlg:
-                                                  FFAppState().consentFlg,
+                                            _model.save2APIOutputMobile =
+                                                await SolarSystemGroup
+                                                    .leadSaveStepTwoCall
+                                                    .call(
                                               step: '2',
-                                              utmSource: FFAppState()
-                                                  .utmSourceAppState,
-                                              utmMedium: FFAppState()
-                                                  .utmMediumAppState,
-                                              utmCampaign: FFAppState()
-                                                  .utmCampaignAppState,
+                                              product: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .product,
+                                              leadGroup: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .leadGroup,
+                                              channel: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .channel,
+                                              subProduct: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .subProduct,
+                                              phoneNumber: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .phoneNumber,
+                                              tempLeadId: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .tempLeadId
+                                                  .toString(),
+                                              sourceBy: FFAppState()
+                                                  .SolarSaveStep1AppState
+                                                  .payload
+                                                  .sourceBy,
+                                              thaiId: functions.removeDash(_model
+                                                  .thaiIdTextFieldTextController
+                                                  .text),
+                                              token: FFAppState().solarToken,
+                                              deedNo: _model
+                                                  .chanodNumberTextFieldTextController
+                                                  .text,
+                                              rai: _model
+                                                  .raiTextFieldTextController
+                                                  .text,
+                                              subdistrict: FFAppState()
+                                                  .addressOutput
+                                                  .subdistrictName,
+                                              squareWah: _model
+                                                  .tarangWaTextFieldTextController
+                                                  .text,
+                                              ngan: _model
+                                                  .nganTextFieldTextController
+                                                  .text,
+                                              district: FFAppState()
+                                                  .addressOutput
+                                                  .districtName,
+                                              province: FFAppState()
+                                                  .addressOutput
+                                                  .provinceName,
+                                              remark: '-',
+                                              attachIdCardList: functions
+                                                  .createListUploadFile(
+                                                      _model.idCardFile),
+                                              attachHouseRegistrationList:
+                                                  _model.houseRegFile,
+                                              attachIncomeList:
+                                                  _model.bookBankFile,
+                                              attachLandOrAppraisalList: () {
+                                                if ((_model.chanodFrontFile !=
+                                                            null &&
+                                                        (_model
+                                                                .chanodFrontFile
+                                                                ?.bytes
+                                                                ?.isNotEmpty ??
+                                                            false)) &&
+                                                    (_model.chanodBackFile !=
+                                                            null &&
+                                                        (_model
+                                                                .chanodBackFile
+                                                                ?.bytes
+                                                                ?.isNotEmpty ??
+                                                            false))) {
+                                                  return functions
+                                                      .generate2FileList(
+                                                          _model
+                                                              .chanodFrontFile,
+                                                          _model
+                                                              .chanodBackFile);
+                                                } else if (_model
+                                                            .chanodFrontFile !=
+                                                        null &&
+                                                    (_model
+                                                            .chanodFrontFile
+                                                            ?.bytes
+                                                            ?.isNotEmpty ??
+                                                        false)) {
+                                                  return functions
+                                                      .createListUploadFile(
+                                                          _model
+                                                              .chanodFrontFile);
+                                                } else if (_model
+                                                            .chanodBackFile !=
+                                                        null &&
+                                                    (_model
+                                                            .chanodBackFile
+                                                            ?.bytes
+                                                            ?.isNotEmpty ??
+                                                        false)) {
+                                                  return functions
+                                                      .createListUploadFile(
+                                                          _model
+                                                              .chanodBackFile);
+                                                } else {
+                                                  return functions
+                                                      .createListUploadFile(_model
+                                                          .uploadedLocalFile_uploadNullValueAction);
+                                                }
+                                              }(),
+                                              attachQuotationList: functions
+                                                  .createListUploadFile(
+                                                      _model.quotation),
+                                              attachElectricityList: functions
+                                                  .createListUploadFile(
+                                                      _model.electricBill),
+                                              url: FFAppState()
+                                                  .apiUrlDocData
+                                                  .solarLeadApiUrl,
                                             );
 
                                             _shouldSetState = true;
-                                            if ((_model.saveAPIOutputMobile
+                                            if ((_model.save2APIOutputMobile
                                                         ?.statusCode ??
                                                     200) !=
                                                 200) {
@@ -6679,7 +6979,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                       child:
                                                           ErrorMessageComponentWidget(
                                                         textMessage:
-                                                            'พบข้อผิดพลาด Save Connection (${(_model.saveAPIOutputMobile?.statusCode ?? 200).toString()})',
+                                                            'พบข้อผิดพลาด Save Connection (${(_model.save2APIOutputMobile?.statusCode ?? 200).toString()})',
                                                       ),
                                                     ),
                                                   );
@@ -6692,7 +6992,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                               return;
                                             }
                                             if ('${getJsonField(
-                                                  (_model.saveAPIOutputMobile
+                                                  (_model.save2APIOutputMobile
                                                           ?.jsonBody ??
                                                       ''),
                                                   r'''$.code''',
@@ -6727,7 +7027,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                           ErrorMessageComponentWidget(
                                                         textMessage:
                                                             'พบข้อผิดพลาด save (${getJsonField(
-                                                          (_model.saveAPIOutputMobile
+                                                          (_model.save2APIOutputMobile
                                                                   ?.jsonBody ??
                                                               ''),
                                                           r'''$.message''',
@@ -6744,38 +7044,40 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                               return;
                                             }
 
-                                            FFAppState().ltv1AmountWeb =
-                                                FFAppState()
-                                                    .chanodOutput
-                                                    .ltv1Amount
-                                                    .toString();
-                                            FFAppState().ltv2AmountWeb =
-                                                FFAppState()
-                                                    .chanodOutput
-                                                    .ltv2Amount
-                                                    .toString();
-                                            safeSetState(() {});
-                                            FFAppState().chanodOutput =
-                                                ChanodDataModelStruct();
-                                            FFAppState().addressOutput =
-                                                AddressDataModelStruct();
-                                            FFAppState().addressDataOriginal =
-                                                [];
-                                            FFAppState().customerDetailData =
-                                                CustomerDetailStruct();
-                                            FFAppState().addressDataListOutput =
-                                                [];
-                                            FFAppState().AppStateAREARAI = '';
-                                            FFAppState().AppStateAREANGAN = '';
-                                            FFAppState().AppStateAREAWA = '';
-                                            FFAppState().customerDetailJson =
-                                                null;
-                                            FFAppState().leadsID = '';
-                                            safeSetState(() {});
-                                            Navigator.pop(context);
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  content: Text(
+                                                      (_model.save2APIOutputMobile
+                                                                  ?.jsonBody ??
+                                                              '')
+                                                          .toString()),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
 
                                             context.goNamed(
-                                                RateWebPageWidget.routeName);
+                                              SolarResultPageWidget.routeName,
+                                              queryParameters: {
+                                                'ltv1Amount': serializeParam(
+                                                  '0.0',
+                                                  ParamType.String,
+                                                ),
+                                                'ltv2Amount': serializeParam(
+                                                  '0.0',
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
 
                                             if (_shouldSetState)
                                               safeSetState(() {});
@@ -6787,16 +7089,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                             height: 50.0,
                                             decoration: BoxDecoration(
                                               color: valueOrDefault<Color>(
-                                                ((_model
-                                                                    .uploadedLocalFile_uploadDataSqdWebMobile
-                                                                    .bytes
-                                                                    ?.isNotEmpty ??
-                                                                false)) &&
-                                                        ((_model
-                                                                    .uploadedLocalFile_uploadDataSqd2Web5
-                                                                    .bytes
-                                                                    ?.isNotEmpty ??
-                                                                false))
+                                                true
                                                     ? Color(0xFFF46503)
                                                     : Color(0xFF595959),
                                                 FlutterFlowTheme.of(context)
@@ -8971,7 +9264,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                         24.0,
                                                                         16.0,
                                                                         24.0,
-                                                                        0.0),
+                                                                        24.0),
                                                             child: Row(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -9018,7 +9311,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                 BoxDecoration(),
                                                             child: Wrap(
                                                               spacing: 24.0,
-                                                              runSpacing: 24.0,
+                                                              runSpacing: 75.0,
                                                               alignment:
                                                                   WrapAlignment
                                                                       .start,
@@ -9037,141 +9330,107 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                   Clip.none,
                                                               children: [
                                                                 Container(
-                                                                  height: 393.0,
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
-                                                                              child: Text(
-                                                                            'รูปภาพโฉนดที่ดิน / ใบประเมินที่ดิน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      if ((_model.chanodFrontFile != null &&
+                                                                  height: (_model.chanodFrontFile != null &&
                                                                               (_model.chanodFrontFile?.bytes?.isNotEmpty ??
                                                                                   false)) ||
                                                                           (_model.chanodBackFile != null &&
-                                                                              (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)))
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Container(
-                                                                            height:
-                                                                                300.0,
-                                                                            decoration:
-                                                                                BoxDecoration(),
-                                                                            child:
-                                                                                Wrap(
-                                                                              spacing: 0.0,
-                                                                              runSpacing: 0.0,
-                                                                              alignment: WrapAlignment.start,
-                                                                              crossAxisAlignment: WrapCrossAlignment.start,
-                                                                              direction: Axis.horizontal,
-                                                                              runAlignment: WrapAlignment.start,
-                                                                              verticalDirection: VerticalDirection.down,
-                                                                              clipBehavior: Clip.none,
-                                                                              children: [
-                                                                                if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false))
-                                                                                  InkWell(
-                                                                                    splashColor: Colors.transparent,
-                                                                                    focusColor: Colors.transparent,
-                                                                                    hoverColor: Colors.transparent,
-                                                                                    highlightColor: Colors.transparent,
-                                                                                    onTap: () async {
-                                                                                      await Navigator.push(
-                                                                                        context,
-                                                                                        PageTransition(
-                                                                                          type: PageTransitionType.fade,
-                                                                                          child: FlutterFlowExpandedImageView(
-                                                                                            image: Image.memory(
-                                                                                              _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
-                                                                                              fit: BoxFit.contain,
-                                                                                            ),
-                                                                                            allowRotation: false,
-                                                                                            tag: 'imageTag7',
-                                                                                            useHeroAnimation: true,
-                                                                                          ),
-                                                                                        ),
-                                                                                      );
-                                                                                    },
-                                                                                    child: Hero(
-                                                                                      tag: 'imageTag7',
-                                                                                      transitionOnUserGestures: true,
-                                                                                      child: ClipRRect(
-                                                                                        borderRadius: BorderRadius.circular(8.0),
-                                                                                        child: Image.memory(
-                                                                                          _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
-                                                                                          width: () {
-                                                                                            if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                              return 200.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                              return 300.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                              return 300.0;
-                                                                                            } else {
-                                                                                              return 300.0;
-                                                                                            }
-                                                                                          }(),
-                                                                                          height: () {
-                                                                                            if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                              return 200.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                              return 300.0;
-                                                                                            } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                              return 300.0;
-                                                                                            } else {
-                                                                                              return 300.0;
-                                                                                            }
-                                                                                          }(),
-                                                                                          fit: BoxFit.cover,
-                                                                                        ),
-                                                                                      ),
+                                                                              (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))
+                                                                      ? 420.0
+                                                                      : 120.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'รูปภาพโฉนดที่ดิน / ใบประเมินที่ดิน',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
                                                                                     ),
-                                                                                  ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation7']!),
-                                                                                if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))
-                                                                                  Padding(
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                                                                                    child: InkWell(
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if ((_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false)) ||
+                                                                            (_model.chanodBackFile != null &&
+                                                                                (_model.chanodBackFile?.bytes?.isNotEmpty ?? false)))
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              height: 300.0,
+                                                                              decoration: BoxDecoration(),
+                                                                              child: Wrap(
+                                                                                spacing: 0.0,
+                                                                                runSpacing: 0.0,
+                                                                                alignment: WrapAlignment.start,
+                                                                                crossAxisAlignment: WrapCrossAlignment.start,
+                                                                                direction: Axis.horizontal,
+                                                                                runAlignment: WrapAlignment.start,
+                                                                                verticalDirection: VerticalDirection.down,
+                                                                                clipBehavior: Clip.none,
+                                                                                children: [
+                                                                                  if (_model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false))
+                                                                                    InkWell(
                                                                                       splashColor: Colors.transparent,
                                                                                       focusColor: Colors.transparent,
                                                                                       hoverColor: Colors.transparent,
@@ -9183,23 +9442,23 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                                             type: PageTransitionType.fade,
                                                                                             child: FlutterFlowExpandedImageView(
                                                                                               image: Image.memory(
-                                                                                                _model.chanodBackFile?.bytes ?? Uint8List.fromList([]),
+                                                                                                _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
                                                                                                 fit: BoxFit.contain,
                                                                                               ),
                                                                                               allowRotation: false,
-                                                                                              tag: 'imageTag8',
+                                                                                              tag: 'imageTag6',
                                                                                               useHeroAnimation: true,
                                                                                             ),
                                                                                           ),
                                                                                         );
                                                                                       },
                                                                                       child: Hero(
-                                                                                        tag: 'imageTag8',
+                                                                                        tag: 'imageTag6',
                                                                                         transitionOnUserGestures: true,
                                                                                         child: ClipRRect(
                                                                                           borderRadius: BorderRadius.circular(8.0),
                                                                                           child: Image.memory(
-                                                                                            _model.chanodBackFile?.bytes ?? Uint8List.fromList([]),
+                                                                                            _model.chanodFrontFile?.bytes ?? Uint8List.fromList([]),
                                                                                             width: () {
                                                                                               if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
                                                                                                 return 200.0;
@@ -9226,63 +9485,392 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                                           ),
                                                                                         ),
                                                                                       ),
-                                                                                    ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation8']!),
-                                                                                  ),
-                                                                              ],
+                                                                                    ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation6']!),
+                                                                                  if (_model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false))
+                                                                                    Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                                                                      child: InkWell(
+                                                                                        splashColor: Colors.transparent,
+                                                                                        focusColor: Colors.transparent,
+                                                                                        hoverColor: Colors.transparent,
+                                                                                        highlightColor: Colors.transparent,
+                                                                                        onTap: () async {
+                                                                                          await Navigator.push(
+                                                                                            context,
+                                                                                            PageTransition(
+                                                                                              type: PageTransitionType.fade,
+                                                                                              child: FlutterFlowExpandedImageView(
+                                                                                                image: Image.memory(
+                                                                                                  _model.chanodBackFile?.bytes ?? Uint8List.fromList([]),
+                                                                                                  fit: BoxFit.contain,
+                                                                                                ),
+                                                                                                allowRotation: false,
+                                                                                                tag: 'imageTag7',
+                                                                                                useHeroAnimation: true,
+                                                                                              ),
+                                                                                            ),
+                                                                                          );
+                                                                                        },
+                                                                                        child: Hero(
+                                                                                          tag: 'imageTag7',
+                                                                                          transitionOnUserGestures: true,
+                                                                                          child: ClipRRect(
+                                                                                            borderRadius: BorderRadius.circular(8.0),
+                                                                                            child: Image.memory(
+                                                                                              _model.chanodBackFile?.bytes ?? Uint8List.fromList([]),
+                                                                                              width: () {
+                                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                  return 200.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                  return 300.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                  return 300.0;
+                                                                                                } else {
+                                                                                                  return 300.0;
+                                                                                                }
+                                                                                              }(),
+                                                                                              height: () {
+                                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                  return 200.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                  return 300.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                  return 300.0;
+                                                                                                } else {
+                                                                                                  return 300.0;
+                                                                                                }
+                                                                                              }(),
+                                                                                              fit: BoxFit.cover,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation7']!),
+                                                                                    ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
+                                                                            decoration:
+                                                                                BoxDecoration(),
+                                                                            child:
+                                                                                Builder(
+                                                                              builder: (context) => FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (dialogContext) {
+                                                                                      return Dialog(
+                                                                                        elevation: 0,
+                                                                                        insetPadding: EdgeInsets.zero,
+                                                                                        backgroundColor: Colors.transparent,
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                          },
+                                                                                          child: ImageManageComponentWidget(
+                                                                                            chanodFrontFileParam: _model.chanodFrontFile != null && (_model.chanodFrontFile?.bytes?.isNotEmpty ?? false) ? _model.chanodFrontFile! : _model.uploadedLocalFile_uploadNullValueAction,
+                                                                                            chanodBackFileParam: _model.chanodBackFile != null && (_model.chanodBackFile?.bytes?.isNotEmpty ?? false) ? _model.chanodBackFile! : _model.uploadedLocalFile_uploadNullValueAction,
+                                                                                            setImageValueChanodFront: (chanodFrontFile) async {
+                                                                                              _model.chanodFrontFile = chanodFrontFile;
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                            setImageValueChanodBack: (chanodBackFile) async {
+                                                                                              _model.chanodBackFile = chanodBackFile;
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                                text: 'อัปโหลดรูปภาพ',
+                                                                                icon: Icon(
+                                                                                  Icons.camera_alt_outlined,
+                                                                                  size: () {
+                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                      return 25.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                      return 30.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                      return 30.0;
+                                                                                    } else {
+                                                                                      return 30.0;
+                                                                                    }
+                                                                                  }(),
+                                                                                ),
+                                                                                options: FFButtonOptions(
+                                                                                  width: double.infinity,
+                                                                                  height: 50.0,
+                                                                                  padding: EdgeInsets.all(0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  iconColor: Color(0xFF1D71B8),
+                                                                                  color: Color(0xFFD9EBFF),
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Color(0xFF1D71B8),
+                                                                                        fontSize: 16.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(30.0),
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height: _model.quotation !=
+                                                                              null &&
+                                                                          (_model.quotation?.bytes?.isNotEmpty ??
+                                                                              false)
+                                                                      ? 420.0
+                                                                      : 120.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
                                                                       Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'รูปภาพใบเสนอราคาโซลาร์เซล',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if (_model.quotation !=
+                                                                                null &&
+                                                                            (_model.quotation?.bytes?.isNotEmpty ??
+                                                                                false))
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                InkWell(
+                                                                              splashColor: Colors.transparent,
+                                                                              focusColor: Colors.transparent,
+                                                                              hoverColor: Colors.transparent,
+                                                                              highlightColor: Colors.transparent,
+                                                                              onTap: () async {
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    child: FlutterFlowExpandedImageView(
+                                                                                      image: Image.memory(
+                                                                                        _model.quotation?.bytes ?? Uint8List.fromList([]),
+                                                                                        fit: BoxFit.contain,
+                                                                                      ),
+                                                                                      allowRotation: false,
+                                                                                      tag: 'imageTag8',
+                                                                                      useHeroAnimation: true,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Hero(
+                                                                                tag: 'imageTag8',
+                                                                                transitionOnUserGestures: true,
+                                                                                child: ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: Image.memory(
+                                                                                    _model.quotation?.bytes ?? Uint8List.fromList([]),
+                                                                                    width: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    height: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation8']!),
                                                                           ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0,
+                                                                              0.0),
                                                                           child:
-                                                                              Builder(
-                                                                            builder: (context) =>
+                                                                              Container(
+                                                                            height:
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
+                                                                            decoration:
+                                                                                BoxDecoration(),
+                                                                            child:
                                                                                 FFButtonWidget(
                                                                               onPressed: () async {
-                                                                                await showDialog(
-                                                                                  context: context,
-                                                                                  builder: (dialogContext) {
-                                                                                    return Dialog(
-                                                                                      elevation: 0,
-                                                                                      insetPadding: EdgeInsets.zero,
-                                                                                      backgroundColor: Colors.transparent,
-                                                                                      alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
-                                                                                      child: GestureDetector(
-                                                                                        onTap: () {
-                                                                                          FocusScope.of(dialogContext).unfocus();
-                                                                                          FocusManager.instance.primaryFocus?.unfocus();
-                                                                                        },
-                                                                                        child: ImageManageComponentWidget(
-                                                                                          setImageValueChanodFront: (chanodFrontFile) async {
-                                                                                            _model.chanodFrontFile = chanodFrontFile;
-                                                                                            safeSetState(() {});
-                                                                                          },
-                                                                                          setImageValueChanodBack: (chanodBackFile) async {
-                                                                                            _model.chanodBackFile = chanodBackFile;
-                                                                                            safeSetState(() {});
-                                                                                          },
+                                                                                final selectedMedia = await selectMedia(
+                                                                                  imageQuality: 30,
+                                                                                  mediaSource: MediaSource.photoGallery,
+                                                                                  multiImage: false,
+                                                                                );
+                                                                                if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
+                                                                                  safeSetState(() => _model.isDataUploading_uploadDataSqdQuotationWebPC = true);
+                                                                                  var selectedUploadedFiles = <FFUploadedFile>[];
+
+                                                                                  try {
+                                                                                    selectedUploadedFiles = selectedMedia
+                                                                                        .map((m) => FFUploadedFile(
+                                                                                              name: m.storagePath.split('/').last,
+                                                                                              bytes: m.bytes,
+                                                                                              height: m.dimensions?.height,
+                                                                                              width: m.dimensions?.width,
+                                                                                              blurHash: m.blurHash,
+                                                                                              originalFilename: m.originalFilename,
+                                                                                            ))
+                                                                                        .toList();
+                                                                                  } finally {
+                                                                                    _model.isDataUploading_uploadDataSqdQuotationWebPC = false;
+                                                                                  }
+                                                                                  if (selectedUploadedFiles.length == selectedMedia.length) {
+                                                                                    safeSetState(() {
+                                                                                      _model.uploadedLocalFile_uploadDataSqdQuotationWebPC = selectedUploadedFiles.first;
+                                                                                    });
+                                                                                  } else {
+                                                                                    safeSetState(() {});
+                                                                                    return;
+                                                                                  }
+                                                                                }
+
+                                                                                if ((_model.uploadedLocalFile_uploadDataSqdQuotationWebPC.bytes?.isNotEmpty ?? false)) {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพสำเร็จ!',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
                                                                                         ),
                                                                                       ),
-                                                                                    );
-                                                                                  },
-                                                                                );
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                } else {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                      ),
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                  return;
+                                                                                }
+
+                                                                                _model.quotation = _model.uploadedLocalFile_uploadDataSqdQuotationWebPC;
+                                                                                safeSetState(() {});
                                                                               },
                                                                               text: 'อัปโหลดรูปภาพ',
                                                                               icon: Icon(
@@ -9318,1240 +9906,1100 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    ],
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Container(
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
-                                                                              child: Text(
-                                                                            'รูปภาพใบเสนอราคาโซลาร์เซล',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      if (_model.quotation !=
-                                                                              null &&
-                                                                          (_model.quotation?.bytes?.isNotEmpty ??
-                                                                              false))
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              await Navigator.push(
-                                                                                context,
-                                                                                PageTransition(
-                                                                                  type: PageTransitionType.fade,
-                                                                                  child: FlutterFlowExpandedImageView(
-                                                                                    image: Image.memory(
-                                                                                      _model.quotation?.bytes ?? Uint8List.fromList([]),
-                                                                                      fit: BoxFit.contain,
-                                                                                    ),
-                                                                                    allowRotation: false,
-                                                                                    tag: 'imageTag9',
-                                                                                    useHeroAnimation: true,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                            child:
-                                                                                Hero(
-                                                                              tag: 'imageTag9',
-                                                                              transitionOnUserGestures: true,
-                                                                              child: ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.memory(
-                                                                                  _model.quotation?.bytes ?? Uint8List.fromList([]),
-                                                                                  width: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  height: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation9']!),
-                                                                        ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
-                                                                          ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              final selectedMedia = await selectMedia(
-                                                                                imageQuality: 30,
-                                                                                mediaSource: MediaSource.photoGallery,
-                                                                                multiImage: false,
-                                                                              );
-                                                                              if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
-                                                                                safeSetState(() => _model.isDataUploading_uploadDataSqdQuotationWebPC = true);
-                                                                                var selectedUploadedFiles = <FFUploadedFile>[];
-
-                                                                                try {
-                                                                                  selectedUploadedFiles = selectedMedia
-                                                                                      .map((m) => FFUploadedFile(
-                                                                                            name: m.storagePath.split('/').last,
-                                                                                            bytes: m.bytes,
-                                                                                            height: m.dimensions?.height,
-                                                                                            width: m.dimensions?.width,
-                                                                                            blurHash: m.blurHash,
-                                                                                            originalFilename: m.originalFilename,
-                                                                                          ))
-                                                                                      .toList();
-                                                                                } finally {
-                                                                                  _model.isDataUploading_uploadDataSqdQuotationWebPC = false;
-                                                                                }
-                                                                                if (selectedUploadedFiles.length == selectedMedia.length) {
-                                                                                  safeSetState(() {
-                                                                                    _model.uploadedLocalFile_uploadDataSqdQuotationWebPC = selectedUploadedFiles.first;
-                                                                                  });
-                                                                                } else {
-                                                                                  safeSetState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              }
-
-                                                                              if ((_model.uploadedLocalFile_uploadDataSqdQuotationWebPC.bytes?.isNotEmpty ?? false)) {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพสำเร็จ!',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                              } else {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                                return;
-                                                                              }
-                                                                            },
-                                                                            text:
-                                                                                'อัปโหลดรูปภาพ',
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.camera_alt_outlined,
-                                                                              size: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 25.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 30.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 30.0;
-                                                                                } else {
-                                                                                  return 30.0;
-                                                                                }
-                                                                              }(),
-                                                                            ),
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: double.infinity,
-                                                                              height: 50.0,
-                                                                              padding: EdgeInsets.all(0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              iconColor: Color(0xFF1D71B8),
-                                                                              color: Color(0xFFD9EBFF),
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF1D71B8),
-                                                                                    fontSize: 16.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(30.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
-                                                                              child: Text(
-                                                                            'สำเนาบัตรประชาชน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      if (_model.idCardFile !=
+                                                                  height: _model.idCardFile !=
                                                                               null &&
                                                                           (_model.idCardFile?.bytes?.isNotEmpty ??
-                                                                              false))
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              await Navigator.push(
-                                                                                context,
-                                                                                PageTransition(
-                                                                                  type: PageTransitionType.fade,
-                                                                                  child: FlutterFlowExpandedImageView(
-                                                                                    image: Image.memory(
-                                                                                      _model.idCardFile?.bytes ?? Uint8List.fromList([]),
-                                                                                      fit: BoxFit.contain,
-                                                                                    ),
-                                                                                    allowRotation: false,
-                                                                                    tag: 'imageTag10',
-                                                                                    useHeroAnimation: true,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                            child:
-                                                                                Hero(
-                                                                              tag: 'imageTag10',
-                                                                              transitionOnUserGestures: true,
-                                                                              child: ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.memory(
-                                                                                  _model.idCardFile?.bytes ?? Uint8List.fromList([]),
-                                                                                  width: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  height: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation10']!),
-                                                                        ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
-                                                                          ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              final selectedMedia = await selectMedia(
-                                                                                imageQuality: 30,
-                                                                                mediaSource: MediaSource.photoGallery,
-                                                                                multiImage: false,
-                                                                              );
-                                                                              if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
-                                                                                safeSetState(() => _model.isDataUploading_uploadDataSqdIdCardWebPC = true);
-                                                                                var selectedUploadedFiles = <FFUploadedFile>[];
-
-                                                                                try {
-                                                                                  selectedUploadedFiles = selectedMedia
-                                                                                      .map((m) => FFUploadedFile(
-                                                                                            name: m.storagePath.split('/').last,
-                                                                                            bytes: m.bytes,
-                                                                                            height: m.dimensions?.height,
-                                                                                            width: m.dimensions?.width,
-                                                                                            blurHash: m.blurHash,
-                                                                                            originalFilename: m.originalFilename,
-                                                                                          ))
-                                                                                      .toList();
-                                                                                } finally {
-                                                                                  _model.isDataUploading_uploadDataSqdIdCardWebPC = false;
-                                                                                }
-                                                                                if (selectedUploadedFiles.length == selectedMedia.length) {
-                                                                                  safeSetState(() {
-                                                                                    _model.uploadedLocalFile_uploadDataSqdIdCardWebPC = selectedUploadedFiles.first;
-                                                                                  });
-                                                                                } else {
-                                                                                  safeSetState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              }
-
-                                                                              if ((_model.uploadedLocalFile_uploadDataSqdIdCardWebPC.bytes?.isNotEmpty ?? false)) {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพสำเร็จ!',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                              } else {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                                return;
-                                                                              }
-                                                                            },
-                                                                            text:
-                                                                                'อัปโหลดรูปภาพ',
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.camera_alt_outlined,
-                                                                              size: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 25.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 30.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 30.0;
-                                                                                } else {
-                                                                                  return 30.0;
-                                                                                }
-                                                                              }(),
-                                                                            ),
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: double.infinity,
-                                                                              height: 50.0,
-                                                                              padding: EdgeInsets.all(0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              iconColor: Color(0xFF1D71B8),
-                                                                              color: Color(0xFFD9EBFF),
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF1D71B8),
-                                                                                    fontSize: 16.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(30.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
+                                                                              false)
+                                                                      ? 420.0
+                                                                      : 120.0,
                                                                   decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
-                                                                              child: Text(
-                                                                            'สำเนาทะเบียนบ้าน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'สำเนาบัตรประชาชน',
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
                                                                                     color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      if (_model.houseRegFile !=
-                                                                              null &&
-                                                                          (_model.houseRegFile?.bytes?.isNotEmpty ??
-                                                                              false))
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              8.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              await Navigator.push(
-                                                                                context,
-                                                                                PageTransition(
-                                                                                  type: PageTransitionType.fade,
-                                                                                  child: FlutterFlowExpandedImageView(
-                                                                                    image: Image.memory(
-                                                                                      _model.houseRegFile?.bytes ?? Uint8List.fromList([]),
-                                                                                      fit: BoxFit.contain,
-                                                                                    ),
-                                                                                    allowRotation: false,
-                                                                                    tag: 'imageTag11',
-                                                                                    useHeroAnimation: true,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                            child:
-                                                                                Hero(
-                                                                              tag: 'imageTag11',
-                                                                              transitionOnUserGestures: true,
-                                                                              child: ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.memory(
-                                                                                  _model.houseRegFile?.bytes ?? Uint8List.fromList([]),
-                                                                                  width: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  height: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  fit: BoxFit.cover,
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation11']!),
-                                                                        ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
-                                                                          ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              final selectedMedia = await selectMedia(
-                                                                                imageQuality: 30,
-                                                                                mediaSource: MediaSource.photoGallery,
-                                                                                multiImage: false,
-                                                                              );
-                                                                              if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
-                                                                                safeSetState(() => _model.isDataUploading_uploadDataSqdHouseRegWebPC = true);
-                                                                                var selectedUploadedFiles = <FFUploadedFile>[];
-
-                                                                                try {
-                                                                                  selectedUploadedFiles = selectedMedia
-                                                                                      .map((m) => FFUploadedFile(
-                                                                                            name: m.storagePath.split('/').last,
-                                                                                            bytes: m.bytes,
-                                                                                            height: m.dimensions?.height,
-                                                                                            width: m.dimensions?.width,
-                                                                                            blurHash: m.blurHash,
-                                                                                            originalFilename: m.originalFilename,
-                                                                                          ))
-                                                                                      .toList();
-                                                                                } finally {
-                                                                                  _model.isDataUploading_uploadDataSqdHouseRegWebPC = false;
-                                                                                }
-                                                                                if (selectedUploadedFiles.length == selectedMedia.length) {
-                                                                                  safeSetState(() {
-                                                                                    _model.uploadedLocalFile_uploadDataSqdHouseRegWebPC = selectedUploadedFiles.first;
-                                                                                  });
-                                                                                } else {
-                                                                                  safeSetState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              }
-
-                                                                              if ((_model.uploadedLocalFile_uploadDataSqdHouseRegWebPC.bytes?.isNotEmpty ?? false)) {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพสำเร็จ!',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                              } else {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                                return;
-                                                                              }
-                                                                            },
-                                                                            text:
-                                                                                'อัปโหลดรูปภาพ',
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.camera_alt_outlined,
-                                                                              size: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 25.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 30.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 30.0;
-                                                                                } else {
-                                                                                  return 30.0;
-                                                                                }
-                                                                              }(),
-                                                                            ),
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: double.infinity,
-                                                                              height: 50.0,
-                                                                              padding: EdgeInsets.all(0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              iconColor: Color(0xFF1D71B8),
-                                                                              color: Color(0xFFD9EBFF),
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF1D71B8),
                                                                                     fontSize: 16.0,
                                                                                     letterSpacing: 0.0,
                                                                                   ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(30.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
                                                                               child: Text(
-                                                                            'เอกสารแสดงรายได้ 6 เดือน',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if (_model.idCardFile !=
+                                                                                null &&
+                                                                            (_model.idCardFile?.bytes?.isNotEmpty ??
+                                                                                false))
                                                                           Padding(
                                                                             padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
                                                                                 0.0,
+                                                                                8.0,
                                                                                 0.0,
                                                                                 0.0),
                                                                             child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
+                                                                                InkWell(
+                                                                              splashColor: Colors.transparent,
+                                                                              focusColor: Colors.transparent,
+                                                                              hoverColor: Colors.transparent,
+                                                                              highlightColor: Colors.transparent,
+                                                                              onTap: () async {
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    child: FlutterFlowExpandedImageView(
+                                                                                      image: Image.memory(
+                                                                                        _model.idCardFile?.bytes ?? Uint8List.fromList([]),
+                                                                                        fit: BoxFit.contain,
+                                                                                      ),
+                                                                                      allowRotation: false,
+                                                                                      tag: 'imageTag9',
+                                                                                      useHeroAnimation: true,
+                                                                                    ),
                                                                                   ),
-                                                                            ),
+                                                                                );
+                                                                              },
+                                                                              child: Hero(
+                                                                                tag: 'imageTag9',
+                                                                                transitionOnUserGestures: true,
+                                                                                child: ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: Image.memory(
+                                                                                    _model.idCardFile?.bytes ?? Uint8List.fromList([]),
+                                                                                    width: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    height: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation9']!),
                                                                           ),
-                                                                        ],
-                                                                      ),
-                                                                      if (_model
-                                                                              .bookBankFile
-                                                                              .length >
-                                                                          0)
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
                                                                               0.0,
-                                                                              8.0,
+                                                                              12.0,
                                                                               0.0,
                                                                               0.0),
                                                                           child:
                                                                               Container(
-                                                                            width:
-                                                                                300.0,
                                                                             height:
-                                                                                300.0,
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
                                                                             decoration:
                                                                                 BoxDecoration(),
                                                                             child:
-                                                                                Builder(
-                                                                              builder: (context) {
-                                                                                final uploadedFileListItem = _model.bookBankFile.toList().take(10).toList();
+                                                                                FFButtonWidget(
+                                                                              onPressed: () async {
+                                                                                final selectedMedia = await selectMedia(
+                                                                                  imageQuality: 30,
+                                                                                  mediaSource: MediaSource.photoGallery,
+                                                                                  multiImage: false,
+                                                                                );
+                                                                                if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
+                                                                                  safeSetState(() => _model.isDataUploading_uploadDataSqdIdCardWebPC = true);
+                                                                                  var selectedUploadedFiles = <FFUploadedFile>[];
 
-                                                                                return ListView.builder(
-                                                                                  padding: EdgeInsets.zero,
-                                                                                  shrinkWrap: true,
-                                                                                  scrollDirection: Axis.vertical,
-                                                                                  itemCount: uploadedFileListItem.length,
-                                                                                  itemBuilder: (context, uploadedFileListItemIndex) {
-                                                                                    final uploadedFileListItemItem = uploadedFileListItem[uploadedFileListItemIndex];
-                                                                                    return Padding(
-                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
-                                                                                      child: InkWell(
+                                                                                  try {
+                                                                                    selectedUploadedFiles = selectedMedia
+                                                                                        .map((m) => FFUploadedFile(
+                                                                                              name: m.storagePath.split('/').last,
+                                                                                              bytes: m.bytes,
+                                                                                              height: m.dimensions?.height,
+                                                                                              width: m.dimensions?.width,
+                                                                                              blurHash: m.blurHash,
+                                                                                              originalFilename: m.originalFilename,
+                                                                                            ))
+                                                                                        .toList();
+                                                                                  } finally {
+                                                                                    _model.isDataUploading_uploadDataSqdIdCardWebPC = false;
+                                                                                  }
+                                                                                  if (selectedUploadedFiles.length == selectedMedia.length) {
+                                                                                    safeSetState(() {
+                                                                                      _model.uploadedLocalFile_uploadDataSqdIdCardWebPC = selectedUploadedFiles.first;
+                                                                                    });
+                                                                                  } else {
+                                                                                    safeSetState(() {});
+                                                                                    return;
+                                                                                  }
+                                                                                }
+
+                                                                                if ((_model.uploadedLocalFile_uploadDataSqdIdCardWebPC.bytes?.isNotEmpty ?? false)) {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพสำเร็จ!',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                      ),
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                } else {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                      ),
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                  return;
+                                                                                }
+
+                                                                                _model.idCardFile = _model.uploadedLocalFile_uploadDataSqdIdCardWebPC;
+                                                                                safeSetState(() {});
+                                                                              },
+                                                                              text: 'อัปโหลดรูปภาพ',
+                                                                              icon: Icon(
+                                                                                Icons.camera_alt_outlined,
+                                                                                size: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 25.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 30.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 30.0;
+                                                                                  } else {
+                                                                                    return 30.0;
+                                                                                  }
+                                                                                }(),
+                                                                              ),
+                                                                              options: FFButtonOptions(
+                                                                                width: double.infinity,
+                                                                                height: 50.0,
+                                                                                padding: EdgeInsets.all(0.0),
+                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                iconColor: Color(0xFF1D71B8),
+                                                                                color: Color(0xFFD9EBFF),
+                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF1D71B8),
+                                                                                      fontSize: 16.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                                elevation: 0.0,
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height: _model
+                                                                              .houseRegFile
+                                                                              .length >
+                                                                          0
+                                                                      ? 420.0
+                                                                      : 120.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'สำเนาทะเบียนบ้าน',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if (_model.houseRegFile.length >
+                                                                            0)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              height: 300.0,
+                                                                              decoration: BoxDecoration(),
+                                                                              child: Builder(
+                                                                                builder: (context) {
+                                                                                  final houseRegListItem = _model.houseRegFile.toList().take(2).toList();
+
+                                                                                  return Wrap(
+                                                                                    spacing: 12.0,
+                                                                                    runSpacing: 0.0,
+                                                                                    alignment: WrapAlignment.start,
+                                                                                    crossAxisAlignment: WrapCrossAlignment.start,
+                                                                                    direction: Axis.horizontal,
+                                                                                    runAlignment: WrapAlignment.start,
+                                                                                    verticalDirection: VerticalDirection.down,
+                                                                                    clipBehavior: Clip.none,
+                                                                                    children: List.generate(houseRegListItem.length, (houseRegListItemIndex) {
+                                                                                      final houseRegListItemItem = houseRegListItem[houseRegListItemIndex];
+                                                                                      return InkWell(
                                                                                         splashColor: Colors.transparent,
                                                                                         focusColor: Colors.transparent,
                                                                                         hoverColor: Colors.transparent,
                                                                                         highlightColor: Colors.transparent,
-                                                                                        onTap: () async {},
-                                                                                        child: Container(
-                                                                                          width: double.infinity,
-                                                                                          height: 30.0,
-                                                                                          decoration: BoxDecoration(),
-                                                                                          child: Padding(
-                                                                                            padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                                                                                            child: Row(
-                                                                                              mainAxisSize: MainAxisSize.max,
-                                                                                              crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                              children: [
-                                                                                                Padding(
-                                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                                                                                                  child: InkWell(
-                                                                                                    splashColor: Colors.transparent,
-                                                                                                    focusColor: Colors.transparent,
-                                                                                                    hoverColor: Colors.transparent,
-                                                                                                    highlightColor: Colors.transparent,
-                                                                                                    onTap: () async {
-                                                                                                      var confirmDialogResponse = await showDialog<bool>(
-                                                                                                            context: context,
-                                                                                                            builder: (alertDialogContext) {
-                                                                                                              return AlertDialog(
-                                                                                                                content: Text('คุณต้องการลบไฟล์ ${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename == 'image' ? 'รูปภาพ' : 'ไฟล์ PDF'} หรือไม่?'),
-                                                                                                                actions: [
-                                                                                                                  TextButton(
-                                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                                    child: Text('ยกเลิก'),
-                                                                                                                  ),
-                                                                                                                  TextButton(
-                                                                                                                    onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                                    child: Text('ลบ'),
-                                                                                                                  ),
-                                                                                                                ],
-                                                                                                              );
-                                                                                                            },
-                                                                                                          ) ??
-                                                                                                          false;
-                                                                                                      if (!confirmDialogResponse) {
-                                                                                                        return;
-                                                                                                      }
-                                                                                                    },
-                                                                                                    child: Icon(
-                                                                                                      Icons.close_outlined,
-                                                                                                      color: Color(0xFFFF0000),
-                                                                                                      size: 30.0,
-                                                                                                    ),
-                                                                                                  ),
+                                                                                        onTap: () async {
+                                                                                          await Navigator.push(
+                                                                                            context,
+                                                                                            PageTransition(
+                                                                                              type: PageTransitionType.fade,
+                                                                                              child: FlutterFlowExpandedImageView(
+                                                                                                image: Image.memory(
+                                                                                                  houseRegListItemItem.bytes ?? Uint8List.fromList([]),
+                                                                                                  fit: BoxFit.contain,
                                                                                                 ),
-                                                                                                Flexible(
-                                                                                                  flex: 3,
-                                                                                                  child: Align(
-                                                                                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                                                                                    child: Row(
-                                                                                                      mainAxisSize: MainAxisSize.max,
-                                                                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                                      children: [
-                                                                                                        Text(
-                                                                                                          '${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename}',
-                                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                                fontFamily: 'Noto San Thai',
-                                                                                                                letterSpacing: 0.0,
-                                                                                                              ),
-                                                                                                        ),
-                                                                                                        Expanded(
-                                                                                                          flex: 3,
-                                                                                                          child: Padding(
-                                                                                                            padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
-                                                                                                            child: Text(
-                                                                                                              '(${functions.checkFileSize(uploadedFileListItemItem)?.toString()} MB)',
-                                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                                                    fontFamily: 'Noto San Thai',
-                                                                                                                    color: Color(0xFFFF0000),
-                                                                                                                    fontSize: 12.0,
-                                                                                                                    letterSpacing: 0.0,
-                                                                                                                  ),
-                                                                                                            ),
-                                                                                                          ),
-                                                                                                        ),
-                                                                                                      ],
-                                                                                                    ),
-                                                                                                  ),
-                                                                                                ),
-                                                                                              ],
+                                                                                                allowRotation: false,
+                                                                                                tag: 'imageTag10',
+                                                                                                useHeroAnimation: true,
+                                                                                              ),
+                                                                                            ),
+                                                                                          );
+                                                                                        },
+                                                                                        child: Hero(
+                                                                                          tag: 'imageTag10',
+                                                                                          transitionOnUserGestures: true,
+                                                                                          child: ClipRRect(
+                                                                                            borderRadius: BorderRadius.circular(8.0),
+                                                                                            child: Image.memory(
+                                                                                              houseRegListItemItem.bytes ?? Uint8List.fromList([]),
+                                                                                              width: () {
+                                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                  return 200.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                  return 300.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                  return 300.0;
+                                                                                                } else {
+                                                                                                  return 300.0;
+                                                                                                }
+                                                                                              }(),
+                                                                                              height: () {
+                                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                                  return 200.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                                  return 300.0;
+                                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                                  return 300.0;
+                                                                                                } else {
+                                                                                                  return 300.0;
+                                                                                                }
+                                                                                              }(),
+                                                                                              fit: BoxFit.cover,
                                                                                             ),
                                                                                           ),
                                                                                         ),
-                                                                                      ),
-                                                                                    );
-                                                                                  },
-                                                                                );
-                                                                              },
+                                                                                      ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation10']!);
+                                                                                    }),
+                                                                                  );
+                                                                                },
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
-                                                                          ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () {
-                                                                              print('Button pressed ...');
-                                                                            },
-                                                                            text:
-                                                                                'อัปโหลดรูปภาพ',
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.camera_alt_outlined,
-                                                                              size: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 25.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 30.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 30.0;
-                                                                                } else {
-                                                                                  return 30.0;
-                                                                                }
-                                                                              }(),
-                                                                            ),
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: double.infinity,
-                                                                              height: 50.0,
-                                                                              padding: EdgeInsets.all(0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              iconColor: Color(0xFF1D71B8),
-                                                                              color: Color(0xFFD9EBFF),
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF1D71B8),
-                                                                                    fontSize: 16.0,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(30.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  decoration:
-                                                                      BoxDecoration(),
-                                                                  child: Column(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Row(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.min,
-                                                                        children: [
-                                                                          SelectionArea(
-                                                                              child: Text(
-                                                                            'บิลค่าไฟ',
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Noto San Thai',
-                                                                                  color: FlutterFlowTheme.of(context).primaryText,
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          )),
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4.0,
-                                                                                0.0,
-                                                                                0.0,
-                                                                                0.0),
-                                                                            child:
-                                                                                Text(
-                                                                              '(ถ้ามี)',
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: 'Noto San Thai',
-                                                                                    color: FlutterFlowTheme.of(context).primaryText,
-                                                                                    letterSpacing: 0.0,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      if (_model.electricBill !=
-                                                                              null &&
-                                                                          (_model.electricBill?.bytes?.isNotEmpty ??
-                                                                              false))
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
                                                                               0.0,
-                                                                              8.0,
+                                                                              12.0,
                                                                               0.0,
                                                                               0.0),
                                                                           child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              await Navigator.push(
-                                                                                context,
-                                                                                PageTransition(
-                                                                                  type: PageTransitionType.fade,
-                                                                                  child: FlutterFlowExpandedImageView(
-                                                                                    image: Image.memory(
-                                                                                      _model.electricBill?.bytes ?? Uint8List.fromList([]),
-                                                                                      fit: BoxFit.contain,
-                                                                                    ),
-                                                                                    allowRotation: false,
-                                                                                    tag: 'imageTag12',
-                                                                                    useHeroAnimation: true,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            },
+                                                                              Container(
+                                                                            height:
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
+                                                                            decoration:
+                                                                                BoxDecoration(),
                                                                             child:
-                                                                                Hero(
-                                                                              tag: 'imageTag12',
-                                                                              transitionOnUserGestures: true,
-                                                                              child: ClipRRect(
-                                                                                borderRadius: BorderRadius.circular(8.0),
-                                                                                child: Image.memory(
-                                                                                  _model.electricBill?.bytes ?? Uint8List.fromList([]),
-                                                                                  width: () {
+                                                                                Builder(
+                                                                              builder: (context) => FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (dialogContext) {
+                                                                                      return Dialog(
+                                                                                        elevation: 0,
+                                                                                        insetPadding: EdgeInsets.zero,
+                                                                                        backgroundColor: Colors.transparent,
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                          },
+                                                                                          child: ImageHouseRegManageComponentWidget(
+                                                                                            houseRegImageList: _model.houseRegFile,
+                                                                                            updateHouseRegAction: (imageList) async {
+                                                                                              _model.houseRegFile = imageList.toList().cast<FFUploadedFile>();
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                                text: 'อัปโหลดรูปภาพ',
+                                                                                icon: Icon(
+                                                                                  Icons.camera_alt_outlined,
+                                                                                  size: () {
                                                                                     if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
+                                                                                      return 25.0;
                                                                                     } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
+                                                                                      return 30.0;
                                                                                     } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
+                                                                                      return 30.0;
                                                                                     } else {
-                                                                                      return 300.0;
+                                                                                      return 30.0;
                                                                                     }
                                                                                   }(),
-                                                                                  height: () {
-                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                      return 200.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                      return 300.0;
-                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                      return 300.0;
-                                                                                    } else {
-                                                                                      return 300.0;
-                                                                                    }
-                                                                                  }(),
-                                                                                  fit: BoxFit.cover,
+                                                                                ),
+                                                                                options: FFButtonOptions(
+                                                                                  width: double.infinity,
+                                                                                  height: 50.0,
+                                                                                  padding: EdgeInsets.all(0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  iconColor: Color(0xFF1D71B8),
+                                                                                  color: Color(0xFFD9EBFF),
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Color(0xFF1D71B8),
+                                                                                        fontSize: 16.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(30.0),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation12']!),
-                                                                        ),
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            12.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                        child:
-                                                                            Container(
-                                                                          height:
-                                                                              50.0,
-                                                                          constraints:
-                                                                              BoxConstraints(
-                                                                            minWidth:
-                                                                                200.0,
-                                                                            maxWidth:
-                                                                                250.0,
                                                                           ),
-                                                                          decoration:
-                                                                              BoxDecoration(),
-                                                                          child:
-                                                                              FFButtonWidget(
-                                                                            onPressed:
-                                                                                () async {
-                                                                              final selectedMedia = await selectMedia(
-                                                                                imageQuality: 30,
-                                                                                mediaSource: MediaSource.photoGallery,
-                                                                                multiImage: false,
-                                                                              );
-                                                                              if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
-                                                                                safeSetState(() => _model.isDataUploading_uploadDataSqdElectricBillWebPC = true);
-                                                                                var selectedUploadedFiles = <FFUploadedFile>[];
-
-                                                                                try {
-                                                                                  selectedUploadedFiles = selectedMedia
-                                                                                      .map((m) => FFUploadedFile(
-                                                                                            name: m.storagePath.split('/').last,
-                                                                                            bytes: m.bytes,
-                                                                                            height: m.dimensions?.height,
-                                                                                            width: m.dimensions?.width,
-                                                                                            blurHash: m.blurHash,
-                                                                                            originalFilename: m.originalFilename,
-                                                                                          ))
-                                                                                      .toList();
-                                                                                } finally {
-                                                                                  _model.isDataUploading_uploadDataSqdElectricBillWebPC = false;
-                                                                                }
-                                                                                if (selectedUploadedFiles.length == selectedMedia.length) {
-                                                                                  safeSetState(() {
-                                                                                    _model.uploadedLocalFile_uploadDataSqdElectricBillWebPC = selectedUploadedFiles.first;
-                                                                                  });
-                                                                                } else {
-                                                                                  safeSetState(() {});
-                                                                                  return;
-                                                                                }
-                                                                              }
-
-                                                                              if ((_model.uploadedLocalFile_uploadDataSqdElectricBillWebPC.bytes?.isNotEmpty ?? false)) {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพสำเร็จ!',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                              } else {
-                                                                                ScaffoldMessenger.of(context).clearSnackBars();
-                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                  SnackBar(
-                                                                                    content: Text(
-                                                                                      'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                                                                      style: TextStyle(
-                                                                                        fontFamily: 'Noto San Thai',
-                                                                                        color: FlutterFlowTheme.of(context).secondary,
-                                                                                        fontWeight: FontWeight.w600,
-                                                                                      ),
-                                                                                    ),
-                                                                                    duration: Duration(milliseconds: 3000),
-                                                                                    backgroundColor: Color(0xBE000000),
-                                                                                  ),
-                                                                                );
-                                                                                return;
-                                                                              }
-                                                                            },
-                                                                            text:
-                                                                                'อัปโหลดรูปภาพ',
-                                                                            icon:
-                                                                                Icon(
-                                                                              Icons.camera_alt_outlined,
-                                                                              size: () {
-                                                                                if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
-                                                                                  return 25.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
-                                                                                  return 30.0;
-                                                                                } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
-                                                                                  return 30.0;
-                                                                                } else {
-                                                                                  return 30.0;
-                                                                                }
-                                                                              }(),
-                                                                            ),
-                                                                            options:
-                                                                                FFButtonOptions(
-                                                                              width: double.infinity,
-                                                                              height: 50.0,
-                                                                              padding: EdgeInsets.all(0.0),
-                                                                              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                              iconColor: Color(0xFF1D71B8),
-                                                                              color: Color(0xFFD9EBFF),
-                                                                              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height: _model
+                                                                              .bookBankFile
+                                                                              .length >
+                                                                          0
+                                                                      ? 420.0
+                                                                      : 120.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'เอกสารแสดงรายได้ 6 เดือน',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: 'Noto San Thai',
-                                                                                    color: Color(0xFF1D71B8),
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
                                                                                     fontSize: 16.0,
                                                                                     letterSpacing: 0.0,
                                                                                   ),
-                                                                              elevation: 0.0,
-                                                                              borderRadius: BorderRadius.circular(30.0),
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if (_model.bookBankFile.length >
+                                                                            0)
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Container(
+                                                                              width: 300.0,
+                                                                              height: 300.0,
+                                                                              decoration: BoxDecoration(),
+                                                                              child: Builder(
+                                                                                builder: (context) {
+                                                                                  final uploadedFileListItem = _model.bookBankFile.toList().take(10).toList();
+
+                                                                                  return ListView.builder(
+                                                                                    padding: EdgeInsets.zero,
+                                                                                    shrinkWrap: true,
+                                                                                    scrollDirection: Axis.vertical,
+                                                                                    itemCount: uploadedFileListItem.length,
+                                                                                    itemBuilder: (context, uploadedFileListItemIndex) {
+                                                                                      final uploadedFileListItemItem = uploadedFileListItem[uploadedFileListItemIndex];
+                                                                                      return Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                                                                                        child: InkWell(
+                                                                                          splashColor: Colors.transparent,
+                                                                                          focusColor: Colors.transparent,
+                                                                                          hoverColor: Colors.transparent,
+                                                                                          highlightColor: Colors.transparent,
+                                                                                          onTap: () async {},
+                                                                                          child: Container(
+                                                                                            width: double.infinity,
+                                                                                            decoration: BoxDecoration(),
+                                                                                            child: Padding(
+                                                                                              padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                                                                                              child: Row(
+                                                                                                mainAxisSize: MainAxisSize.max,
+                                                                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                children: [
+                                                                                                  Padding(
+                                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                                                                                                    child: InkWell(
+                                                                                                      splashColor: Colors.transparent,
+                                                                                                      focusColor: Colors.transparent,
+                                                                                                      hoverColor: Colors.transparent,
+                                                                                                      highlightColor: Colors.transparent,
+                                                                                                      onTap: () async {
+                                                                                                        var confirmDialogResponse = await showDialog<bool>(
+                                                                                                              context: context,
+                                                                                                              builder: (alertDialogContext) {
+                                                                                                                return AlertDialog(
+                                                                                                                  content: Text('คุณต้องการลบไฟล์ ${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename == 'image' ? 'รูปภาพ' : 'ไฟล์ PDF'} หรือไม่?'),
+                                                                                                                  actions: [
+                                                                                                                    TextButton(
+                                                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                                      child: Text('ยกเลิก'),
+                                                                                                                    ),
+                                                                                                                    TextButton(
+                                                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                                      child: Text('ลบ'),
+                                                                                                                    ),
+                                                                                                                  ],
+                                                                                                                );
+                                                                                                              },
+                                                                                                            ) ??
+                                                                                                            false;
+                                                                                                        if (!confirmDialogResponse) {
+                                                                                                          return;
+                                                                                                        }
+                                                                                                        _model.removeAtIndexFromBookBankFile(uploadedFileListItemIndex);
+                                                                                                        safeSetState(() {});
+                                                                                                      },
+                                                                                                      child: Icon(
+                                                                                                        Icons.close_outlined,
+                                                                                                        color: Color(0xFFFF0000),
+                                                                                                        size: 30.0,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  Flexible(
+                                                                                                    flex: 3,
+                                                                                                    child: Align(
+                                                                                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                                                                                      child: Row(
+                                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                                        children: [
+                                                                                                          Flexible(
+                                                                                                            child: RichText(
+                                                                                                              textScaler: MediaQuery.of(context).textScaler,
+                                                                                                              text: TextSpan(
+                                                                                                                children: [
+                                                                                                                  TextSpan(
+                                                                                                                    text: '${(uploadedFileListItemIndex + 1).toString()}. ${uploadedFileListItemItem.originalFilename}',
+                                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                          fontFamily: 'Noto San Thai',
+                                                                                                                          letterSpacing: 0.0,
+                                                                                                                        ),
+                                                                                                                  ),
+                                                                                                                  TextSpan(
+                                                                                                                    text: '  (${functions.checkFileSize(uploadedFileListItemItem)?.toString()} MB)',
+                                                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                          fontFamily: 'Noto San Thai',
+                                                                                                                          color: FlutterFlowTheme.of(context).error,
+                                                                                                                          letterSpacing: 0.0,
+                                                                                                                        ),
+                                                                                                                  )
+                                                                                                                ],
+                                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                                      fontFamily: 'Noto San Thai',
+                                                                                                                      letterSpacing: 0.0,
+                                                                                                                    ),
+                                                                                                              ),
+                                                                                                            ),
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
+                                                                            decoration:
+                                                                                BoxDecoration(),
+                                                                            child:
+                                                                                Builder(
+                                                                              builder: (context) => FFButtonWidget(
+                                                                                onPressed: () async {
+                                                                                  await showDialog(
+                                                                                    context: context,
+                                                                                    builder: (dialogContext) {
+                                                                                      return Dialog(
+                                                                                        elevation: 0,
+                                                                                        insetPadding: EdgeInsets.zero,
+                                                                                        backgroundColor: Colors.transparent,
+                                                                                        alignment: AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+                                                                                        child: GestureDetector(
+                                                                                          onTap: () {
+                                                                                            FocusScope.of(dialogContext).unfocus();
+                                                                                            FocusManager.instance.primaryFocus?.unfocus();
+                                                                                          },
+                                                                                          child: ImageTransactionManageComponentWidget(
+                                                                                            initialFileType: _model.transactionFileType,
+                                                                                            transactionFileList: _model.bookBankFile,
+                                                                                            updatePdfTransactionAction: (pdfFile) async {
+                                                                                              _model.bookBankFile = [];
+                                                                                              safeSetState(() {});
+                                                                                              _model.addToBookBankFile(pdfFile);
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                            updateTransactionFileTypeAction: (fileType) async {
+                                                                                              _model.transactionFileType = fileType;
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                            updateImageTransactionAction: (imageList) async {
+                                                                                              _model.bookBankFile = imageList!.toList().cast<FFUploadedFile>();
+                                                                                              safeSetState(() {});
+                                                                                            },
+                                                                                          ),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                                text: 'อัปโหลดรูปภาพ',
+                                                                                icon: Icon(
+                                                                                  Icons.camera_alt_outlined,
+                                                                                  size: () {
+                                                                                    if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                      return 25.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                      return 30.0;
+                                                                                    } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                      return 30.0;
+                                                                                    } else {
+                                                                                      return 30.0;
+                                                                                    }
+                                                                                  }(),
+                                                                                ),
+                                                                                options: FFButtonOptions(
+                                                                                  width: double.infinity,
+                                                                                  height: 50.0,
+                                                                                  padding: EdgeInsets.all(0.0),
+                                                                                  iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                  iconColor: Color(0xFF1D71B8),
+                                                                                  color: Color(0xFFD9EBFF),
+                                                                                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: Color(0xFF1D71B8),
+                                                                                        fontSize: 16.0,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                  elevation: 0.0,
+                                                                                  borderRadius: BorderRadius.circular(30.0),
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  height: _model.electricBill !=
+                                                                              null &&
+                                                                          (_model.electricBill?.bytes?.isNotEmpty ??
+                                                                              false)
+                                                                      ? 420.0
+                                                                      : 120.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                                    boxShadow: [
+                                                                      BoxShadow(
+                                                                        blurRadius:
+                                                                            4.0,
+                                                                        color: Color(
+                                                                            0x33000000),
+                                                                        offset:
+                                                                            Offset(
+                                                                          0.0,
+                                                                          2.0,
+                                                                        ),
+                                                                      )
                                                                     ],
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            16.0,
+                                                                            10.0,
+                                                                            16.0,
+                                                                            10.0),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            SelectionArea(
+                                                                                child: Text(
+                                                                              'บิลค่าไฟ',
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: FlutterFlowTheme.of(context).primaryText,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                  ),
+                                                                            )),
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                                              child: Text(
+                                                                                '(ถ้ามี)',
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                        if (_model.electricBill !=
+                                                                                null &&
+                                                                            (_model.electricBill?.bytes?.isNotEmpty ??
+                                                                                false))
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                InkWell(
+                                                                              splashColor: Colors.transparent,
+                                                                              focusColor: Colors.transparent,
+                                                                              hoverColor: Colors.transparent,
+                                                                              highlightColor: Colors.transparent,
+                                                                              onTap: () async {
+                                                                                await Navigator.push(
+                                                                                  context,
+                                                                                  PageTransition(
+                                                                                    type: PageTransitionType.fade,
+                                                                                    child: FlutterFlowExpandedImageView(
+                                                                                      image: Image.memory(
+                                                                                        _model.electricBill?.bytes ?? Uint8List.fromList([]),
+                                                                                        fit: BoxFit.contain,
+                                                                                      ),
+                                                                                      allowRotation: false,
+                                                                                      tag: 'imageTag11',
+                                                                                      useHeroAnimation: true,
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                              child: Hero(
+                                                                                tag: 'imageTag11',
+                                                                                transitionOnUserGestures: true,
+                                                                                child: ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: Image.memory(
+                                                                                    _model.electricBill?.bytes ?? Uint8List.fromList([]),
+                                                                                    width: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    height: () {
+                                                                                      if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                        return 200.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                        return 300.0;
+                                                                                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                        return 300.0;
+                                                                                      } else {
+                                                                                        return 300.0;
+                                                                                      }
+                                                                                    }(),
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ).animateOnPageLoad(animationsMap['imageOnPageLoadAnimation11']!),
+                                                                          ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0.0,
+                                                                              12.0,
+                                                                              0.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                50.0,
+                                                                            constraints:
+                                                                                BoxConstraints(
+                                                                              minWidth: 200.0,
+                                                                              maxWidth: 250.0,
+                                                                            ),
+                                                                            decoration:
+                                                                                BoxDecoration(),
+                                                                            child:
+                                                                                FFButtonWidget(
+                                                                              onPressed: () async {
+                                                                                final selectedMedia = await selectMedia(
+                                                                                  imageQuality: 30,
+                                                                                  mediaSource: MediaSource.photoGallery,
+                                                                                  multiImage: false,
+                                                                                );
+                                                                                if (selectedMedia != null && selectedMedia.every((m) => validateFileFormat(m.storagePath, context))) {
+                                                                                  safeSetState(() => _model.isDataUploading_uploadDataSqdElectricBillWebPC = true);
+                                                                                  var selectedUploadedFiles = <FFUploadedFile>[];
+
+                                                                                  try {
+                                                                                    selectedUploadedFiles = selectedMedia
+                                                                                        .map((m) => FFUploadedFile(
+                                                                                              name: m.storagePath.split('/').last,
+                                                                                              bytes: m.bytes,
+                                                                                              height: m.dimensions?.height,
+                                                                                              width: m.dimensions?.width,
+                                                                                              blurHash: m.blurHash,
+                                                                                              originalFilename: m.originalFilename,
+                                                                                            ))
+                                                                                        .toList();
+                                                                                  } finally {
+                                                                                    _model.isDataUploading_uploadDataSqdElectricBillWebPC = false;
+                                                                                  }
+                                                                                  if (selectedUploadedFiles.length == selectedMedia.length) {
+                                                                                    safeSetState(() {
+                                                                                      _model.uploadedLocalFile_uploadDataSqdElectricBillWebPC = selectedUploadedFiles.first;
+                                                                                    });
+                                                                                  } else {
+                                                                                    safeSetState(() {});
+                                                                                    return;
+                                                                                  }
+                                                                                }
+
+                                                                                if ((_model.uploadedLocalFile_uploadDataSqdElectricBillWebPC.bytes?.isNotEmpty ?? false)) {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพสำเร็จ!',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                      ),
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                } else {
+                                                                                  ScaffoldMessenger.of(context).clearSnackBars();
+                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                    SnackBar(
+                                                                                      content: Text(
+                                                                                        'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                                                        style: TextStyle(
+                                                                                          fontFamily: 'Noto San Thai',
+                                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                                          fontWeight: FontWeight.w600,
+                                                                                        ),
+                                                                                      ),
+                                                                                      duration: Duration(milliseconds: 3000),
+                                                                                      backgroundColor: Color(0xBE000000),
+                                                                                    ),
+                                                                                  );
+                                                                                  return;
+                                                                                }
+
+                                                                                _model.electricBill = _model.uploadedLocalFile_uploadDataSqdElectricBillWebPC;
+                                                                                safeSetState(() {});
+                                                                              },
+                                                                              text: 'อัปโหลดรูปภาพ',
+                                                                              icon: Icon(
+                                                                                Icons.camera_alt_outlined,
+                                                                                size: () {
+                                                                                  if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
+                                                                                    return 25.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
+                                                                                    return 30.0;
+                                                                                  } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
+                                                                                    return 30.0;
+                                                                                  } else {
+                                                                                    return 30.0;
+                                                                                  }
+                                                                                }(),
+                                                                              ),
+                                                                              options: FFButtonOptions(
+                                                                                width: double.infinity,
+                                                                                height: 50.0,
+                                                                                padding: EdgeInsets.all(0.0),
+                                                                                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                iconColor: Color(0xFF1D71B8),
+                                                                                color: Color(0xFFD9EBFF),
+                                                                                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: Color(0xFF1D71B8),
+                                                                                      fontSize: 16.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                                elevation: 0.0,
+                                                                                borderRadius: BorderRadius.circular(30.0),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -11452,264 +11900,141 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                     },
                                                   );
 
-                                                  _model.aPIcheckRateOutputPC =
-                                                      await CheckRateApiCall
+                                                  _model.save2APIOutputPC =
+                                                      await SolarSystemGroup
+                                                          .leadSaveStepTwoCall
                                                           .call(
-                                                    chanodNo: FFAppState()
-                                                                .chanodOutput
-                                                                .chanodNo !=
-                                                            ''
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .chanodNo
-                                                        : '',
-                                                    changwatName: FFAppState()
-                                                        .addressOutput
-                                                        .provinceName,
-                                                    amphurName: FFAppState()
-                                                        .addressOutput
-                                                        .districtName,
-                                                    landAreaRai: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaRai()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaRai
-                                                        : '',
-                                                    landAreaNgan: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaNgan()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaNgan
-                                                        : '',
-                                                    landAreaWa: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaWa()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaWa
-                                                        : '',
-                                                    utmmap: FFAppState()
-                                                                .chanodOutput
-                                                                .utmmap !=
-                                                            ''
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .utmmap
-                                                        : '',
-                                                    landNo: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandNo()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landNo
-                                                        : '',
-                                                    surveyNo: '',
-                                                    apiUrl: FFAppState()
-                                                        .landAndHouseAPIUrl,
-                                                  );
-
-                                                  _shouldSetState = true;
-                                                  if ((_model.aPIcheckRateOutputPC
-                                                              ?.statusCode ??
-                                                          200) ==
-                                                      200) {
-                                                  } else {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
-                                                                  0.0, 0.0)
-                                                              .resolve(
-                                                                  Directionality.of(
-                                                                      context)),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                ErrorMessageComponentWidget(
-                                                              textMessage:
-                                                                  'พบข้อผิดพลาด Connection (${(_model.aPIcheckRateOutputPC?.statusCode ?? 200).toString()})',
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    Navigator.pop(context);
-                                                    if (_shouldSetState)
-                                                      safeSetState(() {});
-                                                    return;
-                                                  }
-
-                                                  if ('${getJsonField(
-                                                        (_model.aPIcheckRateOutputPC
-                                                                ?.jsonBody ??
-                                                            ''),
-                                                        r'''$.code''',
-                                                      ).toString()}' ==
-                                                      '200') {
-                                                    FFAppState().chanodOutput =
-                                                        CheckRateApiCall
-                                                            .results(
-                                                      (_model.aPIcheckRateOutputPC
-                                                              ?.jsonBody ??
-                                                          ''),
-                                                    )!;
-                                                    safeSetState(() {});
-                                                    FFAppState()
-                                                        .updateChanodOutputStruct(
-                                                      (e) => e
-                                                        ..landAreaRai =
-                                                            FFAppState()
-                                                                .AppStateAREARAI
-                                                        ..landAreaNgan =
-                                                            FFAppState()
-                                                                .AppStateAREANGAN
-                                                        ..landAreaWa =
-                                                            FFAppState()
-                                                                .AppStateAREAWA,
-                                                    );
-                                                    safeSetState(() {});
-                                                  }
-                                                  _model.saveAPIOutputPC =
-                                                      await SaveRateApiWebCall
-                                                          .call(
-                                                    chanodNo: FFAppState()
-                                                            .chanodOutput
-                                                            .hasChanodNo()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .chanodNo
-                                                        : '',
-                                                    changwatName: FFAppState()
-                                                        .addressOutput
-                                                        .provinceName,
-                                                    amphurName: FFAppState()
-                                                        .addressOutput
-                                                        .districtName,
-                                                    landAreaRai: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaRai()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaRai
-                                                        : '',
-                                                    landAreaNgan: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaNgan()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaNgan
-                                                        : '',
-                                                    landAreaWa: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandAreaWa()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landAreaWa
-                                                        : '',
-                                                    utmmap: FFAppState()
-                                                            .chanodOutput
-                                                            .hasUtmmap()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .utmmap
-                                                        : '',
-                                                    landNo: FFAppState()
-                                                            .chanodOutput
-                                                            .hasLandNo()
-                                                        ? FFAppState()
-                                                            .chanodOutput
-                                                            .landNo
-                                                        : '',
-                                                    surveyNo: '',
-                                                    firstName: '${getJsonField(
-                                                      FFAppState()
-                                                          .customerDetailJson,
-                                                      r'''$.first_name''',
-                                                    ).toString()}',
-                                                    lastName: '${getJsonField(
-                                                      FFAppState()
-                                                          .customerDetailJson,
-                                                      r'''$.last_name''',
-                                                    ).toString()}',
-                                                    phoneNumber:
-                                                        '${getJsonField(
-                                                      FFAppState()
-                                                          .customerDetailJson,
-                                                      r'''$.phone_number''',
-                                                    ).toString()}',
-                                                    birthDate: '',
-                                                    email: '',
-                                                    titleName: '',
-                                                    hashId: '',
-                                                    idNumber: true
-                                                        ? functions.removeDash(
-                                                            _model
-                                                                .thaiIdTextFieldPCTextController
-                                                                .text)
-                                                        : '',
-                                                    imageChanodFront: _model
-                                                                    .chanodFrontFile !=
-                                                                null &&
-                                                            (_model
-                                                                    .chanodFrontFile
-                                                                    ?.bytes
-                                                                    ?.isNotEmpty ??
-                                                                false)
-                                                        ? _model.chanodFrontFile
-                                                        : _model
-                                                            .uploadedLocalFile_uploadNullValueAction,
-                                                    imageChanodBack: _model
-                                                                    .chanodBackFile !=
-                                                                null &&
-                                                            (_model
-                                                                    .chanodBackFile
-                                                                    ?.bytes
-                                                                    ?.isNotEmpty ??
-                                                                false)
-                                                        ? _model.chanodBackFile
-                                                        : _model
-                                                            .uploadedLocalFile_uploadNullValueAction,
-                                                    ratesDataJson: FFAppState()
-                                                        .chanodOutput
-                                                        .toMap(),
-                                                    apiUrl: FFAppState()
-                                                        .landAndHouseAPIUrl,
-                                                    consentDate: '',
-                                                    leadSource: 'WEB',
                                                     step: '2',
-                                                    leadsId:
-                                                        FFAppState().leadsID,
-                                                    consentFlg:
-                                                        FFAppState().consentFlg,
-                                                    utmSource: FFAppState()
-                                                        .utmSourceAppState,
-                                                    utmMedium: FFAppState()
-                                                        .utmMediumAppState,
-                                                    utmCampaign: FFAppState()
-                                                        .utmCampaignAppState,
+                                                    product: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .product,
+                                                    leadGroup: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .leadGroup,
+                                                    channel: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .channel,
+                                                    subProduct: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .subProduct,
+                                                    phoneNumber: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .phoneNumber,
+                                                    tempLeadId: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .tempLeadId
+                                                        .toString(),
+                                                    sourceBy: FFAppState()
+                                                        .SolarSaveStep1AppState
+                                                        .payload
+                                                        .sourceBy,
+                                                    thaiId: functions
+                                                        .removeDash(_model
+                                                            .thaiIdTextFieldPCTextController
+                                                            .text),
+                                                    token:
+                                                        FFAppState().solarToken,
+                                                    deedNo: _model
+                                                        .chanodNumberTextFieldPCTextController
+                                                        .text,
+                                                    rai: _model
+                                                        .raiTextFieldPCTextController
+                                                        .text,
+                                                    subdistrict: FFAppState()
+                                                        .addressOutput
+                                                        .subdistrictName,
+                                                    squareWah: _model
+                                                        .tarangWaTextFieldPCTextController
+                                                        .text,
+                                                    ngan: _model
+                                                        .nganTextFieldPCTextController
+                                                        .text,
+                                                    district: FFAppState()
+                                                        .addressOutput
+                                                        .districtName,
+                                                    province: FFAppState()
+                                                        .addressOutput
+                                                        .provinceName,
+                                                    remark: '-',
+                                                    attachIdCardList: functions
+                                                        .createListUploadFile(
+                                                            _model.idCardFile),
+                                                    attachHouseRegistrationList:
+                                                        _model.houseRegFile,
+                                                    attachIncomeList:
+                                                        _model.bookBankFile,
+                                                    attachLandOrAppraisalList:
+                                                        () {
+                                                      if ((_model.chanodFrontFile !=
+                                                                  null &&
+                                                              (_model
+                                                                      .chanodFrontFile
+                                                                      ?.bytes
+                                                                      ?.isNotEmpty ??
+                                                                  false)) &&
+                                                          (_model.chanodBackFile !=
+                                                                  null &&
+                                                              (_model
+                                                                      .chanodBackFile
+                                                                      ?.bytes
+                                                                      ?.isNotEmpty ??
+                                                                  false))) {
+                                                        return functions
+                                                            .generate2FileList(
+                                                                _model
+                                                                    .chanodFrontFile,
+                                                                _model
+                                                                    .chanodBackFile);
+                                                      } else if (_model
+                                                                  .chanodFrontFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodFrontFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) {
+                                                        return functions
+                                                            .createListUploadFile(
+                                                                _model
+                                                                    .chanodFrontFile);
+                                                      } else if (_model
+                                                                  .chanodBackFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodBackFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) {
+                                                        return functions
+                                                            .createListUploadFile(
+                                                                _model
+                                                                    .chanodBackFile);
+                                                      } else {
+                                                        return functions
+                                                            .createListUploadFile(
+                                                                _model
+                                                                    .chanodBackFile);
+                                                      }
+                                                    }(),
+                                                    attachQuotationList: functions
+                                                        .createListUploadFile(
+                                                            _model.quotation),
+                                                    attachElectricityList: functions
+                                                        .createListUploadFile(
+                                                            _model
+                                                                .electricBill),
+                                                    url: FFAppState()
+                                                        .apiUrlDocData
+                                                        .solarLeadApiUrl,
                                                   );
 
                                                   _shouldSetState = true;
-                                                  if ((_model.saveAPIOutputPC
+                                                  if ((_model.save2APIOutputPC
                                                               ?.statusCode ??
                                                           200) !=
                                                       200) {
@@ -11742,7 +12067,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                             child:
                                                                 ErrorMessageComponentWidget(
                                                               textMessage:
-                                                                  'พบข้อผิดพลาด Save Connection (${(_model.saveAPIOutputPC?.statusCode ?? 200).toString()})',
+                                                                  'พบข้อผิดพลาด Save Connection (${(_model.save2APIOutputPC?.statusCode ?? 200).toString()})',
                                                             ),
                                                           ),
                                                         );
@@ -11755,7 +12080,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                     return;
                                                   }
                                                   if ('${getJsonField(
-                                                        (_model.saveAPIOutputPC
+                                                        (_model.save2APIOutputPC
                                                                 ?.jsonBody ??
                                                             ''),
                                                         r'''$.code''',
@@ -11792,7 +12117,7 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                                 ErrorMessageComponentWidget(
                                                               textMessage:
                                                                   'พบข้อผิดพลาด save (${getJsonField(
-                                                                (_model.saveAPIOutputPC
+                                                                (_model.save2APIOutputPC
                                                                         ?.jsonBody ??
                                                                     ''),
                                                                 r'''$.message''',
@@ -11809,45 +12134,27 @@ class _SolarInfoPageWidgetState extends State<SolarInfoPageWidget>
                                                     return;
                                                   }
 
-                                                  FFAppState().ltv1AmountWeb =
-                                                      FFAppState()
-                                                          .chanodOutput
-                                                          .ltv1Amount
-                                                          .toString();
-                                                  FFAppState().ltv2AmountWeb =
-                                                      FFAppState()
-                                                          .chanodOutput
-                                                          .ltv2Amount
-                                                          .toString();
-                                                  safeSetState(() {});
-                                                  FFAppState().chanodOutput =
-                                                      ChanodDataModelStruct();
-                                                  FFAppState().addressOutput =
-                                                      AddressDataModelStruct();
-                                                  FFAppState()
-                                                      .addressDataOriginal = [];
-                                                  FFAppState()
-                                                          .customerDetailData =
-                                                      CustomerDetailStruct();
-                                                  FFAppState()
-                                                      .addressDataListOutput = [];
-                                                  FFAppState().AppStateAREARAI =
-                                                      '';
-                                                  FFAppState()
-                                                      .AppStateAREANGAN = '';
-                                                  FFAppState().AppStateAREAWA =
-                                                      '';
-                                                  FFAppState()
-                                                          .customerDetailJson =
-                                                      null;
-                                                  FFAppState().leadsID = '';
-                                                  safeSetState(() {});
-                                                  Navigator.pop(context);
-
-                                                  context.goNamed(
-                                                      RateWebPageWidget
-                                                          .routeName);
-
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        content: Text((_model
+                                                                    .save2APIOutputPC
+                                                                    ?.jsonBody ??
+                                                                '')
+                                                            .toString()),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: Text('Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
                                                 },

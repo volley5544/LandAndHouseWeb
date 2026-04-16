@@ -4744,6 +4744,11 @@ class LeadSaveStepOneCall {
         response,
         r'''$.message''',
       ));
+  SolarSaveStep1Struct? data(dynamic response) =>
+      SolarSaveStep1Struct.maybeFromMap(getJsonField(
+        response,
+        r'''$.results.data''',
+      ));
 }
 
 class LeadSaveStepTwoCall {

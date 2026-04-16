@@ -897,6 +897,17 @@ class FFAppState extends ChangeNotifier {
   set solarToken(String value) {
     _solarToken = value;
   }
+
+  SolarSaveStep1Struct _SolarSaveStep1AppState = SolarSaveStep1Struct();
+  SolarSaveStep1Struct get SolarSaveStep1AppState => _SolarSaveStep1AppState;
+  set SolarSaveStep1AppState(SolarSaveStep1Struct value) {
+    _SolarSaveStep1AppState = value;
+  }
+
+  void updateSolarSaveStep1AppStateStruct(
+      Function(SolarSaveStep1Struct) updateFn) {
+    updateFn(_SolarSaveStep1AppState);
+  }
 }
 
 void _safeInit(Function() initializeField) {

@@ -536,7 +536,7 @@ class _AddCustomerSolarLeadWidgetState
                                                                               context)
                                                                           .width <
                                                                       kBreakpointSmall) {
-                                                                    return 16.0;
+                                                                    return 14.0;
                                                                   } else if (MediaQuery.sizeOf(
                                                                               context)
                                                                           .width <
@@ -1758,8 +1758,6 @@ class _AddCustomerSolarLeadWidgetState
                                                   ''),
                                             )!;
                                             safeSetState(() {});
-                                            FFAppState().leadsID = '12345';
-                                            safeSetState(() {});
                                             _model.solarSaveStep1 =
                                                 await SolarSystemGroup
                                                     .leadSaveStepOneCall
@@ -1776,11 +1774,15 @@ class _AddCustomerSolarLeadWidgetState
                                               lastName: _model
                                                   .lastNameTextFieldTextController
                                                   .text,
-                                              phoneNumber: _model
-                                                  .phoneTextFieldTextController
-                                                  .text,
+                                              phoneNumber: functions.removeDash(
+                                                  _model
+                                                      .phoneTextFieldTextController
+                                                      .text),
                                               consentFlag:
-                                                  _model.radioButtonValue,
+                                                  _model.radioButtonValue ==
+                                                          'ยินยอม'
+                                                      ? 'Y'
+                                                      : 'N',
                                               token: FFAppState().solarToken,
                                               utmSource:
                                                   functions.getUtmParamFromUrl(
@@ -1891,6 +1893,16 @@ class _AddCustomerSolarLeadWidgetState
                                                 safeSetState(() {});
                                               return;
                                             }
+                                            FFAppState()
+                                                    .SolarSaveStep1AppState =
+                                                SolarSystemGroup
+                                                    .leadSaveStepOneCall
+                                                    .data(
+                                              (_model.solarSaveStep1
+                                                      ?.jsonBody ??
+                                                  ''),
+                                            )!;
+                                            safeSetState(() {});
 
                                             context.goNamed(
                                                 SolarInfoPageWidget.routeName);

@@ -23,7 +23,15 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
 
   FFUploadedFile? idCardFile;
 
-  FFUploadedFile? houseRegFile;
+  List<FFUploadedFile> houseRegFile = [];
+  void addToHouseRegFile(FFUploadedFile item) => houseRegFile.add(item);
+  void removeFromHouseRegFile(FFUploadedFile item) => houseRegFile.remove(item);
+  void removeAtIndexFromHouseRegFile(int index) => houseRegFile.removeAt(index);
+  void insertAtIndexInHouseRegFile(int index, FFUploadedFile item) =>
+      houseRegFile.insert(index, item);
+  void updateHouseRegFileAtIndex(
+          int index, Function(FFUploadedFile) updateFn) =>
+      houseRegFile[index] = updateFn(houseRegFile[index]);
 
   List<FFUploadedFile> bookBankFile = [];
   void addToBookBankFile(FFUploadedFile item) => bookBankFile.add(item);
@@ -48,6 +56,8 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
   FFUploadedFile? chanodFrontFileTemp;
 
   FFUploadedFile? chanodBackFileTemp;
+
+  String transactionFileType = 'PDF';
 
   ///  State fields for stateful widgets in this page.
 
@@ -86,24 +96,26 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
       tarangWaTextFieldTextControllerValidator;
   // State field(s) for Carousel widget.
   CarouselSliderController? carouselController1;
-  int carouselCurrentIndex1 = 1;
+  int carouselCurrentIndex1 = 0;
 
-  bool isDataUploading_uploadDataSqdWebMobile = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqdWebMobile =
+  bool isDataUploading_uploadDataQuotationMobile = false;
+  FFUploadedFile uploadedLocalFile_uploadDataQuotationMobile =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  bool isDataUploading_uploadDataSqd2Web5 = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqd2Web5 =
+  bool isDataUploading_uploadDataIdCardMobile = false;
+  FFUploadedFile uploadedLocalFile_uploadDataIdCardMobile =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // State field(s) for Carousel widget.
   CarouselSliderController? carouselController2;
-  int carouselCurrentIndex2 = 1;
+  int carouselCurrentIndex2 = 0;
 
-  // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.
-  ApiCallResponse? aPIcheckRateOutputMobile;
-  // Stores action output result for [Backend Call - API (saveRateApiWeb)] action in Container widget.
-  ApiCallResponse? saveAPIOutputMobile;
+  bool isDataUploading_uploadDataElectricBillMobile = false;
+  FFUploadedFile uploadedLocalFile_uploadDataElectricBillMobile =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  // Stores action output result for [Backend Call - API (lead save step two)] action in Container widget.
+  ApiCallResponse? save2APIOutputMobile;
   // State field(s) for ThaiIdTextFieldPC widget.
   FocusNode? thaiIdTextFieldPCFocusNode;
   TextEditingController? thaiIdTextFieldPCTextController;
@@ -149,18 +161,12 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
   FFUploadedFile uploadedLocalFile_uploadDataSqdIdCardWebPC =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  bool isDataUploading_uploadDataSqdHouseRegWebPC = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqdHouseRegWebPC =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-
   bool isDataUploading_uploadDataSqdElectricBillWebPC = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqdElectricBillWebPC =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // Stores action output result for [Backend Call - API (checkRateApi)] action in Container widget.
-  ApiCallResponse? aPIcheckRateOutputPC;
-  // Stores action output result for [Backend Call - API (saveRateApiWeb)] action in Container widget.
-  ApiCallResponse? saveAPIOutputPC;
+  // Stores action output result for [Backend Call - API (lead save step two)] action in Container widget.
+  ApiCallResponse? save2APIOutputPC;
   // Model for loanDataComponent component.
   late LoanDataComponentModel loanDataComponentModel;
   bool isDataUploading_uploadNullValueAction = false;
@@ -234,8 +240,10 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
 
       return;
     }
-    if (!(('${FFAppState().leadsID}' != '') &&
-        ('${FFAppState().leadsID}' != 'null'))) {
+    if (!(('${FFAppState().SolarSaveStep1AppState.tempLeadId.toString()}' !=
+            '') &&
+        ('${FFAppState().SolarSaveStep1AppState.tempLeadId.toString()}' !=
+            'null'))) {
       context.goNamed(
         AddCustomerLeadWidget.routeName,
         extra: <String, dynamic>{
