@@ -1,8 +1,8 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/components/loan_data_component_widget.dart';
-import '/components/p_c_banner_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/lead_solar_cell_web/solar_data_component/solar_data_component_widget.dart';
+import '/lead_solar_cell_web/solar_p_c_banner_component/solar_p_c_banner_component_widget.dart';
 import '/index.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +59,14 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
 
   String transactionFileType = 'PDF';
 
+  FFUploadedFile? landQuotationFile;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in SolarInfoPage widget.
   ApplicationRecord? queryAPIUrl;
-  // Model for PCBannerComponent component.
-  late PCBannerComponentModel pCBannerComponentModel;
+  // Model for SolarPCBannerComponent component.
+  late SolarPCBannerComponentModel solarPCBannerComponentModel;
   // State field(s) for ThaiIdTextField widget.
   FocusNode? thaiIdTextFieldFocusNode;
   TextEditingController? thaiIdTextFieldTextController;
@@ -94,21 +96,25 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
   TextEditingController? tarangWaTextFieldTextController;
   String? Function(BuildContext, String?)?
       tarangWaTextFieldTextControllerValidator;
-  // State field(s) for Carousel widget.
-  CarouselSliderController? carouselController1;
-  int carouselCurrentIndex1 = 0;
-
-  bool isDataUploading_uploadDataQuotationMobile = false;
-  FFUploadedFile uploadedLocalFile_uploadDataQuotationMobile =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-
   bool isDataUploading_uploadDataIdCardMobile = false;
   FFUploadedFile uploadedLocalFile_uploadDataIdCardMobile =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // State field(s) for Carousel widget.
+  CarouselSliderController? carouselController1;
+  int carouselCurrentIndex1 = 0;
+
+  // State field(s) for Carousel widget.
   CarouselSliderController? carouselController2;
   int carouselCurrentIndex2 = 0;
+
+  bool isDataUploading_uploadDataLandQuotationMobile = false;
+  FFUploadedFile uploadedLocalFile_uploadDataLandQuotationMobile =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  bool isDataUploading_uploadDataQuotationMobile = false;
+  FFUploadedFile uploadedLocalFile_uploadDataQuotationMobile =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataElectricBillMobile = false;
   FFUploadedFile uploadedLocalFile_uploadDataElectricBillMobile =
@@ -153,12 +159,16 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
   TextEditingController? tarangWaTextFieldPCTextController;
   String? Function(BuildContext, String?)?
       tarangWaTextFieldPCTextControllerValidator;
-  bool isDataUploading_uploadDataSqdQuotationWebPC = false;
-  FFUploadedFile uploadedLocalFile_uploadDataSqdQuotationWebPC =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-
   bool isDataUploading_uploadDataSqdIdCardWebPC = false;
   FFUploadedFile uploadedLocalFile_uploadDataSqdIdCardWebPC =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  bool isDataUploading_uploadDataSqdLandQuotationWebPC = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqdLandQuotationWebPC =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  bool isDataUploading_uploadDataSqdQuotationWebPC = false;
+  FFUploadedFile uploadedLocalFile_uploadDataSqdQuotationWebPC =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataSqdElectricBillWebPC = false;
@@ -167,23 +177,23 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
 
   // Stores action output result for [Backend Call - API (lead save step two)] action in Container widget.
   ApiCallResponse? save2APIOutputPC;
-  // Model for loanDataComponent component.
-  late LoanDataComponentModel loanDataComponentModel;
+  // Model for SolarDataComponent component.
+  late SolarDataComponentModel solarDataComponentModel;
   bool isDataUploading_uploadNullValueAction = false;
   FFUploadedFile uploadedLocalFile_uploadNullValueAction =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   @override
   void initState(BuildContext context) {
-    pCBannerComponentModel =
-        createModel(context, () => PCBannerComponentModel());
-    loanDataComponentModel =
-        createModel(context, () => LoanDataComponentModel());
+    solarPCBannerComponentModel =
+        createModel(context, () => SolarPCBannerComponentModel());
+    solarDataComponentModel =
+        createModel(context, () => SolarDataComponentModel());
   }
 
   @override
   void dispose() {
-    pCBannerComponentModel.dispose();
+    solarPCBannerComponentModel.dispose();
     thaiIdTextFieldFocusNode?.dispose();
     thaiIdTextFieldTextController?.dispose();
 
@@ -220,7 +230,7 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
     tarangWaTextFieldPCFocusNode?.dispose();
     tarangWaTextFieldPCTextController?.dispose();
 
-    loanDataComponentModel.dispose();
+    solarDataComponentModel.dispose();
   }
 
   /// Action blocks.
@@ -228,7 +238,7 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
     if (!(('${FFAppState().customerDetailJson.toString()}' != '') &&
         ('${FFAppState().customerDetailJson.toString()}' != 'null'))) {
       context.goNamed(
-        AddCustomerLeadWidget.routeName,
+        AddCustomerSolarLeadWidget.routeName,
         extra: <String, dynamic>{
           '__transition_info__': TransitionInfo(
             hasTransition: true,
@@ -245,7 +255,7 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
         ('${FFAppState().SolarSaveStep1AppState.tempLeadId.toString()}' !=
             'null'))) {
       context.goNamed(
-        AddCustomerLeadWidget.routeName,
+        AddCustomerSolarLeadWidget.routeName,
         extra: <String, dynamic>{
           '__transition_info__': TransitionInfo(
             hasTransition: true,
@@ -265,7 +275,7 @@ class SolarInfoPageModel extends FlutterFlowModel<SolarInfoPageWidget> {
         ('${''}' != 'null') &&
         ('${''}' != 'null'))) {
       context.goNamed(
-        AddCustomerLeadWidget.routeName,
+        AddCustomerSolarLeadWidget.routeName,
         extra: <String, dynamic>{
           '__transition_info__': TransitionInfo(
             hasTransition: true,

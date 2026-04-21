@@ -1,13 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/error_message_component_widget.dart';
-import '/components/loan_data_component_widget.dart';
-import '/components/p_c_banner_component_widget.dart';
 import '/flutter_flow/flutter_flow_radio_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/lead_solar_cell_web/solar_data_component/solar_data_component_widget.dart';
+import '/lead_solar_cell_web/solar_p_c_banner_component/solar_p_c_banner_component_widget.dart';
 import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
@@ -138,7 +138,7 @@ class _AddCustomerSolarLeadWidgetState
 
     return Builder(
       builder: (context) => Title(
-          title: 'AddCustomerSolarLead',
+          title: 'สินเชื่อโซลาร์ รูฟท็อป',
           color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
           child: GestureDetector(
             onTap: () {
@@ -160,9 +160,9 @@ class _AddCustomerSolarLeadWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 20.0),
                           child: wrapWithModel(
-                            model: _model.pCBannerComponentModel,
+                            model: _model.solarPCBannerComponentModel,
                             updateCallback: () => safeSetState(() {}),
-                            child: PCBannerComponentWidget(),
+                            child: SolarPCBannerComponentWidget(),
                           ),
                         ),
                         Column(
@@ -186,7 +186,7 @@ class _AddCustomerSolarLeadWidgetState
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
-                                          'ประเมินวงเงินออนไลน์',
+                                          'สินเชื่อโซลาร์ รูฟท็อป',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -208,7 +208,7 @@ class _AddCustomerSolarLeadWidgetState
                                                               context)
                                                           .width <
                                                       kBreakpointLarge) {
-                                                    return 24.0;
+                                                    return 21.0;
                                                   } else {
                                                     return 24.0;
                                                   }
@@ -216,36 +216,61 @@ class _AddCustomerSolarLeadWidgetState
                                                 letterSpacing: 0.0,
                                               ),
                                         ),
-                                        Text(
-                                          'สินเชื่อบ้านที่ดิน รู้ผลเบื้องต้นทันที',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                fontSize: () {
-                                                  if (MediaQuery.sizeOf(context)
-                                                          .width <
-                                                      kBreakpointSmall) {
-                                                    return 21.0;
-                                                  } else if (MediaQuery.sizeOf(
-                                                              context)
-                                                          .width <
-                                                      kBreakpointMedium) {
-                                                    return 21.0;
-                                                  } else if (MediaQuery.sizeOf(
-                                                              context)
-                                                          .width <
-                                                      kBreakpointLarge) {
-                                                    return 24.0;
-                                                  } else {
-                                                    return 24.0;
-                                                  }
-                                                }(),
-                                                letterSpacing: 0.0,
-                                              ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  24.0, 0.0, 24.0, 0.0),
+                                          child: Text(
+                                            () {
+                                              if (MediaQuery.sizeOf(context)
+                                                      .width <
+                                                  kBreakpointSmall) {
+                                                return ('วงเงินสูง ครอบคลุมค่าติดตั้ง ผ่อนยาว\nช่วยลดค่าไฟระยะยาว สมัครง่าย รู้ผลไว');
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointMedium) {
+                                                return ('วงเงินสูง ครอบคลุมค่าติดตั้ง ผ่อนยาว\nช่วยลดค่าไฟระยะยาว สมัครง่าย รู้ผลไว');
+                                              } else if (MediaQuery.sizeOf(
+                                                          context)
+                                                      .width <
+                                                  kBreakpointLarge) {
+                                                return ('วงเงินสูง ครอบคลุมค่าติดตั้ง ผ่อนยาว\nช่วยลดค่าไฟระยะยาว สมัครง่าย รู้ผลไว');
+                                              } else {
+                                                return 'วงเงินสูง ครอบคลุมค่าติดตั้ง ผ่อนยาว ช่วยลดค่าไฟระยะยาว สมัครง่าย รู้ผลไว';
+                                              }
+                                            }(),
+                                            textAlign: TextAlign.center,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  fontSize: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 18.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 18.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 18.0;
+                                                    } else {
+                                                      return 20.0;
+                                                    }
+                                                  }(),
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
                                         ),
                                         Padding(
                                           padding:
@@ -1659,6 +1684,7 @@ class _AddCustomerSolarLeadWidgetState
                                                         ?.statusCode ??
                                                     200) !=
                                                 200) {
+                                              Navigator.pop(context);
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -1693,7 +1719,6 @@ class _AddCustomerSolarLeadWidgetState
                                                 },
                                               );
 
-                                              Navigator.pop(context);
                                               if (_shouldSetState)
                                                 safeSetState(() {});
                                               return;
@@ -1705,6 +1730,7 @@ class _AddCustomerSolarLeadWidgetState
                                                   r'''$.code''',
                                                 ).toString()}' !=
                                                 '200') {
+                                              Navigator.pop(context);
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -1744,7 +1770,6 @@ class _AddCustomerSolarLeadWidgetState
                                                 },
                                               );
 
-                                              Navigator.pop(context);
                                               if (_shouldSetState)
                                                 safeSetState(() {});
                                               return;
@@ -1765,8 +1790,6 @@ class _AddCustomerSolarLeadWidgetState
                                               step: '1',
                                               product: 'loan',
                                               leadGroup: 'TELE',
-                                              sourceBy: 'Online',
-                                              channel: 'Website',
                                               subProduct: 'Solar',
                                               firstName: _model
                                                   .nameTextFieldTextController
@@ -1803,6 +1826,7 @@ class _AddCustomerSolarLeadWidgetState
                                                         ?.statusCode ??
                                                     200) !=
                                                 200) {
+                                              Navigator.pop(context);
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -1837,7 +1861,6 @@ class _AddCustomerSolarLeadWidgetState
                                                 },
                                               );
 
-                                              Navigator.pop(context);
                                               if (_shouldSetState)
                                                 safeSetState(() {});
                                               return;
@@ -1849,6 +1872,7 @@ class _AddCustomerSolarLeadWidgetState
                                                   r'''$.code''',
                                                 ).toString()}' !=
                                                 '200') {
+                                              Navigator.pop(context);
                                               await showDialog(
                                                 context: context,
                                                 builder: (dialogContext) {
@@ -1888,7 +1912,6 @@ class _AddCustomerSolarLeadWidgetState
                                                 },
                                               );
 
-                                              Navigator.pop(context);
                                               if (_shouldSetState)
                                                 safeSetState(() {});
                                               return;
@@ -2003,9 +2026,9 @@ class _AddCustomerSolarLeadWidgetState
                               ),
                             ),
                             wrapWithModel(
-                              model: _model.loanDataComponentModel,
+                              model: _model.solarDataComponentModel,
                               updateCallback: () => safeSetState(() {}),
-                              child: LoanDataComponentWidget(),
+                              child: SolarDataComponentWidget(),
                             ),
                             if (!FFDevEnvironmentValues().isProduction)
                               Text(

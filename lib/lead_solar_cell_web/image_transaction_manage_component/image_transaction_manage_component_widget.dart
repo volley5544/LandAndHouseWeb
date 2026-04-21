@@ -11,6 +11,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'image_transaction_manage_component_model.dart';
 export 'image_transaction_manage_component_model.dart';
 
@@ -142,7 +143,10 @@ class _ImageTransactionManageComponentWidgetState
             0.0),
         child: Container(
           width: double.infinity,
-          height: MediaQuery.sizeOf(context).height * 0.9,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.sizeOf(context).height * 0.5,
+            maxHeight: MediaQuery.sizeOf(context).height * 0.9,
+          ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
             borderRadius: BorderRadius.circular(16.0),
@@ -341,7 +345,7 @@ class _ImageTransactionManageComponentWidgetState
                 Expanded(
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 24.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -505,12 +509,12 @@ class _ImageTransactionManageComponentWidgetState
                                                                       return;
                                                                     }
                                                                   },
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .close_outlined,
+                                                                  child: FaIcon(
+                                                                    FontAwesomeIcons
+                                                                        .trashAlt,
                                                                     color: Color(
                                                                         0xFFFF0000),
-                                                                    size: 30.0,
+                                                                    size: 24.0,
                                                                   ),
                                                                 ),
                                                               ),
@@ -1010,127 +1014,159 @@ class _ImageTransactionManageComponentWidgetState
                                   }
                                 }(),
                                 decoration: BoxDecoration(),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: FlutterFlowIconButton(
-                                    borderRadius: 8.0,
-                                    buttonSize: 40.0,
-                                    fillColor:
-                                        FlutterFlowTheme.of(context).primary,
-                                    icon: Icon(
-                                      Icons.add_rounded,
-                                      color: FlutterFlowTheme.of(context).info,
-                                      size: 24.0,
-                                    ),
-                                    onPressed: () async {
-                                      final selectedMedia = await selectMedia(
-                                        maxWidth: 1920.00,
-                                        maxHeight: 1920.00,
-                                        imageQuality: 50,
-                                        mediaSource: MediaSource.photoGallery,
-                                        multiImage: false,
-                                      );
-                                      if (selectedMedia != null &&
-                                          selectedMedia.every((m) =>
-                                              validateFileFormat(
-                                                  m.storagePath, context))) {
-                                        safeSetState(() => _model
-                                                .isDataUploading_uploadDataSqdImageTransactionWebPC =
-                                            true);
-                                        var selectedUploadedFiles =
-                                            <FFUploadedFile>[];
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: FlutterFlowIconButton(
+                                        borderRadius: 8.0,
+                                        buttonSize: 40.0,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        icon: Icon(
+                                          Icons.add_rounded,
+                                          color:
+                                              FlutterFlowTheme.of(context).info,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          final selectedMedia =
+                                              await selectMedia(
+                                            maxWidth: 1920.00,
+                                            maxHeight: 1920.00,
+                                            imageQuality: 50,
+                                            mediaSource:
+                                                MediaSource.photoGallery,
+                                            multiImage: false,
+                                          );
+                                          if (selectedMedia != null &&
+                                              selectedMedia.every((m) =>
+                                                  validateFileFormat(
+                                                      m.storagePath,
+                                                      context))) {
+                                            safeSetState(() => _model
+                                                    .isDataUploading_uploadDataSqdImageTransactionWebPC =
+                                                true);
+                                            var selectedUploadedFiles =
+                                                <FFUploadedFile>[];
 
-                                        try {
-                                          selectedUploadedFiles = selectedMedia
-                                              .map((m) => FFUploadedFile(
-                                                    name: m.storagePath
-                                                        .split('/')
-                                                        .last,
-                                                    bytes: m.bytes,
-                                                    height:
-                                                        m.dimensions?.height,
-                                                    width: m.dimensions?.width,
-                                                    blurHash: m.blurHash,
-                                                    originalFilename:
-                                                        m.originalFilename,
-                                                  ))
-                                              .toList();
-                                        } finally {
-                                          _model.isDataUploading_uploadDataSqdImageTransactionWebPC =
-                                              false;
-                                        }
-                                        if (selectedUploadedFiles.length ==
-                                            selectedMedia.length) {
-                                          safeSetState(() {
-                                            _model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC =
-                                                selectedUploadedFiles.first;
-                                          });
-                                        } else {
+                                            try {
+                                              selectedUploadedFiles =
+                                                  selectedMedia
+                                                      .map(
+                                                          (m) => FFUploadedFile(
+                                                                name: m
+                                                                    .storagePath
+                                                                    .split('/')
+                                                                    .last,
+                                                                bytes: m.bytes,
+                                                                height: m
+                                                                    .dimensions
+                                                                    ?.height,
+                                                                width: m
+                                                                    .dimensions
+                                                                    ?.width,
+                                                                blurHash:
+                                                                    m.blurHash,
+                                                                originalFilename:
+                                                                    m.originalFilename,
+                                                              ))
+                                                      .toList();
+                                            } finally {
+                                              _model.isDataUploading_uploadDataSqdImageTransactionWebPC =
+                                                  false;
+                                            }
+                                            if (selectedUploadedFiles.length ==
+                                                selectedMedia.length) {
+                                              safeSetState(() {
+                                                _model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC =
+                                                    selectedUploadedFiles.first;
+                                              });
+                                            } else {
+                                              safeSetState(() {});
+                                              return;
+                                            }
+                                          }
+
+                                          if ((_model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC
+                                                      .bytes?.isNotEmpty ??
+                                                  false)) {
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'อัพโหลดรูปภาพสำเร็จ!',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondary,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    Color(0xBE000000),
+                                              ),
+                                            );
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .clearSnackBars();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondary,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 3000),
+                                                backgroundColor:
+                                                    Color(0xBE000000),
+                                              ),
+                                            );
+                                            return;
+                                          }
+
+                                          _model.addToTransactionImageFileList(
+                                              _model
+                                                  .uploadedLocalFile_uploadDataSqdImageTransactionWebPC);
                                           safeSetState(() {});
-                                          return;
-                                        }
-                                      }
-
-                                      if ((_model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC
-                                                  .bytes?.isNotEmpty ??
-                                              false)) {
-                                        ScaffoldMessenger.of(context)
-                                            .clearSnackBars();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'อัพโหลดรูปภาพสำเร็จ!',
-                                              style: TextStyle(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 3000),
-                                            backgroundColor: Color(0xBE000000),
+                                          safeSetState(() {
+                                            _model.isDataUploading_uploadDataSqdImageTransactionWebPC =
+                                                false;
+                                            _model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC =
+                                                FFUploadedFile(
+                                                    bytes:
+                                                        Uint8List.fromList([]),
+                                                    originalFilename: '');
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Text(
+                                      'เพิ่มรูป',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                        );
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .clearSnackBars();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'อัพโหลดรูปภาพไม่สำเร็จ กรุณาลองใหม่อีกครั้ง',
-                                              style: TextStyle(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 3000),
-                                            backgroundColor: Color(0xBE000000),
-                                          ),
-                                        );
-                                        return;
-                                      }
-
-                                      _model.addToTransactionImageFileList(_model
-                                          .uploadedLocalFile_uploadDataSqdImageTransactionWebPC);
-                                      safeSetState(() {});
-                                      safeSetState(() {
-                                        _model.isDataUploading_uploadDataSqdImageTransactionWebPC =
-                                            false;
-                                        _model.uploadedLocalFile_uploadDataSqdImageTransactionWebPC =
-                                            FFUploadedFile(
-                                                bytes: Uint8List.fromList([]),
-                                                originalFilename: '');
-                                      });
-                                    },
-                                  ),
+                                    ),
+                                  ].divide(SizedBox(height: 12.0)),
                                 ),
                               ),
                           ],

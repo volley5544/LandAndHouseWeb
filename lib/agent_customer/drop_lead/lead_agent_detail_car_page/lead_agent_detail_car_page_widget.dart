@@ -1,3 +1,4 @@
+import '/agent_customer/drop_lead/interest_overview_component/interest_overview_component_widget.dart';
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
 import '/agent_customer/drop_lead/review_detail_customer_component/review_detail_customer_component_widget.dart';
 import '/agent_customer/image_source_component/image_source_component_widget.dart';
@@ -6,6 +7,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
+import '/components/interest_component_widget.dart';
 import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -204,6 +206,90 @@ class _LeadAgentDetailCarPageWidgetState
             _model.canNextButton = true;
             safeSetState(() {});
           }
+          _model.apiResultCheckRateOnPageLoad =
+              await AgentAPIGroup.agentCheckRateCall.call(
+            carVehicleCode: 'P2',
+            carGear: 'Auto',
+            carBrand: 'FORD',
+            carYear: '500',
+            carModel: 'RANGER',
+            carCc: '2.0 เกียร์ออโต้ ยกสูง',
+            tenor: '10',
+            interest: '1',
+            thaiId: '1111111111119',
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiUrl
+                : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+            tokenHeader: FFDevEnvironmentValues().isProduction
+                ? FFAppState().apiUrlDocData.agentWebApiToken
+                : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+            projectCode: FFAppState().isGuest ? 'MGM_GUEST' : '',
+          );
+
+          if ((_model.apiResultCheckRateOnPageLoad?.statusCode ?? 200) != 200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          'พบข้อผิดพลาด connection (${(_model.apiResultCheckRateOnPageLoad?.statusCode ?? 200).toString()})',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+          if (AgentAPIGroup.agentCheckRateCall.statusCode(
+                (_model.apiResultCheckRateOnPageLoad?.jsonBody ?? ''),
+              ) !=
+              200) {
+            await showDialog(
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          AgentAPIGroup.agentCheckRateCall.statusMessage(
+                        (_model.apiResultCheckRateOnPageLoad?.jsonBody ?? ''),
+                      )!,
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+          _model.interestRateDataJson = getJsonField(
+            (_model.apiResultCheckRateOnPageLoad?.jsonBody ?? ''),
+            r'''$.results.data_ltv''',
+          );
+          safeSetState(() {});
           Navigator.pop(context);
         }),
       ]);
@@ -295,6 +381,16 @@ class _LeadAgentDetailCarPageWidgetState
               _model.loanAmountTextController?.text = '';
             });
           }
+
+          _model.calculateInterestRateAction =
+              await actions.returnMCInterestRateFromJson(
+            _model.interestRateDataJson,
+            functions
+                .removeCommaFromNumText(_model.loanAmountTextController.text),
+          );
+          _shouldSetState = true;
+          _model.interestRateOutput = '${_model.calculateInterestRateAction}';
+          safeSetState(() {});
         }
 
         if ((FFAppState().agentProfileDataType.agentGroupId == '7') &&
@@ -713,19 +809,44 @@ class _LeadAgentDetailCarPageWidgetState
                       ),
                       actions: [],
                       flexibleSpace: FlexibleSpaceBar(
-                        title: Text(
-                          FFAppState().platform == 'mobile'
-                              ? 'กรอกข้อมูลลูกค้า'
-                              : 'กรุณากรอกข้อมูลให้ถูกต้อง',
-                          style: FlutterFlowTheme.of(context)
-                              .headlineMedium
-                              .override(
-                                fontFamily: 'Noto San Thai',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 18.0,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
-                              ),
+                        title: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  content: Text(
+                                      _model.interestRateDataJson!.toString()),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Text(
+                            FFAppState().platform == 'mobile'
+                                ? 'กรอกข้อมูลลูกค้า'
+                                : 'กรุณากรอกข้อมูลให้ถูกต้อง',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  fontSize: 18.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
                         centerTitle: true,
                         expandedTitleScale: 1.0,
@@ -3831,9 +3952,6 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         .dropDownModelValue,
                                                                     carCc: _model
                                                                         .dropDownCCValue,
-                                                                    tenor: '10',
-                                                                    interest:
-                                                                        '1',
                                                                     thaiId: FFAppState()
                                                                         .saveLeadAgentData
                                                                         .registerId,
@@ -3956,6 +4074,13 @@ class _LeadAgentDetailCarPageWidgetState
                                                                             ?.jsonBody ??
                                                                         ''),
                                                                   );
+                                                                  _model.interestRateDataJson =
+                                                                      getJsonField(
+                                                                    (_model.apiResultCheckRate
+                                                                            ?.jsonBody ??
+                                                                        ''),
+                                                                    r'''$.results.data_ltv''',
+                                                                  );
                                                                   safeSetState(
                                                                       () {});
                                                                   if (FFAppState()
@@ -4061,6 +4186,56 @@ class _LeadAgentDetailCarPageWidgetState
                                                     ).animateOnPageLoad(
                                                         animationsMap[
                                                             'columnOnPageLoadAnimation6']!),
+                                                  ),
+                                                if (((_model.stateNumber! >=
+                                                            7) ||
+                                                        _model.canNextButton) &&
+                                                    FFAppState().isGuest)
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 16.0,
+                                                                0.0, 16.0),
+                                                    child: wrapWithModel(
+                                                      model: _model
+                                                          .interestOverviewComponentModel,
+                                                      updateCallback: () =>
+                                                          safeSetState(() {}),
+                                                      updateOnChange: true,
+                                                      child:
+                                                          InterestOverviewComponentWidget(
+                                                        ltvLoanAmountMin:
+                                                            getJsonField(
+                                                          _model
+                                                              .interestRateDataJson,
+                                                          r'''$.ltv_loan_amount_min''',
+                                                        ).toString(),
+                                                        ltvLoanAmountMax:
+                                                            getJsonField(
+                                                          _model
+                                                              .interestRateDataJson,
+                                                          r'''$.ltv_loan_amount_max''',
+                                                        ).toString(),
+                                                        ltvLoanAmountDefault:
+                                                            getJsonField(
+                                                          _model
+                                                              .interestRateDataJson,
+                                                          r'''$.loan_amount_default''',
+                                                        ).toString(),
+                                                        minInterestRate:
+                                                            getJsonField(
+                                                          _model
+                                                              .interestRateDataJson,
+                                                          r'''$.interest_condition[0].interest_rate''',
+                                                        ).toString(),
+                                                        maxInterestRate:
+                                                            getJsonField(
+                                                          _model
+                                                              .interestRateDataJson,
+                                                          r'''$.interest_condition[1].interest_rate''',
+                                                        ).toString(),
+                                                      ),
+                                                    ),
                                                   ),
                                                 if ((_model.stateNumber! >=
                                                         7) ||
@@ -5247,6 +5422,36 @@ class _LeadAgentDetailCarPageWidgetState
                                                                 : '0.0')!)) >
                                                         0) &&
                                                     FFAppState().isGuest)
+                                                  wrapWithModel(
+                                                    model: _model
+                                                        .interestComponentModel,
+                                                    updateCallback: () =>
+                                                        safeSetState(() {}),
+                                                    child:
+                                                        InterestComponentWidget(
+                                                      interest: _model
+                                                          .interestRateOutput,
+                                                      amount: functions
+                                                          .removeCommaFromNumText(
+                                                              _model
+                                                                  .loanAmountTextController
+                                                                  .text),
+                                                    ),
+                                                  ),
+                                                if ((_model.loanAmountTextController
+                                                                .text !=
+                                                            '') &&
+                                                    (double.parse((functions
+                                                            .removeCommaFromNumText(_model
+                                                                        .loanAmountTextController
+                                                                        .text !=
+                                                                    ''
+                                                                ? _model
+                                                                    .loanAmountTextController
+                                                                    .text
+                                                                : '0.0')!)) >
+                                                        0) &&
+                                                    FFAppState().isGuest)
                                                   Column(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -5344,6 +5549,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         : FFAppState()
                                                                             .apiUrlDocData
                                                                             .agentWebApiTokenUat,
+                                                                    interestRate:
+                                                                        _model
+                                                                            .interestRateOutput,
                                                                   );
 
                                                                   _shouldSetState =

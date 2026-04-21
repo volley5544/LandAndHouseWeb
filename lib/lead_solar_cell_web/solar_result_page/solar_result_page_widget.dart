@@ -1,9 +1,9 @@
-import '/components/loan_data_component_widget.dart';
-import '/components/p_c_banner_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/lead_solar_cell_web/solar_data_component/solar_data_component_widget.dart';
+import '/lead_solar_cell_web/solar_p_c_banner_component/solar_p_c_banner_component_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -86,7 +86,7 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
     context.watch<FFAppState>();
 
     return Title(
-        title: 'SolarResultPage',
+        title: 'สินเชื่อโซลาร์ รูฟท็อป',
         color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
         child: GestureDetector(
           onTap: () {
@@ -108,9 +108,9 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                         child: wrapWithModel(
-                          model: _model.pCBannerComponentModel,
+                          model: _model.solarPCBannerComponentModel,
                           updateCallback: () => safeSetState(() {}),
-                          child: PCBannerComponentWidget(),
+                          child: SolarPCBannerComponentWidget(),
                         ),
                       ),
                       Column(
@@ -130,103 +130,13 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      SelectionArea(
-                                          child: Text(
-                                        'ประเมินวงเงินออนไลน์',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Noto San Thai',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                              fontSize: () {
-                                                if (MediaQuery.sizeOf(context)
-                                                        .width <
-                                                    kBreakpointSmall) {
-                                                  return 21.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointMedium) {
-                                                  return 21.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointLarge) {
-                                                  return 24.0;
-                                                } else {
-                                                  return 24.0;
-                                                }
-                                              }(),
-                                              letterSpacing: 0.0,
-                                            ),
-                                      )),
-                                      SelectionArea(
-                                          child: Text(
-                                        'สินเชื่อบ้านที่ดิน รู้ผลเบื้องต้นทันที',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Noto San Thai',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                              fontSize: () {
-                                                if (MediaQuery.sizeOf(context)
-                                                        .width <
-                                                    kBreakpointSmall) {
-                                                  return 21.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointMedium) {
-                                                  return 21.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointLarge) {
-                                                  return 24.0;
-                                                } else {
-                                                  return 24.0;
-                                                }
-                                              }(),
-                                              letterSpacing: 0.0,
-                                            ),
-                                      )),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0,
-                                            valueOrDefault<double>(
-                                              () {
-                                                if (MediaQuery.sizeOf(context)
-                                                        .width <
-                                                    kBreakpointSmall) {
-                                                  return 8.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointMedium) {
-                                                  return 8.0;
-                                                } else if (MediaQuery.sizeOf(
-                                                            context)
-                                                        .width <
-                                                    kBreakpointLarge) {
-                                                  return 10.0;
-                                                } else {
-                                                  return 10.0;
-                                                }
-                                              }(),
-                                              0.0,
-                                            ),
-                                            0.0,
-                                            0.0),
-                                        child: SelectionArea(
+                                  if (false)
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        SelectionArea(
                                             child: Text(
-                                          'ขั้นตอนที่ 3 : ราคาประเมินเบื้องต้น',
+                                          'ประเมินวงเงินออนไลน์',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -238,27 +148,123 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                                   if (MediaQuery.sizeOf(context)
                                                           .width <
                                                       kBreakpointSmall) {
-                                                    return 16.0;
+                                                    return 21.0;
                                                   } else if (MediaQuery.sizeOf(
                                                               context)
                                                           .width <
                                                       kBreakpointMedium) {
-                                                    return 16.0;
+                                                    return 21.0;
                                                   } else if (MediaQuery.sizeOf(
                                                               context)
                                                           .width <
                                                       kBreakpointLarge) {
-                                                    return 20.0;
+                                                    return 24.0;
                                                   } else {
-                                                    return 20.0;
+                                                    return 24.0;
                                                   }
                                                 }(),
                                                 letterSpacing: 0.0,
                                               ),
                                         )),
-                                      ),
-                                    ],
-                                  ),
+                                        SelectionArea(
+                                            child: Text(
+                                          'สินเชื่อบ้านที่ดิน รู้ผลเบื้องต้นทันที',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Noto San Thai',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                                fontSize: () {
+                                                  if (MediaQuery.sizeOf(context)
+                                                          .width <
+                                                      kBreakpointSmall) {
+                                                    return 21.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointMedium) {
+                                                    return 21.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointLarge) {
+                                                    return 24.0;
+                                                  } else {
+                                                    return 24.0;
+                                                  }
+                                                }(),
+                                                letterSpacing: 0.0,
+                                              ),
+                                        )),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0,
+                                                  valueOrDefault<double>(
+                                                    () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 8.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 8.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 10.0;
+                                                      } else {
+                                                        return 10.0;
+                                                      }
+                                                    }(),
+                                                    0.0,
+                                                  ),
+                                                  0.0,
+                                                  0.0),
+                                          child: SelectionArea(
+                                              child: Text(
+                                            'ขั้นตอนที่ 3 : ราคาประเมินเบื้องต้น',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  fontSize: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 16.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 16.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 20.0;
+                                                    } else {
+                                                      return 20.0;
+                                                    }
+                                                  }(),
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          )),
+                                        ),
+                                      ],
+                                    ),
                                   Builder(
                                     builder: (context) {
                                       if ((('${FFAppState().ltv1AmountWeb}' !=
@@ -718,7 +724,7 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                         return Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
+                                                  0.0, 60.0, 0.0, 0.0),
                                           child: Container(
                                             width: () {
                                               if (MediaQuery.sizeOf(context)
@@ -765,11 +771,11 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      0.0, 0.0, 10.0, 0.0),
+                                                      10.0, 0.0, 10.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Padding(
                                                     padding:
@@ -800,7 +806,33 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                                                 0.0,
                                                                 10.0),
                                                     child: Text(
-                                                      ' ขออภัย ไม่พบข้อมูลที่ดินของท่าน',
+                                                      valueOrDefault<String>(
+                                                        () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return ('ขอบคุณที่ให้ความสนใจ\nเจ้าหน้าที่จะติดต่อกลับโดยเร็ว');
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return ('ขอบคุณที่ให้ความสนใจ\nเจ้าหน้าที่จะติดต่อกลับโดยเร็ว');
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return ('ขอบคุณที่ให้ความสนใจ\nเจ้าหน้าที่จะติดต่อกลับโดยเร็ว');
+                                                          } else {
+                                                            return 'ขอบคุณที่ให้ความสนใจ เจ้าหน้าที่จะติดต่อกลับโดยเร็ว';
+                                                          }
+                                                        }(),
+                                                        'ขอบคุณที่ให้ความสนใจ เจ้าหน้าที่จะติดต่อกลับโดยเร็ว',
+                                                      ),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -844,105 +876,109 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                                       }
                                     },
                                   ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 20.0),
-                                    child: SelectionArea(
-                                        child: Text(
-                                      'ขอบคุณที่ให้ความสนใจ เจ้าหน้าที่จะติดต่อท่านกลับเพื่อให้ข้อมูลเพิ่มเติม ในวันและเวลาทำการ',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondary,
-                                            fontSize: () {
-                                              if (MediaQuery.sizeOf(context)
-                                                      .width <
-                                                  kBreakpointSmall) {
-                                                return 16.0;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointMedium) {
-                                                return 16.0;
-                                              } else if (MediaQuery.sizeOf(
-                                                          context)
-                                                      .width <
-                                                  kBreakpointLarge) {
-                                                return 24.0;
-                                              } else {
-                                                return 24.0;
-                                              }
-                                            }(),
-                                            letterSpacing: 0.0,
-                                          ),
-                                    )),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0,
-                                        valueOrDefault<double>(
-                                          () {
-                                            if (MediaQuery.sizeOf(context)
-                                                    .width <
-                                                kBreakpointSmall) {
-                                              return 10.0;
-                                            } else if (MediaQuery.sizeOf(
-                                                        context)
-                                                    .width <
-                                                kBreakpointMedium) {
-                                              return 10.0;
-                                            } else if (MediaQuery.sizeOf(
-                                                        context)
-                                                    .width <
-                                                kBreakpointLarge) {
-                                              return 20.0;
-                                            } else {
-                                              return 20.0;
-                                            }
-                                          }(),
+                                  if (false)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 20.0, 0.0, 20.0),
+                                      child: SelectionArea(
+                                          child: Text(
+                                        'ขอบคุณที่ให้ความสนใจ เจ้าหน้าที่จะติดต่อกลับโดยเร็ว',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                              fontSize: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 16.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 16.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 24.0;
+                                                } else {
+                                                  return 24.0;
+                                                }
+                                              }(),
+                                              letterSpacing: 0.0,
+                                            ),
+                                      )),
+                                    ),
+                                  if (false)
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0,
-                                        ),
-                                        0.0,
-                                        20.0),
-                                    child: SelectionArea(
-                                        child: Text(
-                                      'หมายเหตุ :\n\n*ราคาประเมินเบื้องต้นเท่านั้น อาจมีการเปลี่ยนตามเงื่อนไขของบริษัทฯ\n*สินเชื่อบ้านและที่ดิน อัตราดอกเบี้ยที่แท้จริง 14.61% - 15.00% ต่อปี ระยะเวลาผ่อนสูงสุด 72 งวด\n*กู้เท่าที่จำเป็นและชำระคืนไหว\n*เงื่อนไขอนุมัติสินเชื่อเป็นไปตามที่บริษัทฯ กำหนด',
-                                      textAlign: TextAlign.start,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondary,
-                                            fontSize: () {
+                                          valueOrDefault<double>(
+                                            () {
                                               if (MediaQuery.sizeOf(context)
                                                       .width <
                                                   kBreakpointSmall) {
-                                                return 14.0;
+                                                return 10.0;
                                               } else if (MediaQuery.sizeOf(
                                                           context)
                                                       .width <
                                                   kBreakpointMedium) {
-                                                return 14.0;
+                                                return 10.0;
                                               } else if (MediaQuery.sizeOf(
                                                           context)
                                                       .width <
                                                   kBreakpointLarge) {
-                                                return 18.0;
+                                                return 20.0;
                                               } else {
-                                                return 18.0;
+                                                return 20.0;
                                               }
                                             }(),
-                                            letterSpacing: 0.0,
+                                            0.0,
                                           ),
-                                    )),
-                                  ),
+                                          0.0,
+                                          20.0),
+                                      child: SelectionArea(
+                                          child: Text(
+                                        'หมายเหตุ :\n\n*ราคาประเมินเบื้องต้นเท่านั้น อาจมีการเปลี่ยนตามเงื่อนไขของบริษัทฯ\n*สินเชื่อบ้านและที่ดิน อัตราดอกเบี้ยที่แท้จริง 14.61% - 15.00% ต่อปี ระยะเวลาผ่อนสูงสุด 72 งวด\n*กู้เท่าที่จำเป็นและชำระคืนไหว\n*เงื่อนไขอนุมัติสินเชื่อเป็นไปตามที่บริษัทฯ กำหนด',
+                                        textAlign: TextAlign.start,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Noto San Thai',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                              fontSize: () {
+                                                if (MediaQuery.sizeOf(context)
+                                                        .width <
+                                                    kBreakpointSmall) {
+                                                  return 14.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointMedium) {
+                                                  return 14.0;
+                                                } else if (MediaQuery.sizeOf(
+                                                            context)
+                                                        .width <
+                                                    kBreakpointLarge) {
+                                                  return 18.0;
+                                                } else {
+                                                  return 18.0;
+                                                }
+                                              }(),
+                                              letterSpacing: 0.0,
+                                            ),
+                                      )),
+                                    ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 16.0, 12.0, 30.0),
+                                        12.0, 60.0, 12.0, 30.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         await launchURL(
@@ -997,9 +1033,9 @@ class _SolarResultPageWidgetState extends State<SolarResultPageWidget>
                             ),
                           ),
                           wrapWithModel(
-                            model: _model.loanDataComponentModel,
+                            model: _model.solarDataComponentModel,
                             updateCallback: () => safeSetState(() {}),
-                            child: LoanDataComponentWidget(),
+                            child: SolarDataComponentWidget(),
                           ),
                           if (!FFDevEnvironmentValues().isProduction)
                             Text(

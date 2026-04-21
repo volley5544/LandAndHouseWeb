@@ -56,6 +56,7 @@ dependencies:
   easy_debounce: 2.0.1
   equatable: 2.0.7
   expandable: 5.0.1
+  expressions: ^0.2.5+3
   fetch_api: 2.2.0
   fetch_client: 1.1.2
   file_picker: 10.1.9

@@ -1,9 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/components/loan_data_component_widget.dart';
-import '/components/p_c_banner_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/lead_solar_cell_web/solar_data_component/solar_data_component_widget.dart';
+import '/lead_solar_cell_web/solar_p_c_banner_component/solar_p_c_banner_component_widget.dart';
 import '/index.dart';
 import 'add_customer_solar_lead_widget.dart' show AddCustomerSolarLeadWidget;
 import 'package:flutter/material.dart';
@@ -19,8 +19,8 @@ class AddCustomerSolarLeadModel
 
   // Stores action output result for [Backend Call - Read Document] action in AddCustomerSolarLead widget.
   ApplicationRecord? queryAPIUrl;
-  // Model for PCBannerComponent component.
-  late PCBannerComponentModel pCBannerComponentModel;
+  // Model for SolarPCBannerComponent component.
+  late SolarPCBannerComponentModel solarPCBannerComponentModel;
   // State field(s) for NameTextField widget.
   FocusNode? nameTextFieldFocusNode;
   TextEditingController? nameTextFieldTextController;
@@ -48,20 +48,20 @@ class AddCustomerSolarLeadModel
   ApiCallResponse? getTokenAPIOutput;
   // Stores action output result for [Backend Call - API (lead save step one )] action in Button widget.
   ApiCallResponse? solarSaveStep1;
-  // Model for loanDataComponent component.
-  late LoanDataComponentModel loanDataComponentModel;
+  // Model for SolarDataComponent component.
+  late SolarDataComponentModel solarDataComponentModel;
 
   @override
   void initState(BuildContext context) {
-    pCBannerComponentModel =
-        createModel(context, () => PCBannerComponentModel());
-    loanDataComponentModel =
-        createModel(context, () => LoanDataComponentModel());
+    solarPCBannerComponentModel =
+        createModel(context, () => SolarPCBannerComponentModel());
+    solarDataComponentModel =
+        createModel(context, () => SolarDataComponentModel());
   }
 
   @override
   void dispose() {
-    pCBannerComponentModel.dispose();
+    solarPCBannerComponentModel.dispose();
     nameTextFieldFocusNode?.dispose();
     nameTextFieldTextController?.dispose();
 
@@ -74,7 +74,7 @@ class AddCustomerSolarLeadModel
     thaiIdTextFieldFocusNode?.dispose();
     thaiIdTextFieldTextController?.dispose();
 
-    loanDataComponentModel.dispose();
+    solarDataComponentModel.dispose();
   }
 
   /// Additional helper methods.

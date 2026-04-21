@@ -41,3 +41,5 @@ export 'get_client_device_platform.dart' show getClientDevicePlatform;
 export 'set_client_platform_action.dart' show setClientPlatformAction;
 export 'initial_set_api_url_action.dart' show initialSetApiUrlAction;
 export 'initial_set_url_param_action.dart' show initialSetUrlParamAction;
+export 'return_m_c_interest_rate_from_json.dart'
+    show returnMCInterestRateFromJson;

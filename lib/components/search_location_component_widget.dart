@@ -38,7 +38,13 @@ class _SearchLocationComponentWidgetState
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().addressDataOriginal.length <= 0) {
+      if (FFAppState().addressDataOriginal.length > 0) {
+        FFAppState().addressDataListOutput = FFAppState()
+            .addressDataOriginal
+            .toList()
+            .cast<AddressDataModelStruct>();
+        safeSetState(() {});
+      } else {
         showDialog(
           context: context,
           builder: (dialogContext) {

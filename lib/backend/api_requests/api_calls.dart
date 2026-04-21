@@ -4532,6 +4532,7 @@ class InstallmentCalculateCall {
     String? estimatePrice = '',
     String? requestAmount = '',
     String? subProduct = '',
+    String? interestRate = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -4551,6 +4552,7 @@ class InstallmentCalculateCall {
         'estimate_price': estimatePrice,
         'request_amount': requestAmount,
         'sub_product': subProduct,
+        'interest_rate': interestRate,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,
@@ -4774,9 +4776,10 @@ class LeadSaveStepTwoCall {
     List<FFUploadedFile>? attachIdCardList,
     List<FFUploadedFile>? attachHouseRegistrationList,
     List<FFUploadedFile>? attachIncomeList,
-    List<FFUploadedFile>? attachLandOrAppraisalList,
+    List<FFUploadedFile>? attachLandList,
     List<FFUploadedFile>? attachQuotationList,
     List<FFUploadedFile>? attachElectricityList,
+    List<FFUploadedFile>? attachAppraisalList,
     String? url = '',
   }) async {
     final baseUrl = SolarSystemGroup.getBaseUrl(
@@ -4785,9 +4788,10 @@ class LeadSaveStepTwoCall {
     final attachIdCard = attachIdCardList ?? [];
     final attachHouseRegistration = attachHouseRegistrationList ?? [];
     final attachIncome = attachIncomeList ?? [];
-    final attachLandOrAppraisal = attachLandOrAppraisalList ?? [];
+    final attachLand = attachLandList ?? [];
     final attachQuotation = attachQuotationList ?? [];
     final attachElectricity = attachElectricityList ?? [];
+    final attachAppraisal = attachAppraisalList ?? [];
 
     return ApiManager.instance.makeApiCall(
       callName: 'lead save step two',
@@ -4817,9 +4821,10 @@ class LeadSaveStepTwoCall {
         'attach_id_card[]': attachIdCard,
         'attach_house_registration[]': attachHouseRegistration,
         'attach_income[]': attachIncome,
-        'attach_land_or_appraisal[]': attachLandOrAppraisal,
+        'attach_land[]': attachLand,
         'attach_quotation[]': attachQuotation,
         'attach_electricity[]': attachElectricity,
+        'attach_appraisal[]': attachAppraisal,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,

@@ -1,8 +1,10 @@
+import '/agent_customer/drop_lead/interest_overview_component/interest_overview_component_widget.dart';
 import '/agent_customer/drop_lead/progress_bar_component/progress_bar_component_widget.dart';
 import '/agent_customer/drop_lead/review_detail_customer_component/review_detail_customer_component_widget.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/interest_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/m_g_m_agent/web_app_bar_component/web_app_bar_component_widget.dart';
@@ -106,6 +108,10 @@ class LeadAgentDetailCarPageModel
 
   String? loanAmountTemp;
 
+  dynamic interestRateDataJson;
+
+  String? interestRateOutput;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Action Block - dropLeadStepCheck] action in LeadAgentDetailCarPage widget.
@@ -116,6 +122,8 @@ class LeadAgentDetailCarPageModel
   ApiCallResponse? provinceApiOutput;
   // Stores action output result for [Backend Call - API (rateGetVehicle)] action in LeadAgentDetailCarPage widget.
   ApiCallResponse? getVehicleMaster;
+  // Stores action output result for [Backend Call - API (AgentCheckRate)] action in LeadAgentDetailCarPage widget.
+  ApiCallResponse? apiResultCheckRateOnPageLoad;
   // Model for WebAppBarComponent component.
   late WebAppBarComponentModel webAppBarComponentModel;
   // State field(s) for Column widget.
@@ -161,6 +169,8 @@ class LeadAgentDetailCarPageModel
   String? Function(BuildContext, String?)? rateFromApiTextControllerValidator;
   // Stores action output result for [Backend Call - API (AgentCheckRate)] action in Button widget.
   ApiCallResponse? apiResultCheckRate;
+  // Model for InterestOverviewComponent component.
+  late InterestOverviewComponentModel interestOverviewComponentModel;
   // State field(s) for carregis widget.
   FocusNode? carregisFocusNode;
   TextEditingController? carregisTextController;
@@ -172,8 +182,12 @@ class LeadAgentDetailCarPageModel
   FocusNode? loanAmountFocusNode;
   TextEditingController? loanAmountTextController;
   String? Function(BuildContext, String?)? loanAmountTextControllerValidator;
+  // Stores action output result for [Custom Action - returnMCInterestRateFromJson] action in loanAmount widget.
+  String? calculateInterestRateAction;
   // Stores action output result for [Backend Call - API (agent commission)] action in loanAmount widget.
   ApiCallResponse? apiResulthzdcommission;
+  // Model for interestComponent component.
+  late InterestComponentModel interestComponentModel;
   // Stores action output result for [Backend Call - API (installment calculate)] action in ConditionalBuilder widget.
   ApiCallResponse? installmentCalOutput;
   DateTime? datePicked;
@@ -189,6 +203,10 @@ class LeadAgentDetailCarPageModel
         createModel(context, () => ProgressBarComponentModel());
     reviewDetailCustomerComponentModel =
         createModel(context, () => ReviewDetailCustomerComponentModel());
+    interestOverviewComponentModel =
+        createModel(context, () => InterestOverviewComponentModel());
+    interestComponentModel =
+        createModel(context, () => InterestComponentModel());
   }
 
   @override
@@ -203,10 +221,13 @@ class LeadAgentDetailCarPageModel
     rateFromApiFocusNode?.dispose();
     rateFromApiTextController?.dispose();
 
+    interestOverviewComponentModel.dispose();
     carregisFocusNode?.dispose();
     carregisTextController?.dispose();
 
     loanAmountFocusNode?.dispose();
     loanAmountTextController?.dispose();
+
+    interestComponentModel.dispose();
   }
 }

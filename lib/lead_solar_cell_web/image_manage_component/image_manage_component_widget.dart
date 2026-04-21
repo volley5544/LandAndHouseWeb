@@ -18,6 +18,8 @@ class ImageManageComponentWidget extends StatefulWidget {
     required this.setImageValueChanodBack,
     required this.chanodFrontFileParam,
     required this.chanodBackFileParam,
+    required this.resetImageValueChanodFront,
+    required this.resetImageValueChanodBack,
   });
 
   final Future Function(FFUploadedFile chanodFrontFile)?
@@ -25,6 +27,8 @@ class ImageManageComponentWidget extends StatefulWidget {
   final Future Function(FFUploadedFile chanodBackFile)? setImageValueChanodBack;
   final FFUploadedFile? chanodFrontFileParam;
   final FFUploadedFile? chanodBackFileParam;
+  final Future Function()? resetImageValueChanodFront;
+  final Future Function()? resetImageValueChanodBack;
 
   @override
   State<ImageManageComponentWidget> createState() =>
@@ -193,7 +197,10 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
             0.0),
         child: Container(
           width: double.infinity,
-          height: MediaQuery.sizeOf(context).height * 0.9,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.sizeOf(context).height * 0.5,
+            maxHeight: MediaQuery.sizeOf(context).height * 0.9,
+          ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
             borderRadius: BorderRadius.circular(16.0),
@@ -221,7 +228,7 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                             ),
                           ),
                           Text(
-                            'เอกสารที่ดิน',
+                            'โฉนดที่ดิน',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -252,7 +259,7 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                 Expanded(
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 24.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -282,7 +289,7 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                     children: [
                                       SelectionArea(
                                           child: Text(
-                                        'โฉนดที่ดินด้านหน้า / ใบประเมินที่ดิน',
+                                        'โฉนดที่ดินด้านหน้า',
                                         style: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
@@ -312,27 +319,313 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                       ),
                                     ],
                                   ),
-                                  Builder(
-                                    builder: (context) {
-                                      if (_model.chanodFrontFileTemp != null &&
+                                  if ((_model.chanodFrontFile != null &&
+                                          (_model.chanodFrontFile?.bytes
+                                                  ?.isNotEmpty ??
+                                              false)) ||
+                                      (_model.chanodFrontFileTemp != null &&
                                           (_model.chanodFrontFileTemp?.bytes
                                                   ?.isNotEmpty ??
-                                              false)) {
-                                        return Visibility(
-                                          visible: (_model.chanodFrontFile !=
-                                                      null &&
-                                                  (_model.chanodFrontFile?.bytes
-                                                          ?.isNotEmpty ??
-                                                      false)) ||
-                                              (_model.chanodFrontFileTemp !=
+                                              false)))
+                                    Container(
+                                      width: () {
+                                        if (MediaQuery.sizeOf(context).width <
+                                            kBreakpointSmall) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointMedium) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointLarge) {
+                                          return 200.0;
+                                        } else {
+                                          return 300.0;
+                                        }
+                                      }(),
+                                      height: () {
+                                        if (MediaQuery.sizeOf(context).width <
+                                            kBreakpointSmall) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointMedium) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointLarge) {
+                                          return 200.0;
+                                        } else {
+                                          return 300.0;
+                                        }
+                                      }(),
+                                      child: Stack(
+                                        children: [
+                                          Builder(
+                                            builder: (context) {
+                                              if (_model.chanodFrontFileTemp !=
                                                       null &&
                                                   (_model.chanodFrontFileTemp
                                                           ?.bytes?.isNotEmpty ??
-                                                      false)),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
+                                                      false)) {
+                                                return Visibility(
+                                                  visible: (_model.chanodFrontFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodFrontFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) ||
+                                                      (_model.chanodFrontFileTemp !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodFrontFileTemp
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  Image.memory(
+                                                                _model.chanodFrontFileTemp
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag: 'imageTag1',
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Hero(
+                                                        tag: 'imageTag1',
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.memory(
+                                                            _model.chanodFrontFileTemp
+                                                                    ?.bytes ??
+                                                                Uint8List
+                                                                    .fromList(
+                                                                        []),
+                                                            width: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            height: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'imageOnPageLoadAnimation1']!),
+                                                  ),
+                                                );
+                                              } else {
+                                                return Visibility(
+                                                  visible: (_model.chanodFrontFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodFrontFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) ||
+                                                      (_model.chanodFrontFileTemp !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodFrontFileTemp
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  Image.memory(
+                                                                _model.chanodFrontFile
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag: 'imageTag2',
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Hero(
+                                                        tag: 'imageTag2',
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.memory(
+                                                            _model.chanodFrontFile
+                                                                    ?.bytes ??
+                                                                Uint8List
+                                                                    .fromList(
+                                                                        []),
+                                                            width: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            height: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'imageOnPageLoadAnimation2']!),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(1.0, -0.9),
                                             child: InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,
@@ -340,200 +633,23 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child:
-                                                        FlutterFlowExpandedImageView(
-                                                      image: Image.memory(
-                                                        _model.chanodFrontFileTemp
-                                                                ?.bytes ??
-                                                            Uint8List.fromList(
-                                                                []),
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                      allowRotation: false,
-                                                      tag: 'imageTag1',
-                                                      useHeroAnimation: true,
-                                                    ),
-                                                  ),
-                                                );
+                                                _model.chanodFrontFileTemp =
+                                                    null;
+                                                _model.chanodFrontFile = null;
+                                                safeSetState(() {});
                                               },
-                                              child: Hero(
-                                                tag: 'imageTag1',
-                                                transitionOnUserGestures: true,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.memory(
-                                                    _model.chanodFrontFileTemp
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
-                                                    width: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    height: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
+                                              child: Icon(
+                                                Icons.close_rounded,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                size: 30.0,
                                               ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'imageOnPageLoadAnimation1']!),
+                                            ),
                                           ),
-                                        );
-                                      } else {
-                                        return Visibility(
-                                          visible: (_model.chanodFrontFile !=
-                                                      null &&
-                                                  (_model.chanodFrontFile?.bytes
-                                                          ?.isNotEmpty ??
-                                                      false)) ||
-                                              (_model.chanodFrontFileTemp !=
-                                                      null &&
-                                                  (_model.chanodFrontFileTemp
-                                                          ?.bytes?.isNotEmpty ??
-                                                      false)),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child:
-                                                        FlutterFlowExpandedImageView(
-                                                      image: Image.memory(
-                                                        _model.chanodFrontFile
-                                                                ?.bytes ??
-                                                            Uint8List.fromList(
-                                                                []),
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                      allowRotation: false,
-                                                      tag: 'imageTag2',
-                                                      useHeroAnimation: true,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Hero(
-                                                tag: 'imageTag2',
-                                                transitionOnUserGestures: true,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.memory(
-                                                    _model.chanodFrontFile
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
-                                                    width: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    height: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'imageOnPageLoadAnimation2']!),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
+                                        ],
+                                      ),
+                                    ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 12.0, 0.0, 0.0),
@@ -756,27 +872,313 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                       ),
                                     ],
                                   ),
-                                  Builder(
-                                    builder: (context) {
-                                      if (_model.chanodBackFileTemp != null &&
+                                  if ((_model.chanodBackFile != null &&
+                                          (_model.chanodBackFile?.bytes
+                                                  ?.isNotEmpty ??
+                                              false)) ||
+                                      (_model.chanodBackFileTemp != null &&
                                           (_model.chanodBackFileTemp?.bytes
                                                   ?.isNotEmpty ??
-                                              false)) {
-                                        return Visibility(
-                                          visible: (_model.chanodBackFile !=
-                                                      null &&
-                                                  (_model.chanodBackFile?.bytes
-                                                          ?.isNotEmpty ??
-                                                      false)) ||
-                                              (_model.chanodBackFileTemp !=
+                                              false)))
+                                    Container(
+                                      width: () {
+                                        if (MediaQuery.sizeOf(context).width <
+                                            kBreakpointSmall) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointMedium) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointLarge) {
+                                          return 200.0;
+                                        } else {
+                                          return 300.0;
+                                        }
+                                      }(),
+                                      height: () {
+                                        if (MediaQuery.sizeOf(context).width <
+                                            kBreakpointSmall) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointMedium) {
+                                          return 200.0;
+                                        } else if (MediaQuery.sizeOf(context)
+                                                .width <
+                                            kBreakpointLarge) {
+                                          return 200.0;
+                                        } else {
+                                          return 300.0;
+                                        }
+                                      }(),
+                                      child: Stack(
+                                        children: [
+                                          Builder(
+                                            builder: (context) {
+                                              if (_model.chanodBackFileTemp !=
                                                       null &&
                                                   (_model.chanodBackFileTemp
                                                           ?.bytes?.isNotEmpty ??
-                                                      false)),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
+                                                      false)) {
+                                                return Visibility(
+                                                  visible: (_model.chanodBackFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodBackFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) ||
+                                                      (_model.chanodBackFileTemp !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodBackFileTemp
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  Image.memory(
+                                                                _model.chanodBackFileTemp
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag: 'imageTag3',
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Hero(
+                                                        tag: 'imageTag3',
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.memory(
+                                                            _model.chanodBackFileTemp
+                                                                    ?.bytes ??
+                                                                Uint8List
+                                                                    .fromList(
+                                                                        []),
+                                                            width: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            height: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'imageOnPageLoadAnimation3']!),
+                                                  ),
+                                                );
+                                              } else {
+                                                return Visibility(
+                                                  visible: (_model.chanodBackFile !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodBackFile
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)) ||
+                                                      (_model.chanodBackFileTemp !=
+                                                              null &&
+                                                          (_model
+                                                                  .chanodBackFileTemp
+                                                                  ?.bytes
+                                                                  ?.isNotEmpty ??
+                                                              false)),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  Image.memory(
+                                                                _model.chanodBackFile
+                                                                        ?.bytes ??
+                                                                    Uint8List
+                                                                        .fromList(
+                                                                            []),
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag: 'imageTag4',
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: Hero(
+                                                        tag: 'imageTag4',
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      8.0),
+                                                          child: Image.memory(
+                                                            _model.chanodBackFile
+                                                                    ?.bytes ??
+                                                                Uint8List
+                                                                    .fromList(
+                                                                        []),
+                                                            width: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            height: () {
+                                                              if (MediaQuery.sizeOf(
+                                                                          context)
+                                                                      .width <
+                                                                  kBreakpointSmall) {
+                                                                return 200.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointMedium) {
+                                                                return 300.0;
+                                                              } else if (MediaQuery
+                                                                          .sizeOf(
+                                                                              context)
+                                                                      .width <
+                                                                  kBreakpointLarge) {
+                                                                return 300.0;
+                                                              } else {
+                                                                return 300.0;
+                                                              }
+                                                            }(),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ).animateOnPageLoad(
+                                                        animationsMap[
+                                                            'imageOnPageLoadAnimation4']!),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(1.0, -0.9),
                                             child: InkWell(
                                               splashColor: Colors.transparent,
                                               focusColor: Colors.transparent,
@@ -784,200 +1186,23 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child:
-                                                        FlutterFlowExpandedImageView(
-                                                      image: Image.memory(
-                                                        _model.chanodBackFileTemp
-                                                                ?.bytes ??
-                                                            Uint8List.fromList(
-                                                                []),
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                      allowRotation: false,
-                                                      tag: 'imageTag3',
-                                                      useHeroAnimation: true,
-                                                    ),
-                                                  ),
-                                                );
+                                                _model.chanodBackFile = null;
+                                                _model.chanodBackFileTemp =
+                                                    null;
+                                                safeSetState(() {});
                                               },
-                                              child: Hero(
-                                                tag: 'imageTag3',
-                                                transitionOnUserGestures: true,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.memory(
-                                                    _model.chanodBackFileTemp
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
-                                                    width: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    height: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
+                                              child: Icon(
+                                                Icons.close_rounded,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                size: 30.0,
                                               ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'imageOnPageLoadAnimation3']!),
+                                            ),
                                           ),
-                                        );
-                                      } else {
-                                        return Visibility(
-                                          visible: (_model.chanodBackFile !=
-                                                      null &&
-                                                  (_model.chanodBackFile?.bytes
-                                                          ?.isNotEmpty ??
-                                                      false)) ||
-                                              (_model.chanodBackFileTemp !=
-                                                      null &&
-                                                  (_model.chanodBackFileTemp
-                                                          ?.bytes?.isNotEmpty ??
-                                                      false)),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child:
-                                                        FlutterFlowExpandedImageView(
-                                                      image: Image.memory(
-                                                        _model.chanodBackFile
-                                                                ?.bytes ??
-                                                            Uint8List.fromList(
-                                                                []),
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                      allowRotation: false,
-                                                      tag: 'imageTag4',
-                                                      useHeroAnimation: true,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: Hero(
-                                                tag: 'imageTag4',
-                                                transitionOnUserGestures: true,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                  child: Image.memory(
-                                                    _model.chanodBackFile
-                                                            ?.bytes ??
-                                                        Uint8List.fromList([]),
-                                                    width: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    height: () {
-                                                      if (MediaQuery.sizeOf(
-                                                                  context)
-                                                              .width <
-                                                          kBreakpointSmall) {
-                                                        return 200.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointMedium) {
-                                                        return 300.0;
-                                                      } else if (MediaQuery
-                                                                  .sizeOf(
-                                                                      context)
-                                                              .width <
-                                                          kBreakpointLarge) {
-                                                        return 300.0;
-                                                      } else {
-                                                        return 300.0;
-                                                      }
-                                                    }(),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ).animateOnPageLoad(animationsMap[
-                                                'imageOnPageLoadAnimation4']!),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
+                                        ],
+                                      ),
+                                    ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 12.0, 0.0, 0.0),
@@ -1229,7 +1454,57 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                 await widget.setImageValueChanodFront?.call(
                                   _model.chanodFrontFile!,
                                 );
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('1'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                _model.chanodFrontFile = null;
+                                safeSetState(() {});
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('2'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                await widget.resetImageValueChanodFront?.call();
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('3'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               }
+
                               if (_model.chanodBackFileTemp != null &&
                                   (_model.chanodBackFileTemp?.bytes
                                           ?.isNotEmpty ??
@@ -1240,7 +1515,57 @@ class _ImageManageComponentWidgetState extends State<ImageManageComponentWidget>
                                 await widget.setImageValueChanodBack?.call(
                                   _model.chanodBackFile!,
                                 );
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('4'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                _model.chanodBackFile = null;
+                                safeSetState(() {});
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('5'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                await widget.resetImageValueChanodBack?.call();
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      content: Text('6'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               }
+
                               _model.chanodFrontFileTemp = null;
                               _model.chanodBackFileTemp = null;
                               safeSetState(() {});
