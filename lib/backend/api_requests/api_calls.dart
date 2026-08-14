@@ -5243,12 +5243,15 @@ class UserDetailCall {
   static Future<ApiCallResponse> call({
     String? hashId = '',
     String? url = '',
+    String? token = '',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'userDetail',
       apiUrl: '${url}/user/detail?hash_thai_id=${hashId}',
       callType: ApiCallType.GET,
-      headers: {},
+      headers: {
+        'Authorization': 'Bearer ${token}',
+      },
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,

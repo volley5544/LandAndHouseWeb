@@ -280,6 +280,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
             url: FFDevEnvironmentValues().isProduction
                 ? FFAppState().topupUrlProd
                 : FFAppState().topupUrlDev,
+            token: FFAppState().accessToken,
           );
 
           if ((_model.userDetailOutput?.statusCode ?? 200) == 200) {
