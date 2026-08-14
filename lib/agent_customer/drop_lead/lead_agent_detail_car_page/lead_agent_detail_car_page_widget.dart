@@ -1615,6 +1615,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                       true;
                                                                   safeSetState(
                                                                       () {});
+                                                                  await _model
+                                                                      .callCheckRateApiDefault(
+                                                                          context);
                                                                 }
                                                                 Navigator.pop(
                                                                     context);
@@ -2077,6 +2080,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         true;
                                                                     safeSetState(
                                                                         () {});
+                                                                    await _model
+                                                                        .callCheckRateApiDefault(
+                                                                            context);
                                                                   }
                                                                   safeSetState(
                                                                       () {});
@@ -2720,6 +2726,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         true;
                                                                     safeSetState(
                                                                         () {});
+                                                                    await _model
+                                                                        .callCheckRateApiDefault(
+                                                                            context);
                                                                   }
                                                                   _model.stateNumber =
                                                                       4;
@@ -3150,6 +3159,9 @@ class _LeadAgentDetailCarPageWidgetState
                                                                         true;
                                                                     safeSetState(
                                                                         () {});
+                                                                    await _model
+                                                                        .callCheckRateApiDefault(
+                                                                            context);
                                                                   }
                                                                   _model.stateNumber =
                                                                       5;
@@ -4190,7 +4202,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                 if (((_model.stateNumber! >=
                                                             7) ||
                                                         _model.canNextButton) &&
-                                                    FFAppState().isGuest)
+                                                    FFAppState().isGuest &&
+                                                    true)
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
@@ -5421,7 +5434,8 @@ class _LeadAgentDetailCarPageWidgetState
                                                                     .text
                                                                 : '0.0')!)) >
                                                         0) &&
-                                                    FFAppState().isGuest)
+                                                    FFAppState().isGuest &&
+                                                    true)
                                                   wrapWithModel(
                                                     model: _model
                                                         .interestComponentModel,
@@ -6869,6 +6883,15 @@ class _LeadAgentDetailCarPageWidgetState
 
                                                                           return;
                                                                         }
+                                                                        FFAppState()
+                                                                            .updateSaveLeadAgentDataStruct(
+                                                                          (e) => e
+                                                                            ..registerId = FFAppState().isUseOtpConsentAppstate
+                                                                                ? FFAppState().saveLeadAgentData.registerId
+                                                                                : functions.removeDash(_model.idcardTextController.text),
+                                                                        );
+                                                                        safeSetState(
+                                                                            () {});
                                                                       }
                                                                       if ((FFAppState().agentProfileDataType.agentGroupId ==
                                                                               '7') &&
@@ -6973,14 +6996,26 @@ class _LeadAgentDetailCarPageWidgetState
                                                                                 FFAppState().agentProfileDataType.actualPercent
                                                                             ..comEstimateVatAmt =
                                                                                 '${((double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().maxCommissionAmountInstallment < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountInstallment ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountInstallment.toString()}')) : (FFAppState().maxCommissionAmountOnetime < 0.0 ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : (double.parse((((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString())) < FFAppState().maxCommissionAmountOnetime ? (((double.parse((functions.removeCommaFromNumText(_model.loanAmountTextController.text)!))) * (double.parse((FFAppState().agentProfileDataType.paymentMethod == 'installment' ? (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0') : (FFAppState().agentProfileDataType.actualPercent != '' ? FFAppState().agentProfileDataType.actualPercent : '0')))) / 100).toString()) : '${FFAppState().maxCommissionAmountOnetime.toString()}')))) * double.parse((FFAppState().agentProfileDataType.agentWht != '' ? FFAppState().agentProfileDataType.agentWht : '0')) / 100)).toString()}'
-                                                                            ..agentCode =
-                                                                                FFAppState().agentCode
-                                                                            ..registerId = FFAppState().isUseOtpConsentAppstate ? FFAppState().saveLeadAgentData.registerId : functions.removeDash(_model.idcardTextController.text),
+                                                                            ..agentCode = FFAppState().agentCode,
                                                                         );
                                                                         safeSetState(
                                                                             () {});
                                                                       }
 
+                                                                      if (('${_model.interestRateOutput}' != '-') &&
+                                                                          ('${_model.interestRateOutput}' !=
+                                                                              'null') &&
+                                                                          ('${_model.interestRateOutput}' !=
+                                                                              '')) {
+                                                                        FFAppState()
+                                                                            .updateSaveLeadAgentDataStruct(
+                                                                          (e) => e
+                                                                            ..interestRate =
+                                                                                _model.interestRateOutput,
+                                                                        );
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      }
                                                                       FFAppState()
                                                                               .dropLeadStepCheck =
                                                                           true;

@@ -41,6 +41,7 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
     String? overdueTo,
     String? interestPaidFlag,
     int? yield,
+    int? topupSpecials,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _code = code,
         _message = message,
@@ -74,6 +75,7 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         _overdueTo = overdueTo,
         _interestPaidFlag = interestPaidFlag,
         _yield = yield,
+        _topupSpecials = topupSpecials,
         super(firestoreUtilData);
 
   // "code" field.
@@ -356,6 +358,16 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
 
   bool hasYield() => _yield != null;
 
+  // "topup_specials" field.
+  int? _topupSpecials;
+  int get topupSpecials => _topupSpecials ?? 0;
+  set topupSpecials(int? val) => _topupSpecials = val;
+
+  void incrementTopupSpecials(int amount) =>
+      topupSpecials = topupSpecials + amount;
+
+  bool hasTopupSpecials() => _topupSpecials != null;
+
   static GetTopupDataAPIDataTypeStruct fromMap(Map<String, dynamic> data) =>
       GetTopupDataAPIDataTypeStruct(
         code: data['code'] as String?,
@@ -394,6 +406,7 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         overdueTo: data['overdue_to'] as String?,
         interestPaidFlag: data['interest_paid_flag'] as String?,
         yield: castToType<int>(data['yield']),
+        topupSpecials: castToType<int>(data['topup_specials']),
       );
 
   static GetTopupDataAPIDataTypeStruct? maybeFromMap(dynamic data) =>
@@ -434,6 +447,7 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         'overdue_to': _overdueTo,
         'interest_paid_flag': _interestPaidFlag,
         'yield': _yield,
+        'topup_specials': _topupSpecials,
       }.withoutNulls;
 
   @override
@@ -564,6 +578,10 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         ),
         'yield': serializeParam(
           _yield,
+          ParamType.int,
+        ),
+        'topup_specials': serializeParam(
+          _topupSpecials,
           ParamType.int,
         ),
       }.withoutNulls;
@@ -733,6 +751,11 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        topupSpecials: deserializeParam(
+          data['topup_specials'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -772,7 +795,8 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         overdueFrom == other.overdueFrom &&
         overdueTo == other.overdueTo &&
         interestPaidFlag == other.interestPaidFlag &&
-        yield == other.yield;
+        yield == other.yield &&
+        topupSpecials == other.topupSpecials;
   }
 
   @override
@@ -808,7 +832,8 @@ class GetTopupDataAPIDataTypeStruct extends FFFirebaseStruct {
         overdueFrom,
         overdueTo,
         interestPaidFlag,
-        yield
+        yield,
+        topupSpecials
       ]);
 }
 
@@ -845,6 +870,7 @@ GetTopupDataAPIDataTypeStruct createGetTopupDataAPIDataTypeStruct({
   String? overdueTo,
   String? interestPaidFlag,
   int? yield,
+  int? topupSpecials,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -884,6 +910,7 @@ GetTopupDataAPIDataTypeStruct createGetTopupDataAPIDataTypeStruct({
       overdueTo: overdueTo,
       interestPaidFlag: interestPaidFlag,
       yield: yield,
+      topupSpecials: topupSpecials,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -49,6 +49,7 @@ export 'pdf_loan_doc_data_model_struct.dart';
 export 'qr_code_data_type_struct.dart';
 export 'save_assign_branch_struct.dart';
 export 'save_lead_agent_data_model_struct.dart';
+export 'save_p_loan_data_model_struct.dart';
 export 'save_pdf_data_model_struct.dart';
 export 'save_topup_data_model_struct.dart';
 export 'save_topup_l_h_model_struct.dart';

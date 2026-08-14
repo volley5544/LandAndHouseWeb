@@ -62,8 +62,6 @@ class LoanDetailPageModel extends FlutterFlowModel<LoanDetailPageWidget> {
   dynamic comCodeConfigDoc;
   // Stores action output result for [Backend Call - API (get list of loan.)] action in LoanDetailPage widget.
   ApiCallResponse? getLoanListOutput;
-  // Stores action output result for [Backend Call - API (get detail of loan.)] action in LoanDetailPage widget.
-  ApiCallResponse? detailLoanOutput;
   // Model for LoanDetailCardComponent component.
   late LoanDetailCardComponentModel loanDetailCardComponentModel;
   // State field(s) for ChoiceChips widget.

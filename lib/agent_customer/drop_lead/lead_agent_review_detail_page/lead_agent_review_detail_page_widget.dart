@@ -343,6 +343,8 @@ class _LeadAgentReviewDetailPageWidgetState
                                                         '${FFAppState().saveLeadAgentData.requestInstallmentTerm}',
                                                     installmentAmount:
                                                         '${FFAppState().saveLeadAgentData.requestInstallmentAmount}',
+                                                    interestAmount:
+                                                        '${FFAppState().saveLeadAgentData.interestRate}',
                                                   ),
                                                 ),
                                               ),
@@ -1286,6 +1288,10 @@ class _LeadAgentReviewDetailPageWidgetState
                                                                       FFAppState()
                                                                           .saveLeadAgentData
                                                                           .requestInstallmentAmount,
+                                                                  interestRate:
+                                                                      FFAppState()
+                                                                          .saveLeadAgentData
+                                                                          .interestRate,
                                                                 );
 
                                                                 _shouldSetState =

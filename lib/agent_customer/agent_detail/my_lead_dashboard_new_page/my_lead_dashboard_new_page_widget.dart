@@ -1781,24 +1781,19 @@ class _MyLeadDashboardNewPageWidgetState
                                                             ),
                                                           ),
                                                         ),
-                                                        collapsed: Container(),
-                                                        expanded: Padding(
+                                                        collapsed: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(
+                                                                      8.0,
                                                                       0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      20.0),
+                                                                      8.0,
+                                                                      0.0),
                                                           child: Container(
                                                             width:
                                                                 double.infinity,
                                                             decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                            ),
+                                                                BoxDecoration(),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -1825,6 +1820,70 @@ class _MyLeadDashboardNewPageWidgetState
                                                                       .map((e) =>
                                                                           e.name)
                                                                       .toList(),
+                                                                ),
+                                                              ].addToEnd(
+                                                                  SizedBox(
+                                                                      height:
+                                                                          16.0)),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        expanded: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      20.0),
+                                                          child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: [
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          8.0,
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Divider(
+                                                                        thickness:
+                                                                            2.0,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .alternate,
+                                                                      ),
+                                                                      ProgressLeadComponentNewWidget(
+                                                                        key: Key(
+                                                                            'Key1wa_${leadListItemsIndex}_of_${leadListItems.length}'),
+                                                                        step: ((functions.findTrueInBoolList(leadListItemsItem.state.map((e) => e.active).toList())!) +
+                                                                                1)
+                                                                            .toString(),
+                                                                        progressStatusList: leadListItemsItem
+                                                                            .state
+                                                                            .map((e) =>
+                                                                                e.name)
+                                                                            .toList(),
+                                                                      ),
+                                                                    ].addToEnd(SizedBox(
+                                                                        height:
+                                                                            16.0)),
+                                                                  ),
                                                                 ),
                                                                 Divider(
                                                                   thickness:

@@ -4,8 +4,10 @@ import '/components/message_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/pages/loading/loading_widget.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -892,6 +894,40 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                       defaultLocation:
                                                           LatLng(0.0, 0.0));
                                               var _shouldSetState = false;
+                                              showDialog(
+                                                context: context,
+                                                builder: (dialogContext) {
+                                                  return Dialog(
+                                                    elevation: 0,
+                                                    insetPadding:
+                                                        EdgeInsets.zero,
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                                0.0, 0.0)
+                                                            .resolve(
+                                                                Directionality.of(
+                                                                    context)),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        FocusScope.of(
+                                                                dialogContext)
+                                                            .unfocus();
+                                                        FocusManager.instance
+                                                            .primaryFocus
+                                                            ?.unfocus();
+                                                      },
+                                                      child: Container(
+                                                        height: double.infinity,
+                                                        width: double.infinity,
+                                                        child: LoadingWidget(),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+
                                               _model.queryUrl =
                                                   await ApplicationRecord
                                                       .getDocumentOnce(
@@ -906,6 +942,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                         .oTPFieldTextController
                                                         .text !=
                                                     _model.otpCode) {
+                                                  Navigator.pop(context);
                                                   await showDialog(
                                                     context: context,
                                                     builder: (dialogContext) {
@@ -949,6 +986,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                 if (!(_model.phonenumberFieldTextController
                                                             .text !=
                                                         '')) {
+                                                  Navigator.pop(context);
                                                   await showDialog(
                                                     context: context,
                                                     builder: (dialogContext) {
@@ -992,6 +1030,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                     functions.removeDash(_model
                                                         .phonenumberFieldTextController
                                                         .text))!) {
+                                                  Navigator.pop(context);
                                                   await showDialog(
                                                     context: context,
                                                     builder: (dialogContext) {
@@ -1032,6 +1071,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                   return;
                                                 }
                                                 if (_model.countingOtp > 0) {
+                                                  Navigator.pop(context);
                                                   await showDialog(
                                                     context: context,
                                                     builder:
@@ -1065,6 +1105,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                   FFAppState()
                                                       .registerStepCheck = true;
                                                   safeSetState(() {});
+                                                  Navigator.pop(context);
 
                                                   context.pushNamed(
                                                       AgentRegisterConsentPage02Widget
@@ -1117,6 +1158,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                   );
                                                   safeSetState(() {});
                                                 } else {
+                                                  Navigator.pop(context);
                                                   await showDialog(
                                                     context: context,
                                                     builder: (dialogContext) {
@@ -1157,6 +1199,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                   return;
                                                 }
 
+                                                Navigator.pop(context);
                                                 while (_model.countingOtp > 0) {
                                                   await Future.delayed(
                                                     Duration(
@@ -1190,6 +1233,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                           'lng'),
                                               );
                                               safeSetState(() {});
+                                              Navigator.pop(context);
 
                                               context.pushNamed(
                                                   AgentSettingPage03Widget
@@ -1438,22 +1482,88 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                             ),
                                           ),
                                         ),
-                                      if (false)
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                // You will have to add an action on this rich text to go to your login page.
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              // You will have to add an action on this rich text to go to your login page.
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 12.0, 0.0, 12.0),
+                                                child: RichText(
+                                                  textScaler:
+                                                      MediaQuery.of(context)
+                                                          .textScaler,
+                                                  text: TextSpan(
+                                                    children: [
+                                                      TextSpan(
+                                                        text:
+                                                            'เงื่อนไขโครงการเพื่อนแนะนำเพื่อน ',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text: 'อ่านต่อ',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w600,
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .underline,
+                                                                ),
+                                                        mouseCursor:
+                                                            SystemMouseCursors
+                                                                .click,
+                                                        recognizer:
+                                                            TapGestureRecognizer()
+                                                              ..onTap =
+                                                                  () async {
+                                                                context.pushNamed(
+                                                                    PdfViewerFGFPageWidget
+                                                                        .routeName);
+                                                              },
+                                                      )
+                                                    ],
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              // You will have to add an action on this rich text to go to your login page.
+                                              if (false)
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                          0.0, 12.0, 0.0, 12.0),
+                                                          0.0, 0.0, 0.0, 12.0),
                                                   child: RichText(
                                                     textScaler:
                                                         MediaQuery.of(context)
@@ -1462,7 +1572,7 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                       children: [
                                                         TextSpan(
                                                           text:
-                                                              'เงื่อนไขโครงการเพื่อนแนะนำเพื่อน ',
+                                                              'ข้อกำหนดและเงื่อนไข ',
                                                           style: TextStyle(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
@@ -1502,68 +1612,10 @@ class _AgentRegisterPage01WidgetState extends State<AgentRegisterPage01Widget> {
                                                     ),
                                                   ),
                                                 ),
-
-                                                // You will have to add an action on this rich text to go to your login page.
-                                                if (false)
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 12.0),
-                                                    child: RichText(
-                                                      textScaler:
-                                                          MediaQuery.of(context)
-                                                              .textScaler,
-                                                      text: TextSpan(
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                'ข้อกำหนดและเงื่อนไข ',
-                                                            style: TextStyle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText,
-                                                            ),
-                                                          ),
-                                                          TextSpan(
-                                                            text: 'อ่านต่อ',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  decoration:
-                                                                      TextDecoration
-                                                                          .underline,
-                                                                ),
-                                                          )
-                                                        ],
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Noto San Thai',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                       if (!FFDevEnvironmentValues()
                                           .isProduction)
                                         Text(

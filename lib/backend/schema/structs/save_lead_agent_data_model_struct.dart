@@ -60,6 +60,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
     String? subProduct,
     String? requestInstallmentTerm,
     String? requestInstallmentAmount,
+    String? interestRate,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _estimatePrice = estimatePrice,
         _landDistrict = landDistrict,
@@ -113,6 +114,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         _subProduct = subProduct,
         _requestInstallmentTerm = requestInstallmentTerm,
         _requestInstallmentAmount = requestInstallmentAmount,
+        _interestRate = interestRate,
         super(firestoreUtilData);
 
   // "estimate_price" field.
@@ -482,6 +484,13 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
 
   bool hasRequestInstallmentAmount() => _requestInstallmentAmount != null;
 
+  // "interest_rate" field.
+  String? _interestRate;
+  String get interestRate => _interestRate ?? '';
+  set interestRate(String? val) => _interestRate = val;
+
+  bool hasInterestRate() => _interestRate != null;
+
   static SaveLeadAgentDataModelStruct fromMap(Map<String, dynamic> data) =>
       SaveLeadAgentDataModelStruct(
         estimatePrice: data['estimate_price'] as String?,
@@ -536,6 +545,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         subProduct: data['sub_product'] as String?,
         requestInstallmentTerm: data['request_installment_term'] as String?,
         requestInstallmentAmount: data['request_installment_amount'] as String?,
+        interestRate: data['interest_rate'] as String?,
       );
 
   static SaveLeadAgentDataModelStruct? maybeFromMap(dynamic data) => data is Map
@@ -595,6 +605,7 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         'sub_product': _subProduct,
         'request_installment_term': _requestInstallmentTerm,
         'request_installment_amount': _requestInstallmentAmount,
+        'interest_rate': _interestRate,
       }.withoutNulls;
 
   @override
@@ -805,6 +816,10 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         ),
         'request_installment_amount': serializeParam(
           _requestInstallmentAmount,
+          ParamType.String,
+        ),
+        'interest_rate': serializeParam(
+          _interestRate,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -1072,6 +1087,11 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        interestRate: deserializeParam(
+          data['interest_rate'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -1131,7 +1151,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         leadMobileId == other.leadMobileId &&
         subProduct == other.subProduct &&
         requestInstallmentTerm == other.requestInstallmentTerm &&
-        requestInstallmentAmount == other.requestInstallmentAmount;
+        requestInstallmentAmount == other.requestInstallmentAmount &&
+        interestRate == other.interestRate;
   }
 
   @override
@@ -1187,7 +1208,8 @@ class SaveLeadAgentDataModelStruct extends FFFirebaseStruct {
         leadMobileId,
         subProduct,
         requestInstallmentTerm,
-        requestInstallmentAmount
+        requestInstallmentAmount,
+        interestRate
       ]);
 }
 
@@ -1244,6 +1266,7 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
   String? subProduct,
   String? requestInstallmentTerm,
   String? requestInstallmentAmount,
+  String? interestRate,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -1302,6 +1325,7 @@ SaveLeadAgentDataModelStruct createSaveLeadAgentDataModelStruct({
       subProduct: subProduct,
       requestInstallmentTerm: requestInstallmentTerm,
       requestInstallmentAmount: requestInstallmentAmount,
+      interestRate: interestRate,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

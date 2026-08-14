@@ -1,9 +1,13 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/customer_topup/empty_component_topup/empty_component_topup_widget.dart';
+import '/customer_topup/navigate_topup_component/navigate_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'topup_card_page_widget.dart' show TopupCardPageWidget;
 import 'package:flutter/material.dart';
 
@@ -12,25 +16,82 @@ class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
 
   bool isLoadFirestoreCompleted = false;
 
+  String videoPath = 'nodata1';
+
+  int? tabSelested = 1;
+
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - saveVideoFile] action in topupCardPage widget.
+  String? resultText;
+  // Stores action output result for [Custom Action - getFFUploadFileFromFilePath] action in topupCardPage widget.
+  FFUploadedFile? fileVideoOutput;
   // Stores action output result for [Backend Call - Read Document] action in topupCardPage widget.
   ApplicationRecord? configOutput;
   // Stores action output result for [Backend Call - API (userDetail)] action in topupCardPage widget.
   ApiCallResponse? userDetailOutput;
+  // State field(s) for ChoiceChips widget.
+  FormFieldController<List<String>>? choiceChipsValueController;
+  String? get choiceChipsValue =>
+      choiceChipsValueController?.value?.firstOrNull;
+  set choiceChipsValue(String? val) =>
+      choiceChipsValueController?.value = val != null ? [val] : [];
+  // Model for NavigateTopupComponent component.
+  late NavigateTopupComponentModel navigateTopupComponentModel;
   Completer<ApiCallResponse>? apiRequestCompleter;
+  // State field(s) for PageView widget.
+  PageController? pageViewController;
+
+  int get pageViewCurrentIndex => pageViewController != null &&
+          pageViewController!.hasClients &&
+          pageViewController!.page != null
+      ? pageViewController!.page!.round()
+      : 0;
+  // State field(s) for Carousel widget.
+  CarouselSliderController? carouselController;
+  int carouselCurrentIndex = 0;
+
   // Model for EmptyComponentTopup component.
   late EmptyComponentTopupModel emptyComponentTopupModel;
 
   @override
   void initState(BuildContext context) {
+    navigateTopupComponentModel =
+        createModel(context, () => NavigateTopupComponentModel());
     emptyComponentTopupModel =
         createModel(context, () => EmptyComponentTopupModel());
   }
 
   @override
   void dispose() {
+    navigateTopupComponentModel.dispose();
     emptyComponentTopupModel.dispose();
+  }
+
+  /// Action blocks.
+  Future listenCameraActionEventBlock(BuildContext context) async {
+    await actions.listenWebviewEventCamera(
+      context,
+      (cameraBase64, actionNameOutput) async {
+        if (actionNameOutput == 'VideoRecord') {
+          videoPath = cameraBase64;
+          await showDialog(
+            context: context,
+            builder: (alertDialogContext) {
+              return AlertDialog(
+                content: Text(cameraBase64),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(alertDialogContext),
+                    child: Text('Ok'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      },
+    );
   }
 
   /// Additional helper methods.

@@ -105,6 +105,16 @@ class ApplicationRecord extends FirestoreRecord {
   bool get isUseOtpConsent => _isUseOtpConsent ?? false;
   bool hasIsUseOtpConsent() => _isUseOtpConsent != null;
 
+  // "can_topup_default_msg" field.
+  String? _canTopupDefaultMsg;
+  String get canTopupDefaultMsg => _canTopupDefaultMsg ?? '';
+  bool hasCanTopupDefaultMsg() => _canTopupDefaultMsg != null;
+
+  // "topup_text_time" field.
+  String? _topupTextTime;
+  String get topupTextTime => _topupTextTime ?? '';
+  bool hasTopupTextTime() => _topupTextTime != null;
+
   void _initializeFields() {
     _apiUrl = snapshotData['api_url'] is ApiUrlStruct
         ? snapshotData['api_url']
@@ -132,6 +142,8 @@ class ApplicationRecord extends FirestoreRecord {
     _consentTextCustomer = snapshotData['consent_text_customer'] as String?;
     _mgmUserManualUrl = snapshotData['mgm_user_manual_url'] as String?;
     _isUseOtpConsent = snapshotData['is_use_otp_consent'] as bool?;
+    _canTopupDefaultMsg = snapshotData['can_topup_default_msg'] as String?;
+    _topupTextTime = snapshotData['topup_text_time'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -184,6 +196,8 @@ Map<String, dynamic> createApplicationRecordData({
   String? consentTextCustomer,
   String? mgmUserManualUrl,
   bool? isUseOtpConsent,
+  String? canTopupDefaultMsg,
+  String? topupTextTime,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -202,6 +216,8 @@ Map<String, dynamic> createApplicationRecordData({
       'consent_text_customer': consentTextCustomer,
       'mgm_user_manual_url': mgmUserManualUrl,
       'is_use_otp_consent': isUseOtpConsent,
+      'can_topup_default_msg': canTopupDefaultMsg,
+      'topup_text_time': topupTextTime,
     }.withoutNulls,
   );
 
@@ -239,7 +255,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e1?.consentTextAgent == e2?.consentTextAgent &&
         e1?.consentTextCustomer == e2?.consentTextCustomer &&
         e1?.mgmUserManualUrl == e2?.mgmUserManualUrl &&
-        e1?.isUseOtpConsent == e2?.isUseOtpConsent;
+        e1?.isUseOtpConsent == e2?.isUseOtpConsent &&
+        e1?.canTopupDefaultMsg == e2?.canTopupDefaultMsg &&
+        e1?.topupTextTime == e2?.topupTextTime;
   }
 
   @override
@@ -260,7 +278,9 @@ class ApplicationRecordDocumentEquality implements Equality<ApplicationRecord> {
         e?.consentTextAgent,
         e?.consentTextCustomer,
         e?.mgmUserManualUrl,
-        e?.isUseOtpConsent
+        e?.isUseOtpConsent,
+        e?.canTopupDefaultMsg,
+        e?.topupTextTime
       ]);
 
   @override

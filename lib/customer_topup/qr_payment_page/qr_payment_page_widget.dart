@@ -398,17 +398,18 @@ class _QrPaymentPageWidgetState extends State<QrPaymentPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                              Text(
-                                'หลังชำระสำเร็จยอดบัญชีจะถูกปรับภายใน 30 นาที',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Noto San Thai',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
+                              if (false)
+                                Text(
+                                  'หลังชำระสำเร็จยอดบัญชีจะถูกปรับภายใน 30 นาที',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
                             ],
                           ),
                           Padding(

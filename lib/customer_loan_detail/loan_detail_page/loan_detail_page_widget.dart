@@ -26,6 +26,7 @@ class LoanDetailPageWidget extends StatefulWidget {
     this.contNo,
     this.token,
     String? platform,
+    this.fromPage,
   }) : this.platform = platform ?? 'mobile';
 
   final FFUploadedFile? bankIcon;
@@ -33,6 +34,7 @@ class LoanDetailPageWidget extends StatefulWidget {
   final String? contNo;
   final String? token;
   final String platform;
+  final String? fromPage;
 
   static String routeName = 'LoanDetailPage';
   static String routePath = '/LoanDetailPage';
@@ -162,92 +164,12 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                 widget.contNo)!)!;
         safeSetState(() {});
       }
-      _model.detailLoanOutput = await SrisawadApiGroup.getDetailOfLoanCall.call(
-        contractNo: FFAppState().getLoanListSelected.contractNo,
-        dbName: FFAppState().getLoanListSelected.dbName,
-        bearerAuth: widget.token,
-        xSrisawad: 'x1',
-        apiUrl: FFDevEnvironmentValues().isProduction
-            ? FFAppState().topupUrlProd
-            : FFAppState().topupUrlDev,
-      );
-
-      if ((_model.detailLoanOutput?.statusCode ?? 200) != 200) {
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage:
-                      'พบข้อผิดพลาด status (${(_model.detailLoanOutput?.statusCode ?? 200).toString()})',
-                ),
-              ),
-            );
-          },
-        );
-
-        Navigator.pop(context);
-        return;
-      }
-      if (SrisawadApiGroup.getDetailOfLoanCall.code(
-            (_model.detailLoanOutput?.jsonBody ?? ''),
-          ) ==
-          '200') {
-        _model.carDetailLoanPageState =
-            SrisawadApiGroup.getDetailOfLoanCall.cardetails(
-          (_model.detailLoanOutput?.jsonBody ?? ''),
-        );
-        _model.contractDetailLoanPageState =
-            SrisawadApiGroup.getDetailOfLoanCall.contractdetails(
-          (_model.detailLoanOutput?.jsonBody ?? ''),
-        );
-        _model.dataDate = SrisawadApiGroup.getDetailOfLoanCall
-            .datadate(
-              (_model.detailLoanOutput?.jsonBody ?? ''),
-            )
-            ?.firstOrNull;
-        safeSetState(() {});
-      } else {
-        await showDialog(
-          barrierDismissible: false,
-          context: context,
-          builder: (dialogContext) {
-            return Dialog(
-              elevation: 0,
-              insetPadding: EdgeInsets.zero,
-              backgroundColor: Colors.transparent,
-              alignment: AlignmentDirectional(0.0, 0.0)
-                  .resolve(Directionality.of(context)),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(dialogContext).unfocus();
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                child: ErrorMessageComponentWidget(
-                  textMessage: '${SrisawadApiGroup.getDetailOfLoanCall.message(
-                    (_model.detailLoanOutput?.jsonBody ?? ''),
-                  )}',
-                ),
-              ),
-            );
-          },
-        );
-
-        Navigator.pop(context);
-        return;
-      }
-
+      _model.carDetailLoanPageState =
+          FFAppState().getLoanListSelected.carDetails;
+      _model.contractDetailLoanPageState =
+          FFAppState().getLoanListSelected.contractDetails;
+      _model.dataDate = FFAppState().getLoanListSelected.dataDate;
+      safeSetState(() {});
       Navigator.pop(context);
     });
 
@@ -286,6 +208,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
+                    if ('${widget.fromPage}' == 'TopupCard') {
+                      context.safePop();
+                      return;
+                    }
                     await actions.navigateBackWebviewAction();
                   },
                   child: Icon(
@@ -323,10 +249,8 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                 top: true,
                 child: Visibility(
                   visible:
-                      ('${(_model.getLoanListOutput?.statusCode ?? 200).toString()}' ==
-                              '200') &&
-                          ('${(_model.detailLoanOutput?.statusCode ?? 200).toString()}' ==
-                              '200'),
+                      '${(_model.getLoanListOutput?.statusCode ?? 200).toString()}' ==
+                          '200',
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -360,15 +284,21 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                               .getLoanListSelected
                               .paymentDetails
                               .overdueTo,
-                          overdueAmount:
-                              '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
-                                      '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
-                                  ? ((String currentDueDate,
+                          overdueAmount: '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? (((functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDueDate}') !=
+                                              '') &&
+                                          (functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDateTime}') !=
+                                              '')
+                                      ? ((String currentDueDate,
                                               String currentDate) {
-                                      return DateTime.parse('${currentDueDate}')
-                                          .isAfter(
-                                              DateTime.parse('${currentDate}'));
-                                    }(
+                                          return DateTime.parse(
+                                                  '${currentDueDate}')
+                                              .isAfter(DateTime.parse(
+                                                  '${currentDate}'));
+                                        }(
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
@@ -376,30 +306,37 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
-                                              .currentDateTime)
-                                      ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
-                                              'null'
-                                          ? FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .overdueAmount
-                                              .toString()
-                                          : '0.00')
-                                      : 'เกินกำหนดชำระ')
-                                  : FFAppState()
-                                      .getLoanListSelected
-                                      .paymentDetails
-                                      .overdueAmount
-                                      .toString(),
-                          installmentAmount:
-                              '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
-                                      '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
-                                  ? ((String currentDueDate,
+                                              .currentDateTime))
+                                      : true)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
+                                          'null'
+                                      ? FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .overdueAmount
+                                          .toString()
+                                      : '0.00')
+                                  : 'เกินกำหนดชำระ')
+                              : FFAppState()
+                                  .getLoanListSelected
+                                  .paymentDetails
+                                  .overdueAmount
+                                  .toString(),
+                          installmentAmount: '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? (((functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDueDate}') !=
+                                              '') &&
+                                          (functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDateTime}') !=
+                                              '')
+                                      ? ((String currentDueDate,
                                               String currentDate) {
-                                      return DateTime.parse('${currentDueDate}')
-                                          .isAfter(
-                                              DateTime.parse('${currentDate}'));
-                                    }(
+                                          return DateTime.parse(
+                                                  '${currentDueDate}')
+                                              .isAfter(DateTime.parse(
+                                                  '${currentDate}'));
+                                        }(
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
@@ -407,21 +344,22 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
-                                              .currentDateTime)
-                                      ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
-                                              'null'
-                                          ? FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .currentDueAmount
-                                              .toString()
-                                          : '0.00')
-                                      : 'เกินกำหนดชำระ')
-                                  : FFAppState()
-                                      .getLoanListSelected
-                                      .paymentDetails
-                                      .installmentAmount
-                                      .toString(),
+                                              .currentDateTime))
+                                      : true)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
+                                          'null'
+                                      ? FFAppState()
+                                          .getLoanListSelected
+                                          .paymentDetails
+                                          .currentDueAmount
+                                          .toString()
+                                      : '0.00')
+                                  : 'เกินกำหนดชำระ')
+                              : FFAppState()
+                                  .getLoanListSelected
+                                  .paymentDetails
+                                  .installmentAmount
+                                  .toString(),
                           totalDueAmount: FFAppState()
                               .getLoanListSelected
                               .paymentDetails
@@ -473,20 +411,28 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                           installmentAmountColor:
                               '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
                                       '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
-                                  ? ((String currentDueDate,
-                                              String currentDate) {
-                                      return DateTime.parse('${currentDueDate}')
-                                          .isAfter(
-                                              DateTime.parse('${currentDate}'));
-                                    }(
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .currentDueDate,
-                                          FFAppState()
-                                              .getLoanListSelected
-                                              .paymentDetails
-                                              .currentDateTime)
+                                  ? (((functions.formatToThaiDate(
+                                                      '${FFAppState().getLoanListSelected.paymentDetails.currentDueDate}') !=
+                                                  '') &&
+                                              (functions.formatToThaiDate(
+                                                      '${FFAppState().getLoanListSelected.paymentDetails.currentDateTime}') !=
+                                                  '')
+                                          ? ((String currentDueDate,
+                                                  String currentDate) {
+                                              return DateTime.parse(
+                                                      '${currentDueDate}')
+                                                  .isAfter(DateTime.parse(
+                                                      '${currentDate}'));
+                                            }(
+                                              FFAppState()
+                                                  .getLoanListSelected
+                                                  .paymentDetails
+                                                  .currentDueDate,
+                                              FFAppState()
+                                                  .getLoanListSelected
+                                                  .paymentDetails
+                                                  .currentDateTime))
+                                          : true)
                                       ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
                                               'null'
                                           ? FlutterFlowTheme.of(context)
@@ -495,15 +441,21 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                               .primaryText)
                                       : Color(0xFFFF0000))
                                   : FlutterFlowTheme.of(context).primaryText,
-                          overdueAmountColor:
-                              '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
-                                      '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
-                                  ? ((String currentDueDate,
+                          overdueAmountColor: '${FFAppState().getLoanListSelected.paymentDetails.currentInstallmentNumber.toString()}' ==
+                                  '${FFAppState().getLoanListSelected.paymentDetails.totalInstallmentNumber.toString()}'
+                              ? (((functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDueDate}') !=
+                                              '') &&
+                                          (functions.formatToThaiDate(
+                                                  '${FFAppState().getLoanListSelected.paymentDetails.currentDateTime}') !=
+                                              '')
+                                      ? ((String currentDueDate,
                                               String currentDate) {
-                                      return DateTime.parse('${currentDueDate}')
-                                          .isAfter(
-                                              DateTime.parse('${currentDate}'));
-                                    }(
+                                          return DateTime.parse(
+                                                  '${currentDueDate}')
+                                              .isAfter(DateTime.parse(
+                                                  '${currentDate}'));
+                                        }(
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
@@ -511,15 +463,15 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                           FFAppState()
                                               .getLoanListSelected
                                               .paymentDetails
-                                              .currentDateTime)
-                                      ? ('${FFAppState().getLoanListSelected.paymentDetails.overdueAmount.toString()}' !=
-                                              'null'
-                                          ? FlutterFlowTheme.of(context)
-                                              .primaryText
-                                          : FlutterFlowTheme.of(context)
-                                              .primaryText)
-                                      : Color(0xFFFF0000))
-                                  : FlutterFlowTheme.of(context).primaryText,
+                                              .currentDateTime))
+                                      : true)
+                                  ? ('${FFAppState().getLoanListSelected.paymentDetails.currentDueAmount.toString()}' !=
+                                          'null'
+                                      ? FlutterFlowTheme.of(context).primaryText
+                                      : FlutterFlowTheme.of(context)
+                                          .primaryText)
+                                  : Color(0xFFFF0000))
+                              : FlutterFlowTheme.of(context).primaryText,
                           isShowVmi: FFAppState()
                               .getLoanListSelected
                               .insurances
@@ -724,14 +676,10 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                     if (_model.choiceChipsValue ==
                                         'ข้อมูลสินเชื่อ') {
                                       return Visibility(
-                                        visible: ((_model.getLoanListOutput
-                                                        ?.statusCode ??
-                                                    200) ==
-                                                200) &&
-                                            ((_model.detailLoanOutput
-                                                        ?.statusCode ??
-                                                    200) ==
-                                                200),
+                                        visible: (_model.getLoanListOutput
+                                                    ?.statusCode ??
+                                                200) ==
+                                            200,
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -2354,7 +2302,7 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                     }
                                   },
                                 ),
-                                if ((_model.detailLoanOutput?.statusCode ??
+                                if ((_model.getLoanListOutput?.statusCode ??
                                         200) ==
                                     200)
                                   Container(
@@ -2411,11 +2359,63 @@ class _LoanDetailPageWidgetState extends State<LoanDetailPageWidget> {
                                   Expanded(
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        FFAppState()
+                                            .updateQrCodeDataTypeAppStateStruct(
+                                          (e) => e
+                                            ..prefix = FFAppState()
+                                                .getLoanListSelected
+                                                .barcodeDetails
+                                                .prefix
+                                            ..suffix = FFAppState()
+                                                .getLoanListSelected
+                                                .barcodeDetails
+                                                .suffix
+                                            ..taxId = FFAppState()
+                                                .getLoanListSelected
+                                                .barcodeDetails
+                                                .taxId
+                                            ..ref1 = FFAppState()
+                                                .getLoanListSelected
+                                                .barcodeDetails
+                                                .ref1
+                                            ..ref2 = FFAppState()
+                                                .getLoanListSelected
+                                                .barcodeDetails
+                                                .ref2
+                                            ..carRegistration = FFAppState()
+                                                .getLoanListSelected
+                                                .contractDetails
+                                                .collateralInformation
+                                            ..contNo = FFAppState()
+                                                .getLoanListSelected
+                                                .contractNo
+                                            ..topupAmountWithComma = functions
+                                                .returnNumberWithComma2Decimal(
+                                                    FFAppState()
+                                                        .getLoanListSelected
+                                                        .paymentDetails
+                                                        .currentDueAmount
+                                                        .toString())
+                                            ..currentDate = functions
+                                                .formatToThaiDate(FFAppState()
+                                                    .getLoanListSelected
+                                                    .dataDate),
+                                        );
+                                        safeSetState(() {});
+
                                         context.pushNamed(
-                                          SelectPaymentPageWidget.routeName,
+                                          CustomerQrPaymentPageWidget.routeName,
                                           queryParameters: {
-                                            'from': serializeParam(
-                                              'loanDetail',
+                                            'amount': serializeParam(
+                                              (FFAppState()
+                                                          .getLoanListSelected
+                                                          .paymentDetails
+                                                          .currentDueAmount +
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .paymentDetails
+                                                          .collectionFee)
+                                                  .toString(),
                                               ParamType.String,
                                             ),
                                           }.withoutNulls,

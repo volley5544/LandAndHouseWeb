@@ -1,6 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import '/components/error_message_component_widget.dart';
 import '/customer_topup/loan_detail_card_topup_component/loan_detail_card_topup_component_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -139,6 +138,20 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
           GetTopupDataAPIDataTypeStruct.maybeFromMap(
               (_model.getTopupDetailAPIOutput?.jsonBody ?? ''))!;
       safeSetState(() {});
+      if (FFAppState().getLoanListSelected.topupSpecialFlag) {
+        FFAppState().updateGetTopupDataAPIResultAppstateStruct(
+          (e) => e
+            ..topupSpecials =
+                FFAppState().getLoanListSelected.topupDetail.topupSpecials
+            ..defaultTopupAmount =
+                FFAppState().getTopupDataAPIResultAppstate.defaultTopupAmount +
+                    FFAppState().getLoanListSelected.topupDetail.topupSpecials
+            ..maxTopupAmount =
+                FFAppState().getTopupDataAPIResultAppstate.maxTopupAmount +
+                    FFAppState().getLoanListSelected.topupDetail.topupSpecials,
+        );
+        safeSetState(() {});
+      }
       _model.yieldTemp = SrisawadApiGroup.getTopupDetailCall.topupYield(
         (_model.getTopupDetailAPIOutput?.jsonBody ?? ''),
       );
@@ -147,16 +160,10 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
           await SrisawadApiGroup.postToCalculatorToGetNewTopupCall.call(
         bearerAuth: FFAppState().accessToken,
         transno: '',
-        dbName: valueOrDefault<String>(
-          FFAppState().getTopupDataAPIResultAppstate.dbName,
-          'db_name',
-        ),
-        contractNo: valueOrDefault<String>(
-          FFAppState().getTopupDataAPIResultAppstate.contractNo,
-          'contract_no',
-        ),
+        dbName: FFAppState().getTopupDataAPIResultAppstate.dbName,
+        contractNo: FFAppState().getTopupDataAPIResultAppstate.contractNo,
         loanAmount: double.tryParse(
-            FFAppState().saveTopupData.products != ProductsStruct()
+            (FFAppState().saveTopupData.products != ProductsStruct()) && false
                 ? (((((FFAppState()
                                             .getTopupDataAPIResultAppstate
                                             .contractDetails
@@ -271,6 +278,21 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         },
       );
       Navigator.pop(context);
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content:
+                Text((FFAppState().saveTopupData.products.toMap()).toString()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
     });
 
     _model.textController ??= TextEditingController();
@@ -754,7 +776,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                         0.0,
                                                                         0.0),
                                                             child: Text(
-                                                              'วงเงินพิเศษ',
+                                                              'วงเงินเพิ่มเติม',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
@@ -847,6 +869,170 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                             ].divide(SizedBox(height: 8.0)),
                                           ),
                                         ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 12.0, 12.0, 12.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 10.0,
+                                                color: Color(0x33000000),
+                                                offset: Offset(
+                                                  2.0,
+                                                  2.0,
+                                                ),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Visibility(
+                                            visible: FFAppState()
+                                                .getLoanListSelected
+                                                .topupSpecialFlag,
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 18.0, 0.0, 18.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(14.0, 0.0,
+                                                                14.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Container(
+                                                              width: 100.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            1.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  'วงเงินพิเศษ',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Noto San Thai',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(14.0, 0.0,
+                                                                14.0, 0.0),
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      decoration: BoxDecoration(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .secondaryBackground,
+                                                      ),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              functions
+                                                                  .returnNumberWithComma2Decimal(
+                                                                      '${valueOrDefault<String>(
+                                                                FFAppState()
+                                                                    .getTopupDataAPIResultAppstate
+                                                                    .topupSpecials
+                                                                    .toString(),
+                                                                'topup_specials',
+                                                              )}'),
+                                                              'topup_specials',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: Color(
+                                                                      0xFFFF0000),
+                                                                  fontSize:
+                                                                      24.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                          ),
+                                                          Text(
+                                                            'บาท',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: Color(
+                                                                      0xFFFF0000),
+                                                                  fontSize:
+                                                                      18.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ].divide(SizedBox(height: 8.0)),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                       Divider(
                                         thickness: 2.0,
                                         color: FlutterFlowTheme.of(context)
@@ -1337,8 +1523,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                   0.0,
                                                                 ),
                                                                 value: _model
-                                                                    .sliderValue ??= (FFAppState().saveTopupData.products !=
-                                                                            ProductsStruct()
+                                                                    .sliderValue ??= ((FFAppState().saveTopupData.products !=
+                                                                                ProductsStruct()) &&
+                                                                            false
                                                                         ? FFAppState()
                                                                             .getTopupCalculateAppState
                                                                             .amount
@@ -1368,8 +1555,9 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                                         .minTopupAmount),
                                                                 onChanged: ((FFAppState().getTopupDataAPIResultAppstate.interestPaidFlag ==
                                                                             'Y') ||
-                                                                        (FFAppState().saveTopupData.products !=
-                                                                            ProductsStruct()))
+                                                                        ((FFAppState().saveTopupData.products !=
+                                                                                ProductsStruct()) &&
+                                                                            false))
                                                                     ? null
                                                                     : (newValue) {
                                                                         newValue =
@@ -2676,111 +2864,40 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Divider(
-                              thickness: 2.0,
-                              color: FlutterFlowTheme.of(context).alternate,
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 12.0, 24.0, 0.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: 30.0,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      flex: 4,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'จำนวนเงินที่จะได้รับ',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Noto San Thai',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
+                        child: FutureBuilder<ApplicationRecord>(
+                          future: ApplicationRecord.getDocumentOnce(
+                              FFAppState().configDocument!),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
                                     ),
-                                    Text(
-                                      '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse(('${valueOrDefault<String>(
-                                                FFAppState()
-                                                    .getTopupDataAPIResultAppstate
-                                                    .interestPaidFlag,
-                                                'yield',
-                                              )}' == 'Y' ? '${valueOrDefault<String>(
-                                              FFAppState()
-                                                  .getTopupDataAPIResultAppstate
-                                                  .yield
-                                                  .toString(),
-                                              '0',
-                                            )}' : '0')) - int.parse('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .contractDetails
-                                                .closingBalance
-                                                .toString(),
-                                            'closing_balance',
-                                          )}') - int.parse('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .feeAmount
-                                                .toString(),
-                                            'fee_amount',
-                                          )}') - int.parse('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .collectionFee
-                                                .toString(),
-                                            'collection_fee',
-                                          )}')).toString())} บาท',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Noto San Thai',
-                                            color: Colors.black,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                            if (FFAppState()
-                                    .getTopupDataAPIResultAppstate
-                                    .contractDetails
-                                    .canTopup !=
-                                'Y')
-                              Expanded(
-                                child: Padding(
+                              );
+                            }
+
+                            final columnApplicationRecord = snapshot.data!;
+
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Divider(
+                                  thickness: 2.0,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                ),
+                                Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 4.0, 24.0, 0.0),
+                                      24.0, 12.0, 24.0, 0.0),
                                   child: Container(
                                     width: double.infinity,
+                                    height: 30.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
@@ -2792,981 +2909,1119 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Expanded(
+                                          flex: 4,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'จำนวนเงินที่จะได้รับ',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                         Text(
-                                          '${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getLoanListSelected
-                                                .topupDetail
-                                                .canTopupMsg,
-                                            'can_topup_msg',
-                                          )}',
+                                          '${functions.returnNumberWithComma2Decimal((double.parse((functions.removeCommaFromNumText('${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) - int.parse(('${valueOrDefault<String>(
+                                                    FFAppState()
+                                                        .getTopupDataAPIResultAppstate
+                                                        .interestPaidFlag,
+                                                    'yield',
+                                                  )}' == 'Y' ? '${valueOrDefault<String>(
+                                                  FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .yield
+                                                      .toString(),
+                                                  '0',
+                                                )}' : '0')) - int.parse('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .contractDetails
+                                                    .closingBalance
+                                                    .toString(),
+                                                'closing_balance',
+                                              )}') - int.parse('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .feeAmount
+                                                    .toString(),
+                                                'fee_amount',
+                                              )}') - int.parse('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .collectionFee
+                                                    .toString(),
+                                                'collection_fee',
+                                              )}')).toString())} บาท',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
                                                 fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .error,
-                                                fontSize: 14.0,
+                                                color: Colors.black,
+                                                fontSize: 16.0,
                                                 letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 24.0, 24.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  if (('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .interestPaidFlag,
-                                            'yield',
-                                          )}' ==
-                                          'Y') ||
-                                      false)
-                                    Expanded(
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          FFAppState()
-                                              .updateQrCodeDataTypeAppStateStruct(
-                                            (e) => e
-                                              ..prefix = FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .prefix
-                                              ..suffix = FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .suffix
-                                              ..taxId = FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .taxId
-                                              ..ref1 = FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .ref1
-                                              ..ref2 = FFAppState()
-                                                  .getLoanListSelected
-                                                  .barcodeDetails
-                                                  .ref2
-                                              ..yield = _model.yieldTemp
-                                              ..collectionFee = FFAppState()
-                                                  .getTopupDataAPIResultAppstate
-                                                  .collectionFee
-                                              ..penaltyFee = FFAppState()
-                                                  .getTopupDataAPIResultAppstate
-                                                  .penaltyFee
-                                              ..carRegistration = FFAppState()
-                                                  .getLoanListSelected
-                                                  .contractDetails
-                                                  .collateralInformation
-                                              ..contNo = FFAppState()
-                                                  .getLoanListSelected
-                                                  .contractNo
-                                              ..topupAmountWithComma = functions
-                                                  .returnNumberWithComma2Decimal(((_model
-                                                              .yieldTemp!) +
-                                                          FFAppState()
-                                                              .getTopupDataAPIResultAppstate
-                                                              .collectionFee +
-                                                          FFAppState()
-                                                              .getTopupDataAPIResultAppstate
-                                                              .penaltyFee)
-                                                      .toString())
-                                              ..currentDate = FFAppState()
-                                                  .getLoanListSelected
-                                                  .dataDate,
-                                          );
-                                          safeSetState(() {});
-                                          _model.interestPayment =
-                                              await SrisawadApiGroup
-                                                  .interestpaymentAPICall
-                                                  .call(
-                                            comcode: FFAppState()
-                                                .getLoanListSelected
-                                                .barcodeDetails
-                                                .comcode,
-                                            contractNo: FFAppState()
-                                                .getLoanListSelected
-                                                .contractNo,
-                                            contractName: FFAppState()
-                                                .getLoanListSelected
-                                                .contractName,
-                                            firstname: (String name) {
-                                              return name.split(' ')[0];
-                                            }(FFAppState()
-                                                .getLoanListSelected
-                                                .contractName),
-                                            lastname: (String name) {
-                                              return name.split(' ')[1];
-                                            }(FFAppState()
-                                                .getLoanListSelected
-                                                .contractName),
-                                            nationalThaiId: FFAppState()
-                                                .customerDetailData
-                                                .thaiId,
-                                            hashThaiId:
-                                                FFAppState().hashThaiIdAppState,
-                                            interestAmount: _model.yieldTemp,
-                                            collectionFee: FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .collectionFee,
-                                            penaltyFee: FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .penaltyFee,
-                                            db: FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .dbName,
-                                            barcodeRef1: FFAppState()
-                                                .getLoanListSelected
-                                                .barcodeDetails
-                                                .ref1,
-                                            barcodeRef2: FFAppState()
-                                                .getLoanListSelected
-                                                .barcodeDetails
-                                                .ref2,
-                                            apiUrl: FFDevEnvironmentValues()
-                                                    .isProduction
-                                                ? FFAppState().topupUrlProd
-                                                : FFAppState().topupUrlDev,
-                                          );
-
-                                          context.goNamed(
-                                            QrPaymentPageWidget.routeName,
-                                            extra: <String, dynamic>{
-                                              '__transition_info__':
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType
-                                                        .rightToLeft,
-                                              ),
-                                            },
-                                          );
-
-                                          safeSetState(() {});
-                                        },
-                                        text: 'ชำระเงิน',
-                                        options: FFButtonOptions(
-                                          width: 140.0,
-                                          height: 60.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
+                                if (FFAppState()
+                                        .getTopupDataAPIResultAppstate
+                                        .contractDetails
+                                        .canTopup !=
+                                    'Y')
+                                  Expanded(
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          24.0, 4.0, 24.0, 0.0),
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Noto San Thai',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          elevation: 0.0,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                              .secondaryBackground,
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                ('${FFAppState().getLoanListSelected.topupDetail.canTopupMsg}' !=
+                                                            'null') &&
+                                                        ('${FFAppState().getLoanListSelected.topupDetail.canTopupMsg}' !=
+                                                            '')
+                                                    ? '${FFAppState().getLoanListSelected.topupDetail.canTopupMsg}'
+                                                    : columnApplicationRecord
+                                                        .canTopupDefaultMsg,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          fontSize: 14.0,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  if (('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .interestPaidFlag,
-                                            'yield',
-                                          )}' ==
-                                          'N') ||
-                                      false)
-                                    Expanded(
-                                      child: Builder(
-                                        builder: (context) => FFButtonWidget(
-                                          onPressed: !(((String textField,
-                                                          int minTopup,
-                                                          int maxTopup) {
-                                                    return (int.parse(
-                                                                textField) >=
-                                                            minTopup) &&
-                                                        (int.parse(textField) <=
-                                                            maxTopup);
-                                                  }(
-                                                      functions
-                                                          .removeCommaFromNumText(
-                                                              _model
-                                                                  .textController
-                                                                  .text)!,
-                                                      valueOrDefault<int>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .minTopupAmount,
-                                                        0,
+                                  ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      24.0, 24.0, 24.0, 0.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      if (('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .interestPaidFlag,
+                                                'yield',
+                                              )}' ==
+                                              'Y') ||
+                                          false)
+                                        Expanded(
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              FFAppState()
+                                                  .updateQrCodeDataTypeAppStateStruct(
+                                                (e) => e
+                                                  ..prefix = FFAppState()
+                                                      .getLoanListSelected
+                                                      .barcodeDetails
+                                                      .prefix
+                                                  ..suffix = FFAppState()
+                                                      .getLoanListSelected
+                                                      .barcodeDetails
+                                                      .suffix
+                                                  ..taxId = FFAppState()
+                                                      .getLoanListSelected
+                                                      .barcodeDetails
+                                                      .taxId
+                                                  ..ref1 = FFAppState()
+                                                      .getLoanListSelected
+                                                      .barcodeDetails
+                                                      .ref1
+                                                  ..ref2 = FFAppState()
+                                                      .getLoanListSelected
+                                                      .barcodeDetails
+                                                      .ref2
+                                                  ..yield = _model.yieldTemp
+                                                  ..collectionFee = FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .collectionFee
+                                                  ..penaltyFee = FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .penaltyFee
+                                                  ..carRegistration =
+                                                      FFAppState()
+                                                          .getLoanListSelected
+                                                          .contractDetails
+                                                          .collateralInformation
+                                                  ..contNo = FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractNo
+                                                  ..topupAmountWithComma = functions
+                                                      .returnNumberWithComma2Decimal(((_model
+                                                                  .yieldTemp!) +
+                                                              FFAppState()
+                                                                  .getTopupDataAPIResultAppstate
+                                                                  .collectionFee +
+                                                              FFAppState()
+                                                                  .getTopupDataAPIResultAppstate
+                                                                  .penaltyFee)
+                                                          .toString())
+                                                  ..currentDate = FFAppState()
+                                                      .getLoanListSelected
+                                                      .dataDate,
+                                              );
+                                              safeSetState(() {});
+                                              _model.interestPayment =
+                                                  await SrisawadApiGroup
+                                                      .interestpaymentAPICall
+                                                      .call(
+                                                comcode: FFAppState()
+                                                    .getLoanListSelected
+                                                    .barcodeDetails
+                                                    .comcode,
+                                                contractNo: FFAppState()
+                                                    .getLoanListSelected
+                                                    .contractNo,
+                                                contractName: FFAppState()
+                                                    .getLoanListSelected
+                                                    .contractName,
+                                                firstname: (String name) {
+                                                  return name.split(' ')[0];
+                                                }(FFAppState()
+                                                    .getLoanListSelected
+                                                    .contractName),
+                                                lastname: (String name) {
+                                                  return name.split(' ')[1];
+                                                }(FFAppState()
+                                                    .getLoanListSelected
+                                                    .contractName),
+                                                nationalThaiId: FFAppState()
+                                                    .customerDetailData
+                                                    .thaiId,
+                                                hashThaiId: FFAppState()
+                                                    .hashThaiIdAppState,
+                                                interestAmount:
+                                                    _model.yieldTemp,
+                                                collectionFee: FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .collectionFee,
+                                                penaltyFee: FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .penaltyFee,
+                                                db: FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .dbName,
+                                                barcodeRef1: FFAppState()
+                                                    .getLoanListSelected
+                                                    .barcodeDetails
+                                                    .ref1,
+                                                barcodeRef2: FFAppState()
+                                                    .getLoanListSelected
+                                                    .barcodeDetails
+                                                    .ref2,
+                                                apiUrl: FFDevEnvironmentValues()
+                                                        .isProduction
+                                                    ? FFAppState().topupUrlProd
+                                                    : FFAppState().topupUrlDev,
+                                              );
+
+                                              context.goNamed(
+                                                QrPaymentPageWidget.routeName,
+                                                extra: <String, dynamic>{
+                                                  '__transition_info__':
+                                                      TransitionInfo(
+                                                    hasTransition: true,
+                                                    transitionType:
+                                                        PageTransitionType
+                                                            .rightToLeft,
+                                                  ),
+                                                },
+                                              );
+
+                                              safeSetState(() {});
+                                            },
+                                            text: 'ชำระเงิน',
+                                            options: FFButtonOptions(
+                                              width: 140.0,
+                                              height: 60.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 16.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Noto San Thai',
+                                                        color: Colors.white,
+                                                        letterSpacing: 0.0,
                                                       ),
-                                                      valueOrDefault<int>(
-                                                        FFAppState()
-                                                            .getTopupDataAPIResultAppstate
-                                                            .maxTopupAmount,
-                                                        0,
-                                                      ))) &&
-                                                  ((valueOrDefault<String>(
+                                              elevation: 0.0,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          ),
+                                        ),
+                                      if (('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .interestPaidFlag,
+                                                'yield',
+                                              )}' ==
+                                              'N') ||
+                                          true)
+                                        Expanded(
+                                          child: Builder(
+                                            builder: (context) =>
+                                                FFButtonWidget(
+                                              onPressed: !(((String textField,
+                                                              int minTopup,
+                                                              int maxTopup) {
+                                                        return (int.parse(
+                                                                    textField) >=
+                                                                minTopup) &&
+                                                            (int.parse(
+                                                                    textField) <=
+                                                                maxTopup);
+                                                      }(
+                                                          functions
+                                                              .removeCommaFromNumText(
+                                                                  _model
+                                                                      .textController
+                                                                      .text)!,
+                                                          valueOrDefault<int>(
                                                             FFAppState()
                                                                 .getTopupDataAPIResultAppstate
-                                                                .interestPaidFlag,
-                                                            'yield',
-                                                          ) ==
-                                                          'Y') ||
-                                                      true))
-                                              ? null
-                                              : () async {
-                                                  var _shouldSetState = false;
-                                                  if ((FFAppState()
+                                                                .minTopupAmount,
+                                                            0,
+                                                          ),
+                                                          valueOrDefault<int>(
+                                                            FFAppState()
+                                                                .getTopupDataAPIResultAppstate
+                                                                .maxTopupAmount,
+                                                            0,
+                                                          ))) &&
+                                                      ((valueOrDefault<String>(
+                                                                FFAppState()
+                                                                    .getTopupDataAPIResultAppstate
+                                                                    .interestPaidFlag,
+                                                                'yield',
+                                                              ) ==
+                                                              'Y') ||
+                                                          true))
+                                                  ? null
+                                                  : () async {
+                                                      var _shouldSetState =
+                                                          false;
+                                                      if ((FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractDetails
+                                                                  .loanTypeCode ==
+                                                              'L') ||
+                                                          (FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractDetails
+                                                                  .loanTypeCode ==
+                                                              'H') ||
+                                                          (FFAppState()
+                                                                  .getTopupDataAPIResultAppstate
+                                                                  .contractDetails
+                                                                  .canTopup !=
+                                                              'Y') ||
+                                                          ((double.parse((functions
+                                                                      .removeCommaFromNumText(
+                                                                          '${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) -
+                                                                  int.parse((valueOrDefault<
+                                                                              String>(
+                                                                            FFAppState().getTopupDataAPIResultAppstate.interestPaidFlag,
+                                                                            'yield',
+                                                                          ) ==
+                                                                          'Y'
+                                                                      ? _model
+                                                                          .yieldTemp!
+                                                                          .toString()
+                                                                      : '0')) -
+                                                                  int.parse(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .contractDetails
+                                                                        .closingBalance
+                                                                        .toString(),
+                                                                    'closing_balance',
+                                                                  )) -
+                                                                  int.parse(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .feeAmount
+                                                                        .toString(),
+                                                                    'fee_amount',
+                                                                  )) -
+                                                                  int.parse(valueOrDefault<String>(
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .collectionFee
+                                                                        .toString(),
+                                                                    'collection_fee',
+                                                                  ))) >
+                                                              FFAppState().getLoanListSelected.topupDetail.maxTransferAmount)) {
+                                                        _model
+                                                            .updateSaveTopupLHDataStruct(
+                                                          (e) => e
+                                                            ..branchCode =
+                                                                FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .branchCode
+                                                            ..branchName =
+                                                                FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .branchName
+                                                            ..firstName = (String
+                                                                name) {
+                                                              return name.split(
+                                                                  ' ')[0];
+                                                            }(FFAppState()
+                                                                .getLoanListSelected
+                                                                .contractName)
+                                                            ..lastName = (String
+                                                                name) {
+                                                              return name.split(
+                                                                  ' ')[1];
+                                                            }(FFAppState()
+                                                                .getLoanListSelected
+                                                                .contractName)
+                                                            ..phoneNumber =
+                                                                FFAppState()
+                                                                    .customerDetailData
+                                                                    .phoneNumber
+                                                            ..birthDate =
+                                                                FFAppState()
+                                                                    .customerDetailData
+                                                                    .dob
+                                                            ..email = FFAppState()
+                                                                .customerDetailData
+                                                                .email
+                                                            ..contractThaiId =
+                                                                FFAppState()
+                                                                    .hashThaiIdAppState
+                                                            ..pdpaFlg = 'Y'
+                                                            ..pdpaDate = FFAppState()
+                                                                .getLoanListSelected
+                                                                .paymentDetails
+                                                                .currentDateTime,
+                                                        );
+                                                        safeSetState(() {});
+                                                        FFAppState()
+                                                            .updateGetLoanListSelectedStruct(
+                                                          (e) => e
+                                                            ..updateTopupDetail(
+                                                              (e) => e
+                                                                ..collectionFee =
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .collectionFee
+                                                                ..penaltyFee =
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .penaltyFee
+                                                                ..feeAmount =
+                                                                    FFAppState()
+                                                                        .getTopupDataAPIResultAppstate
+                                                                        .feeAmount
+                                                                ..yield = _model
+                                                                    .yieldTemp,
+                                                            ),
+                                                        );
+                                                        safeSetState(() {});
+                                                        showDialog(
+                                                          context: context,
+                                                          builder:
+                                                              (dialogContext) {
+                                                            return Dialog(
+                                                              elevation: 0,
+                                                              insetPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              alignment: AlignmentDirectional(
+                                                                      0.0, 0.0)
+                                                                  .resolve(
+                                                                      Directionality.of(
+                                                                          context)),
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  FocusScope.of(
+                                                                          dialogContext)
+                                                                      .unfocus();
+                                                                  FocusManager
+                                                                      .instance
+                                                                      .primaryFocus
+                                                                      ?.unfocus();
+                                                                },
+                                                                child:
+                                                                    LoadingWidget(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+
+                                                        for (int loop1Index = 0;
+                                                            loop1Index <=
+                                                                FFAppState()
+                                                                        .getLoanListSelected
+                                                                        .insurances
+                                                                        .length -
+                                                                    1;
+                                                            loop1Index++) {
+                                                          final currentLoop1Item =
+                                                              FFAppState()
+                                                                      .getLoanListSelected
+                                                                      .insurances[
+                                                                  loop1Index];
+                                                          _model.addToListInsurance(
+                                                              currentLoop1Item
+                                                                  .toMap());
+                                                          safeSetState(() {});
+                                                        }
+                                                        _model.saveLeadLHOutput =
+                                                            await TopupLeadLHMobileAppCall
+                                                                .call(
+                                                          apiUrl: FFDevEnvironmentValues()
+                                                                  .isProduction
+                                                              ? FFAppState()
+                                                                  .LeadUrlProd
+                                                              : FFAppState()
+                                                                  .LeadUrlDev,
+                                                          branchCode: _model
+                                                              .saveTopupLHData
+                                                              ?.branchCode,
+                                                          branchName: _model
+                                                              .saveTopupLHData
+                                                              ?.branchName,
+                                                          titleId: '',
+                                                          titleName: '',
+                                                          firstName: _model
+                                                              .saveTopupLHData
+                                                              ?.firstName,
+                                                          lastName: _model
+                                                              .saveTopupLHData
+                                                              ?.lastName,
+                                                          phoneNumber: _model
+                                                              .saveTopupLHData
+                                                              ?.phoneNumber,
+                                                          birthDate: _model
+                                                              .saveTopupLHData
+                                                              ?.birthDate,
+                                                          age: '',
+                                                          email: _model
+                                                              .saveTopupLHData
+                                                              ?.email,
+                                                          contractThaiId: _model
+                                                              .saveTopupLHData
+                                                              ?.contractThaiId,
+                                                          pdpaFlg: _model
+                                                              .saveTopupLHData
+                                                              ?.pdpaFlg,
+                                                          pdpaDate: _model
+                                                              .saveTopupLHData
+                                                              ?.pdpaDate,
+                                                          utmSource: '',
+                                                          utmMedium: '',
+                                                          utmCampaign: '',
+                                                          contractDetailsJson:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractDetails
+                                                                  .toMap(),
+                                                          carDetailsJson:
+                                                              FFAppState()
+                                                                  .getTopupDataAPIResultAppstate
+                                                                  .carDetails
+                                                                  .toMap(),
+                                                          paymentDetailsJson:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .paymentDetails
+                                                                  .toMap(),
+                                                          topupDetailJson:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .topupDetail
+                                                                  .toMap(),
+                                                          barcodeDetailsJson:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .barcodeDetails
+                                                                  .toMap(),
+                                                          dataDate: FFAppState()
                                                               .getLoanListSelected
-                                                              .contractDetails
-                                                              .loanTypeCode ==
+                                                              .dataDate,
+                                                          contractName: FFAppState()
+                                                              .getLoanListSelected
+                                                              .contractName,
+                                                          dbName: FFAppState()
+                                                              .getLoanListSelected
+                                                              .dbName,
+                                                          contractNo: FFAppState()
+                                                              .getLoanListSelected
+                                                              .contractNo,
+                                                          contractNoBlinding:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractNo,
+                                                          contractBankType: FFAppState()
+                                                              .getLoanListSelected
+                                                              .contractBankType,
+                                                          contractBankAccount:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractBankAccount,
+                                                          contractBankBrandname:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractBankBrandname,
+                                                          contractDate: FFAppState()
+                                                              .getLoanListSelected
+                                                              .contractDate,
+                                                          contractCloseDate:
+                                                              FFAppState()
+                                                                  .getLoanListSelected
+                                                                  .contractCloseDate,
+                                                          transno: FFAppState()
+                                                              .getLoanListSelected
+                                                              .transno,
+                                                          requestTopupAmount:
+                                                              FFAppState()
+                                                                  .getTopupCalculateAppState
+                                                                  .amount
+                                                                  .toString(),
+                                                          requestDate: FFAppState()
+                                                              .getLoanListSelected
+                                                              .requestDate,
+                                                          loanAmount: FFAppState()
+                                                              .getTopupCalculateAppState
+                                                              .amount
+                                                              .toString(),
+                                                          requestStatus: FFAppState()
+                                                              .getLoanListSelected
+                                                              .requestStatusCode,
+                                                          thaiId: FFAppState()
+                                                              .customerDetailData
+                                                              .thaiId,
+                                                          hashThaiId: FFAppState()
+                                                              .hashThaiIdAppState,
+                                                          insurancesJson: _model
+                                                              .listInsurance,
+                                                        );
+
+                                                        _shouldSetState = true;
+                                                        if ((_model.saveLeadLHOutput
+                                                                    ?.statusCode ??
+                                                                200) ==
+                                                            200) {
+                                                        } else {
+                                                          Navigator.pop(
+                                                              context);
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ErrorMessageComponentWidget(
+                                                                    textMessage:
+                                                                        'พบข้อผิดพลาด status (${TopupLeadLHMobileAppCall.statuscode(
+                                                                      (_model.saveLeadLHOutput
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                    )})',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+
+                                                        if ('${getJsonField(
+                                                              (_model.saveLeadLHOutput
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                              r'''$.code''',
+                                                            ).toString()}' ==
+                                                            '200') {
+                                                        } else {
+                                                          Navigator.pop(
+                                                              context);
+                                                          await showDialog(
+                                                            barrierDismissible:
+                                                                false,
+                                                            context: context,
+                                                            builder:
+                                                                (dialogContext) {
+                                                              return Dialog(
+                                                                elevation: 0,
+                                                                insetPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                alignment: AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0)
+                                                                    .resolve(
+                                                                        Directionality.of(
+                                                                            context)),
+                                                                child:
+                                                                    GestureDetector(
+                                                                  onTap: () {
+                                                                    FocusScope.of(
+                                                                            dialogContext)
+                                                                        .unfocus();
+                                                                    FocusManager
+                                                                        .instance
+                                                                        .primaryFocus
+                                                                        ?.unfocus();
+                                                                  },
+                                                                  child:
+                                                                      ErrorMessageComponentWidget(
+                                                                    textMessage:
+                                                                        '${getJsonField(
+                                                                      (_model.saveLeadLHOutput
+                                                                              ?.jsonBody ??
+                                                                          ''),
+                                                                      r'''$.message''',
+                                                                    ).toString()}',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+
+                                                          if (_shouldSetState)
+                                                            safeSetState(() {});
+                                                          return;
+                                                        }
+
+                                                        Navigator.pop(context);
+
+                                                        context.goNamed(
+                                                          SaveLeadHLSuccessWidget
+                                                              .routeName,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            '__transition_info__':
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                      } else {
+                                                        context.pushNamed(
+                                                          SelectInstallmentPageWidget
+                                                              .routeName,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            '__transition_info__':
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                      }
+
+                                                      if (_shouldSetState)
+                                                        safeSetState(() {});
+                                                    },
+                                              text: ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
                                                           'L') ||
-                                                      (FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractDetails
-                                                              .loanTypeCode ==
+                                                      ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
                                                           'H') ||
-                                                      (FFAppState()
-                                                              .getTopupDataAPIResultAppstate
-                                                              .contractDetails
-                                                              .canTopup !=
+                                                      ('${FFAppState().getTopupDataAPIResultAppstate.contractDetails.canTopup}' !=
                                                           'Y') ||
                                                       ((double.parse((functions
                                                                   .removeCommaFromNumText(
                                                                       '${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) -
-                                                              int.parse((valueOrDefault<
-                                                                          String>(
-                                                                        FFAppState()
-                                                                            .getTopupDataAPIResultAppstate
-                                                                            .interestPaidFlag,
-                                                                        'yield',
-                                                                      ) ==
-                                                                      'Y'
-                                                                  ? _model
-                                                                      .yieldTemp!
-                                                                      .toString()
-                                                                  : '0')) -
                                                               int.parse(
-                                                                  valueOrDefault<
-                                                                      String>(
+                                                                  ('${valueOrDefault<String>(
+                                                                            FFAppState().getTopupDataAPIResultAppstate.interestPaidFlag,
+                                                                            'yield',
+                                                                          )}' ==
+                                                                          'Y'
+                                                                      ? '${_model.yieldTemp?.toString()}'
+                                                                      : '0')) -
+                                                              int.parse(
+                                                                  '${valueOrDefault<String>(
                                                                 FFAppState()
                                                                     .getTopupDataAPIResultAppstate
                                                                     .contractDetails
                                                                     .closingBalance
                                                                     .toString(),
                                                                 'closing_balance',
-                                                              )) -
+                                                              )}') -
                                                               int.parse(
-                                                                  valueOrDefault<
-                                                                      String>(
+                                                                  '${valueOrDefault<String>(
                                                                 FFAppState()
                                                                     .getTopupDataAPIResultAppstate
                                                                     .feeAmount
                                                                     .toString(),
                                                                 'fee_amount',
-                                                              )) -
-                                                              int.parse(valueOrDefault<String>(
+                                                              )}') -
+                                                              int.parse(
+                                                                  '${valueOrDefault<String>(
                                                                 FFAppState()
                                                                     .getTopupDataAPIResultAppstate
                                                                     .collectionFee
                                                                     .toString(),
                                                                 'collection_fee',
-                                                              ))) >
-                                                          FFAppState().getLoanListSelected.topupDetail.maxTransferAmount)) {
-                                                    _model
-                                                        .updateSaveTopupLHDataStruct(
-                                                      (e) => e
-                                                        ..branchCode = FFAppState()
-                                                            .getLoanListSelected
-                                                            .branchCode
-                                                        ..branchName = FFAppState()
-                                                            .getLoanListSelected
-                                                            .branchCode
-                                                        ..firstName = (String
-                                                            name) {
-                                                          return name
-                                                              .split(' ')[0];
-                                                        }(FFAppState()
-                                                            .getLoanListSelected
-                                                            .contractName)
-                                                        ..lastName = (String
-                                                            name) {
-                                                          return name
-                                                              .split(' ')[1];
-                                                        }(FFAppState()
-                                                            .getLoanListSelected
-                                                            .contractName)
-                                                        ..phoneNumber =
-                                                            FFAppState()
-                                                                .customerDetailData
-                                                                .phoneNumber
-                                                        ..birthDate = FFAppState()
-                                                            .customerDetailData
-                                                            .dob
-                                                        ..email = FFAppState()
-                                                            .customerDetailData
-                                                            .email
-                                                        ..contractThaiId =
-                                                            FFAppState()
-                                                                .hashThaiIdAppState
-                                                        ..pdpaFlg = 'Y'
-                                                        ..pdpaDate = FFAppState()
-                                                            .getLoanListSelected
-                                                            .paymentDetails
-                                                            .currentDateTime,
-                                                    );
-                                                    safeSetState(() {});
-                                                    FFAppState()
-                                                        .updateGetLoanListSelectedStruct(
-                                                      (e) => e
-                                                        ..updateTopupDetail(
-                                                          (e) => e
-                                                            ..collectionFee =
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .collectionFee
-                                                            ..penaltyFee =
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .penaltyFee
-                                                            ..feeAmount =
-                                                                FFAppState()
-                                                                    .getTopupDataAPIResultAppstate
-                                                                    .feeAmount
-                                                            ..yield = _model
-                                                                .yieldTemp,
+                                                              )}')) >
+                                                          FFAppState()
+                                                              .getLoanListSelected
+                                                              .topupDetail
+                                                              .maxTransferAmount)
+                                                  ? 'ส่งข้อมูล'
+                                                  : 'ถัดไป',
+                                              options: FFButtonOptions(
+                                                width: 140.0,
+                                                height: 60.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
                                                         ),
-                                                    );
-                                                    safeSetState(() {});
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (dialogContext) {
-                                                        return Dialog(
-                                                          elevation: 0,
-                                                          insetPadding:
-                                                              EdgeInsets.zero,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          alignment: AlignmentDirectional(
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                disabledColor:
+                                                    Color(0x80DB771A),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      if (('${valueOrDefault<String>(
+                                                FFAppState()
+                                                    .getTopupDataAPIResultAppstate
+                                                    .interestPaidFlag,
+                                                'yield',
+                                              )}' ==
+                                              'Y') ||
+                                          false)
+                                        Expanded(
+                                          child: Builder(
+                                            builder: (context) =>
+                                                FFButtonWidget(
+                                              onPressed: () async {
+                                                var _shouldSetState = false;
+                                                unawaited(
+                                                  () async {}(),
+                                                );
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (dialogContext) {
+                                                    return Dialog(
+                                                      elevation: 0,
+                                                      insetPadding:
+                                                          EdgeInsets.zero,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      alignment:
+                                                          AlignmentDirectional(
                                                                   0.0, 0.0)
                                                               .resolve(
                                                                   Directionality.of(
                                                                       context)),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          FocusScope.of(
+                                                                  dialogContext)
+                                                              .unfocus();
+                                                          FocusManager.instance
+                                                              .primaryFocus
+                                                              ?.unfocus();
+                                                        },
+                                                        child: LoadingWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+                                                _model.getTopupDetailAPIRefresh =
+                                                    await SrisawadApiGroup
+                                                        .getTopupDetailCall
+                                                        .call(
+                                                  dbName: FFAppState()
+                                                      .getLoanListSelected
+                                                      .dbName,
+                                                  contractNo: FFAppState()
+                                                      .getLoanListSelected
+                                                      .contractNo,
+                                                  bearerAuth:
+                                                      FFAppState().accessToken,
+                                                  apiUrl:
+                                                      FFDevEnvironmentValues()
+                                                              .isProduction
+                                                          ? FFAppState()
+                                                              .topupUrlProd
+                                                          : FFAppState()
+                                                              .topupUrlDev,
+                                                );
+
+                                                _shouldSetState = true;
+                                                if ((_model.getTopupDetailAPIRefresh
+                                                            ?.statusCode ??
+                                                        200) !=
+                                                    200) {
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
                                                           child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              FocusScope.of(
-                                                                      dialogContext)
-                                                                  .unfocus();
-                                                              FocusManager
-                                                                  .instance
-                                                                  .primaryFocus
-                                                                  ?.unfocus();
-                                                            },
-                                                            child:
-                                                                LoadingWidget(),
+                                                              ErrorMessageComponentWidget(
+                                                            textMessage:
+                                                                'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIRefresh?.statusCode ?? 200).toString()})',
                                                           ),
-                                                        );
-                                                      },
-                                                    );
-
-                                                    for (int loop1Index = 0;
-                                                        loop1Index <=
-                                                            FFAppState()
-                                                                    .getLoanListSelected
-                                                                    .insurances
-                                                                    .length -
-                                                                1;
-                                                        loop1Index++) {
-                                                      final currentLoop1Item =
-                                                          FFAppState()
-                                                                  .getLoanListSelected
-                                                                  .insurances[
-                                                              loop1Index];
-                                                      _model.addToListInsurance(
-                                                          currentLoop1Item
-                                                              .toMap());
-                                                      safeSetState(() {});
-                                                    }
-                                                    _model.saveLeadLHOutput =
-                                                        await TopupLeadLHMobileAppCall
-                                                            .call(
-                                                      apiUrl:
-                                                          FFDevEnvironmentValues()
-                                                                  .isProduction
-                                                              ? FFAppState()
-                                                                  .LeadUrlProd
-                                                              : FFAppState()
-                                                                  .LeadUrlDev,
-                                                      branchCode: _model
-                                                          .saveTopupLHData
-                                                          ?.branchCode,
-                                                      branchName: _model
-                                                          .saveTopupLHData
-                                                          ?.branchName,
-                                                      titleId: '',
-                                                      titleName: '',
-                                                      firstName: _model
-                                                          .saveTopupLHData
-                                                          ?.firstName,
-                                                      lastName: _model
-                                                          .saveTopupLHData
-                                                          ?.lastName,
-                                                      phoneNumber: _model
-                                                          .saveTopupLHData
-                                                          ?.phoneNumber,
-                                                      birthDate: _model
-                                                          .saveTopupLHData
-                                                          ?.birthDate,
-                                                      age: '',
-                                                      email: _model
-                                                          .saveTopupLHData
-                                                          ?.email,
-                                                      contractThaiId: _model
-                                                          .saveTopupLHData
-                                                          ?.contractThaiId,
-                                                      pdpaFlg: _model
-                                                          .saveTopupLHData
-                                                          ?.pdpaFlg,
-                                                      pdpaDate: _model
-                                                          .saveTopupLHData
-                                                          ?.pdpaDate,
-                                                      utmSource: '',
-                                                      utmMedium: '',
-                                                      utmCampaign: '',
-                                                      contractDetailsJson:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractDetails
-                                                              .toMap(),
-                                                      carDetailsJson: FFAppState()
-                                                          .getTopupDataAPIResultAppstate
-                                                          .carDetails
-                                                          .toMap(),
-                                                      paymentDetailsJson:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .paymentDetails
-                                                              .toMap(),
-                                                      topupDetailJson:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .topupDetail
-                                                              .toMap(),
-                                                      barcodeDetailsJson:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .barcodeDetails
-                                                              .toMap(),
-                                                      dataDate: FFAppState()
-                                                          .getLoanListSelected
-                                                          .dataDate,
-                                                      contractName: FFAppState()
-                                                          .getLoanListSelected
-                                                          .contractName,
-                                                      dbName: FFAppState()
-                                                          .getLoanListSelected
-                                                          .dbName,
-                                                      contractNo: FFAppState()
-                                                          .getLoanListSelected
-                                                          .contractNo,
-                                                      contractNoBlinding:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractNo,
-                                                      contractBankType:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractBankType,
-                                                      contractBankAccount:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractBankAccount,
-                                                      contractBankBrandname:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractBankBrandname,
-                                                      contractDate: FFAppState()
-                                                          .getLoanListSelected
-                                                          .contractDate,
-                                                      contractCloseDate:
-                                                          FFAppState()
-                                                              .getLoanListSelected
-                                                              .contractCloseDate,
-                                                      transno: FFAppState()
-                                                          .getLoanListSelected
-                                                          .transno,
-                                                      requestTopupAmount:
-                                                          FFAppState()
-                                                              .getTopupCalculateAppState
-                                                              .amount
-                                                              .toString(),
-                                                      requestDate: FFAppState()
-                                                          .getLoanListSelected
-                                                          .requestDate,
-                                                      loanAmount: FFAppState()
-                                                          .getTopupCalculateAppState
-                                                          .amount
-                                                          .toString(),
-                                                      requestStatus: FFAppState()
-                                                          .getLoanListSelected
-                                                          .requestStatusCode,
-                                                      thaiId: FFAppState()
-                                                          .customerDetailData
-                                                          .thaiId,
-                                                      hashThaiId: FFAppState()
-                                                          .hashThaiIdAppState,
-                                                      insurancesJson:
-                                                          _model.listInsurance,
-                                                    );
-
-                                                    _shouldSetState = true;
-                                                    if ((_model.saveLeadLHOutput
-                                                                ?.statusCode ??
-                                                            200) !=
-                                                        200) {
-                                                      Navigator.pop(context);
-                                                      await showDialog(
-                                                        barrierDismissible:
-                                                            false,
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'พบข้อผิดพลาด status (${TopupLeadLHMobileAppCall.statuscode(
-                                                                  (_model.saveLeadLHOutput
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                )})',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    if (TopupLeadLHMobileAppCall
-                                                            .statuscode(
-                                                          (_model.saveLeadLHOutput
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                        ) !=
-                                                        '200') {
-                                                      Navigator.pop(context);
-                                                      await showDialog(
-                                                        barrierDismissible:
-                                                            false,
-                                                        context: context,
-                                                        builder:
-                                                            (dialogContext) {
-                                                          return Dialog(
-                                                            elevation: 0,
-                                                            insetPadding:
-                                                                EdgeInsets.zero,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            alignment: AlignmentDirectional(
-                                                                    0.0, 0.0)
-                                                                .resolve(
-                                                                    Directionality.of(
-                                                                        context)),
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        dialogContext)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child:
-                                                                  ErrorMessageComponentWidget(
-                                                                textMessage:
-                                                                    'พบข้อผิดพลาด (${TopupLeadLHMobileAppCall.statuscode(
-                                                                  (_model.saveLeadLHOutput
-                                                                          ?.jsonBody ??
-                                                                      ''),
-                                                                )})',
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        safeSetState(() {});
-                                                      return;
-                                                    }
-                                                    Navigator.pop(context);
-
-                                                    context.goNamed(
-                                                      SaveLeadHLSuccessWidget
-                                                          .routeName,
-                                                      extra: <String, dynamic>{
-                                                        '__transition_info__':
-                                                            TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
                                                         ),
-                                                      },
-                                                    );
-                                                  } else {
-                                                    context.pushNamed(
-                                                      SelectInstallmentPageWidget
-                                                          .routeName,
-                                                      extra: <String, dynamic>{
-                                                        '__transition_info__':
-                                                            TransitionInfo(
-                                                          hasTransition: true,
-                                                          transitionType:
-                                                              PageTransitionType
-                                                                  .rightToLeft,
-                                                        ),
-                                                      },
-                                                    );
-                                                  }
+                                                      );
+                                                    },
+                                                  );
 
+                                                  Navigator.pop(context);
                                                   if (_shouldSetState)
                                                     safeSetState(() {});
-                                                },
-                                          text: ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
-                                                      'L') ||
-                                                  ('${FFAppState().getLoanListSelected.contractDetails.loanTypeCode}' ==
-                                                      'H') ||
-                                                  ('${FFAppState().getTopupDataAPIResultAppstate.contractDetails.canTopup}' !=
-                                                      'Y') ||
-                                                  ((double.parse((functions
-                                                              .removeCommaFromNumText(
-                                                                  '${FFAppState().getTopupCalculateAppState.amount.toString()}')!)) -
-                                                          int.parse(
-                                                              ('${valueOrDefault<String>(
-                                                                        FFAppState()
-                                                                            .getTopupDataAPIResultAppstate
-                                                                            .interestPaidFlag,
-                                                                        'yield',
-                                                                      )}' ==
-                                                                      'Y'
-                                                                  ? '${_model.yieldTemp?.toString()}'
-                                                                  : '0')) -
-                                                          int.parse(
-                                                              '${valueOrDefault<String>(
-                                                            FFAppState()
-                                                                .getTopupDataAPIResultAppstate
-                                                                .contractDetails
-                                                                .closingBalance
-                                                                .toString(),
-                                                            'closing_balance',
-                                                          )}') -
-                                                          int.parse(
-                                                              '${valueOrDefault<String>(
-                                                            FFAppState()
-                                                                .getTopupDataAPIResultAppstate
-                                                                .feeAmount
-                                                                .toString(),
-                                                            'fee_amount',
-                                                          )}') -
-                                                          int.parse(
-                                                              '${valueOrDefault<String>(
-                                                            FFAppState()
-                                                                .getTopupDataAPIResultAppstate
-                                                                .collectionFee
-                                                                .toString(),
-                                                            'collection_fee',
-                                                          )}')) >
-                                                      FFAppState()
-                                                          .getLoanListSelected
-                                                          .topupDetail
-                                                          .maxTransferAmount)
-                                              ? 'ส่งข้อมูล'
-                                              : 'ถัดไป',
-                                          options: FFButtonOptions(
-                                            width: 140.0,
-                                            height: 60.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      color: Colors.white,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            disabledColor: Color(0x80DB771A),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  if (('${valueOrDefault<String>(
-                                            FFAppState()
-                                                .getTopupDataAPIResultAppstate
-                                                .interestPaidFlag,
-                                            'yield',
-                                          )}' ==
-                                          'Y') ||
-                                      false)
-                                    Expanded(
-                                      child: Builder(
-                                        builder: (context) => FFButtonWidget(
-                                          onPressed: () async {
-                                            var _shouldSetState = false;
-                                            unawaited(
-                                              () async {}(),
-                                            );
-                                            showDialog(
-                                              context: context,
-                                              builder: (dialogContext) {
-                                                return Dialog(
-                                                  elevation: 0,
-                                                  insetPadding: EdgeInsets.zero,
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                              0.0, 0.0)
-                                                          .resolve(
-                                                              Directionality.of(
-                                                                  context)),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      FocusScope.of(
-                                                              dialogContext)
-                                                          .unfocus();
-                                                      FocusManager
-                                                          .instance.primaryFocus
-                                                          ?.unfocus();
+                                                  return;
+                                                }
+                                                if (SrisawadApiGroup
+                                                        .getTopupDetailCall
+                                                        .code(
+                                                      (_model.getTopupDetailAPIRefresh
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                    ) !=
+                                                    '200') {
+                                                  await showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (dialogContext) {
+                                                      return Dialog(
+                                                        elevation: 0,
+                                                        insetPadding:
+                                                            EdgeInsets.zero,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                    0.0, 0.0)
+                                                                .resolve(
+                                                                    Directionality.of(
+                                                                        context)),
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            FocusScope.of(
+                                                                    dialogContext)
+                                                                .unfocus();
+                                                            FocusManager
+                                                                .instance
+                                                                .primaryFocus
+                                                                ?.unfocus();
+                                                          },
+                                                          child:
+                                                              ErrorMessageComponentWidget(
+                                                            textMessage:
+                                                                '${SrisawadApiGroup.getTopupDetailCall.message(
+                                                              (_model.getTopupDetailAPIRefresh
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                            )}',
+                                                          ),
+                                                        ),
+                                                      );
                                                     },
-                                                    child: LoadingWidget(),
-                                                  ),
-                                                );
-                                              },
-                                            );
-
-                                            _model.getTopupDetailAPIRefresh =
-                                                await SrisawadApiGroup
-                                                    .getTopupDetailCall
-                                                    .call(
-                                              dbName: FFAppState()
-                                                  .getLoanListSelected
-                                                  .dbName,
-                                              contractNo: FFAppState()
-                                                  .getLoanListSelected
-                                                  .contractNo,
-                                              bearerAuth:
-                                                  FFAppState().accessToken,
-                                              apiUrl: FFDevEnvironmentValues()
-                                                      .isProduction
-                                                  ? FFAppState().topupUrlProd
-                                                  : FFAppState().topupUrlDev,
-                                            );
-
-                                            _shouldSetState = true;
-                                            if ((_model.getTopupDetailAPIRefresh
-                                                        ?.statusCode ??
-                                                    200) !=
-                                                200) {
-                                              await showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        FocusScope.of(
-                                                                dialogContext)
-                                                            .unfocus();
-                                                        FocusManager.instance
-                                                            .primaryFocus
-                                                            ?.unfocus();
-                                                      },
-                                                      child:
-                                                          ErrorMessageComponentWidget(
-                                                        textMessage:
-                                                            'พบข้อผิดพลาด status (${(_model.getTopupDetailAPIRefresh?.statusCode ?? 200).toString()})',
-                                                      ),
-                                                    ),
                                                   );
-                                                },
-                                              );
 
-                                              Navigator.pop(context);
-                                              if (_shouldSetState)
+                                                  Navigator.pop(context);
+                                                  if (_shouldSetState)
+                                                    safeSetState(() {});
+                                                  return;
+                                                }
+                                                FFAppState()
+                                                        .getTopupDataAPIResultAppstate =
+                                                    GetTopupDataAPIDataTypeStruct
+                                                        .maybeFromMap((_model
+                                                                .getTopupDetailAPIRefresh
+                                                                ?.jsonBody ??
+                                                            ''))!;
                                                 safeSetState(() {});
-                                              return;
-                                            }
-                                            if (SrisawadApiGroup
-                                                    .getTopupDetailCall
-                                                    .code(
+                                                _model.yieldTemp =
+                                                    SrisawadApiGroup
+                                                        .getTopupDetailCall
+                                                        .topupYield(
                                                   (_model.getTopupDetailAPIRefresh
                                                           ?.jsonBody ??
                                                       ''),
-                                                ) !=
-                                                '200') {
-                                              await showDialog(
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (dialogContext) {
-                                                  return Dialog(
-                                                    elevation: 0,
-                                                    insetPadding:
-                                                        EdgeInsets.zero,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                                0.0, 0.0)
-                                                            .resolve(
-                                                                Directionality.of(
-                                                                    context)),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        FocusScope.of(
-                                                                dialogContext)
-                                                            .unfocus();
-                                                        FocusManager.instance
-                                                            .primaryFocus
-                                                            ?.unfocus();
-                                                      },
-                                                      child:
-                                                          ErrorMessageComponentWidget(
-                                                        textMessage:
-                                                            '${SrisawadApiGroup.getTopupDetailCall.message(
-                                                          (_model.getTopupDetailAPIRefresh
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                        )}',
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              );
-
-                                              Navigator.pop(context);
-                                              if (_shouldSetState)
+                                                );
                                                 safeSetState(() {});
-                                              return;
-                                            }
-                                            FFAppState()
-                                                    .getTopupDataAPIResultAppstate =
-                                                GetTopupDataAPIDataTypeStruct
-                                                    .maybeFromMap((_model
-                                                            .getTopupDetailAPIRefresh
-                                                            ?.jsonBody ??
-                                                        ''))!;
-                                            safeSetState(() {});
-                                            _model.yieldTemp = SrisawadApiGroup
-                                                .getTopupDetailCall
-                                                .topupYield(
-                                              (_model.getTopupDetailAPIRefresh
-                                                      ?.jsonBody ??
-                                                  ''),
-                                            );
-                                            safeSetState(() {});
-                                            Navigator.pop(context);
-                                            if (_shouldSetState)
-                                              safeSetState(() {});
-                                          },
-                                          text: 'ปรับปรุงยอดชำระ',
-                                          options: FFButtonOptions(
-                                            width: 140.0,
-                                            height: 60.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .accent2,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleSmall
-                                                    .override(
-                                                      fontFamily:
-                                                          'Noto San Thai',
-                                                      color: Colors.white,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                            elevation: 0.0,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
+                                                Navigator.pop(context);
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                              },
+                                              text: 'ปรับปรุงยอดชำระ',
+                                              options: FFButtonOptions(
+                                                width: 140.0,
+                                                height: 60.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .accent2,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Noto San Thai',
+                                                          color: Colors.white,
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                ].divide(SizedBox(width: 16.0)),
-                              ),
-                            ),
-                          ].addToEnd(SizedBox(height: 12.0)),
+                                    ].divide(SizedBox(width: 16.0)),
+                                  ),
+                                ),
+                              ].addToEnd(SizedBox(height: 12.0)),
+                            );
+                          },
                         ),
                       ),
                   ].addToEnd(SizedBox(height: 18.0)),

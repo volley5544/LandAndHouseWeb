@@ -574,13 +574,13 @@ class FFAppState extends ChangeNotifier {
     _LeadUrlProd = value;
   }
 
-  int _webProdVersion = 43;
+  int _webProdVersion = 46;
   int get webProdVersion => _webProdVersion;
   set webProdVersion(int value) {
     _webProdVersion = value;
   }
 
-  int _webUatVersion = 146;
+  int _webUatVersion = 166;
   int get webUatVersion => _webUatVersion;
   set webUatVersion(int value) {
     _webUatVersion = value;
@@ -907,6 +907,16 @@ class FFAppState extends ChangeNotifier {
   void updateSolarSaveStep1AppStateStruct(
       Function(SolarSaveStep1Struct) updateFn) {
     updateFn(_SolarSaveStep1AppState);
+  }
+
+  SavePLoanDataModelStruct _savePLoanData = SavePLoanDataModelStruct();
+  SavePLoanDataModelStruct get savePLoanData => _savePLoanData;
+  set savePLoanData(SavePLoanDataModelStruct value) {
+    _savePLoanData = value;
+  }
+
+  void updateSavePLoanDataStruct(Function(SavePLoanDataModelStruct) updateFn) {
+    updateFn(_savePLoanData);
   }
 }
 

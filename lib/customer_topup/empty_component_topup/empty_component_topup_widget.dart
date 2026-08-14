@@ -52,23 +52,24 @@ class _EmptyComponentTopupWidgetState extends State<EmptyComponentTopupWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 0.0),
+        padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              valueOrDefault<String>(
-                widget.text1,
-                'text1',
+            if (('${widget.text1}' != '') && ('${widget.text1}' != 'null'))
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+                child: Text(
+                  '${widget.text1}',
+                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        fontFamily: 'Noto San Thai',
+                        color: Color(0x7F646464),
+                        fontSize: 16.0,
+                        letterSpacing: 0.0,
+                      ),
+                ),
               ),
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    fontFamily: 'Noto San Thai',
-                    color: Color(0x7F646464),
-                    fontSize: 16.0,
-                    letterSpacing: 0.0,
-                  ),
-            ),
             Text(
               valueOrDefault<String>(
                 widget.text2,
@@ -83,7 +84,7 @@ class _EmptyComponentTopupWidgetState extends State<EmptyComponentTopupWidget> {
                     fontWeight: FontWeight.bold,
                   ),
             ),
-          ],
+          ].addToStart(SizedBox(height: 48.0)),
         ),
       ),
     );

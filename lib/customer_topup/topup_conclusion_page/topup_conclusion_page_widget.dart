@@ -4721,6 +4721,53 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                       .loanTypeName,
                                               );
                                               safeSetState(() {});
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('last period'),
+                                                    content: Text(FFAppState()
+                                                        .topupInstallmentSelected
+                                                        .lastPeriodAmt
+                                                        .toString()),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text(
+                                                        'last period promo'),
+                                                    content: Text(FFAppState()
+                                                        .topupInstallmentSelected
+                                                        .lastPeriodPromo
+                                                        .toString()),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              if (!false) {
+                                                Navigator.pop(context);
+                                                if (_shouldSetState)
+                                                  safeSetState(() {});
+                                                return;
+                                              }
                                               _model.saveTopupOutput =
                                                   await SrisawadApiGroup
                                                       .saveNewTopupCall

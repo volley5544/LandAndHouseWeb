@@ -1,0 +1,2503 @@
+import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
+import '/components/error_message_component_widget.dart';
+import '/customer_topup/empty_component_topup/empty_component_topup_widget.dart';
+import '/customer_topup/navigate_topup_component/navigate_topup_component_widget.dart';
+import '/customer_topup/topup_choice_chip_component/topup_choice_chip_component_widget.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/pages/loading/loading_widget.dart';
+import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'topup_card_page_copy_copy_copy_model.dart';
+export 'topup_card_page_copy_copy_copy_model.dart';
+
+class TopupCardPageCopyCopyCopyWidget extends StatefulWidget {
+  const TopupCardPageCopyCopyCopyWidget({
+    super.key,
+    this.token,
+    this.hashThaiId,
+    this.source,
+    this.referId,
+    this.contNo,
+    String? topupType,
+  }) : this.topupType = topupType ?? 'normal';
+
+  final String? token;
+  final String? hashThaiId;
+  final String? source;
+  final String? referId;
+  final String? contNo;
+  final String topupType;
+
+  static String routeName = 'topupCardPageCopyCopyCopy';
+  static String routePath = '/topupCardPageCopyCopyCopy';
+
+  @override
+  State<TopupCardPageCopyCopyCopyWidget> createState() =>
+      _TopupCardPageCopyCopyCopyWidgetState();
+}
+
+class _TopupCardPageCopyCopyCopyWidgetState
+    extends State<TopupCardPageCopyCopyCopyWidget> {
+  late TopupCardPageCopyCopyCopyModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => TopupCardPageCopyCopyCopyModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await Future.wait([
+        Future(() async {
+          while (true) {
+            safeSetState(() {});
+            await Future.delayed(
+              Duration(
+                milliseconds: 1000,
+              ),
+            );
+          }
+        }),
+        Future(() async {
+          await actions.listenWebviewEventCamera(
+            context,
+            (cameraBase64, actionNameOutput) async {
+              if (actionNameOutput == 'VideoRecord') {
+                _model.videoPath = cameraBase64;
+                safeSetState(() {});
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      content: Text(_model.videoPath),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                _model.fileVideoOutput =
+                    await actions.getFFUploadFileFromFilePath(
+                  _model.videoPath,
+                  '123456789',
+                );
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      content: Text('after gen file'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                await Future.delayed(
+                  Duration(
+                    milliseconds: 500,
+                  ),
+                );
+                _model.resultText = await actions.saveVideoFile(
+                  _model.fileVideoOutput,
+                  '123456789',
+                );
+                await showDialog(
+                  context: context,
+                  builder: (alertDialogContext) {
+                    return AlertDialog(
+                      content: Text('${_model.resultText}'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(alertDialogContext),
+                          child: Text('Ok'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+          );
+          showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return Dialog(
+                elevation: 0,
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                alignment: AlignmentDirectional(1.0, 1.0)
+                    .resolve(Directionality.of(context)),
+                child: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(dialogContext).unfocus();
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  child: LoadingWidget(),
+                ),
+              );
+            },
+          );
+
+          setDarkModeSetting(context, ThemeMode.light);
+          _model.isLoadFirestoreCompleted = false;
+          safeSetState(() {});
+          FFAppState().getLoanListAPIResultAppState = [];
+          safeSetState(() {});
+          unawaited(
+            () async {}(),
+          );
+          _model.configOutput = await ApplicationRecord.getDocumentOnce(
+              FFAppState().configDocument!);
+          _model.isLoadFirestoreCompleted = true;
+          safeSetState(() {});
+          FFAppState().hashThaiIdAppState = widget.hashThaiId!;
+          FFAppState().accessToken = widget.token!;
+          FFAppState().topupUrlDev =
+              '${_model.configOutput?.apiUrl.apiUrlDev}';
+          FFAppState().topupUrlProd =
+              '${_model.configOutput?.apiUrl.apiUrlProd}';
+          FFAppState().LeadUrlDev =
+              '${_model.configOutput?.apiUrl.apiUrlLeadDev}';
+          FFAppState().LeadUrlProd =
+              '${_model.configOutput?.apiUrl.apiUrlLeadProd}';
+          FFAppState().ocrUrlDev = '${_model.configOutput?.apiUrl.ocrUrlDev}';
+          FFAppState().ocrUrlProd =
+              '${_model.configOutput?.apiUrl.ocrUrlProd}';
+          FFAppState().useNewCameraAction =
+              _model.configOutput!.useNewCameraAction;
+          safeSetState(() {});
+          FFAppState().saveTopupData = SaveTopupDataModelStruct(
+            lifeInsureAmt: '',
+            transno: '',
+            dbName: '',
+            hashThaiId: widget.hashThaiId,
+            contractNo: '',
+            marketingConsent: '',
+            sensitiveConsent: '',
+            latitude: '',
+            longitude: '',
+            loanAmount: 0,
+            topupFee: 0,
+            feeAmount: 0,
+            transferAmount: 0,
+            interestRate: 0,
+            interestAmount: 0,
+            totalAmount: 0,
+            creditLimit: 0,
+            termPeriod: 0,
+            regularPeriod: 0,
+            lastPeriod: 0,
+            lastPeriodPromo: 0,
+            actImage: '',
+            propertyImage: '',
+            topupRequestFile: '',
+            topupArgeementFile: '',
+            topupReceiptFile: '',
+            savePdf: SavePdfDataModelStruct(
+              contractNo: '',
+              dbName: '',
+              contractDate: '',
+              amount: 0.0,
+              from: '',
+              contractBankAccount: '',
+              contractBankBrandname: '',
+              contractBankType: '',
+              contractBankBranch: '',
+              interestRate: 0.0,
+              installmentNumber: 0.0,
+              amountPerInstallment: 0.0,
+              startInstallmentDate: '',
+              installmentDate: '',
+              vehicleType: '',
+            ),
+            customerImage2: '',
+            customerImage3: '',
+            carImageFront: '',
+            carImageBack: '',
+            carImageLeft: '',
+            carImageRight: '',
+            carImageMile: '',
+            source: '${widget.source}',
+            referId: '${widget.referId}',
+          );
+          safeSetState(() {});
+          FFAppState().userAddressData = UserAllAddressDataModelStruct(
+            currentAddress: UserAddressDataModelStruct(
+              addressDetails: '',
+              addressSubDistrict: '',
+              addressDistrict: '',
+              addressProvince: '',
+              addressPostalCode: '',
+            ),
+            registrationAddress: UserAddressDataModelStruct(
+              addressDetails: '',
+              addressSubDistrict: '',
+              addressDistrict: '',
+              addressProvince: '',
+              addressPostalCode: '',
+            ),
+            idCardAddress: UserAddressDataModelStruct(
+              addressDetails: '',
+              addressSubDistrict: '',
+              addressDistrict: '',
+              addressProvince: '',
+              addressPostalCode: '',
+            ),
+            otherAddress: UserAddressDataModelStruct(
+              addressDetails: '',
+              addressSubDistrict: '',
+              addressDistrict: '',
+              addressProvince: '',
+              addressPostalCode: '',
+            ),
+            dataDate: '',
+          );
+          safeSetState(() {});
+          _model.userDetailOutput = await UserDetailCall.call(
+            hashId: FFAppState().hashThaiIdAppState,
+            url: FFDevEnvironmentValues().isProduction
+                ? FFAppState().topupUrlProd
+                : FFAppState().topupUrlDev,
+          );
+
+          if ((_model.userDetailOutput?.statusCode ?? 200) == 200) {
+          } else {
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage:
+                          'พบข้อผิดพลาด statuscode (${(_model.userDetailOutput?.statusCode ?? 200).toString()})',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+
+          if (UserDetailCall.statuscode(
+                (_model.userDetailOutput?.jsonBody ?? ''),
+              ) !=
+              '200') {
+            await showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (dialogContext) {
+                return Dialog(
+                  elevation: 0,
+                  insetPadding: EdgeInsets.zero,
+                  backgroundColor: Colors.transparent,
+                  alignment: AlignmentDirectional(0.0, 0.0)
+                      .resolve(Directionality.of(context)),
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusScope.of(dialogContext).unfocus();
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: ErrorMessageComponentWidget(
+                      textMessage: '${UserDetailCall.message(
+                        (_model.userDetailOutput?.jsonBody ?? ''),
+                      )}',
+                    ),
+                  ),
+                );
+              },
+            );
+
+            Navigator.pop(context);
+            return;
+          }
+          FFAppState().customerDetailData = UserDetailCall.results(
+            (_model.userDetailOutput?.jsonBody ?? ''),
+          )!;
+          safeSetState(() {});
+          FFAppState().updateCustomerDetailDataStruct(
+            (e) => e..hashThaiId = FFAppState().hashThaiIdAppState,
+          );
+          safeSetState(() {});
+          logFirebaseEvent(
+            'topup_list_page',
+            parameters: {
+              'hash_id': FFAppState().hashThaiIdAppState,
+              'source': FFAppState().saveTopupData.source,
+              'refer_id': FFAppState().saveTopupData.referId,
+            },
+          );
+          Navigator.pop(context);
+        }),
+      ]);
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
+    return Builder(
+      builder: (context) => FutureBuilder<ApplicationRecord>(
+        future: ApplicationRecord.getDocumentOnce(FFAppState().configDocument!),
+        builder: (context, snapshot) {
+          // Customize what your widget looks like when it's loading.
+          if (!snapshot.hasData) {
+            return Scaffold(
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              body: Center(
+                child: SizedBox(
+                  width: 50.0,
+                  height: 50.0,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      FlutterFlowTheme.of(context).primary,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+
+          final topupCardPageCopyCopyCopyApplicationRecord = snapshot.data!;
+
+          return Title(
+              title: 'topupCardPageCopyCopyCopy',
+              color: FlutterFlowTheme.of(context).primary.withAlpha(0XFF),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: Scaffold(
+                  key: scaffoldKey,
+                  backgroundColor:
+                      FlutterFlowTheme.of(context).primaryBackground,
+                  appBar: AppBar(
+                    backgroundColor: FlutterFlowTheme.of(context).secondary,
+                    iconTheme: IconThemeData(
+                        color: FlutterFlowTheme.of(context).primary),
+                    automaticallyImplyLeading: false,
+                    leading: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await actions.navigateBackWebviewAction();
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: FlutterFlowTheme.of(context).primary,
+                        size: 24.0,
+                      ),
+                    ),
+                    actions: [],
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await actions.openCameraWebview(
+                                'video',
+                                'VideoRecord',
+                              );
+                            },
+                            child: Text(
+                              'เติมวงเงิน',
+                              style: FlutterFlowTheme.of(context)
+                                  .headlineMedium
+                                  .override(
+                                    fontFamily: 'Noto San Thai',
+                                    color: Color(0xFF003063),
+                                    fontSize: 18.0,
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                          ),
+                          if (!FFDevEnvironmentValues().isProduction)
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  4.0, 0.0, 0.0, 0.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  safeSetState(() {});
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        content: Text(_model.videoPath),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('Ok'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text(
+                                  '(UAT v.${FFAppState().webUatVersion.toString()})',
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineMedium
+                                      .override(
+                                        fontFamily: 'Noto San Thai',
+                                        color: Color(0xFF003063),
+                                        fontSize: 18.0,
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      centerTitle: true,
+                      expandedTitleScale: 1.0,
+                    ),
+                    elevation: 2.0,
+                  ),
+                  body: SafeArea(
+                    top: true,
+                    child: Visibility(
+                      visible: _model.isLoadFirestoreCompleted,
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 8.0, 0.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 20.0, 0.0, 0.0),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFBEFE3),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 8.0, 12.0, 0.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${topupCardPageCopyCopyCopyApplicationRecord.topupTextTitle}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final listText =
+                                                    topupCardPageCopyCopyCopyApplicationRecord
+                                                        .topupTextList
+                                                        .toList();
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: List.generate(
+                                                      listText.length,
+                                                      (listTextIndex) {
+                                                    final listTextItem =
+                                                        listText[listTextIndex];
+                                                    return Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        '${listTextItem}',
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .bodyMedium
+                                                            .override(
+                                                              fontFamily:
+                                                                  'Noto San Thai',
+                                                              color:
+                                                                  Colors.black,
+                                                              letterSpacing:
+                                                                  0.0,
+                                                            ),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 5.0, 0.0, 0.0),
+                                            child: Builder(
+                                              builder: (context) {
+                                                final warnningTextList =
+                                                    topupCardPageCopyCopyCopyApplicationRecord
+                                                        .topupWarnningTextList
+                                                        .toList();
+
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: List.generate(
+                                                      warnningTextList.length,
+                                                      (warnningTextListIndex) {
+                                                    final warnningTextListItem =
+                                                        warnningTextList[
+                                                            warnningTextListIndex];
+                                                    return Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  2.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        '${warnningTextListItem}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: functions.containString(
+                                                                          '***',
+                                                                          warnningTextListItem)!
+                                                                      ? Color(
+                                                                          0xFFFF0000)
+                                                                      : Color(
+                                                                          0xFF003063),
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                      ),
+                                                    );
+                                                  }),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        ]
+                                            .addToStart(SizedBox(height: 8.0))
+                                            .addToEnd(SizedBox(height: 12.0)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (false)
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 12.0, 0.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 0.0, 0.0, 0.0),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {},
+                                            child: Text(
+                                              'กรุณาเลือกสัญญาที่ต้องการเติมวงเงินเวลาทำการ',
+                                              textAlign: TextAlign.start,
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Noto San Thai',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontSize: 14.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                FutureBuilder<ApiCallResponse>(
+                                  future: (_model.apiRequestCompleter ??=
+                                          Completer<ApiCallResponse>()
+                                            ..complete(SrisawadApiGroup
+                                                .getListOfLoanCall
+                                                .call(
+                                              hashThaiId: widget.hashThaiId,
+                                              authorization:
+                                                  FFAppState().accessToken,
+                                              apiUrl:
+                                                  FFDevEnvironmentValues()
+                                                          .isProduction
+                                                      ? topupCardPageCopyCopyCopyApplicationRecord
+                                                          .apiUrl.apiUrlProd
+                                                      : topupCardPageCopyCopyCopyApplicationRecord
+                                                          .apiUrl.apiUrlDev,
+                                            )))
+                                      .future,
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    final columnGetListOfLoanResponse =
+                                        snapshot.data!;
+
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        if (false)
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 12.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child:
+                                                        FlutterFlowChoiceChips(
+                                                      options: [
+                                                        ChipData(
+                                                            'สัญญาที่เพิ่มวงเงินได้'),
+                                                        ChipData(
+                                                            'สัญญาที่ยังไม่เข้าเงื่อนไข')
+                                                      ],
+                                                      onChanged: (val) =>
+                                                          safeSetState(() => _model
+                                                                  .choiceChipsValue =
+                                                              val?.firstOrNull),
+                                                      selectedChipStyle:
+                                                          ChipStyle(
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .info,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  lineHeight:
+                                                                      2.3,
+                                                                ),
+                                                        iconColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                        iconSize: 16.0,
+                                                        elevation: 0.0,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                      ),
+                                                      unselectedChipStyle:
+                                                          ChipStyle(
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Noto San Thai',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryText,
+                                                                  fontSize:
+                                                                      12.0,
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                  lineHeight:
+                                                                      2.5,
+                                                                ),
+                                                        iconColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        iconSize: 16.0,
+                                                        elevation: 0.0,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                      ),
+                                                      chipSpacing: 8.0,
+                                                      rowSpacing: 8.0,
+                                                      multiselect: false,
+                                                      initialized: _model
+                                                              .choiceChipsValue !=
+                                                          null,
+                                                      alignment:
+                                                          WrapAlignment.start,
+                                                      controller: _model
+                                                              .choiceChipsValueController ??=
+                                                          FormFieldController<
+                                                              List<String>>(
+                                                        [
+                                                          SrisawadApiGroup
+                                                                      .getListOfLoanCall
+                                                                      .results(
+                                                                        columnGetListOfLoanResponse
+                                                                            .jsonBody,
+                                                                      )!
+                                                                      .where((e) =>
+                                                                          (e.topupDetail.canTopup !=
+                                                                              'N') &&
+                                                                          (e.contractDetails.accountStatus ==
+                                                                              'A'))
+                                                                      .toList()
+                                                                      .length >
+                                                                  0
+                                                              ? 'สัญญาที่เพิ่มวงเงินได้'
+                                                              : 'สัญญาที่ยังไม่เข้าเงื่อนไข'
+                                                        ],
+                                                      ),
+                                                      wrapped: false,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (false)
+                                          wrapWithModel(
+                                            model: _model
+                                                .topupChoiceChipComponentModel,
+                                            updateCallback: () =>
+                                                safeSetState(() {}),
+                                            updateOnChange: true,
+                                            child:
+                                                TopupChoiceChipComponentWidget(
+                                              initialTab: SrisawadApiGroup
+                                                          .getListOfLoanCall
+                                                          .results(
+                                                            columnGetListOfLoanResponse
+                                                                .jsonBody,
+                                                          )!
+                                                          .where((e) =>
+                                                              (e.topupDetail
+                                                                      .canTopup !=
+                                                                  'N') &&
+                                                              (e.contractDetails
+                                                                      .accountStatus ==
+                                                                  'A'))
+                                                          .toList()
+                                                          .length >
+                                                      0
+                                                  ? 1
+                                                  : 2,
+                                              updateTabSelected:
+                                                  (tabSelected) async {
+                                                _model.tabSelested =
+                                                    tabSelected;
+                                                safeSetState(() {});
+                                              },
+                                            ),
+                                          ),
+                                        wrapWithModel(
+                                          model: _model
+                                              .navigateTopupComponentModel,
+                                          updateCallback: () =>
+                                              safeSetState(() {}),
+                                          updateOnChange: true,
+                                          child: NavigateTopupComponentWidget(
+                                            contNo: '${widget.contNo}',
+                                            navigateTopupDetailAction:
+                                                () async {
+                                              if ('${widget.topupType}' ==
+                                                  'normal') {
+                                                FFAppState()
+                                                        .getLoanListSelected =
+                                                    SrisawadApiGroup
+                                                        .getListOfLoanCall
+                                                        .results(
+                                                          columnGetListOfLoanResponse
+                                                              .jsonBody,
+                                                        )!
+                                                        .where((e) =>
+                                                            e.contractDetails
+                                                                .accountStatus ==
+                                                            'A')
+                                                        .toList()
+                                                        .elementAtOrNull(functions
+                                                            .findIndexInList(
+                                                                SrisawadApiGroup
+                                                                    .getListOfLoanCall
+                                                                    .results(
+                                                                      columnGetListOfLoanResponse
+                                                                          .jsonBody,
+                                                                    )
+                                                                    ?.map((e) =>
+                                                                        e.contractNo)
+                                                                    .toList()
+                                                                    .toList(),
+                                                                '${widget.contNo}')!)!;
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateGetLoanListSelectedStruct(
+                                                  (e) => e
+                                                    ..topupSpecialFlag = false,
+                                                );
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateSaveTopupDataStruct(
+                                                  (e) => e
+                                                    ..products =
+                                                        ProductsStruct(),
+                                                );
+                                                safeSetState(() {});
+
+                                                context.pushNamed(
+                                                    SelectTopupPurposePageWidget
+                                                        .routeName);
+                                              } else if ('${widget.topupType}' ==
+                                                  'topup_special') {
+                                                FFAppState()
+                                                        .getLoanListSelected =
+                                                    SrisawadApiGroup
+                                                        .getListOfLoanCall
+                                                        .results(
+                                                          columnGetListOfLoanResponse
+                                                              .jsonBody,
+                                                        )!
+                                                        .where((e) =>
+                                                            e.contractDetails
+                                                                .accountStatus ==
+                                                            'A')
+                                                        .toList()
+                                                        .elementAtOrNull(functions
+                                                            .findIndexInList(
+                                                                SrisawadApiGroup
+                                                                    .getListOfLoanCall
+                                                                    .results(
+                                                                      columnGetListOfLoanResponse
+                                                                          .jsonBody,
+                                                                    )
+                                                                    ?.map((e) =>
+                                                                        e.contractNo)
+                                                                    .toList()
+                                                                    .toList(),
+                                                                '${widget.contNo}')!)!;
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateGetLoanListSelectedStruct(
+                                                  (e) => e
+                                                    ..topupSpecialFlag = true,
+                                                );
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateSaveTopupDataStruct(
+                                                  (e) => e
+                                                    ..products =
+                                                        ProductsStruct(),
+                                                );
+                                                safeSetState(() {});
+
+                                                context.pushNamed(
+                                                    SelectTopupPurposePageWidget
+                                                        .routeName);
+                                              } else {
+                                                FFAppState()
+                                                        .getLoanListSelected =
+                                                    SrisawadApiGroup
+                                                        .getListOfLoanCall
+                                                        .results(
+                                                          columnGetListOfLoanResponse
+                                                              .jsonBody,
+                                                        )!
+                                                        .where((e) =>
+                                                            e.contractDetails
+                                                                .accountStatus ==
+                                                            'A')
+                                                        .toList()
+                                                        .elementAtOrNull(functions
+                                                            .findIndexInList(
+                                                                SrisawadApiGroup
+                                                                    .getListOfLoanCall
+                                                                    .results(
+                                                                      columnGetListOfLoanResponse
+                                                                          .jsonBody,
+                                                                    )
+                                                                    ?.map((e) =>
+                                                                        e.contractNo)
+                                                                    .toList()
+                                                                    .toList(),
+                                                                '${widget.contNo}')!)!;
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateGetLoanListSelectedStruct(
+                                                  (e) => e
+                                                    ..topupSpecialFlag = false,
+                                                );
+                                                safeSetState(() {});
+                                                FFAppState()
+                                                    .updateSaveTopupDataStruct(
+                                                  (e) => e
+                                                    ..products =
+                                                        ProductsStruct(),
+                                                );
+                                                safeSetState(() {});
+
+                                                context.pushNamed(
+                                                    SelectTopupPurposePageWidget
+                                                        .routeName);
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        Builder(
+                                          builder: (context) {
+                                            final loanList = (true
+                                                        ? SrisawadApiGroup
+                                                            .getListOfLoanCall
+                                                            .results(
+                                                              columnGetListOfLoanResponse
+                                                                  .jsonBody,
+                                                            )
+                                                            ?.where((e) =>
+                                                                e.contractDetails
+                                                                    .accountStatus ==
+                                                                'A')
+                                                            .toList()
+                                                        : (_model.tabSelested ==
+                                                                1
+                                                            ? SrisawadApiGroup
+                                                                .getListOfLoanCall
+                                                                .results(
+                                                                  columnGetListOfLoanResponse
+                                                                      .jsonBody,
+                                                                )
+                                                                ?.where((e) =>
+                                                                    (e.topupDetail
+                                                                            .canTopup !=
+                                                                        'N') &&
+                                                                    (e.contractDetails
+                                                                            .accountStatus ==
+                                                                        'A'))
+                                                                .toList()
+                                                            : SrisawadApiGroup
+                                                                .getListOfLoanCall
+                                                                .results(
+                                                                  columnGetListOfLoanResponse
+                                                                      .jsonBody,
+                                                                )
+                                                                ?.where((e) =>
+                                                                    (e.topupDetail
+                                                                            .canTopup ==
+                                                                        'N') &&
+                                                                    (e.contractDetails
+                                                                            .accountStatus ==
+                                                                        'A'))
+                                                                .toList()))
+                                                    ?.toList() ??
+                                                [];
+                                            if (loanList.isEmpty) {
+                                              return Center(
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  height: 350.0,
+                                                  child:
+                                                      EmptyComponentTopupWidget(
+                                                    text1: '',
+                                                    text2: _model.tabSelested ==
+                                                            1
+                                                        ? 'ไม่พบสัญญาที่เพิ่มวงเงินได้'
+                                                        : 'ไม่พบสัญญาที่ยังไม่เข้าเงื่อนไข',
+                                                  ),
+                                                ),
+                                              );
+                                            }
+
+                                            return RefreshIndicator(
+                                              onRefresh: () async {
+                                                safeSetState(() =>
+                                                    _model.apiRequestCompleter =
+                                                        null);
+                                                await _model
+                                                    .waitForApiRequestCompleted();
+                                              },
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.fromLTRB(
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  30.0,
+                                                ),
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: loanList.length,
+                                                itemBuilder:
+                                                    (context, loanListIndex) {
+                                                  final loanListItem =
+                                                      loanList[loanListIndex];
+                                                  return Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 9.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        if (!(((String amount) {
+                                                              return double.parse(
+                                                                      amount) <=
+                                                                  0.0;
+                                                            }(
+                                                                '${loanListItem.topupDetail.topupSpecials.toString()}')) ||
+                                                            ('${loanListItem.topupDetail.topupSpecials.toString()}' ==
+                                                                'null') ||
+                                                            ('${loanListItem.topupDetail.topupSpecials.toString()}' ==
+                                                                ''))) {
+                                                          return;
+                                                        }
+                                                        if (loanListItem
+                                                                .contractDetails
+                                                                .accountType ==
+                                                            'L') {
+                                                          return;
+                                                        }
+                                                        FFAppState()
+                                                                .getLoanListSelected =
+                                                            loanListItem;
+                                                        safeSetState(() {});
+                                                        FFAppState()
+                                                            .updateGetLoanListSelectedStruct(
+                                                          (e) => e
+                                                            ..topupSpecialFlag =
+                                                                false,
+                                                        );
+                                                        safeSetState(() {});
+                                                        if ('${loanListItem.topupDetail.canTopup}' ==
+                                                            'N') {
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                content: Text(
+                                                                    'ไปหน้าLoan Detail'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child: Text(
+                                                                        'Ok'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+
+                                                          context.pushNamed(
+                                                            LoanDetailPageWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'hashThaiId':
+                                                                  serializeParam(
+                                                                FFAppState()
+                                                                    .hashThaiIdAppState,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                              'contNo':
+                                                                  serializeParam(
+                                                                loanListItem
+                                                                    .contractNo,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                              'token':
+                                                                  serializeParam(
+                                                                FFAppState()
+                                                                    .accessToken,
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                              'fromPage':
+                                                                  serializeParam(
+                                                                'TopupCard',
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+
+                                                          return;
+                                                        }
+                                                        if (FFAppState()
+                                                                    .getLoanListSelected
+                                                                    .requestStatus ==
+                                                                'ยังไม่ได้ทำรายการเติมเงิน'
+                                                            ? true
+                                                            : false) {
+                                                          context.pushNamed(
+                                                              SelectTopupPurposePageWidget
+                                                                  .routeName);
+                                                        } else {
+                                                          context.pushNamed(
+                                                            TopupStatusPageWidget
+                                                                .routeName,
+                                                            queryParameters: {
+                                                              'fromPage':
+                                                                  serializeParam(
+                                                                'LoanListCard',
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              '__transition_info__':
+                                                                  TransitionInfo(
+                                                                hasTransition:
+                                                                    true,
+                                                                transitionType:
+                                                                    PageTransitionType
+                                                                        .rightToLeft,
+                                                              ),
+                                                            },
+                                                          );
+                                                        }
+                                                      },
+                                                      child: Container(
+                                                        width: double.infinity,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: false
+                                                              ? Color(
+                                                                  0xFFE9FFEA)
+                                                              : FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              blurRadius: 4.0,
+                                                              color: Color(
+                                                                  0x33000000),
+                                                              offset: Offset(
+                                                                0.0,
+                                                                2.0,
+                                                              ),
+                                                            )
+                                                          ],
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    15.0),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    15.0),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    15.0),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    15.0),
+                                                          ),
+                                                        ),
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          12.0,
+                                                                          0.0,
+                                                                          12.0,
+                                                                          0.0),
+                                                              child: Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              50.0,
+                                                                          height:
+                                                                              50.0,
+                                                                          decoration:
+                                                                              BoxDecoration(),
+                                                                          child:
+                                                                              Builder(
+                                                                            builder:
+                                                                                (context) {
+                                                                              if ('${loanListItem.contractDetails.loanTypeCode}' == 'C') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/car-loan.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'M') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/MotorLoanIcon.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'H') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/HouseLoanIcon.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'L') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/HouseLoanIcon.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'T') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/LOANT.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'V') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/LOANV.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else if ('${loanListItem.contractDetails.loanTypeCode}' == 'I') {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/CarInsuranceLoanIcon.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              } else {
+                                                                                return ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(8.0),
+                                                                                  child: SvgPicture.asset(
+                                                                                    'assets/images/LOANL.svg',
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
+                                                                                    fit: BoxFit.cover,
+                                                                                  ),
+                                                                                );
+                                                                              }
+                                                                            },
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Expanded(
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              8.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.spaceBetween,
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Row(
+                                                                                    mainAxisSize: MainAxisSize.max,
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: Padding(
+                                                                                          padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                          child: Text(
+                                                                                            valueOrDefault<String>(
+                                                                                              '${loanListItem.contractDetails.loanTypeName}',
+                                                                                              'loan_type_name',
+                                                                                            ),
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  fontSize: 16.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        if (loanListItem.contractDetails.accountType !=
+                                                                            'L')
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                12.0,
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                Expanded(
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(),
+                                                                                    child: Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Text(
+                                                                                              'เลขที่สัญญา',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.normal,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Text(
+                                                                                            '${loanListItem.contractNo}',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              8.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                      children: [
+                                                                                        Expanded(
+                                                                                          child: Text(
+                                                                                            'ข้อมูลหลักประกัน',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.normal,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Text(
+                                                                                          '${loanListItem.contractDetails.collateralInformation}',
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        Padding(
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              12.0,
+                                                                              0.0,
+                                                                              8.0,
+                                                                              0.0),
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              if (('${loanListItem.contractDetails.loanTypeCode}' == 'L') && ('${loanListItem.contractDetails.loanTypeCode}' == 'H') && false)
+                                                                                Expanded(
+                                                                                  child: Container(
+                                                                                    decoration: BoxDecoration(),
+                                                                                    child: Padding(
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                      child: Row(
+                                                                                        mainAxisSize: MainAxisSize.max,
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                        children: [
+                                                                                          Expanded(
+                                                                                            child: Text(
+                                                                                              'กลุ่มสินค้า',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.normal,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Text(
+                                                                                            valueOrDefault<String>(
+                                                                                              FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.contractDetails.vehicleBrand,
+                                                                                              'vehicle_brand',
+                                                                                            ),
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: 'Noto San Thai',
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                  fontSize: 14.0,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        if (loanListItem.contractDetails.accountType !=
+                                                                            'L')
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                12.0,
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                if (!(('${loanListItem.contractDetails.loanTypeCode}' == 'L') || ('${loanListItem.contractDetails.loanTypeCode}' == 'H') || (loanListItem.topupDetail.canTopup == 'G') || (loanListItem.topupDetail.canTopup == 'A')))
+                                                                                  Expanded(
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(),
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                        child: Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Expanded(
+                                                                                              child: Text(
+                                                                                                'ข้อมูลสถานะ',
+                                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                      fontFamily: 'Noto San Thai',
+                                                                                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                                      fontSize: 14.0,
+                                                                                                      letterSpacing: 0.0,
+                                                                                                      fontWeight: FontWeight.normal,
+                                                                                                    ),
+                                                                                              ),
+                                                                                            ),
+                                                                                            Text(
+                                                                                              '${loanListItem.requestStatus}',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: valueOrDefault<String>(
+                                                                                                              FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.requestStatus,
+                                                                                                              'request_status',
+                                                                                                            ) ==
+                                                                                                            'เอกสารไม่ครบติดต่อ 1652'
+                                                                                                        ? FlutterFlowTheme.of(context).error
+                                                                                                        : Colors.black,
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.bold,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        if (loanListItem.contractDetails.accountType !=
+                                                                            'L')
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                12.0,
+                                                                                0.0,
+                                                                                8.0,
+                                                                                0.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                if ('${loanListItem.topupDetail.topupExtra.toString()}' != '0')
+                                                                                  Expanded(
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(),
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                        child: Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Text(
+                                                                                              'วงเงินพิเศษ',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: Color(0xFFFF0000),
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                  ),
+                                                                                            ),
+                                                                                            Text(
+                                                                                              '5,300 บาท',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: Color(0xFFFF0000),
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        if (loanListItem.contractDetails.accountType !=
+                                                                            'L')
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0.0,
+                                                                                16.0,
+                                                                                0.0,
+                                                                                16.0),
+                                                                            child:
+                                                                                Row(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                if ((double.parse('${loanListItem.topupDetail.topupSpecials.toString()}') > 0.0) && ('${loanListItem.topupDetail.topupSpecials.toString()}' != 'null') && ('${loanListItem.topupDetail.topupSpecials.toString()}' != '') && ('${loanListItem.topupDetail.canTopup}' != 'N') && false)
+                                                                                  Expanded(
+                                                                                    child: Container(
+                                                                                      decoration: BoxDecoration(
+                                                                                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                                                                                        boxShadow: [
+                                                                                          BoxShadow(
+                                                                                            blurRadius: 10.0,
+                                                                                            color: Color(0x33000000),
+                                                                                            offset: Offset(
+                                                                                              2.0,
+                                                                                              2.0,
+                                                                                            ),
+                                                                                          )
+                                                                                        ],
+                                                                                        borderRadius: BorderRadius.circular(30.0),
+                                                                                      ),
+                                                                                      child: Padding(
+                                                                                        padding: EdgeInsetsDirectional.fromSTEB(12.0, 16.0, 8.0, 16.0),
+                                                                                        child: Row(
+                                                                                          mainAxisSize: MainAxisSize.max,
+                                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                          children: [
+                                                                                            Text(
+                                                                                              'วงเงินพิเศษ',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: Color(0xFFFF0000),
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                  ),
+                                                                                            ),
+                                                                                            Text(
+                                                                                              '5,300 บาท',
+                                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                    fontFamily: 'Noto San Thai',
+                                                                                                    color: Color(0xFFFF0000),
+                                                                                                    fontSize: 14.0,
+                                                                                                    letterSpacing: 0.0,
+                                                                                                    fontWeight: FontWeight.w600,
+                                                                                                  ),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        if ((('${loanListItem.contractDetails.loanTypeCode}' == 'L') ||
+                                                                                ('${loanListItem.contractDetails.loanTypeCode}' == 'H') ||
+                                                                                (loanListItem.topupDetail.canTopup == 'G') ||
+                                                                                (loanListItem.topupDetail.canTopup == 'A') ||
+                                                                                (loanListItem.topupDetail.canTopup == 'L')) &&
+                                                                            (loanListItem.topupDetail.canTopup != 'N'))
+                                                                          Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children: [
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'ยังไม่สามารถทำรายการผ่านแอปได้',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'กรุณาติดต่อสาขาเจ้าของบัญชีหรือสาขาใกล้บ้าน',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                                    child: Row(
+                                                                                      mainAxisSize: MainAxisSize.max,
+                                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'เพื่อทำสัญญาและรับเงิน',
+                                                                                          textAlign: TextAlign.start,
+                                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                fontFamily: 'Noto San Thai',
+                                                                                                color: Color(0xFFFF0000),
+                                                                                                fontSize: 14.0,
+                                                                                                letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.w600,
+                                                                                              ),
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Divider(
+                                                              thickness: 2.0,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
+                                                            ),
+                                                            if (('${loanListItem.topupDetail.canTopup}' ==
+                                                                    'Y') &&
+                                                                (loanListItem
+                                                                        .contractDetails
+                                                                        .accountType !=
+                                                                    'L'))
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8.0,
+                                                                            0.0,
+                                                                            12.0,
+                                                                            0.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Column(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .max,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: [
+                                                                        Text(
+                                                                          'วงเงินสินเชื่อสูงสุด',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .override(
+                                                                                fontFamily: 'Noto San Thai',
+                                                                                color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
+                                                                        if (('${loanListItem.contractDetails.loanTypeCode}' !=
+                                                                                'L') &&
+                                                                            ('${loanListItem.contractDetails.loanTypeCode}' !=
+                                                                                'H'))
+                                                                          Text(
+                                                                            '(เลขที่สัญญา ${'${loanListItem.contractNo}'})',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: Color(0x80646464),
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                          ),
+                                                                        if (('${loanListItem.contractDetails.loanTypeCode}' ==
+                                                                                'L') ||
+                                                                            ('${loanListItem.contractDetails.loanTypeCode}' ==
+                                                                                'H'))
+                                                                          Text(
+                                                                            '(เลขที่${'${loanListItem.contractNo}'})',
+                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                  fontFamily: 'Noto San Thai',
+                                                                                  color: Color(0x80646464),
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
+                                                                          ),
+                                                                      ],
+                                                                    ),
+                                                                    Text(
+                                                                      '${valueOrDefault<String>(
+                                                                        functions
+                                                                            .returnNumberWithComma2Decimal('${loanListItem.topupDetail.defaultTopupAmount.toString()}'),
+                                                                        '0',
+                                                                      )}',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Noto San Thai',
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontSize:
+                                                                                16.0,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FontWeight.w600,
+                                                                          ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            if ('${loanListItem.topupDetail.canTopup}' !=
+                                                                'Y')
+                                                              Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        20.0,
+                                                                        12.0,
+                                                                        20.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Builder(
+                                                                        builder:
+                                                                            (context) {
+                                                                          if (loanListItem.contractDetails.accountType ==
+                                                                              'L') {
+                                                                            return Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  loanListItem.contractDetails.accountTypeMsg,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).error,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          } else if (loanListItem.topupDetail.canTopupMsg != '') {
+                                                                            return Container(
+                                                                              width: double.infinity,
+                                                                              decoration: BoxDecoration(),
+                                                                              child: Padding(
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                child: Text(
+                                                                                  loanListItem.topupDetail.canTopupMsg,
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                        fontFamily: 'Noto San Thai',
+                                                                                        color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                        letterSpacing: 0.0,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            );
+                                                                          } else {
+                                                                            return Column(
+                                                                              mainAxisSize: MainAxisSize.max,
+                                                                              children: [
+                                                                                Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                    child: Text(
+                                                                                      topupCardPageCopyCopyCopyApplicationRecord.topupNoDataText,
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                Container(
+                                                                                  width: double.infinity,
+                                                                                  decoration: BoxDecoration(),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                                                                    child: Text(
+                                                                                      topupCardPageCopyCopyCopyApplicationRecord.topupNoData2Text,
+                                                                                      textAlign: TextAlign.center,
+                                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                            fontFamily: 'Noto San Thai',
+                                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                                            letterSpacing: 0.0,
+                                                                                          ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            if (loanListItem
+                                                                    .contractDetails
+                                                                    .accountType !=
+                                                                'L')
+                                                              Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        12.0,
+                                                                        8.0,
+                                                                        12.0,
+                                                                        8.0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: [
+                                                                    if ((double.parse(
+                                                                                '${loanListItem.topupDetail.topupSpecials.toString()}') >
+                                                                            0.0) &&
+                                                                        ('${loanListItem.topupDetail.topupSpecials.toString()}' !=
+                                                                            'null') &&
+                                                                        ('${loanListItem.topupDetail.topupSpecials.toString()}' !=
+                                                                            '') &&
+                                                                        ('${loanListItem.topupDetail.canTopup}' !=
+                                                                            'N') &&
+                                                                        false)
+                                                                      Align(
+                                                                        alignment: AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                        child:
+                                                                            InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            if (loanListItem.contractDetails.accountType ==
+                                                                                'L') {
+                                                                              return;
+                                                                            }
+                                                                            FFAppState().getLoanListSelected =
+                                                                                loanListItem;
+                                                                            safeSetState(() {});
+                                                                            FFAppState().updateGetLoanListSelectedStruct(
+                                                                              (e) => e..topupSpecialFlag = true,
+                                                                            );
+                                                                            safeSetState(() {});
+                                                                            if ('${loanListItem.topupDetail.topupSpecials.toString()}' ==
+                                                                                'N') {
+                                                                              await showDialog(
+                                                                                context: context,
+                                                                                builder: (alertDialogContext) {
+                                                                                  return AlertDialog(
+                                                                                    content: Text('ไปหน้าLoan Detail'),
+                                                                                    actions: [
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                        child: Text('Ok'),
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                },
+                                                                              );
+
+                                                                              context.pushNamed(
+                                                                                LoanDetailPageWidget.routeName,
+                                                                                queryParameters: {
+                                                                                  'hashThaiId': serializeParam(
+                                                                                    FFAppState().hashThaiIdAppState,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'contNo': serializeParam(
+                                                                                    loanListItem.contractNo,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'token': serializeParam(
+                                                                                    FFAppState().accessToken,
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                  'fromPage': serializeParam(
+                                                                                    'TopupCard',
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                }.withoutNulls,
+                                                                              );
+
+                                                                              return;
+                                                                            }
+                                                                            if (FFAppState().getLoanListSelected.requestStatus == 'ยังไม่ได้ทำรายการเติมเงิน'
+                                                                                ? true
+                                                                                : false) {
+                                                                              context.pushNamed(SelectTopupPurposePageWidget.routeName);
+                                                                            } else {
+                                                                              context.pushNamed(
+                                                                                TopupStatusPageWidget.routeName,
+                                                                                queryParameters: {
+                                                                                  'fromPage': serializeParam(
+                                                                                    'LoanListCard',
+                                                                                    ParamType.String,
+                                                                                  ),
+                                                                                }.withoutNulls,
+                                                                                extra: <String, dynamic>{
+                                                                                  '__transition_info__': TransitionInfo(
+                                                                                    hasTransition: true,
+                                                                                    transitionType: PageTransitionType.rightToLeft,
+                                                                                  ),
+                                                                                },
+                                                                              );
+                                                                            }
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            width:
+                                                                                valueOrDefault<double>(
+                                                                              ('${valueOrDefault<String>(
+                                                                                            FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.requestStatus,
+                                                                                            'default_topup_amount',
+                                                                                          )}' !=
+                                                                                          'ยังไม่ได้ทำรายการเติมเงิน'
+                                                                                      ? 150
+                                                                                      : 100)
+                                                                                  .toDouble(),
+                                                                              150.0,
+                                                                            ),
+                                                                            height:
+                                                                                50.0,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              color: FlutterFlowTheme.of(context).success,
+                                                                              borderRadius: BorderRadius.circular(8.0),
+                                                                            ),
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
+                                                                              child: Text(
+                                                                                valueOrDefault<String>(
+                                                                                  _model.tabSelested == 1
+                                                                                      ? valueOrDefault<String>(
+                                                                                          '${loanListItem.requestStatus}' != 'ยังไม่ได้ทำรายการเติมเงิน' ? 'ตรวจสอบสถานะ' : 'วงเงินพิเศษ',
+                                                                                          'วงเงินฉุกเฉิน',
+                                                                                        )
+                                                                                      : 'รายละเอียด',
+                                                                                  'วงเงินฉุกเฉิน',
+                                                                                ),
+                                                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                      fontFamily: 'Noto San Thai',
+                                                                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                      fontSize: 16.0,
+                                                                                      letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.w600,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    Align(
+                                                                      alignment:
+                                                                          AlignmentDirectional(
+                                                                              0.0,
+                                                                              0.0),
+                                                                      child:
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          if (loanListItem.contractDetails.accountType ==
+                                                                              'L') {
+                                                                            return;
+                                                                          }
+                                                                          FFAppState().getLoanListSelected =
+                                                                              loanListItem;
+                                                                          safeSetState(
+                                                                              () {});
+                                                                          FFAppState()
+                                                                              .updateGetLoanListSelectedStruct(
+                                                                            (e) => e
+                                                                              ..topupSpecialFlag = false,
+                                                                          );
+                                                                          safeSetState(
+                                                                              () {});
+                                                                          if ('${loanListItem.topupDetail.canTopup}' ==
+                                                                              'N') {
+                                                                            await showDialog(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  content: Text('ไปหน้าLoan Detail'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                      child: Text('Ok'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            );
+
+                                                                            context.pushNamed(
+                                                                              LoanDetailPageWidget.routeName,
+                                                                              queryParameters: {
+                                                                                'hashThaiId': serializeParam(
+                                                                                  FFAppState().hashThaiIdAppState,
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                                'contNo': serializeParam(
+                                                                                  loanListItem.contractNo,
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                                'token': serializeParam(
+                                                                                  FFAppState().accessToken,
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                                'fromPage': serializeParam(
+                                                                                  'TopupCard',
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                              }.withoutNulls,
+                                                                            );
+
+                                                                            return;
+                                                                          }
+                                                                          if (FFAppState().getLoanListSelected.requestStatus == 'ยังไม่ได้ทำรายการเติมเงิน'
+                                                                              ? true
+                                                                              : false) {
+                                                                            context.pushNamed(SelectTopupPurposePageWidget.routeName);
+                                                                          } else {
+                                                                            context.pushNamed(
+                                                                              TopupStatusPageWidget.routeName,
+                                                                              queryParameters: {
+                                                                                'fromPage': serializeParam(
+                                                                                  'LoanListCard',
+                                                                                  ParamType.String,
+                                                                                ),
+                                                                              }.withoutNulls,
+                                                                              extra: <String, dynamic>{
+                                                                                '__transition_info__': TransitionInfo(
+                                                                                  hasTransition: true,
+                                                                                  transitionType: PageTransitionType.rightToLeft,
+                                                                                ),
+                                                                              },
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              valueOrDefault<double>(
+                                                                            ('${valueOrDefault<String>(
+                                                                                          FFAppState().getLoanListAPIResultAppState.elementAtOrNull(loanListIndex)?.requestStatus,
+                                                                                          'default_topup_amount',
+                                                                                        )}' !=
+                                                                                        'ยังไม่ได้ทำรายการเติมเงิน'
+                                                                                    ? 150
+                                                                                    : 100)
+                                                                                .toDouble(),
+                                                                            150.0,
+                                                                          ),
+                                                                          height:
+                                                                              50.0,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).accent2,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(8.0),
+                                                                          ),
+                                                                          child:
+                                                                              Align(
+                                                                            alignment:
+                                                                                AlignmentDirectional(0.0, 0.0),
+                                                                            child:
+                                                                                Text(
+                                                                              valueOrDefault<String>(
+                                                                                '${loanListItem.topupDetail.canTopup}' != 'N'
+                                                                                    ? valueOrDefault<String>(
+                                                                                        '${loanListItem.requestStatus}' != 'ยังไม่ได้ทำรายการเติมเงิน' ? 'ตรวจสอบสถานะ' : 'เติมวงเงิน',
+                                                                                        'เติมวงเงิน',
+                                                                                      )
+                                                                                    : 'รายละเอียด',
+                                                                                'เติมวงเงิน',
+                                                                              ),
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Noto San Thai',
+                                                                                    color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                                    fontSize: 16.0,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                  ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ].divide(SizedBox(
+                                                                      width:
+                                                                          8.0)),
+                                                                ),
+                                                              ),
+                                                          ]
+                                                              .addToStart(
+                                                                  SizedBox(
+                                                                      height:
+                                                                          12.0))
+                                                              .addToEnd(
+                                                                  SizedBox(
+                                                                      height:
+                                                                          4.0)),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                if (false)
+                                  Container(
+                                    height: 250.0,
+                                    child: wrapWithModel(
+                                      model: _model.emptyComponentTopupModel,
+                                      updateCallback: () => safeSetState(() {}),
+                                      child: EmptyComponentTopupWidget(
+                                        text1: '',
+                                        text2: _model.tabSelested == 1
+                                            ? 'ไม่พบสัญญาที่เพิ่มวงเงินได้'
+                                            : 'ไม่พบสัญญาที่ยังไม่เข้าเงื่อนไข',
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ));
+        },
+      ),
+    );
+  }
+}

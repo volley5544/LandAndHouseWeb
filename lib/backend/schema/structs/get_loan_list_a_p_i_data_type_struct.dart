@@ -34,6 +34,8 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
     String? requestDate,
     String? requestStatus,
     String? requestStatusCode,
+    bool? topupSpecialFlag,
+    CarDetailsStruct? carDetails,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _contractName = contractName,
         _branchCode = branchCode,
@@ -60,6 +62,8 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         _requestDate = requestDate,
         _requestStatus = requestStatus,
         _requestStatusCode = requestStatusCode,
+        _topupSpecialFlag = topupSpecialFlag,
+        _carDetails = carDetails,
         super(firestoreUtilData);
 
   // "contract_name" field.
@@ -264,6 +268,24 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
 
   bool hasRequestStatusCode() => _requestStatusCode != null;
 
+  // "topup_special_flag" field.
+  bool? _topupSpecialFlag;
+  bool get topupSpecialFlag => _topupSpecialFlag ?? false;
+  set topupSpecialFlag(bool? val) => _topupSpecialFlag = val;
+
+  bool hasTopupSpecialFlag() => _topupSpecialFlag != null;
+
+  // "car_details" field.
+  CarDetailsStruct? _carDetails;
+  CarDetailsStruct get carDetails => _carDetails ?? CarDetailsStruct();
+  set carDetails(CarDetailsStruct? val) => _carDetails = val;
+
+  void updateCarDetails(Function(CarDetailsStruct) updateFn) {
+    updateFn(_carDetails ??= CarDetailsStruct());
+  }
+
+  bool hasCarDetails() => _carDetails != null;
+
   static GetLoanListAPIDataTypeStruct fromMap(Map<String, dynamic> data) =>
       GetLoanListAPIDataTypeStruct(
         contractName: data['contract_name'] as String?,
@@ -303,6 +325,10 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         requestDate: data['request_date'] as String?,
         requestStatus: data['request_status'] as String?,
         requestStatusCode: data['request_status_code'] as String?,
+        topupSpecialFlag: data['topup_special_flag'] as bool?,
+        carDetails: data['car_details'] is CarDetailsStruct
+            ? data['car_details']
+            : CarDetailsStruct.maybeFromMap(data['car_details']),
       );
 
   static GetLoanListAPIDataTypeStruct? maybeFromMap(dynamic data) => data is Map
@@ -335,6 +361,8 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         'request_date': _requestDate,
         'request_status': _requestStatus,
         'request_status_code': _requestStatusCode,
+        'topup_special_flag': _topupSpecialFlag,
+        'car_details': _carDetails?.toMap(),
       }.withoutNulls;
 
   @override
@@ -439,6 +467,14 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         'request_status_code': serializeParam(
           _requestStatusCode,
           ParamType.String,
+        ),
+        'topup_special_flag': serializeParam(
+          _topupSpecialFlag,
+          ParamType.bool,
+        ),
+        'car_details': serializeParam(
+          _carDetails,
+          ParamType.DataStruct,
         ),
       }.withoutNulls;
 
@@ -575,6 +611,17 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        topupSpecialFlag: deserializeParam(
+          data['topup_special_flag'],
+          ParamType.bool,
+          false,
+        ),
+        carDetails: deserializeStructParam(
+          data['car_details'],
+          ParamType.DataStruct,
+          false,
+          structBuilder: CarDetailsStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -608,7 +655,9 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         requestTopupAmount == other.requestTopupAmount &&
         requestDate == other.requestDate &&
         requestStatus == other.requestStatus &&
-        requestStatusCode == other.requestStatusCode;
+        requestStatusCode == other.requestStatusCode &&
+        topupSpecialFlag == other.topupSpecialFlag &&
+        carDetails == other.carDetails;
   }
 
   @override
@@ -637,7 +686,9 @@ class GetLoanListAPIDataTypeStruct extends FFFirebaseStruct {
         requestTopupAmount,
         requestDate,
         requestStatus,
-        requestStatusCode
+        requestStatusCode,
+        topupSpecialFlag,
+        carDetails
       ]);
 }
 
@@ -666,6 +717,8 @@ GetLoanListAPIDataTypeStruct createGetLoanListAPIDataTypeStruct({
   String? requestDate,
   String? requestStatus,
   String? requestStatusCode,
+  bool? topupSpecialFlag,
+  CarDetailsStruct? carDetails,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -700,6 +753,8 @@ GetLoanListAPIDataTypeStruct createGetLoanListAPIDataTypeStruct({
       requestDate: requestDate,
       requestStatus: requestStatus,
       requestStatusCode: requestStatusCode,
+      topupSpecialFlag: topupSpecialFlag,
+      carDetails: carDetails ?? (clearUnsetFields ? CarDetailsStruct() : null),
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
@@ -795,6 +850,16 @@ Map<String, dynamic> getGetLoanListAPIDataTypeFirestoreData(
         ? getLoanListAPIDataType.topupDetail
         : null,
     'topup_detail',
+    forFieldValue,
+  );
+
+  // Handle nested data for "car_details" field.
+  addCarDetailsStructData(
+    firestoreData,
+    getLoanListAPIDataType.hasCarDetails()
+        ? getLoanListAPIDataType.carDetails
+        : null,
+    'car_details',
     forFieldValue,
   );
 

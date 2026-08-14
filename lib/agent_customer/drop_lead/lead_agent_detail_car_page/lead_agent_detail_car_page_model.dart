@@ -4,6 +4,7 @@ import '/agent_customer/drop_lead/review_detail_customer_component/review_detail
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
+import '/components/error_message_component_widget.dart';
 import '/components/interest_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -110,7 +111,7 @@ class LeadAgentDetailCarPageModel
 
   dynamic interestRateDataJson;
 
-  String? interestRateOutput;
+  String? interestRateOutput = '-';
 
   ///  State fields for stateful widgets in this page.
 
@@ -229,5 +230,90 @@ class LeadAgentDetailCarPageModel
     loanAmountTextController?.dispose();
 
     interestComponentModel.dispose();
+  }
+
+  /// Action blocks.
+  Future callCheckRateApiDefault(BuildContext context) async {
+    ApiCallResponse? apiResultCheckRateActionBlock;
+
+    apiResultCheckRateActionBlock = await AgentAPIGroup.agentCheckRateCall.call(
+      carVehicleCode: 'P2',
+      carGear: 'Auto',
+      carBrand: 'FORD',
+      carYear: '500',
+      carModel: 'RANGER',
+      carCc: '2.0 เกียร์ออโต้ ยกสูง',
+      tenor: '10',
+      interest: '1',
+      thaiId: '1111111111119',
+      url: FFDevEnvironmentValues().isProduction
+          ? FFAppState().apiUrlDocData.agentWebApiUrl
+          : FFAppState().apiUrlDocData.agentWebApiUrlUat,
+      tokenHeader: FFDevEnvironmentValues().isProduction
+          ? FFAppState().apiUrlDocData.agentWebApiToken
+          : FFAppState().apiUrlDocData.agentWebApiTokenUat,
+      projectCode: FFAppState().isGuest ? 'MGM_GUEST' : '',
+    );
+
+    if ((apiResultCheckRateActionBlock.statusCode ?? 200) != 200) {
+      await showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return Dialog(
+            elevation: 0,
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alignment: AlignmentDirectional(0.0, 0.0)
+                .resolve(Directionality.of(context)),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(dialogContext).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: ErrorMessageComponentWidget(
+                textMessage:
+                    'พบข้อผิดพลาด connection (${(apiResultCheckRateActionBlock?.statusCode ?? 200).toString()})',
+              ),
+            ),
+          );
+        },
+      );
+
+      return;
+    }
+    if (AgentAPIGroup.agentCheckRateCall.statusCode(
+          (apiResultCheckRateActionBlock.jsonBody ?? ''),
+        ) !=
+        200) {
+      await showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return Dialog(
+            elevation: 0,
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alignment: AlignmentDirectional(0.0, 0.0)
+                .resolve(Directionality.of(context)),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(dialogContext).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: ErrorMessageComponentWidget(
+                textMessage: AgentAPIGroup.agentCheckRateCall.statusMessage(
+                  (apiResultCheckRateActionBlock?.jsonBody ?? ''),
+                )!,
+              ),
+            ),
+          );
+        },
+      );
+
+      return;
+    }
+    interestRateDataJson = getJsonField(
+      (apiResultCheckRateActionBlock.jsonBody ?? ''),
+      r'''$.results.data_ltv''',
+    );
   }
 }

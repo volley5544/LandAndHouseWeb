@@ -11,6 +11,7 @@ import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -1538,6 +1539,17 @@ class _AgentLoginPageWidgetState extends State<AgentLoginPageWidget> {
                                                                     TextDecoration
                                                                         .underline,
                                                               ),
+                                                          mouseCursor:
+                                                              SystemMouseCursors
+                                                                  .click,
+                                                          recognizer:
+                                                              TapGestureRecognizer()
+                                                                ..onTap =
+                                                                    () async {
+                                                                  context.pushNamed(
+                                                                      PdfViewerFGFPageWidget
+                                                                          .routeName);
+                                                                },
                                                         )
                                                       ],
                                                       style: FlutterFlowTheme

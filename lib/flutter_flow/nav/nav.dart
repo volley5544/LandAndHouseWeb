@@ -343,6 +343,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               'referId',
               ParamType.String,
             ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
+              ParamType.String,
+            ),
+            productCode: params.getParam(
+              'productCode',
+              ParamType.String,
+            ),
           ),
         ),
         FFRoute(
@@ -477,6 +489,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             platform: params.getParam(
               'platform',
+              ParamType.String,
+            ),
+            fromPage: params.getParam(
+              'fromPage',
               ParamType.String,
             ),
           ),
@@ -987,6 +1003,230 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             ),
             ltv2Amount: params.getParam(
               'ltv2Amount',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PdfViewerFGFPageWidget.routeName,
+          path: PdfViewerFGFPageWidget.routePath,
+          builder: (context, params) => PdfViewerFGFPageWidget(
+            agentCode: params.getParam(
+              'agentCode',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: CustomerApplicationListPageWidget.routeName,
+          path: CustomerApplicationListPageWidget.routePath,
+          builder: (context, params) => CustomerApplicationListPageWidget(),
+        ),
+        FFRoute(
+          name: SelectTopupPurposePageWidget.routeName,
+          path: SelectTopupPurposePageWidget.routePath,
+          builder: (context, params) => SelectTopupPurposePageWidget(),
+        ),
+        FFRoute(
+          name: TopupCardPageCopyWidget.routeName,
+          path: TopupCardPageCopyWidget.routePath,
+          builder: (context, params) => TopupCardPageCopyWidget(
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            source: params.getParam(
+              'source',
+              ParamType.String,
+            ),
+            referId: params.getParam(
+              'referId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TopupCardPageCopyCopyCopyWidget.routeName,
+          path: TopupCardPageCopyCopyCopyWidget.routePath,
+          builder: (context, params) => TopupCardPageCopyCopyCopyWidget(
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            source: params.getParam(
+              'source',
+              ParamType.String,
+            ),
+            referId: params.getParam(
+              'referId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: TopupCardPageOldWidget.routeName,
+          path: TopupCardPageOldWidget.routePath,
+          builder: (context, params) => TopupCardPageOldWidget(
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            source: params.getParam(
+              'source',
+              ParamType.String,
+            ),
+            referId: params.getParam(
+              'referId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PLoanFormPageWidget.routeName,
+          path: PLoanFormPageWidget.routePath,
+          builder: (context, params) => PLoanFormPageWidget(),
+        ),
+        FFRoute(
+          name: PloanStatusPageWidget.routeName,
+          path: PloanStatusPageWidget.routePath,
+          builder: (context, params) => PloanStatusPageWidget(
+            fromPage: params.getParam(
+              'fromPage',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PloanRequestAmountPage02Widget.routeName,
+          path: PloanRequestAmountPage02Widget.routePath,
+          builder: (context, params) => PloanRequestAmountPage02Widget(),
+        ),
+        FFRoute(
+          name: PloanConclusionPage06Widget.routeName,
+          path: PloanConclusionPage06Widget.routePath,
+          builder: (context, params) => PloanConclusionPage06Widget(
+            bankIcon: params.getParam(
+              'bankIcon',
+              ParamType.FFUploadedFile,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PloanCardPage01Widget.routeName,
+          path: PloanCardPage01Widget.routePath,
+          builder: (context, params) => PloanCardPage01Widget(
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            source: params.getParam(
+              'source',
+              ParamType.String,
+            ),
+            referId: params.getParam(
+              'referId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
+              ParamType.String,
+            ),
+            productCode: params.getParam(
+              'productCode',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: PloanUploadDocPage04Widget.routeName,
+          path: PloanUploadDocPage04Widget.routePath,
+          builder: (context, params) => PloanUploadDocPage04Widget(),
+        ),
+        FFRoute(
+          name: PloanInstallmentPage03Widget.routeName,
+          path: PloanInstallmentPage03Widget.routePath,
+          builder: (context, params) => PloanInstallmentPage03Widget(),
+        ),
+        FFRoute(
+          name: PloanSuccessPageWidget.routeName,
+          path: PloanSuccessPageWidget.routePath,
+          builder: (context, params) => PloanSuccessPageWidget(),
+        ),
+        FFRoute(
+          name: PloanCustomerDataPage05Widget.routeName,
+          path: PloanCustomerDataPage05Widget.routePath,
+          builder: (context, params) => PloanCustomerDataPage05Widget(),
+        ),
+        FFRoute(
+          name: TopupCardPageOldCopy1Widget.routeName,
+          path: TopupCardPageOldCopy1Widget.routePath,
+          builder: (context, params) => TopupCardPageOldCopy1Widget(
+            token: params.getParam(
+              'token',
+              ParamType.String,
+            ),
+            hashThaiId: params.getParam(
+              'hashThaiId',
+              ParamType.String,
+            ),
+            source: params.getParam(
+              'source',
+              ParamType.String,
+            ),
+            referId: params.getParam(
+              'referId',
+              ParamType.String,
+            ),
+            contNo: params.getParam(
+              'contNo',
+              ParamType.String,
+            ),
+            topupType: params.getParam(
+              'topupType',
               ParamType.String,
             ),
           ),

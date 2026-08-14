@@ -59,6 +59,21 @@ abstract class FlutterFlowTheme {
   late Color backgroundColor;
   late Color softBGColor;
   late Color bGColor2;
+  late Color cardHeader;
+  late Color text03;
+  late Color bg03;
+  late Color border03;
+  late Color border04;
+  late Color bg04;
+  late Color border05;
+  late Color text04;
+  late Color starColor;
+  late Color bg05;
+  late Color border06;
+  late Color bg06;
+  late Color text05;
+  late Color bg07;
+  late Color bg08;
 
   FFDesignTokens get designToken => FFDesignTokens(this);
 
@@ -168,6 +183,21 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color backgroundColor = const Color(0xFF2438D0);
   late Color softBGColor = const Color(0xFFEDF8FF);
   late Color bGColor2 = const Color(0xFFF46503);
+  late Color cardHeader = const Color(0xFF005ABE);
+  late Color text03 = const Color(0xFFC2410C);
+  late Color bg03 = const Color(0xFFFFF0E4);
+  late Color border03 = const Color(0xFFFFD0AE);
+  late Color border04 = const Color(0xFF1FB6AE);
+  late Color bg04 = const Color(0xFFCFE3F8);
+  late Color border05 = const Color(0xFFBFE6E2);
+  late Color text04 = const Color(0xFF0E8C86);
+  late Color starColor = const Color(0x33FFFFFF);
+  late Color bg05 = const Color(0x2EFFFFFF);
+  late Color border06 = const Color(0x5AFFFFFF);
+  late Color bg06 = const Color(0xFFE5F0FB);
+  late Color text05 = const Color(0xFFA32D2D);
+  late Color bg07 = const Color(0xFFF1EFE8);
+  late Color bg08 = const Color(0xFFD3FFF8);
 }
 
 abstract class Typography {
@@ -373,6 +403,21 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color backgroundColor = const Color(0xFFEA3690);
   late Color softBGColor = const Color(0xFFE920EE);
   late Color bGColor2 = const Color(0xFF0513BA);
+  late Color cardHeader = const Color(0xFF3FA094);
+  late Color text03 = const Color(0xFF64EAFF);
+  late Color bg03 = const Color(0xFFCA2F12);
+  late Color border03 = const Color(0xFF3CC567);
+  late Color border04 = const Color(0xFF044A83);
+  late Color bg04 = const Color(0xFFA2099A);
+  late Color border05 = const Color(0xFF332041);
+  late Color text04 = const Color(0xFFA60052);
+  late Color starColor = const Color(0xFFA7A700);
+  late Color bg05 = const Color(0xFF63F340);
+  late Color border06 = const Color(0xFFD2BC3A);
+  late Color bg06 = const Color(0xFF42EA77);
+  late Color text05 = const Color(0xFFFE6F13);
+  late Color bg07 = const Color(0xFF6F8427);
+  late Color bg08 = const Color(0xFFF633A6);
 }
 
 class FFDesignTokens {
@@ -440,7 +485,7 @@ extension TextStyleHelper on TextStyle {
     List<Shadow>? shadows,
     String? package,
   }) {
-    if (useGoogleFonts && fontFamily != null) {
+    if (useGoogleFonts && fontFamily != null && fontFamily.isNotEmpty) {
       font = GoogleFonts.getFont(fontFamily,
           fontWeight: fontWeight ?? this.fontWeight,
           fontStyle: fontStyle ?? this.fontStyle);

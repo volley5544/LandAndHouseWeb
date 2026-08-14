@@ -3635,6 +3635,7 @@ class LeadsSaveGuestCall {
     String? subProduct = '',
     String? requestInstallmentTerm = '',
     String? requestInstallmentAmount = '',
+    String? interestRate = '',
     String? url = '',
     String? tokenHeader = '',
   }) async {
@@ -3716,6 +3717,7 @@ class LeadsSaveGuestCall {
         'sub_product': subProduct,
         'request_installment_term': requestInstallmentTerm,
         'request_installment_amount': requestInstallmentAmount,
+        'interest_rate': interestRate,
       },
       bodyType: BodyType.MULTIPART,
       returnBody: true,

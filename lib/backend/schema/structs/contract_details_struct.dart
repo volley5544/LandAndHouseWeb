@@ -32,6 +32,10 @@ class ContractDetailsStruct extends FFFirebaseStruct {
     double? arRemainAmount,
     String? firstDueDate,
     String? lastDueDate,
+    String? accountType,
+    String? accountTypeMsg,
+    String? contStat,
+    String? targetStat,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _closingBalance = closingBalance,
         _comcode = comcode,
@@ -57,6 +61,10 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         _arRemainAmount = arRemainAmount,
         _firstDueDate = firstDueDate,
         _lastDueDate = lastDueDate,
+        _accountType = accountType,
+        _accountTypeMsg = accountTypeMsg,
+        _contStat = contStat,
+        _targetStat = targetStat,
         super(firestoreUtilData);
 
   // "closing_balance" field.
@@ -250,6 +258,34 @@ class ContractDetailsStruct extends FFFirebaseStruct {
 
   bool hasLastDueDate() => _lastDueDate != null;
 
+  // "account_type" field.
+  String? _accountType;
+  String get accountType => _accountType ?? '';
+  set accountType(String? val) => _accountType = val;
+
+  bool hasAccountType() => _accountType != null;
+
+  // "account_type_msg" field.
+  String? _accountTypeMsg;
+  String get accountTypeMsg => _accountTypeMsg ?? '';
+  set accountTypeMsg(String? val) => _accountTypeMsg = val;
+
+  bool hasAccountTypeMsg() => _accountTypeMsg != null;
+
+  // "cont_stat" field.
+  String? _contStat;
+  String get contStat => _contStat ?? '';
+  set contStat(String? val) => _contStat = val;
+
+  bool hasContStat() => _contStat != null;
+
+  // "target_stat" field.
+  String? _targetStat;
+  String get targetStat => _targetStat ?? '';
+  set targetStat(String? val) => _targetStat = val;
+
+  bool hasTargetStat() => _targetStat != null;
+
   static ContractDetailsStruct fromMap(Map<String, dynamic> data) =>
       ContractDetailsStruct(
         closingBalance: castToType<int>(data['closing_balance']),
@@ -276,6 +312,10 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         arRemainAmount: castToType<double>(data['ar_remain_amount']),
         firstDueDate: data['first_due_date'] as String?,
         lastDueDate: data['last_due_date'] as String?,
+        accountType: data['account_type'] as String?,
+        accountTypeMsg: data['account_type_msg'] as String?,
+        contStat: data['cont_stat'] as String?,
+        targetStat: data['target_stat'] as String?,
       );
 
   static ContractDetailsStruct? maybeFromMap(dynamic data) => data is Map
@@ -307,6 +347,10 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         'ar_remain_amount': _arRemainAmount,
         'first_due_date': _firstDueDate,
         'last_due_date': _lastDueDate,
+        'account_type': _accountType,
+        'account_type_msg': _accountTypeMsg,
+        'cont_stat': _contStat,
+        'target_stat': _targetStat,
       }.withoutNulls;
 
   @override
@@ -405,6 +449,22 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         ),
         'last_due_date': serializeParam(
           _lastDueDate,
+          ParamType.String,
+        ),
+        'account_type': serializeParam(
+          _accountType,
+          ParamType.String,
+        ),
+        'account_type_msg': serializeParam(
+          _accountTypeMsg,
+          ParamType.String,
+        ),
+        'cont_stat': serializeParam(
+          _contStat,
+          ParamType.String,
+        ),
+        'target_stat': serializeParam(
+          _targetStat,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -531,6 +591,26 @@ class ContractDetailsStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        accountType: deserializeParam(
+          data['account_type'],
+          ParamType.String,
+          false,
+        ),
+        accountTypeMsg: deserializeParam(
+          data['account_type_msg'],
+          ParamType.String,
+          false,
+        ),
+        contStat: deserializeParam(
+          data['cont_stat'],
+          ParamType.String,
+          false,
+        ),
+        targetStat: deserializeParam(
+          data['target_stat'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -562,7 +642,11 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         comcodeCode == other.comcodeCode &&
         arRemainAmount == other.arRemainAmount &&
         firstDueDate == other.firstDueDate &&
-        lastDueDate == other.lastDueDate;
+        lastDueDate == other.lastDueDate &&
+        accountType == other.accountType &&
+        accountTypeMsg == other.accountTypeMsg &&
+        contStat == other.contStat &&
+        targetStat == other.targetStat;
   }
 
   @override
@@ -590,7 +674,11 @@ class ContractDetailsStruct extends FFFirebaseStruct {
         comcodeCode,
         arRemainAmount,
         firstDueDate,
-        lastDueDate
+        lastDueDate,
+        accountType,
+        accountTypeMsg,
+        contStat,
+        targetStat
       ]);
 }
 
@@ -619,6 +707,10 @@ ContractDetailsStruct createContractDetailsStruct({
   double? arRemainAmount,
   String? firstDueDate,
   String? lastDueDate,
+  String? accountType,
+  String? accountTypeMsg,
+  String? contStat,
+  String? targetStat,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -649,6 +741,10 @@ ContractDetailsStruct createContractDetailsStruct({
       arRemainAmount: arRemainAmount,
       firstDueDate: firstDueDate,
       lastDueDate: lastDueDate,
+      accountType: accountType,
+      accountTypeMsg: accountTypeMsg,
+      contStat: contStat,
+      targetStat: targetStat,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

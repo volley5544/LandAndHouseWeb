@@ -36,7 +36,7 @@ class _SelectInstallmentPageWidgetState
       _model.checkBoxSelected = 999;
       safeSetState(() {});
       logFirebaseEvent(
-        'topup_step2_installment_plan',
+        'ploan_step2_installment_plan',
         parameters: {
           'hash_id': FFAppState().hashThaiIdAppState,
         },

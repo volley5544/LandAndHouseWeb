@@ -169,6 +169,16 @@ class _LoanDetailCardComponentWidgetState
                               fit: BoxFit.cover,
                             ),
                           );
+                        } else if (widget.productTypeCode == 'I') {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: SvgPicture.asset(
+                              'assets/images/CarInsuranceLoanIcon.svg',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          );
                         } else {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),

@@ -90,7 +90,10 @@ class _InterestOverviewComponentWidgetState
                       children: [
                         Expanded(
                           child: Text(
-                            'ประเมินวงเงินสูงสุด (บาท)',
+                            ('${widget.ltvLoanAmountMin}' != '0') &&
+                                    ('${widget.ltvLoanAmountMax}' != '0')
+                                ? 'ประเมินวงเงินสูงสุด (บาท)'
+                                : 'อัตราดอกเบี้ยเริ่มต้น (ต่อเดือน)',
                             textAlign: TextAlign.center,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
@@ -106,7 +109,43 @@ class _InterestOverviewComponentWidgetState
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        valueOrDefault<double>(
+                          () {
+                            if (MediaQuery.sizeOf(context).width <
+                                kBreakpointSmall) {
+                              return 0.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointMedium) {
+                              return 0.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointLarge) {
+                              return 0.0;
+                            } else {
+                              return (MediaQuery.sizeOf(context).width * 0.05);
+                            }
+                          }(),
+                          0.0,
+                        ),
+                        8.0,
+                        valueOrDefault<double>(
+                          () {
+                            if (MediaQuery.sizeOf(context).width <
+                                kBreakpointSmall) {
+                              return 0.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointMedium) {
+                              return 0.0;
+                            } else if (MediaQuery.sizeOf(context).width <
+                                kBreakpointLarge) {
+                              return 0.0;
+                            } else {
+                              return (MediaQuery.sizeOf(context).width * 0.05);
+                            }
+                          }(),
+                          0.0,
+                        ),
+                        0.0),
                     child: Container(
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       height: 45.0,
@@ -130,8 +169,14 @@ class _InterestOverviewComponentWidgetState
                         children: [
                           Text(
                             valueOrDefault<String>(
-                              functions.returnNumberWithCommaFullNumber(
-                                  widget.ltvLoanAmountMax, '0'),
+                              ('${widget.ltvLoanAmountMin}' != '0') &&
+                                      ('${widget.ltvLoanAmountMax}' != '0')
+                                  ? valueOrDefault<String>(
+                                      functions.returnNumberWithCommaFullNumber(
+                                          widget.ltvLoanAmountMax, '0'),
+                                      '0',
+                                    )
+                                  : '${widget.maxInterestRate} %',
                               '0',
                             ),
                             style: FlutterFlowTheme.of(context)
@@ -151,264 +196,386 @@ class _InterestOverviewComponentWidgetState
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-              ),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: 100.0,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'วงเงินตั้งแต่',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 10.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Text(
-                                    '${valueOrDefault<String>(
-                                      functions.returnNumberWithCommaFullNumber(
-                                          widget.ltvLoanAmountDefault, '0'),
-                                      '0',
-                                    )} - ${valueOrDefault<String>(
-                                      functions.returnNumberWithCommaFullNumber(
-                                          widget.ltvLoanAmountMin, '0'),
-                                      '0',
-                                    )} บาท',
-                                    textAlign: TextAlign.center,
+            if (('${widget.ltvLoanAmountMin}' != '0') &&
+                ('${widget.ltvLoanAmountMax}' != '0'))
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          width: 100.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    'วงเงินตั้งแต่',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
+                                          fontSize: 10.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'อัตราดอกเบี้ยเริ่มต้น (ต่อเดือน)',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 10.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 12.0, 0.0),
-                                  child: Container(
+                                  Container(
                                     width: double.infinity,
-                                    height: 35.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context).info,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 4.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(
-                                            0.0,
-                                            2.0,
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      '${valueOrDefault<String>(
+                                        functions
+                                            .returnNumberWithCommaFullNumber(
+                                                widget.ltvLoanAmountDefault,
+                                                '0'),
+                                        '0',
+                                      )} - ${valueOrDefault<String>(
+                                        functions
+                                            .returnNumberWithCommaFullNumber(
+                                                widget.ltvLoanAmountMin, '0'),
+                                        '0',
+                                      )} บาท',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
                                           ),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '${widget.minInterestRate} %',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ],
                                     ),
                                   ),
-                                ),
-                              ].divide(SizedBox(height: 4.0)),
-                            ),
-                          ].divide(SizedBox(height: 12.0)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 120.0,
-                      child: VerticalDivider(
-                        thickness: 2.0,
-                        color: FlutterFlowTheme.of(context).alternate,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 100.0,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'วงเงินตั้งแต่',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 10.0,
-                                        letterSpacing: 0.0,
-                                      ),
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(),
-                                  child: Text(
-                                    '${valueOrDefault<String>(
-                                      functions.returnNumberWithCommaFullNumber(
-                                          (double.parse((widget
-                                                      .ltvLoanAmountMin!)) +
-                                                  1)
-                                              .toString(),
-                                          '0'),
-                                      '0',
-                                    )} - ${valueOrDefault<String>(
-                                      functions.returnNumberWithCommaFullNumber(
-                                          widget.ltvLoanAmountMax, '0'),
-                                      '0',
-                                    )} บาท',
-                                    textAlign: TextAlign.center,
+                                ],
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'อัตราดอกเบี้ยเริ่มต้น (ต่อเดือน)',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           fontFamily: 'Noto San Thai',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          fontSize: 14.0,
+                                          fontSize: 10.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.normal,
                                         ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'อัตราดอกเบี้ยเริ่มต้น (ต่อเดือน)',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Noto San Thai',
-                                        fontSize: 10.0,
-                                        letterSpacing: 0.0,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        valueOrDefault<double>(
+                                          () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 12.0;
+                                            } else {
+                                              return (MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.015);
+                                            }
+                                          }(),
+                                          0.0,
+                                        ),
+                                        0.0,
+                                        valueOrDefault<double>(
+                                          () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 12.0;
+                                            } else {
+                                              return (MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.015);
+                                            }
+                                          }(),
+                                          0.0,
+                                        ),
+                                        0.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 35.0,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            FlutterFlowTheme.of(context).info,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(
+                                              0.0,
+                                              2.0,
+                                            ),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 12.0, 0.0),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 35.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context).info,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 4.0,
-                                          color: Color(0x33000000),
-                                          offset: Offset(
-                                            0.0,
-                                            2.0,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '${widget.minInterestRate} %',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                           ),
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '${widget.maxInterestRate} %',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Noto San Thai',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                fontSize: 14.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ].divide(SizedBox(height: 4.0)),
-                            ),
-                          ].divide(SizedBox(height: 12.0)),
+                                ].divide(SizedBox(height: 4.0)),
+                              ),
+                            ].divide(SizedBox(height: 12.0)),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 120.0,
+                        child: VerticalDivider(
+                          thickness: 2.0,
+                          color: FlutterFlowTheme.of(context).alternate,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: 100.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(
+                                    'วงเงินตั้งแต่',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 10.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      '${valueOrDefault<String>(
+                                        functions.returnNumberWithCommaFullNumber(
+                                            (double.parse((widget
+                                                        .ltvLoanAmountMin!)) +
+                                                    1)
+                                                .toString(),
+                                            '0'),
+                                        '0',
+                                      )} - ${valueOrDefault<String>(
+                                        functions
+                                            .returnNumberWithCommaFullNumber(
+                                                widget.ltvLoanAmountMax, '0'),
+                                        '0',
+                                      )} บาท',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Noto San Thai',
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'อัตราดอกเบี้ยเริ่มต้น (ต่อเดือน)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Noto San Thai',
+                                          fontSize: 10.0,
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        valueOrDefault<double>(
+                                          () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 12.0;
+                                            } else {
+                                              return (MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.015);
+                                            }
+                                          }(),
+                                          0.0,
+                                        ),
+                                        0.0,
+                                        valueOrDefault<double>(
+                                          () {
+                                            if (MediaQuery.sizeOf(context)
+                                                    .width <
+                                                kBreakpointSmall) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointMedium) {
+                                              return 12.0;
+                                            } else if (MediaQuery.sizeOf(
+                                                        context)
+                                                    .width <
+                                                kBreakpointLarge) {
+                                              return 12.0;
+                                            } else {
+                                              return (MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.015);
+                                            }
+                                          }(),
+                                          0.0,
+                                        ),
+                                        0.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 35.0,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            FlutterFlowTheme.of(context).info,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            blurRadius: 4.0,
+                                            color: Color(0x33000000),
+                                            offset: Offset(
+                                              0.0,
+                                              2.0,
+                                            ),
+                                          )
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '${widget.maxInterestRate} %',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Noto San Thai',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  fontSize: 14.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ].divide(SizedBox(height: 4.0)),
+                              ),
+                            ].divide(SizedBox(height: 12.0)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ]
               .divide(SizedBox(height: 12.0))
-              .addToStart(SizedBox(height: 16.0))
-              .addToEnd(SizedBox(height: 16.0)),
+              .addToStart(SizedBox(
+                  height: valueOrDefault<double>(
+                ('${widget.ltvLoanAmountMin}' != '0') &&
+                        ('${widget.ltvLoanAmountMax}' != '0')
+                    ? 16.0
+                    : 36.0,
+                36.0,
+              )))
+              .addToEnd(SizedBox(
+                  height: valueOrDefault<double>(
+                ('${widget.ltvLoanAmountMin}' != '0') &&
+                        ('${widget.ltvLoanAmountMax}' != '0')
+                    ? 16.0
+                    : 36.0,
+                36.0,
+              ))),
         ),
       ),
     );
