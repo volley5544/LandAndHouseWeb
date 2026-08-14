@@ -5251,6 +5251,7 @@ class UserDetailCall {
       callType: ApiCallType.GET,
       headers: {
         'Authorization': 'Bearer ${token}',
+        'x-srisawad': 'x1',
       },
       params: {},
       returnBody: true,
