@@ -302,6 +302,8 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
             apiUrl: FFDevEnvironmentValues().isProduction
                 ? FFAppState().topupUrlProd
                 : FFAppState().topupUrlDev,
+            xSrisawad:
+                FFDevEnvironmentValues().isProduction ? 'x1_c3Jpc2F3YWQ' : 'x1',
           );
 
           if ((_model.getPdfLoanDocApiOutput?.statusCode ?? 200) != 200) {
@@ -4910,6 +4912,11 @@ class _TopupConclusionPageWidgetState extends State<TopupConclusionPageWidget> {
                                                         .saveTopupData
                                                         .products
                                                         .productCode,
+                                                xSrisawad:
+                                                    FFDevEnvironmentValues()
+                                                            .isProduction
+                                                        ? 'x1_c3Jpc2F3YWQ'
+                                                        : 'x1',
                                               );
 
                                               _shouldSetState = true;

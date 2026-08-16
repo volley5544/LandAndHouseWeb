@@ -1451,6 +1451,7 @@ class SendAnPdfToUserCall {
     double? amountPerInstallment,
     String? startInstallmentDate = '',
     String? installmentDate = '',
+    String? xSrisawad = '',
     String? apiUrl = '',
   }) async {
     final baseUrl = SrisawadApiGroup.getBaseUrl(
@@ -1482,7 +1483,7 @@ class SendAnPdfToUserCall {
       headers: {
         'x-srisawad': 'x1',
         'Authorization': 'Bearer ${bearerAuth}',
-        'x-srisawad': 'x1_c3Jpc2F3YWQ',
+        'x-srisawad': '${xSrisawad}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -2192,6 +2193,7 @@ class SaveNewTopupCall {
     String? source = '',
     String? referId = '',
     String? productCode = '',
+    String? xSrisawad = '',
     String? apiUrl = '',
   }) async {
     final baseUrl = SrisawadApiGroup.getBaseUrl(
@@ -2246,6 +2248,7 @@ class SaveNewTopupCall {
       headers: {
         'x-srisawad': 'x1',
         'Authorization': 'Bearer ${bearerAuth}',
+        'x-srisawad': '${xSrisawad}',
       },
       params: {},
       body: ffApiRequestBody,
