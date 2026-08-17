@@ -278,21 +278,6 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
         },
       );
       Navigator.pop(context);
-      await showDialog(
-        context: context,
-        builder: (alertDialogContext) {
-          return AlertDialog(
-            content:
-                Text((FFAppState().saveTopupData.products.toMap()).toString()),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(alertDialogContext),
-                child: Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
     });
 
     _model.textController ??= TextEditingController();

@@ -63,307 +63,223 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.wait([
-        Future(() async {
-          while (true) {
-            safeSetState(() {});
-            await Future.delayed(
-              Duration(
-                milliseconds: 1000,
+      showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return Dialog(
+            elevation: 0,
+            insetPadding: EdgeInsets.zero,
+            backgroundColor: Colors.transparent,
+            alignment: AlignmentDirectional(1.0, 1.0)
+                .resolve(Directionality.of(context)),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(dialogContext).unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
+              child: LoadingWidget(),
+            ),
+          );
+        },
+      );
+
+      setDarkModeSetting(context, ThemeMode.light);
+      _model.isLoadFirestoreCompleted = false;
+      safeSetState(() {});
+      FFAppState().getLoanListAPIResultAppState = [];
+      safeSetState(() {});
+      unawaited(
+        () async {}(),
+      );
+      _model.configOutput =
+          await ApplicationRecord.getDocumentOnce(FFAppState().configDocument!);
+      _model.isLoadFirestoreCompleted = true;
+      safeSetState(() {});
+      FFAppState().hashThaiIdAppState = widget.hashThaiId!;
+      FFAppState().accessToken = widget.token!;
+      FFAppState().topupUrlDev = '${_model.configOutput?.apiUrl.apiUrlDev}';
+      FFAppState().topupUrlProd = '${_model.configOutput?.apiUrl.apiUrlProd}';
+      FFAppState().LeadUrlDev = '${_model.configOutput?.apiUrl.apiUrlLeadDev}';
+      FFAppState().LeadUrlProd =
+          '${_model.configOutput?.apiUrl.apiUrlLeadProd}';
+      FFAppState().ocrUrlDev = '${_model.configOutput?.apiUrl.ocrUrlDev}';
+      FFAppState().ocrUrlProd = '${_model.configOutput?.apiUrl.ocrUrlProd}';
+      FFAppState().useNewCameraAction = _model.configOutput!.useNewCameraAction;
+      safeSetState(() {});
+      FFAppState().saveTopupData = SaveTopupDataModelStruct(
+        lifeInsureAmt: '',
+        transno: '',
+        dbName: '',
+        hashThaiId: widget.hashThaiId,
+        contractNo: '',
+        marketingConsent: '',
+        sensitiveConsent: '',
+        latitude: '',
+        longitude: '',
+        loanAmount: 0,
+        topupFee: 0,
+        feeAmount: 0,
+        transferAmount: 0,
+        interestRate: 0,
+        interestAmount: 0,
+        totalAmount: 0,
+        creditLimit: 0,
+        termPeriod: 0,
+        regularPeriod: 0,
+        lastPeriod: 0,
+        lastPeriodPromo: 0,
+        actImage: '',
+        propertyImage: '',
+        topupRequestFile: '',
+        topupArgeementFile: '',
+        topupReceiptFile: '',
+        savePdf: SavePdfDataModelStruct(
+          contractNo: '',
+          dbName: '',
+          contractDate: '',
+          amount: 0.0,
+          from: '',
+          contractBankAccount: '',
+          contractBankBrandname: '',
+          contractBankType: '',
+          contractBankBranch: '',
+          interestRate: 0.0,
+          installmentNumber: 0.0,
+          amountPerInstallment: 0.0,
+          startInstallmentDate: '',
+          installmentDate: '',
+          vehicleType: '',
+        ),
+        customerImage2: '',
+        customerImage3: '',
+        carImageFront: '',
+        carImageBack: '',
+        carImageLeft: '',
+        carImageRight: '',
+        carImageMile: '',
+        source: '${widget.source}',
+        referId: '${widget.referId}',
+      );
+      safeSetState(() {});
+      FFAppState().userAddressData = UserAllAddressDataModelStruct(
+        currentAddress: UserAddressDataModelStruct(
+          addressDetails: '',
+          addressSubDistrict: '',
+          addressDistrict: '',
+          addressProvince: '',
+          addressPostalCode: '',
+        ),
+        registrationAddress: UserAddressDataModelStruct(
+          addressDetails: '',
+          addressSubDistrict: '',
+          addressDistrict: '',
+          addressProvince: '',
+          addressPostalCode: '',
+        ),
+        idCardAddress: UserAddressDataModelStruct(
+          addressDetails: '',
+          addressSubDistrict: '',
+          addressDistrict: '',
+          addressProvince: '',
+          addressPostalCode: '',
+        ),
+        otherAddress: UserAddressDataModelStruct(
+          addressDetails: '',
+          addressSubDistrict: '',
+          addressDistrict: '',
+          addressProvince: '',
+          addressPostalCode: '',
+        ),
+        dataDate: '',
+      );
+      safeSetState(() {});
+      _model.userDetailOutput = await UserDetailCall.call(
+        hashId: FFAppState().hashThaiIdAppState,
+        url: FFDevEnvironmentValues().isProduction
+            ? FFAppState().topupUrlProd
+            : FFAppState().topupUrlDev,
+        token: FFAppState().accessToken,
+      );
+
+      if ((_model.userDetailOutput?.statusCode ?? 200) == 200) {
+      } else {
+        await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage:
+                      'พบข้อผิดพลาด statuscode (${(_model.userDetailOutput?.statusCode ?? 200).toString()})',
+                ),
               ),
             );
-          }
-        }),
-        Future(() async {
-          await actions.listenWebviewEventCamera(
-            context,
-            (cameraBase64, actionNameOutput) async {
-              if (actionNameOutput == 'VideoRecord') {
-                _model.videoPath = cameraBase64;
-                safeSetState(() {});
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      content: Text(_model.videoPath),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-                _model.fileVideoOutput =
-                    await actions.getFFUploadFileFromFilePath(
-                  _model.videoPath,
-                  '123456789',
-                );
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      content: Text('after gen file'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-                await Future.delayed(
-                  Duration(
-                    milliseconds: 500,
-                  ),
-                );
-                _model.resultText = await actions.saveVideoFile(
-                  _model.fileVideoOutput,
-                  '123456789',
-                );
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      content: Text('${_model.resultText}'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('Ok'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            },
-          );
-          showDialog(
-            context: context,
-            builder: (dialogContext) {
-              return Dialog(
-                elevation: 0,
-                insetPadding: EdgeInsets.zero,
-                backgroundColor: Colors.transparent,
-                alignment: AlignmentDirectional(1.0, 1.0)
-                    .resolve(Directionality.of(context)),
-                child: GestureDetector(
-                  onTap: () {
-                    FocusScope.of(dialogContext).unfocus();
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  child: LoadingWidget(),
-                ),
-              );
-            },
-          );
+          },
+        );
 
-          setDarkModeSetting(context, ThemeMode.light);
-          _model.isLoadFirestoreCompleted = false;
-          safeSetState(() {});
-          FFAppState().getLoanListAPIResultAppState = [];
-          safeSetState(() {});
-          unawaited(
-            () async {}(),
-          );
-          _model.configOutput = await ApplicationRecord.getDocumentOnce(
-              FFAppState().configDocument!);
-          _model.isLoadFirestoreCompleted = true;
-          safeSetState(() {});
-          FFAppState().hashThaiIdAppState = widget.hashThaiId!;
-          FFAppState().accessToken = widget.token!;
-          FFAppState().topupUrlDev =
-              '${_model.configOutput?.apiUrl.apiUrlDev}';
-          FFAppState().topupUrlProd =
-              '${_model.configOutput?.apiUrl.apiUrlProd}';
-          FFAppState().LeadUrlDev =
-              '${_model.configOutput?.apiUrl.apiUrlLeadDev}';
-          FFAppState().LeadUrlProd =
-              '${_model.configOutput?.apiUrl.apiUrlLeadProd}';
-          FFAppState().ocrUrlDev = '${_model.configOutput?.apiUrl.ocrUrlDev}';
-          FFAppState().ocrUrlProd =
-              '${_model.configOutput?.apiUrl.ocrUrlProd}';
-          FFAppState().useNewCameraAction =
-              _model.configOutput!.useNewCameraAction;
-          safeSetState(() {});
-          FFAppState().saveTopupData = SaveTopupDataModelStruct(
-            lifeInsureAmt: '',
-            transno: '',
-            dbName: '',
-            hashThaiId: widget.hashThaiId,
-            contractNo: '',
-            marketingConsent: '',
-            sensitiveConsent: '',
-            latitude: '',
-            longitude: '',
-            loanAmount: 0,
-            topupFee: 0,
-            feeAmount: 0,
-            transferAmount: 0,
-            interestRate: 0,
-            interestAmount: 0,
-            totalAmount: 0,
-            creditLimit: 0,
-            termPeriod: 0,
-            regularPeriod: 0,
-            lastPeriod: 0,
-            lastPeriodPromo: 0,
-            actImage: '',
-            propertyImage: '',
-            topupRequestFile: '',
-            topupArgeementFile: '',
-            topupReceiptFile: '',
-            savePdf: SavePdfDataModelStruct(
-              contractNo: '',
-              dbName: '',
-              contractDate: '',
-              amount: 0.0,
-              from: '',
-              contractBankAccount: '',
-              contractBankBrandname: '',
-              contractBankType: '',
-              contractBankBranch: '',
-              interestRate: 0.0,
-              installmentNumber: 0.0,
-              amountPerInstallment: 0.0,
-              startInstallmentDate: '',
-              installmentDate: '',
-              vehicleType: '',
-            ),
-            customerImage2: '',
-            customerImage3: '',
-            carImageFront: '',
-            carImageBack: '',
-            carImageLeft: '',
-            carImageRight: '',
-            carImageMile: '',
-            source: '${widget.source}',
-            referId: '${widget.referId}',
-          );
-          safeSetState(() {});
-          FFAppState().userAddressData = UserAllAddressDataModelStruct(
-            currentAddress: UserAddressDataModelStruct(
-              addressDetails: '',
-              addressSubDistrict: '',
-              addressDistrict: '',
-              addressProvince: '',
-              addressPostalCode: '',
-            ),
-            registrationAddress: UserAddressDataModelStruct(
-              addressDetails: '',
-              addressSubDistrict: '',
-              addressDistrict: '',
-              addressProvince: '',
-              addressPostalCode: '',
-            ),
-            idCardAddress: UserAddressDataModelStruct(
-              addressDetails: '',
-              addressSubDistrict: '',
-              addressDistrict: '',
-              addressProvince: '',
-              addressPostalCode: '',
-            ),
-            otherAddress: UserAddressDataModelStruct(
-              addressDetails: '',
-              addressSubDistrict: '',
-              addressDistrict: '',
-              addressProvince: '',
-              addressPostalCode: '',
-            ),
-            dataDate: '',
-          );
-          safeSetState(() {});
-          _model.userDetailOutput = await UserDetailCall.call(
-            hashId: FFAppState().hashThaiIdAppState,
-            url: FFDevEnvironmentValues().isProduction
-                ? FFAppState().topupUrlProd
-                : FFAppState().topupUrlDev,
-            token: FFAppState().accessToken,
-          );
+        Navigator.pop(context);
+        return;
+      }
 
-          if ((_model.userDetailOutput?.statusCode ?? 200) == 200) {
-          } else {
-            await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (dialogContext) {
-                return Dialog(
-                  elevation: 0,
-                  insetPadding: EdgeInsets.zero,
-                  backgroundColor: Colors.transparent,
-                  alignment: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
-                  child: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(dialogContext).unfocus();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    child: ErrorMessageComponentWidget(
-                      textMessage:
-                          'พบข้อผิดพลาด statuscode (${(_model.userDetailOutput?.statusCode ?? 200).toString()})',
-                    ),
-                  ),
-                );
-              },
-            );
-
-            Navigator.pop(context);
-            return;
-          }
-
-          if (UserDetailCall.statuscode(
-                (_model.userDetailOutput?.jsonBody ?? ''),
-              ) !=
-              '200') {
-            await showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (dialogContext) {
-                return Dialog(
-                  elevation: 0,
-                  insetPadding: EdgeInsets.zero,
-                  backgroundColor: Colors.transparent,
-                  alignment: AlignmentDirectional(0.0, 0.0)
-                      .resolve(Directionality.of(context)),
-                  child: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(dialogContext).unfocus();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    child: ErrorMessageComponentWidget(
-                      textMessage: '${UserDetailCall.message(
-                        (_model.userDetailOutput?.jsonBody ?? ''),
-                      )}',
-                    ),
-                  ),
-                );
-              },
-            );
-
-            Navigator.pop(context);
-            return;
-          }
-          FFAppState().customerDetailData = UserDetailCall.results(
+      if (UserDetailCall.statuscode(
             (_model.userDetailOutput?.jsonBody ?? ''),
-          )!;
-          safeSetState(() {});
-          FFAppState().updateCustomerDetailDataStruct(
-            (e) => e..hashThaiId = FFAppState().hashThaiIdAppState,
-          );
-          safeSetState(() {});
-          logFirebaseEvent(
-            'topup_list_page',
-            parameters: {
-              'hash_id': FFAppState().hashThaiIdAppState,
-              'source': FFAppState().saveTopupData.source,
-              'refer_id': FFAppState().saveTopupData.referId,
-            },
-          );
-          Navigator.pop(context);
-        }),
-      ]);
+          ) !=
+          '200') {
+        await showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (dialogContext) {
+            return Dialog(
+              elevation: 0,
+              insetPadding: EdgeInsets.zero,
+              backgroundColor: Colors.transparent,
+              alignment: AlignmentDirectional(0.0, 0.0)
+                  .resolve(Directionality.of(context)),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(dialogContext).unfocus();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: ErrorMessageComponentWidget(
+                  textMessage: '${UserDetailCall.message(
+                    (_model.userDetailOutput?.jsonBody ?? ''),
+                  )}',
+                ),
+              ),
+            );
+          },
+        );
+
+        Navigator.pop(context);
+        return;
+      }
+      FFAppState().customerDetailData = UserDetailCall.results(
+        (_model.userDetailOutput?.jsonBody ?? ''),
+      )!;
+      safeSetState(() {});
+      FFAppState().updateCustomerDetailDataStruct(
+        (e) => e..hashThaiId = FFAppState().hashThaiIdAppState,
+      );
+      safeSetState(() {});
+      logFirebaseEvent(
+        'topup_list_page',
+        parameters: {
+          'hash_id': FFAppState().hashThaiIdAppState,
+          'source': FFAppState().saveTopupData.source,
+          'refer_id': FFAppState().saveTopupData.referId,
+        },
+      );
+      Navigator.pop(context);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -441,28 +357,16 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              await actions.openCameraWebview(
-                                'video',
-                                'VideoRecord',
-                              );
-                            },
-                            child: Text(
-                              'เติมวงเงิน',
-                              style: FlutterFlowTheme.of(context)
-                                  .headlineMedium
-                                  .override(
-                                    fontFamily: 'Noto San Thai',
-                                    color: Color(0xFF003063),
-                                    fontSize: 18.0,
-                                    letterSpacing: 0.0,
-                                  ),
-                            ),
+                          Text(
+                            'เติมวงเงิน',
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Noto San Thai',
+                                  color: Color(0xFF003063),
+                                  fontSize: 18.0,
+                                  letterSpacing: 0.0,
+                                ),
                           ),
                           if (!FFDevEnvironmentValues().isProduction)
                             Padding(
@@ -473,24 +377,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                 focusColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  safeSetState(() {});
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        content: Text(_model.videoPath),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text('Ok'),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                },
+                                onTap: () async {},
                                 child: Text(
                                   '(UAT v.${FFAppState().webUatVersion.toString()})',
                                   style: FlutterFlowTheme.of(context)
@@ -5542,6 +5429,9 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                                 Colors
                                                                     .transparent,
                                                             onTap: () async {
+                                                              if (!false) {
+                                                                return;
+                                                              }
                                                               if (!(((String
                                                                           amount) {
                                                                     return double.parse(

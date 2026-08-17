@@ -22,10 +22,6 @@ class TopupCardPageModel extends FlutterFlowModel<TopupCardPageWidget> {
 
   ///  State fields for stateful widgets in this page.
 
-  // Stores action output result for [Custom Action - saveVideoFile] action in topupCardPage widget.
-  String? resultText;
-  // Stores action output result for [Custom Action - getFFUploadFileFromFilePath] action in topupCardPage widget.
-  FFUploadedFile? fileVideoOutput;
   // Stores action output result for [Backend Call - Read Document] action in topupCardPage widget.
   ApplicationRecord? configOutput;
   // Stores action output result for [Backend Call - API (userDetail)] action in topupCardPage widget.
