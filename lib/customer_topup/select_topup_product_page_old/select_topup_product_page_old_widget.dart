@@ -640,18 +640,31 @@ class _SelectTopupProductPageOldWidgetState
                                                                               100.0),
                                                                   child:
                                                                       OctoImage(
-                                                                    placeholderBuilder: (_) =>
-                                                                        SizedBox
-                                                                            .expand(
-                                                                      child:
-                                                                          Image(
-                                                                        image: BlurHashImage(listViewTopupProductConfigRecord.productImgHash.elementAtOrNull(functions.findIndexInList(
-                                                                            listViewTopupProductConfigRecord.produceCode.toList(),
-                                                                            installmentListItem.productCode)!)!),
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                      ),
-                                                                    ),
+                                                                    placeholderBuilder:
+                                                                        (_) {
+                                                                      final blurHash = listViewTopupProductConfigRecord.productImgHash.elementAtOrNull(functions.findIndexInList(
+                                                                          listViewTopupProductConfigRecord
+                                                                              .produceCode
+                                                                              .toList(),
+                                                                          installmentListItem
+                                                                              .productCode)!)!;
+
+                                                                      if (!validateBlurhash(
+                                                                          blurHash)) {
+                                                                        return const SizedBox
+                                                                            .shrink();
+                                                                      }
+                                                                      return SizedBox
+                                                                          .expand(
+                                                                        child:
+                                                                            Image(
+                                                                          image:
+                                                                              BlurHashImage(blurHash),
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      );
+                                                                    },
                                                                     image:
                                                                         NetworkImage(
                                                                       functions.stringToImgPath(listViewTopupProductConfigRecord.productImg.elementAtOrNull(functions.findIndexInList(

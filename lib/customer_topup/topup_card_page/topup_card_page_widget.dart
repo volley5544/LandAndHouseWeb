@@ -6797,7 +6797,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                                                             ],
                                                                                           ),
                                                                                         ),
-                                                                                      if ((double.parse('${loanListCarouselItemItem.topupDetail.topupSpecials.toString()}') > 0.0) && ('${loanListCarouselItemItem.topupDetail.topupSpecials.toString()}' != 'null') && ('${loanListCarouselItemItem.topupDetail.topupSpecials.toString()}' != '') && ('${loanListCarouselItemItem.topupDetail.canTopup}' != 'N') && (loanListCarouselItemItem.contractDetails.accountType != 'L'))
+                                                                                      if ((double.parse('${loanListCarouselItemItem.topupDetail.topupExtra.toString()}') > 0.0) && ('${loanListCarouselItemItem.topupDetail.topupExtra.toString()}' != 'null') && ('${loanListCarouselItemItem.topupDetail.topupExtra.toString()}' != '') && ('${loanListCarouselItemItem.topupDetail.canTopup}' != 'N') && (loanListCarouselItemItem.contractDetails.accountType != 'L'))
                                                                                         Padding(
                                                                                           padding: EdgeInsetsDirectional.fromSTEB(12.0, 4.0, 8.0, 0.0),
                                                                                           child: Row(
@@ -6826,7 +6826,7 @@ class _TopupCardPageWidgetState extends State<TopupCardPageWidget> {
                                                                                               ),
                                                                                               Text(
                                                                                                 '+${valueOrDefault<String>(
-                                                                                                  functions.returnNumberWithComma2Decimal(loanListCarouselItemItem.topupDetail.topupSpecials.toString()),
+                                                                                                  functions.returnNumberWithComma2Decimal(loanListCarouselItemItem.topupDetail.topupExtra.toString()),
                                                                                                   '0',
                                                                                                 )}',
                                                                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
