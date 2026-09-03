@@ -3196,7 +3196,7 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                 'yield',
                                               )}' ==
                                               'N') ||
-                                          true)
+                                          false)
                                         Expanded(
                                           child: Builder(
                                             builder: (context) =>
