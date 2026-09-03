@@ -1145,7 +1145,13 @@ class _TopupDetailDataPageWidgetState extends State<TopupDetailDataPageWidget> {
                                                 ],
                                               ),
                                               Text(
-                                                'คุณสามารถแก้ไขยอดขอสินเชื่อใหม่ได้ แต่จำนวนเงินต้องไม่เกิน 7,000 บาท (ยอดจัดสินเชื่อ ระบบจะปัดเป็นจำนวนเต็มร้อยเท่านั้น)',
+                                                'คุณสามารถแก้ไขยอดขอสินเชื่อใหม่ได้ แต่จำนวนเงินต้องไม่เกิน ${functions.returnNumberWithComma2Decimal('${valueOrDefault<String>(
+                                                  FFAppState()
+                                                      .getTopupDataAPIResultAppstate
+                                                      .maxTopupAmount
+                                                      .toString(),
+                                                  'max_topup_amount',
+                                                )}')}บาท (ยอดจัดสินเชื่อ ระบบจะปัดเป็นจำนวนเต็มร้อยเท่านั้น)',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium
